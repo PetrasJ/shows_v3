@@ -5,29 +5,42 @@ namespace App\Service;
 use App\Entity\Show;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 class ShowsManager
 {
+    const API_URL = 'http://api.tvmaze.com/shows';
     private $entityManager;
-    private $appKernel;
+    private $imageService;
+    private $episodesManager;
+    private $client;
 
-    public function __construct(EntityManagerInterface $entityManager, KernelInterface $appKernel)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ImageService $imageService,
+        EpisodesManager $episodesManager
+    )
     {
         $this->entityManager = $entityManager;
-        $this->appKernel = $appKernel;
+        $this->imageService = $imageService;
+        $this->episodesManager = $episodesManager;
+        $this->client = new Client();
     }
 
     public function load()
     {
-        $client = new Client();
-
-        for ($page = 0; $page <= 2; $page++) {
-            $shows = json_decode($client->get(sprintf('http://api.tvmaze.com/shows?page=%d', $page))->getBody());
-            $this->addShows($shows);
+        $gap = 0;
+        for ($page = 0; $page <= 1200; $page++) {
+            try {
+                $shows = $this->client->get(sprintf('%s?page=%d', self::API_URL, $page))->getBody();
+                $this->addShows(json_decode($shows));
+                $gap = 0;
+            } catch (\Exception $e) {
+                if ($gap === 10) {
+                    break;
+                }
+                $gap++;
+            }
         }
-
-        return true;
     }
 
     private function addShows($shows)
@@ -37,13 +50,13 @@ class ShowsManager
         }
     }
 
-    private function addShow($show)
+    private function addShow($show): bool
     {
         if (!$show->id) {
             return false;
         }
 
-        if ($this->entityManager->getRepository(Show::class)->findBy(['showID' => $show->id])) {
+        if ($this->entityManager->getRepository(Show::class)->findOneBy(['showID' => $show->id])) {
             return false;
         };
 
@@ -53,7 +66,7 @@ class ShowsManager
         $newShow->setUrl($show->url);
         $newShow->setOfficialSite($show->officialSite);
         $newShow->setRating($show->rating->average);
-        $this->saveShowImage($show->image->original, $show->image->medium, $show->id);
+        $this->imageService->saveShowImage($show->image->original, $show->image->medium, $show->id);
         $newShow->setUpdated($show->updated);
         $newShow->setWeight($show->weight);
         $newShow->setStatus($show->status);
@@ -68,34 +81,7 @@ class ShowsManager
         $newShow->setSummary($show->summary);
         $this->entityManager->persist($newShow);
         $this->entityManager->flush();
-
-        return true;
-    }
-
-    private function saveShowImage($imageUrl, $imageMediumUrl, $showID)
-    {
-
-        $dir = $this->appKernel->getProjectDir() . '/public/img/shows';
-        if (!is_dir($dir)) {
-            mkdir($dir);
-        }
-
-        if (!is_dir($dir . '/medium')) {
-            mkdir($dir . '/medium');
-        }
-
-        try {
-            $newFilename = $dir . $showID . "." . pathinfo($imageUrl, PATHINFO_EXTENSION);
-            copy($imageUrl, $newFilename);
-        } catch (\Exception $e) {
-            error_log(__METHOD__ .' fails: ' . $e->getMessage());
-        }
-        try {
-            $newFilename = $dir . '/medium' . $showID . "." . pathinfo($imageMediumUrl, PATHINFO_EXTENSION);
-            return copy($imageMediumUrl, $newFilename);
-        } catch (\Exception $e) {
-            error_log(__METHOD__ .' fails: ' . $e->getMessage());
-        }
+        $this->episodesManager->addEpisodes($show->id);
 
         return true;
     }
