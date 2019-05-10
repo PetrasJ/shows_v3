@@ -1,2 +1,33 @@
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
+
+.ui-autocomplete {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.6);
+  list-style: none;
+  border-radius: 5px;
+  border: 1px solid #999;
+  max-width: 400px;
+  margin-left: 20px;
+  z-index: 999;
+  padding-left: 0;
+
+}
+
+.ui-autocomplete li div {
+  padding: 5px 5px 5px 15px;
+  border: 1px solid transparent;
+}
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+.ui-autocomplete li {
+  margin: 2px;
+  color: white;
+}
+
+.ui-autocomplete li:hover {
+  cursor: pointer;
+}
