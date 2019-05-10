@@ -58,7 +58,9 @@ Encore
     //.enableIntegrityHashes()
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
+    .addStyleEntry('style', './assets/css/app.scss')
+    .enableSassLoader()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
