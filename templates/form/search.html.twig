@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+{{ form_errors(form) }}
+<div class="input-group">
+    {{ form_widget(form.search) }}
+    <div class="input-group-btn">
+        <button class="btn btn-primary" type="submit">
+            Search
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}

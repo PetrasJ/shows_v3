@@ -43,6 +43,11 @@ class ShowsManager
         }
     }
 
+    public function find(string $term)
+    {
+        return $this->entityManager->getRepository(Show::class)->findAllByNameLimited($term);
+    }
+
     private function addShows($shows)
     {
         foreach ($shows as $show) {
