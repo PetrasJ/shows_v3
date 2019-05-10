@@ -34,7 +34,6 @@ class ImportShowsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $output->writeln([
             'Import shows',
             $this->showsManager->load() ? 'true' : 'false',
