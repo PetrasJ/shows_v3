@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user_shows")
- * @ORM\Entity(repositoryClass="App\Repository\UserShowsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserShowRepository")
  */
-class UserShows
+class UserShow
 {
     const STATUS_WATCHING = null;
     const STATUS_WATCH_LATER = 1;
@@ -28,10 +28,12 @@ class UserShows
     private $userID;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var Show
+     * @ORM\OneToOne(targetEntity="Show")
+     * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
      */
-
-    private $showID;
+    private $show;
+        
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
      */
@@ -55,7 +57,7 @@ class UserShows
     /**
      * @param integer $userID
      *
-     * @return UserShows
+     * @return UserShow
      */
     public function setUserID($userID)
     {
@@ -73,29 +75,28 @@ class UserShows
     }
 
     /**
-     * @param string $showID
-     *
-     * @return UserShows
+     * @return Show
      */
-    public function setShowID($showID)
+    public function getShow(): Show
     {
-        $this->showID = $showID;
+        return $this->show;
+    }
+
+    /**
+     * @param Show $show
+     * @return UserShow
+     */
+    public function setShow(Show $show): UserShow
+    {
+        $this->show = $show;
 
         return $this;
     }
 
     /**
-     * @return string
-     */
-    public function getShowID()
-    {
-        return $this->showID;
-    }
-
-    /**
      * @param string $status
      *
-     * @return UserShows
+     * @return UserShow
      */
     public function setStatus($status)
     {
@@ -115,7 +116,7 @@ class UserShows
     /**
      * @param integer $offset
      *
-     * @return UserShows
+     * @return UserShow
      */
     public function setOffset($offset)
     {

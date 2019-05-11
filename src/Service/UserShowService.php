@@ -5,12 +5,12 @@ namespace App\Service;
 use App\Entity\Episode;
 use App\Entity\Show;
 use App\Entity\User;
-use App\Entity\UserShows;
+use App\Entity\UserShow;
 use App\Repository\EpisodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 
-class UserShowsService
+class UserShowService
 {
     private $entityManager;
 
@@ -28,32 +28,33 @@ class UserShowsService
         $resultCount = [];
         $upcomingEpisode = [];
         try {
-        $repository = $this->entityManager->getRepository(UserShows::class);
-        $userShows = $repository->getShows(1);
+            $repository = $this->entityManager->getRepository(UserShow::class);
+            $userShows = $repository->getShows(1);
 
-        $showRepo = $this->entityManager->getRepository(Show::class);
-        $show = $showRepo->findOneBy(['showID'=>7480]);
-        $episodeRepo = $this->entityManager->getRepository(Episode::class);
-        $episode = $episodeRepo->findOneBy(['episodeID' => 1217060]);
+            $showRepo = $this->entityManager->getRepository(Show::class);
+            $show = $showRepo->findOneBy(['showID' => 7480]);
+            $episodeRepo = $this->entityManager->getRepository(Episode::class);
+            $episode = $episodeRepo->findOneBy(['episodeID' => 1217060]);
+            $episodes = $show->getEpisodes();
 
-        foreach ($userShows as $userShow) {
-            $checkShow = $this->checkShowForUnwatchedEpisodes($userShow);
-            if ($checkShow) {
-                $result[] = $userShow;
-                $resultCount[$userShow] = count($checkShow);
-                $upcomingEpisode[$userShow] = end($checkShow);
+            foreach ($userShows as $userShow) {
+                $checkShow = $this->checkShowForUnwatchedEpisodes($userShow);
+                if ($checkShow) {
+                    $result[] = $userShow;
+                    $resultCount[$userShow] = count($checkShow);
+                    $upcomingEpisode[$userShow] = end($checkShow);
+                }
             }
+
+
+            $episodeRepo = $this->entityManager->getRepository(Episode::class);
+            /** @var User $user */
+            $user = $this->entityManager->getReference(User::class, 1);
+            $checkShow2 = $episodeRepo->getUnwatchedEpisodes($user);
+
+        } catch (\Exception $e) {
+
         }
-
-        } catch (\Exception $e)
-        {
-
-        }
-
-        $episodeRepo = $this->entityManager->getRepository(Episode::class);
-        /** @var User $user */
-        $user = $this->entityManager->getReference(User::class, 1);
-        $checkShow2 = $episodeRepo->getUnwatchedEpisodes($user);
 
         return ['result' => $result, 'resultCount' => $resultCount, 'upcomingEpisode' => $upcomingEpisode];
     }

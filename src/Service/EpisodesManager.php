@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Episode;
+use App\Entity\Show;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 
@@ -17,25 +18,27 @@ class EpisodesManager
         $this->client = new Client();
     }
 
-    public function addEpisodes(int $showID)
+    public function addEpisodes(Show $show): int
     {
-        $this->removeEpisodes($showID);
-        $episodes = $this->getEpisodes($showID);
+        $this->removeEpisodes($show);
+        $episodes = $this->getEpisodes($show);
 
         $saved = 0;
         foreach ($episodes as $episode) {
             $saved++;
             if (($episode->name) && ($episode->airdate)) {
                 $newEpisode = new Episode();
-                $newEpisode->setShowID($showID);
-                $newEpisode->setEpisodeID($episode->id);
-                $newEpisode->setName($episode->name);
-                $newEpisode->setSeason($episode->season);
-                $newEpisode->setEpisode($episode->number);
-                $newEpisode->setAirdate($episode->airdate);
-                $newEpisode->setAirtime($episode->airtime);
-                $newEpisode->setSummary($episode->summary);
-                $newEpisode->setDuration($episode->runtime);
+                $newEpisode
+                    ->setId($episode->id)
+                    ->setShow($show)
+                    ->setName($episode->name)
+                    ->setSeason($episode->season)
+                    ->setEpisode($episode->number)
+                    ->setAirdate($episode->airdate)
+                    ->setAirtime($episode->airtime)
+                    ->setSummary($episode->summary)
+                    ->setDuration($episode->runtime)
+                ;
                 $this->entityManager->persist($newEpisode);
             }
         }
@@ -44,18 +47,19 @@ class EpisodesManager
         return $saved;
     }
 
-    private function getEpisodes(int $showID): array
+    private function getEpisodes(Show $show): array
     {
         return json_decode(
-            $this->client->get(sprintf('%s/%d/episodes', ShowsManager::API_URL, $showID))->getBody()
+            $this->client
+                ->get(sprintf('%s/%d/episodes', ShowsManager::API_URL, $show->getId()))
+                ->getBody()
         );
     }
 
-    private function removeEpisodes(int $showID)
+    private function removeEpisodes(Show $show)
     {
-        $episodes = $this->entityManager->getRepository(Episode::class)->findBy(['showID' => $showID]);
-        foreach ($episodes as $episode)
-        {
+        $episodes = $this->entityManager->getRepository(Episode::class)->findBy(['show' => $show]);
+        foreach ($episodes as $episode) {
             $this->entityManager->remove($episode);
         }
 

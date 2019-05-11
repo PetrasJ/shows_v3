@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\UserShows;
+use App\Entity\UserShow;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
@@ -26,7 +26,7 @@ class ShowRepository extends EntityRepository
         $names = explode(" ", $names);
 
         $qb = $this->createQueryBuilder('p')
-            ->leftJoin(UserShows::class, 'us', 'WITH', 'us.showID = p.showID')
+            ->leftJoin(UserShow::class, 'us', 'WITH', 'us.showID = p.showID')
             ->where('p.name LIKE :word')
             ->setParameter('word', '%' . $names[0] . '%')
             ->orderBy('us.showID', 'desc')
@@ -58,7 +58,7 @@ class ShowRepository extends EntityRepository
 
         $qb = $this->createQueryBuilder('p')
             ->select('p.name')
-            ->leftJoin(UserShows::class, 'us', 'WITH', 'us.showID = p.showID')
+            ->leftJoin(UserShow::class, 'us', 'WITH', 'us.showID = p.showID')
             ->where('p.name LIKE :word')
             ->setParameter('word', '%' . $names[0] . '%')
             ->orderBy('us.showID', 'desc')

@@ -7,7 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ImportShowsCommand extends Command
+class UpdateShowsCommand extends Command
 {
     private $showsManager;
 
@@ -22,8 +22,8 @@ class ImportShowsCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('import-shows')
-            ->setDescription('Imports shows from TV Maze')
+        $this->setName('update-shows')
+            ->setDescription('Updates shows')
         ;
     }
 
@@ -35,7 +35,7 @@ class ImportShowsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         echo 'start';
-        $this->showsManager->load();
+        $this->showsManager->update();
         echo 'finish';
     }
 }

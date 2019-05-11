@@ -8,12 +8,11 @@ use Doctrine\ORM\Mapping\Index;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user_episodes",indexes={
- *      @Index(name="episodeID", columns={"episode_id"}),
  *      @Index(name="showID", columns={"show_id"}),
  * })
- * @ORM\Entity(repositoryClass="App\Repository\UserEpisodesRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserEpisodeRepository")
  */
-class UserEpisodes
+class UserEpisode
 {
     const STATUS_UNWATCHED = null;
     const STATUS_WATCHED = 1;
@@ -81,7 +80,7 @@ class UserEpisodes
     /**
      * @param integer $userID
      *
-     * @return UserEpisodes
+     * @return UserEpisode
      */
     public function setUserID($userID)
     {
@@ -101,7 +100,7 @@ class UserEpisodes
     /**
      * @param integer $showID
      *
-     * @return UserEpisodes
+     * @return UserEpisode
      */
     public function setShowID($showID)
     {
@@ -121,7 +120,7 @@ class UserEpisodes
     /**
      * @param integer $episodeID
      *
-     * @return UserEpisodes
+     * @return UserEpisode
      */
     public function setEpisodeID($episodeID)
     {
@@ -141,7 +140,7 @@ class UserEpisodes
     /**
      * @param string $comment
      *
-     * @return UserEpisodes
+     * @return UserEpisode
      */
     public function setComment($comment)
     {
@@ -161,7 +160,7 @@ class UserEpisodes
     /**
      * @param \DateTime $created
      *
-     * @return UserEpisodes
+     * @return UserEpisode
      */
     public function setCreated($created)
     {
@@ -181,7 +180,7 @@ class UserEpisodes
     /**
      * @param int $status
      *
-     * @return UserEpisodes
+     * @return UserEpisode
      */
     public function setStatus($status)
     {
@@ -201,7 +200,7 @@ class UserEpisodes
     /**
      * @param string $airdate
      *
-     * @return UserEpisodes
+     * @return UserEpisode
      */
     public function setAirdate($airdate)
     {
@@ -221,7 +220,7 @@ class UserEpisodes
     /**
      * @param string $airtime
      *
-     * @return UserEpisodes
+     * @return UserEpisode
      */
     public function setAirtime($airtime)
     {

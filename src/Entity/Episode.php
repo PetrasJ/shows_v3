@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping\Index;
 /**
  * @ORM\Entity
  * @ORM\Table(name="episodes", indexes={
- *      @Index(name="episodeID", columns={"episode_id"}),
  *      @Index(name="showID", columns={"show_id"}),
  * })
  * @ORM\Entity(repositoryClass="App\Repository\EpisodeRepository")
@@ -18,28 +17,18 @@ class Episode
     public $watchedOn;
 
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
-    private $id = 0;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $showID = 0;
+    private $id;
 
     /**
      * @var Show
      * @ORM\ManyToOne(targetEntity="Show", inversedBy="episodes")
-     * @ORM\JoinColumn(name="show_id", referencedColumnName="show_id")
+     * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
      */
     private $show;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $episodeID = null;
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
@@ -77,43 +66,22 @@ class Episode
     private $summary = null;
 
     /**
-     * @param integer $showID
-     *
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
      * @return Episode
      */
-    public function setShowID($showID)
+    public function setId($id): Episode
     {
-        $this->showID = $showID;
+        $this->id = $id;
 
         return $this;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getShowID()
-    {
-        return $this->showID;
-    }
-
-    /**
-     * @param integer $episodeID
-     *
-     * @return Episode
-     */
-    public function setEpisodeID($episodeID)
-    {
-        $this->episodeID = $episodeID;
-
-        return $this;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getEpisodeID()
-    {
-        return $this->episodeID;
     }
 
     /**
@@ -214,14 +182,6 @@ class Episode
     public function getSummary()
     {
         return $this->summary;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

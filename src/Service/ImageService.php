@@ -18,13 +18,13 @@ class ImageService
 
     public function saveShowImage($imageUrl, $imageMediumUrl, $showID)
     {
-        $dir =$this->projectDir . '/public/img/shows';
+        $dir =$this->projectDir . '/public/img/shows/';
         if (!is_dir($dir)) {
             mkdir($dir);
         }
 
-        if (!is_dir($dir . '/medium')) {
-            mkdir($dir . '/medium');
+        if (!is_dir($dir . 'medium/')) {
+            mkdir($dir . 'medium/');
         }
 
         try {
@@ -34,7 +34,7 @@ class ImageService
             error_log(__METHOD__ .' fails: ' . $e->getMessage());
         }
         try {
-            $newFilename = $dir . '/medium' . $showID . "." . pathinfo($imageMediumUrl, PATHINFO_EXTENSION);
+            $newFilename = $dir . '/medium/' . $showID . "." . pathinfo($imageMediumUrl, PATHINFO_EXTENSION);
             return copy($imageMediumUrl, $newFilename);
         } catch (\Exception $e) {
             error_log(__METHOD__ .' fails: ' . $e->getMessage());

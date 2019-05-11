@@ -4,33 +4,19 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="shows",indexes={@Index(name="showID", columns={"show_id"})})
+ * @ORM\Table(name="shows")
  * @ORM\Entity(repositoryClass="App\Repository\ShowRepository")
  */
 class Show
 {
-
-    /** @var int */
-    public $unwatched;
-
-    /** @var Episode[] */
-    public $upcomingEpisode;
-
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $showID;
 
     /**
      * @var ArrayCollection
@@ -102,6 +88,17 @@ class Show
     public function __construct()
     {
         $this->episodes = new ArrayCollection();
+    }
+
+    /**
+     * @param int $id
+     * @return Show
+     */
+    public function setId(int $id): Show
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
