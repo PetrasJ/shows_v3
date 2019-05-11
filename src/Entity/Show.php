@@ -272,29 +272,9 @@ class Show
     }
 
     /**
-     * @param integer $showID
-     *
-     * @return Show
-     */
-    public function setShowID($showID)
-    {
-        $this->showID = $showID;
-
-        return $this;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getShowID()
-    {
-        return $this->showID;
-    }
-
-    /**
      * @return ArrayCollection
      */
-    public function getEpisodes(): ArrayCollection
+    public function getEpisodes()
     {
         return $this->episodes;
     }

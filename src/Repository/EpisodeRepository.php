@@ -175,27 +175,27 @@ class EpisodeRepository extends EntityRepository
     }
 
     /**
-     * @param int $showID
+     * @param Show $show
      * @param User $user
      *
      * @return array
      *
      * @deprecated
      */
-    public function getUnwatchedEpisodesDeprecated(int $showID, User $user)
+    public function getUnwatchedEpisodesDeprecated(Show $show, User $user)
     {
         return $this->createQueryBuilder('e')
-            ->select('e.episodeID, e.airdate')
-            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.showID = e.showID AND us.userID = :userID')
+            ->select('e.id, e.airdate')
+            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.userID = :userID')
             ->innerJoin(User::class, 'u', Join::WITH, 'u.id = :userID')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.userID = :userID AND ue.episodeID = e.episodeID')
-            ->where('e.showID = :showID')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.userID = :userID AND ue.episodeID = e.id')
+            ->where('e.show = :show')
             ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf($this->dateSub, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->setParameters([
                 'watched' => UserEpisode::STATUS_WATCHED,
                 'dateTo' => date("Y-m-d H:i"),
-                'showID' => $showID,
+                'show' => $show,
                 'userID' => $user->getId()
             ])
             ->orderBy('e.airdate', 'DESC')
@@ -204,7 +204,6 @@ class EpisodeRepository extends EntityRepository
     }
 
     /**
-     * @param int $showID
      * @param User $user
      *
      * @return array
@@ -212,7 +211,7 @@ class EpisodeRepository extends EntityRepository
     public function getUnwatchedEpisodes(User $user)
     {
         return $this->createQueryBuilder('e')
-            ->select('e.episodeID, e.airdate')
+            ->select('e.id, e.airdate')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.showID = e.showID AND us.userID = :userID')
             ->innerJoin(User::class, 'u', Join::WITH, 'u.id = :userID')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.userID = :userID AND ue.episodeID = e.episodeID')

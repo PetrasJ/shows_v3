@@ -20,8 +20,6 @@ class UserShowRepository extends EntityRepository
      */
     public function getShows($userID, $status = UserShow::STATUS_WATCHING)
     {
-        $selected = [];
-
         if ($status == UserShow::STATUS_WATCHING) {
             $ignore = [UserShow::STATUS_ARCHIVED, UserShow::STATUS_WATCH_LATER];
             $result = $this->createQueryBuilder('p')
@@ -30,7 +28,6 @@ class UserShowRepository extends EntityRepository
                 ->andWhere('p.status is NULL')
                 ->orWhere('p.status NOT IN (:status)')
                 ->setParameter('status', array_values($ignore))
-                ->select('p.showID as id')
                 ->getQuery()
                 ->getResult();
         } elseif ($status == UserShow::STATUS_ARCHIVED) {
@@ -39,7 +36,6 @@ class UserShowRepository extends EntityRepository
                 ->setParameter('userID', $userID)
                 ->andWhere('p.status = :status')
                 ->setParameter('status', UserShow::STATUS_ARCHIVED)
-                ->select('p.showID as id')
                 ->getQuery()
                 ->getResult();
         } elseif ($status == UserShow::STATUS_WATCH_LATER) {
@@ -48,22 +44,17 @@ class UserShowRepository extends EntityRepository
                 ->setParameter('userID', $userID)
                 ->andWhere('p.status = :status')
                 ->setParameter('status', UserShow::STATUS_WATCH_LATER)
-                ->select('p.showID as id')
                 ->getQuery()
                 ->getResult();
         } else {
             $result = $this->createQueryBuilder('p')
                 ->where('p.userID = :userID')
                 ->setParameter('userID', $userID)
-                ->select('p.showID as id')
                 ->getQuery()
                 ->getResult();
         }
 
-        foreach ($result as $show) {
-            $selected[] = $show['id'];
-        }
-        return $selected;
+        return array_map(function($userShow) {return $userShow->getShow();}, $result);
     }
 
     /**

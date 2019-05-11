@@ -32,17 +32,17 @@ class UserShowService
             $userShows = $repository->getShows(1);
 
             $showRepo = $this->entityManager->getRepository(Show::class);
-            $show = $showRepo->findOneBy(['showID' => 7480]);
+            $show = $showRepo->findOneBy(['id' => 7480]);
             $episodeRepo = $this->entityManager->getRepository(Episode::class);
-            $episode = $episodeRepo->findOneBy(['episodeID' => 1217060]);
+            $episode = $episodeRepo->findOneBy(['id' => 1217060]);
             $episodes = $show->getEpisodes();
 
             foreach ($userShows as $userShow) {
                 $checkShow = $this->checkShowForUnwatchedEpisodes($userShow);
                 if ($checkShow) {
                     $result[] = $userShow;
-                    $resultCount[$userShow] = count($checkShow);
-                    $upcomingEpisode[$userShow] = end($checkShow);
+                    $resultCount[$userShow->getId()] = count($checkShow);
+                    $upcomingEpisode[$userShow->getId()] = end($checkShow);
                 }
             }
 
@@ -64,14 +64,14 @@ class UserShowService
      * @return bool|array
      * @throws ORMException
      */
-    private function checkShowForUnwatchedEpisodes($showID)
+    private function checkShowForUnwatchedEpisodes($show)
     {
         /** @var EpisodeRepository $episodeRepo */
         $episodeRepo = $this->entityManager->getRepository(Episode::class);
 
         /** @var User $user */
         $user = $this->entityManager->getReference(User::class, 1);
-        $unwatchedEpisodes = $episodeRepo->getUnwatchedEpisodesDeprecated($showID, $user);
+        $unwatchedEpisodes = $episodeRepo->getUnwatchedEpisodesDeprecated($show, $user);
         if (count($unwatchedEpisodes) > 0) {
             return $unwatchedEpisodes;
         } else {
