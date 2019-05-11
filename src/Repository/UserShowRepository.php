@@ -71,10 +71,12 @@ class UserShowRepository extends EntityRepository
      */
     public function getAllUsersShows()
     {
-        return $this->createQueryBuilder('us')
-            ->select('us.show')
-            ->groupBy('us.show')
+        $result = $this->createQueryBuilder('p')
+            ->select('p')
+            ->groupBy('p.show')
             ->getQuery()
             ->getResult();
+
+        return array_map(function($userShow) {return $userShow->getShow()->getId();}, $result);
     }
 }

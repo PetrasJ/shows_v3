@@ -51,8 +51,7 @@ class ShowsManager
     {
         $shows = $this->entityManager->getRepository(UserShow::class)->getAllUsersShows();
         foreach ($shows as $showId) {
-            $show = $this->client->get(sprintf('%s/%d', self::API_URL, $showId))->getBody();
-            $this->updateShow($show);
+            $this->updateShow($showId);
         }
     }
 
@@ -103,8 +102,11 @@ class ShowsManager
         return $newShow;
     }
 
-    private function updateShow($show): bool
+    private function updateShow($showId): bool
     {
+        $show = json_decode($this->client->get(
+            sprintf('%s/%d', self::API_URL, $showId))->getBody()
+        );
         $showEntity = $this->getShow($show);
 
         if (!$showEntity) {
@@ -126,7 +128,18 @@ class ShowsManager
             $this->imageService->saveShowImage($show->image->original, $show->image->medium, $show->id);
         }
 
-        $showEntity->setUpdated($show->updated);
+        $showEntity
+            ->setName($show->name)
+            ->setUrl($show->url)
+            ->setOfficialSite($show->officialSite)
+            ->setRating($show->rating->average)
+            ->setWeight($show->weight)
+            ->setStatus($show->status)
+            ->setPremiered($show->premiered)
+            ->setGenres(json_encode($show->genres))
+            ->setSummary($show->summary)
+            ->setUpdated($show->updated);
+
         $this->entityManager->persist($showEntity);
         $this->entityManager->flush();
 
