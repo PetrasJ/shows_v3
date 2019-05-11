@@ -36,7 +36,7 @@ class ImageService
         }
         try {
             $newFilename = $dir . '/medium/' . $showID . "." . pathinfo($imageMediumUrl, PATHINFO_EXTENSION);
-            return copy($imageMediumUrl, $newFilename);
+            copy($imageMediumUrl, $newFilename);
         } catch (Exception $e) {
             error_log(__METHOD__ .' fails: ' . $e->getMessage());
         }
