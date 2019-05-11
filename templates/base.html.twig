@@ -27,6 +27,12 @@
                 </li>
                 {% if app.user.username is defined %}
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ path('unwatched') }}">
+                            <i class="fa fa-eye-slash" aria-hidden="true"></i> {{ 'menu.unwatched'|trans }}
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('fos_user_security_logout') }}">Logout</a>
                     </li>
                 {% else %}
