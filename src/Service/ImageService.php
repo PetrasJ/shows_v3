@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Exception;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class ImageService
@@ -16,7 +17,7 @@ class ImageService
         $this->projectDir = $appKernel->getProjectDir();
     }
 
-    public function saveShowImage($imageUrl, $imageMediumUrl, $showID)
+    public function saveShowImage($imageUrl, $imageMediumUrl, $showID): void
     {
         $dir =$this->projectDir . '/public/img/shows/';
         if (!is_dir($dir)) {
@@ -30,13 +31,13 @@ class ImageService
         try {
             $newFilename = $dir . $showID . "." . pathinfo($imageUrl, PATHINFO_EXTENSION);
             copy($imageUrl, $newFilename);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             error_log(__METHOD__ .' fails: ' . $e->getMessage());
         }
         try {
             $newFilename = $dir . '/medium/' . $showID . "." . pathinfo($imageMediumUrl, PATHINFO_EXTENSION);
             return copy($imageMediumUrl, $newFilename);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             error_log(__METHOD__ .' fails: ' . $e->getMessage());
         }
     }

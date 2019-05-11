@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Show;
 use App\Entity\UserShow;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use GuzzleHttp\Client;
 
 class ShowsManager
@@ -38,7 +39,7 @@ class ShowsManager
                     ->getBody()
                 ));
                 $gap = 0;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 if ($gap === 10) {
                     break;
                 }
