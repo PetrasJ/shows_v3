@@ -10,7 +10,7 @@ const app = {
   },
   initSearch: function() {
       $('#search_show_search').autocomplete({
-          source: '/search',
+          source: window.baseUrl + 'search',
           minLength: 2,
           delay: 100,
           focus: function (event) {
