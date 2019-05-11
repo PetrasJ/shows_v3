@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
@@ -30,6 +31,12 @@ class Show
      * @ORM\Column(type="integer", nullable=true)
      */
     private $showID;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Episode", mappedBy="show")
+     */
+    private $episodes;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -91,6 +98,11 @@ class Show
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $genres;
+
+    public function __construct()
+    {
+        $this->episodes = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -280,6 +292,25 @@ class Show
     public function getShowID()
     {
         return $this->showID;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getEpisodes(): ArrayCollection
+    {
+        return $this->episodes;
+    }
+
+    /**
+     * @param ArrayCollection $episodes
+     * @return Show
+     */
+    public function setEpisodes(ArrayCollection $episodes): Show
+    {
+        $this->episodes = $episodes;
+
+        return $this;
     }
 
     /**

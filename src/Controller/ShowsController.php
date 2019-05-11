@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\UserShowsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShowsController extends AbstractController
 {
     /**
+     * @param UserShowsService $userShowsService
      * @Route("/unwatched", name="unwatched")
      * @return Response
      */
-    public function search()
+    public function unwatched(UserShowsService $userShowsService)
     {
-        return $this->render('shows/index.html.twig');
+        $shows = $userShowsService->getShowsWithUnwatchedEpisodes();
+        return $this->render('shows/index.html.twig', ['shows' => $shows]);
     }
 }

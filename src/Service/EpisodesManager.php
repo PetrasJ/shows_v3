@@ -8,7 +8,6 @@ use GuzzleHttp\Client;
 
 class EpisodesManager
 {
-    const API_URL = 'http://api.tvmaze.com/shows';
     private $entityManager;
     private $client;
 
@@ -48,7 +47,7 @@ class EpisodesManager
     private function getEpisodes(int $showID): array
     {
         return json_decode(
-            $this->client->get(sprintf('%s/%d/episodes', self::API_URL, $showID))->getBody()
+            $this->client->get(sprintf('%s/%d/episodes', ShowsManager::API_URL, $showID))->getBody()
         );
     }
 

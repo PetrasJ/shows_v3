@@ -16,7 +16,6 @@ use Doctrine\ORM\Mapping\Index;
 class Episode
 {
     public $watchedOn;
-    public $show;
 
     /**
      * @ORM\Column(type="integer")
@@ -29,6 +28,13 @@ class Episode
      * @ORM\Column(type="integer", nullable=true)
      */
     private $showID = 0;
+
+    /**
+     * @var Show
+     * @ORM\ManyToOne(targetEntity="Show", inversedBy="episodes")
+     * @ORM\JoinColumn(name="show_id", referencedColumnName="show_id")
+     */
+    private $show;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -256,5 +262,24 @@ class Episode
     public function getEpisode()
     {
         return $this->episode;
+    }
+
+    /**
+     * @return Show
+     */
+    public function getShow(): Show
+    {
+        return $this->show;
+    }
+
+    /**
+     * @param Show $show
+     * @return Episode
+     */
+    public function setShow(Show $show): Episode
+    {
+        $this->show = $show;
+
+        return $this;
     }
 }
