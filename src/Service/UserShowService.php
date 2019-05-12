@@ -23,12 +23,21 @@ class UserShowService
      */
     public function getShowsWithUnwatchedEpisodes()
     {
-        try {
-            return $this->entityManager
-                ->getRepository(Episode::class)
-                ->getShowsWithUnwatchedEpisodes($this->user, UserShow::STATUS_WATCHING);
-        } catch (Exception $e) {
-            return null;
-        }
+        return $this->entityManager
+            ->getRepository(Episode::class)
+            ->getShowsWithUnwatchedEpisodes($this->user, UserShow::STATUS_WATCHING)
+            ;
+    }
+
+    /**
+     * @param $status
+     * @return array
+     */
+    public function getShows($status)
+    {
+        return $this->entityManager
+            ->getRepository(UserShow::class)
+            ->getShows($this->user, $status)
+            ;
     }
 }

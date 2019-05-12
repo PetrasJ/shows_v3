@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="04ad8ebe-cb9f-49c4-9091-0e48b806700b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/UserEpisodeService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/shows/episodes.html.twig" afterDir="false" />
+    <list default="true" id="04ad8ebe-cb9f-49c4-9091-0e48b806700b" name="Default Changelist" comment="unwatched episode list">
+      <change afterPath="$PROJECT_DIR$/src/Controller/UnwatchedShowsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/unwatched-shows/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ShowsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ShowsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/EpisodeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/EpisodeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ShowRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ShowRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/UserEpisodeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserEpisodeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/UserShowRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserShowRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/UserShowService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UserShowService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/shows/episodes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/unwatched-shows/episodes.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/shows/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shows/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,26 +27,12 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/ShowsController.php">
+        <entry file="file://$PROJECT_DIR$/src/Controller/UnwatchedShowsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="39" column="67" selection-start-line="39" selection-start-column="67" selection-end-line="39" selection-end-column="67" />
+            <state relative-caret-position="169">
+              <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
               <folding>
                 <element signature="e#34#69#0#PHP" expanded="true" />
-                <element signature="e#729#752#0#PHP" expanded="true" />
-                <element signature="e#1131#1157#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/shows/episodes.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="68" selection-start-line="4" selection-start-column="68" selection-end-line="4" selection-end-column="68" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -49,51 +41,92 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/shows/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" selection-start-line="3" selection-end-line="5" selection-end-column="16" />
+            <state relative-caret-position="68">
+              <caret line="4" column="62" selection-start-line="4" selection-start-column="62" selection-end-line="4" selection-end-column="62" />
               <folding>
                 <element signature="e#12#26#0#Twig" expanded="true" />
-                <element signature="e#119#137#0#Twig" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
+        <entry file="file://$PROJECT_DIR$/src/Controller/ShowsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Episode.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/UserEpisode.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+            <state relative-caret-position="299">
+              <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
               <folding>
-                <element signature="e#30#43#0#PHP" expanded="true" />
+                <element signature="e#34#66#0#PHP" expanded="true" />
+                <element signature="e#773#796#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/symfony/http-kernel/HttpKernel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="305">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="197">
+              <caret line="29" column="81" selection-start-line="29" selection-start-column="81" selection-end-line="29" selection-end-column="81" />
+              <folding>
+                <element signature="e#1282#1297#0#Twig" expanded="true" />
+                <element signature="e#1570#1581#0#Twig" expanded="true" />
+                <element signature="e#1865#1876#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Repository/UserShowRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="978">
-              <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
+            <state relative-caret-position="77">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+              <folding>
+                <element signature="e#34#54#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Repository/EpisodeRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="67">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+              <folding>
+                <element signature="e#34#54#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Repository/ShowRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
+              <folding>
+                <element signature="e#34#58#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Repository/UserEpisodeRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="9">
+              <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
               <folding>
                 <element signature="e#34#54#0#PHP" expanded="true" />
               </folding>
@@ -104,34 +137,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Service/UserShowService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="28" column="32" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+            <state relative-caret-position="316">
+              <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
               <folding>
                 <element signature="e#31#54#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Service/UserEpisodeService.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
-              <folding>
-                <element signature="e#31#54#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Repository/EpisodeRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="252" column="24" selection-start-line="252" selection-start-column="24" selection-end-line="252" selection-end-column="24" />
-              <folding>
-                <element signature="e#34#54#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -161,6 +170,7 @@
       <find>episode_id</find>
       <find>getEpisodes</find>
       <find>user</find>
+      <find>getShows</find>
     </findStrings>
     <replaceStrings>
       <replace>$show-&gt;</replace>
@@ -184,8 +194,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Repository/UserEpisodesRepository.php" />
-        <option value="$PROJECT_DIR$/src/Entity/UserEpisodes.php" />
         <option value="$PROJECT_DIR$/src/Entity/UserShows.php" />
         <option value="$PROJECT_DIR$/src/Controller/ShowSearchController.php" />
         <option value="$PROJECT_DIR$/src/Form/SearchType.php" />
@@ -202,12 +210,9 @@
         <option value="$PROJECT_DIR$/assets/js/app.js" />
         <option value="$PROJECT_DIR$/src/Controller/WatchController.php" />
         <option value="$PROJECT_DIR$/src/Controller/ShowController.php" />
-        <option value="$PROJECT_DIR$/templates/base.html.twig" />
         <option value="$PROJECT_DIR$/config/packages/translation.yaml" />
         <option value="$PROJECT_DIR$/src/Command/UpdateUserEpisodesCommand.php" />
         <option value="$PROJECT_DIR$/src/Repository/UserShowsRepository.php" />
-        <option value="$PROJECT_DIR$/src/Repository/UserEpisodeRepository.php" />
-        <option value="$PROJECT_DIR$/src/Repository/ShowRepository.php" />
         <option value="$PROJECT_DIR$/src/Migrations/Version20190511060213.php" />
         <option value="$PROJECT_DIR$/src/Migrations/Version20190511095345.php" />
         <option value="$PROJECT_DIR$/src/Migrations/Version20190510052642.php" />
@@ -220,7 +225,6 @@
         <option value="$PROJECT_DIR$/src/Service/ImageService.php" />
         <option value="$PROJECT_DIR$/src/Entity/Show.php" />
         <option value="$PROJECT_DIR$/src/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/Repository/UserShowRepository.php" />
         <option value="$PROJECT_DIR$/src/Migrations/Version20190512063641.php" />
         <option value="$PROJECT_DIR$/src/Listener/RequestListener.php" />
         <option value="$PROJECT_DIR$/config/services.yaml" />
@@ -229,12 +233,18 @@
         <option value="$PROJECT_DIR$/src/Service/Storage.php" />
         <option value="$PROJECT_DIR$/src/Entity/UserEpisode.php" />
         <option value="$PROJECT_DIR$/src/Entity/UserShow.php" />
-        <option value="$PROJECT_DIR$/src/Service/UserShowService.php" />
-        <option value="$PROJECT_DIR$/templates/shows/index.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/ShowsController.php" />
         <option value="$PROJECT_DIR$/src/Service/UserEpisodeService.php" />
         <option value="$PROJECT_DIR$/templates/shows/episodes.html.twig" />
+        <option value="$PROJECT_DIR$/templates/unwatched-shows/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/UnwatchedShowsController.php" />
+        <option value="$PROJECT_DIR$/templates/base.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/ShowsController.php" />
+        <option value="$PROJECT_DIR$/src/Service/UserShowService.php" />
+        <option value="$PROJECT_DIR$/templates/shows/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/Repository/UserEpisodeRepository.php" />
         <option value="$PROJECT_DIR$/src/Repository/EpisodeRepository.php" />
+        <option value="$PROJECT_DIR$/src/Repository/ShowRepository.php" />
+        <option value="$PROJECT_DIR$/src/Repository/UserShowRepository.php" />
       </list>
     </option>
   </component>
@@ -343,8 +353,8 @@
   </component>
   <component name="PhpXdebugProxy" ide_key="PHPSTORM" port="9000" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="366" />
-    <option name="y" value="2" />
+    <option name="x" value="440" />
+    <option name="y" value="13" />
     <option name="width" value="1551" />
     <option name="height" value="1022" />
   </component>
@@ -435,6 +445,12 @@
               <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="shows" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="unwatched-shows" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
@@ -644,11 +660,18 @@
       <option name="project" value="LOCAL" />
       <updated>1557646486896</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="unwatched episode list">
+      <created>1557647283831</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1557647283831</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52282000" />
+    <option name="totallyTimeSpent" value="54728000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -660,7 +683,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="366" y="2" width="1551" height="1022" extended-state="0" />
+    <frame x="440" y="13" width="1551" height="1022" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49752882" visible="true" weight="0.2186452" />
@@ -747,7 +770,8 @@
     <MESSAGE value="CS" />
     <MESSAGE value="get unwatched shows" />
     <MESSAGE value="get unwatched shows by show status" />
-    <option name="LAST_COMMIT_MESSAGE" value="get unwatched shows by show status" />
+    <MESSAGE value="unwatched episode list" />
+    <option name="LAST_COMMIT_MESSAGE" value="unwatched episode list" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -756,11 +780,6 @@
           <url>file://$PROJECT_DIR$/src/Service/ShowsManager.php</url>
           <line>48</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Service/UserShowService.php</url>
-          <line>31</line>
-          <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Entity/UserEpisode.php</url>
@@ -779,24 +798,29 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Repository/UserShowRepository.php</url>
-          <line>78</line>
+          <line>102</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Repository/UserShowRepository.php</url>
-          <line>71</line>
+          <line>94</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Service/UserEpisodeService.php</url>
-          <line>22</line>
-          <option name="timeStamp" value="39" />
+          <url>file://$PROJECT_DIR$/src/Controller/ShowsController.php</url>
+          <line>24</line>
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>$this-&gt;createQueryBuilder('e')             -&gt;select('s.id, s.name, s.e, ue')             -&gt;innerJoin('e.show', 's')             -&gt;innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')             -&gt;innerJoin(User::class, 'u', Join::WITH, 'u = :user')             -&gt;leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')             -&gt;andWhere(&quot;concat(e.airdate, ' ', e.airtime) &lt; &quot; . sprintf($this-&gt;dateSub, ':dateTo'))             -&gt;andWhere('us.status = :showStatus')             -&gt;setParameters([                 'user' =&gt; $user,                 'showStatus' =&gt; $status,             ])             -&gt;groupBy('s')             -&gt;orderBy('e.airdate', 'DESC')             -&gt;getQuery()             -&gt;getResult()</expression-string>
+        <language-id>PHP</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>$this-&gt;entityManager                 -&gt;getRepository(Episode::class)                 -&gt;getUnwatchedEpisodes($this-&gt;user, $showId)</expression-string>
         <language-id>PHP</language-id>
@@ -837,31 +861,9 @@
         <language-id>PHP</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>$this-&gt;token-&gt;getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface</expression-string>
-        <language-id>PHP</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/jquery-ui/ui/widgets/autocomplete.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/form/search.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42925">
-          <caret line="2525" column="37" selection-start-line="2525" selection-start-column="37" selection-end-line="2525" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -945,16 +947,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="43" selection-start-line="29" selection-start-column="43" selection-end-line="29" selection-end-column="43" />
-          <folding>
-            <element signature="e#1248#1257#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/packages/translation.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -983,16 +975,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="84" selection-start-line="84" selection-end-line="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Repository/ShowRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="98" column="1" selection-start-line="98" selection-start-column="1" selection-end-line="98" selection-end-column="1" />
-          <folding>
-            <element signature="e#34#59#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1044,23 +1026,6 @@
           <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
           <folding>
             <element signature="e#31#60#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="712" selection-start-line="712" selection-end-line="712" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Repository/UserEpisodeRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
-          <folding>
-            <element signature="e#34#54#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1137,26 +1102,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Repository/UserShowRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="978">
-          <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
-          <folding>
-            <element signature="e#34#54#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/UserEpisode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding>
-            <element signature="e#30#43#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/Episode.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1164,36 +1109,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
+    <entry file="file://$PROJECT_DIR$/src/Service/UserEpisodeService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/ShowsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="39" column="67" selection-start-line="39" selection-start-column="67" selection-end-line="39" selection-end-column="67" />
-          <folding>
-            <element signature="e#34#69#0#PHP" expanded="true" />
-            <element signature="e#729#752#0#PHP" expanded="true" />
-            <element signature="e#1131#1157#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service/UserShowService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="28" column="32" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+        <state relative-caret-position="391">
+          <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
           <folding>
             <element signature="e#31#54#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/shows/episodes.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="712" selection-start-line="712" selection-end-line="712" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/unwatched-shows/episodes.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="68" selection-start-line="4" selection-start-column="68" selection-end-line="4" selection-end-column="68" />
@@ -1203,10 +1143,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/shows/index.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Entity/UserEpisode.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="5" selection-end-column="16" />
+        <state relative-caret-position="220">
+          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="24" />
+          <folding>
+            <element signature="e#30#43#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/unwatched-shows/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="6" selection-end-column="14" />
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
             <element signature="e#119#137#0#Twig" expanded="true" />
@@ -1214,10 +1164,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service/UserEpisodeService.php">
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/http-kernel/HttpKernel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+        <state relative-caret-position="305">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="29" column="81" selection-start-line="29" selection-start-column="81" selection-end-line="29" selection-end-column="81" />
+          <folding>
+            <element signature="e#1282#1297#0#Twig" expanded="true" />
+            <element signature="e#1570#1581#0#Twig" expanded="true" />
+            <element signature="e#1865#1876#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/UnwatchedShowsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+          <folding>
+            <element signature="e#34#69#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/shows/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="62" selection-start-line="4" selection-start-column="62" selection-end-line="4" selection-end-column="62" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/ShowsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+          <folding>
+            <element signature="e#34#66#0#PHP" expanded="true" />
+            <element signature="e#773#796#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/UserShowService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
           <folding>
             <element signature="e#31#54#0#PHP" expanded="true" />
           </folding>
@@ -1226,8 +1226,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Repository/EpisodeRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="252" column="24" selection-start-line="252" selection-start-column="24" selection-end-line="252" selection-end-column="24" />
+        <state relative-caret-position="67">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#34#54#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/ShowRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="e#34#58#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/UserEpisodeRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+          <folding>
+            <element signature="e#34#54#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/UserShowRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
           <folding>
             <element signature="e#34#54#0#PHP" expanded="true" />
           </folding>

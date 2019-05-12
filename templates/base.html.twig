@@ -27,8 +27,20 @@
                 </li>
                 {% if app.user.username is defined %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('unwatched') }}">
+                        <a class="nav-link" href="{{ path('unwatched_index') }}">
                             <i class="fa fa-eye-slash" aria-hidden="true"></i> {{ 'menu.unwatched'|trans }}
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('shows_index') }}">
+                            <i class="fa fa-film" aria-hidden="true"></i> {{ 'menu.shows'|trans }}
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('shows_index', {'status': '2'}) }}">
+                            <i class="fa fa-archive" aria-hidden="true"></i> {{ 'menu.archived_shows'|trans }}
                         </a>
                     </li>
 

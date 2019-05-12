@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for show in shows %}
+        {{ show.name }} <a href="{{ path('unwatched_episodes', {'showId': show.id}) }}">{{ show.episodes }}</a> <br>
+    {% endfor %}
+{% endblock %}
