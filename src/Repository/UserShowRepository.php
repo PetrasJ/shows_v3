@@ -27,7 +27,8 @@ class UserShowRepository extends EntityRepository
                 'status' => $status,
             ])
             ->groupBy('s')
-            ->orderBy('s.name', 'asc')
+            ->orderBy('s.status', 'desc')
+            ->addOrderBy('s.name', 'asc')
             ->getQuery()
             ->getResult()
         ;

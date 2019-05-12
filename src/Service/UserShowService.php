@@ -70,6 +70,8 @@ class UserShowService
             }
 
             $formatted[] = [
+                'id' => $userShow->getId(),
+                'status' => $userShow->getShow()->getStatus(),
                 'name' => $userShow->getShow()->getName(),
                 'episodesCount' => $userShow->getShow()->getEpisodes()->count(),
                 'watchedCount' => $userShow->getUserEpisodes()->count(),

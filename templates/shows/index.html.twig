@@ -1,15 +1,51 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ shows|length }}<br>
-    {% for show in shows %}
-        {{  show.name }} {{ show.episodesCount }} {{ show.watchedCount }}
-        {% if show.lastEpisode %}
-            last: {{ show.lastEpisode.modifiedDate|dateTimezone }}
-        {% endif %}
-        {% if show.nextEpisode %}
-            next: {{ show.nextEpisode.modifiedDate|dateTimezone }}
-        {% endif %}
-        <br>
-    {% endfor %}
+    {{ shows|length }}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">{{ 'show.show'|trans }}</th>
+            <th scope="col">{{ 'show.Previous Episode'|trans }}</th>
+            <th scope="col">{{ 'show.Next Episode'|trans }}</th>
+            <th scope="col">{{ 'show.Actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% set showstatus = null %}
+        {% for show in shows %}
+            {% if (showstatus != show.status) %}
+                {% set showstatus = show.status %}
+                <tr>
+                    <td colspan="4"><h4>{{ ('show.'~show.status)|trans }}</h4></td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td>{{ show.name }} ({{ show.episodesCount-show.watchedCount }})</td>
+                <td>{% if show.lastEpisode %}
+                        {{ show.lastEpisode.modifiedDate|dateTimezone }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if show.nextEpisode %}
+                        {{ show.nextEpisode.modifiedDate|dateTimezone }}
+                    {% endif %}
+                </td>
+                <td>
+                    <button data-toggle="modal" data-target="#show-settings"
+                            class="btn btn-warning show-settings"
+                            data-id="{{ show.id }}"
+                            data-title="{{ show.name }}">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </button>
+
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'modals/modal.html.twig' with {modalId: 'show-settings'} %}
 {% endblock %}

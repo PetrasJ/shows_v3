@@ -15,23 +15,6 @@ class EpisodeRepository extends EntityRepository
     private $dateSub = "DATE_SUB(%s, CASE WHEN us.offset IS NOT NULL THEN us.offset ELSE u.defaultOffset END, 'hour')";
 
     /**
-     * @param int $userID
-     * @param int $showID
-     * @return int|bool
-     */
-    public function getShowOffset($userID, $showID)
-    {
-        $repository = $this->getEntityManager()->getRepository(UserShow::class);
-        $result = $repository->findOneBy(['userID' => $userID, 'showID' => $showID]);
-
-        if ($result->getOffset()) {
-            return $result->getOffset();
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * @param string $dateFrom
      * @param string $dateTo
      * @param User|null $user
