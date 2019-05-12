@@ -205,10 +205,11 @@ class EpisodeRepository extends EntityRepository
 
     /**
      * @param User $user
+     * @param int $status
      *
      * @return array
      */
-    public function getShowsWithUnwatchedEpisodes(User $user)
+    public function getShowsWithUnwatchedEpisodes(User $user, $status = 0)
     {
         return $this->createQueryBuilder('e')
             ->select('s.name, count(e.id) as episodes')
@@ -218,10 +219,12 @@ class EpisodeRepository extends EntityRepository
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
             ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf($this->dateSub, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
+            ->andWhere('us.status = :showStatus')
             ->setParameters([
                 'watched' => UserEpisode::STATUS_WATCHED,
                 'dateTo' => date("Y-m-d H:i"),
-                'user' => $user
+                'user' => $user,
+                'showStatus' => $status,
             ])
             ->groupBy('s')
             ->orderBy('e.airdate', 'DESC')

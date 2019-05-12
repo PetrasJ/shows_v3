@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\Index;
  */
 class UserEpisode
 {
-    const STATUS_UNWATCHED = null;
+    const STATUS_UNWATCHED = 0;
     const STATUS_WATCHED = 1;
     const STATUS_COMMENTED = 2;
     const MAX_RESULT = 100;

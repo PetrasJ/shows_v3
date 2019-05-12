@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Episode;
+use App\Entity\UserShow;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 
@@ -25,7 +26,7 @@ class UserShowService
         try {
             return $this->entityManager
                 ->getRepository(Episode::class)
-                ->getShowsWithUnwatchedEpisodes($this->user);
+                ->getShowsWithUnwatchedEpisodes($this->user, UserShow::STATUS_WATCHING);
         } catch (Exception $e) {
             return null;
         }

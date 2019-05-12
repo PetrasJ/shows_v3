@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UserShow
 {
-    const STATUS_WATCHING = null;
+    const STATUS_WATCHING = 0;
     const STATUS_WATCH_LATER = 1;
     const STATUS_ARCHIVED = 2;
 
