@@ -24,14 +24,33 @@ const app = {
         });
     },
     initModals: function () {
+        const t = this;
         $('#show-settings').on('shown.bs.modal', function (e) {
             const button = $(e.relatedTarget);
             const modal = $(this);
             modal.find('.modal-title').html(button.data('title'));
-            modal.find('.modal-body').html(button.data('id'));
+            modal.find('.show-offset').val(button.data('offset')).attr('data-id', button.data('id'));
+            t.initSettings();
+        })
+    },
+    initSettings: function () {
+        $('.show-offset').change(function () {
+            $.ajax({
+                type: 'post',
+                url: window.baseUrl + 'shows/update',
+                data: {
+                    id: $(this).data('id'),
+                    value: $(this).val()
+                },
+                success: function (data) {
+                    console.log(data);
+                }
+            }).fail(function () {
+                console.log('fail');
+            });
+
         })
     }
-
 };
 
 $(document).ready(function () {

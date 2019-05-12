@@ -36,7 +36,8 @@
                     <button data-toggle="modal" data-target="#show-settings"
                             class="btn btn-warning show-settings"
                             data-id="{{ show.id }}"
-                            data-title="{{ show.name }}">
+                            data-title="{{ show.name }}"
+                            data-offset="{{ show.offset }}">
                         <i class="fa fa-cog" aria-hidden="true"></i>
                     </button>
 
@@ -47,5 +48,5 @@
         </tbody>
     </table>
 
-    {% include 'modals/modal.html.twig' with {modalId: 'show-settings'} %}
+    {% include 'modals/show-settings.html.twig' %}
 {% endblock %}

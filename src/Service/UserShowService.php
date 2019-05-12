@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Episode;
+use App\Entity\Show;
 use App\Entity\UserShow;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,6 +28,22 @@ class UserShowService
             ->getRepository(Episode::class)
             ->getShowsWithUnwatchedEpisodes($this->user, UserShow::STATUS_WATCHING)
             ;
+    }
+
+    public function updateShow($id, $data = [])
+    {
+        $show = $this->entityManager->getReference(Show::class, $id);
+        $userShow = $this->entityManager
+            ->getRepository(UserShow::class)
+            ->findOneBy(['show' => $show, 'user' => $this->user]);
+
+        if (!$userShow) {
+            $userShow = (new UserShow())->setUser($this->user)->setShow($show);
+        }
+
+        $userShow->setOffset($data['offset']);
+        $this->entityManager->persist($userShow);
+        $this->entityManager->flush();
     }
 
     /**
@@ -70,13 +87,14 @@ class UserShowService
             }
 
             $formatted[] = [
-                'id' => $userShow->getId(),
+                'id' => $userShow->getShow()->getId(),
                 'status' => $userShow->getShow()->getStatus(),
                 'name' => $userShow->getShow()->getName(),
                 'episodesCount' => $userShow->getShow()->getEpisodes()->count(),
                 'watchedCount' => $userShow->getUserEpisodes()->count(),
                 'lastEpisode' => $lastEpisode,
                 'nextEpisode' => $nextEpisode,
+                'offset' => $userShow->getOffset(),
             ];
         }
 
