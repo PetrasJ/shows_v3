@@ -9,6 +9,7 @@ const app = {
     init: function () {
         this.initSearch();
         this.initModals();
+        this.initUnwatchedEpisodes();
     },
     initSearch: function () {
         $('#search_show_search').autocomplete({
@@ -44,6 +45,20 @@ const app = {
                 },
                 success: function (data) {
                     console.log(data);
+                }
+            }).fail(function () {
+                console.log('fail');
+            });
+
+        })
+    },
+    initUnwatchedEpisodes: function () {
+        $('.unwatched-episodes').unbind().on('click', function () {
+            $.ajax({
+                type: 'get',
+                url: $(this).data('link'),
+                success: function (data) {
+                    $('#result').html(data);
                 }
             }).fail(function () {
                 console.log('fail');

@@ -2,6 +2,8 @@
 
 {% block body %}
     {% for show in shows %}
-        {{ show.name }} <a href="{{ path('unwatched_episodes', {'showId': show.id}) }}">{{ show.episodes }}</a> <br>
+        {{ show.name }} <span class="unwatched-episodes" data-link="{{ path('unwatched_episodes', {'showId': show.id}) }}">{{ show.episodes }}</span> <br>
     {% endfor %}
+
+    <div id="result"></div>
 {% endblock %}

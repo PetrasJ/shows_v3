@@ -25,14 +25,14 @@ class UserShow
 
     /**
      * @var User
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
      * @var Show
-     * @ORM\OneToOne(targetEntity="Show", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Show", fetch="EAGER")
      * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
      */
     private $show;

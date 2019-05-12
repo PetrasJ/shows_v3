@@ -30,14 +30,14 @@ class UserEpisode
 
     /**
      * @var User
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
      * @var Show
-     * @ORM\OneToOne(targetEntity="Show")
+     * @ORM\ManyToOne(targetEntity="Show")
      * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
      */
     private $show;

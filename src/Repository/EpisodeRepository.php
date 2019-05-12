@@ -194,7 +194,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
-            ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf($this->dateSub, ':dateTo'))
+            ->andWhere('e.airstamp < ' . sprintf($this->dateSub, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->andWhere('us.status = :showStatus')
             ->setParameters([
@@ -217,7 +217,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
-            ->andWhere("e.airstamp < " . sprintf($this->dateSub, ':dateTo'))
+            ->andWhere('e.airstamp < ' . sprintf($this->dateSub, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->andWhere('s.id = :showId')
             ->setParameters([
