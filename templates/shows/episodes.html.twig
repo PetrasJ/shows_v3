@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for episode in episodes %}
+        {{ episode.id }} {{ episode.season }} {{ episode.episode }} {{ episode.name }}  <br>
+    {% endfor %}
+{% endblock %}

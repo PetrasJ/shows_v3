@@ -212,7 +212,7 @@ class EpisodeRepository extends EntityRepository
     public function getShowsWithUnwatchedEpisodes(User $user, $status = 0)
     {
         return $this->createQueryBuilder('e')
-            ->select('s.name, count(e.id) as episodes')
+            ->select('s.id, s.name, count(e.id) as episodes')
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
@@ -228,6 +228,28 @@ class EpisodeRepository extends EntityRepository
             ])
             ->groupBy('s')
             ->orderBy('e.airdate', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getUnwatchedEpisodes(User $user, $showId, $order = 'desc')
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e')
+            ->innerJoin('e.show', 's')
+            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
+            ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
+            ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf($this->dateSub, ':dateTo'))
+            ->andWhere('ue.status != :watched OR ue.status IS NULL')
+            ->andWhere('s.id = :showId')
+            ->setParameters([
+                'watched' => UserEpisode::STATUS_WATCHED,
+                'dateTo' => date("Y-m-d H:i"),
+                'user' => $user,
+                'showId' => $showId,
+            ])
+            ->orderBy('e.airdate', $order)
             ->getQuery()
             ->getResult();
     }
