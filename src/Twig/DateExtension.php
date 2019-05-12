@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use App\Entity\User;
 use App\Service\Storage;
 use DateTime;
 use DateTimeZone;
@@ -14,9 +15,12 @@ class DateExtension extends AbstractExtension
 
     public function __construct(Storage $storage)
     {
-        $this->timezone = $storage->getUser()->getTimezone()
-            ? new DateTimeZone($storage->getUser()->getTimezone())
-            : new DateTimeZone('Europe/Vilnius');
+        $user = $storage->getUser();
+        if ($user instanceof User && $user->getTimezone()) {
+            $this->timezone = new DateTimeZone($user->getTimezone());
+        } else {
+            $this->timezone = new DateTimeZone('UTC');
+        }
     }
 
     public function getFilters()

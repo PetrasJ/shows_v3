@@ -34,37 +34,43 @@ class Episode
      * @ORM\Column(type="string", length=100, nullable=true)
      */
 
-    private $name = null;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $season = null;
+    private $season;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $episode = null;
+    private $episode;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $airstamp;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $airdate = null;
+    private $airdate;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $airtime = null;
+    private $airtime;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $duration = null;
+    private $duration;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
      */
-    private $summary = null;
+    private $summary;
 
     /**
      * @var DateTime
@@ -128,6 +134,25 @@ class Episode
     public function getSeason()
     {
         return $this->season;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getAirstamp(): DateTime
+    {
+        return $this->airstamp;
+    }
+
+    /**
+     * @param DateTime $airstamp
+     * @return Episode
+     */
+    public function setAirstamp(DateTime $airstamp): Episode
+    {
+        $this->airstamp = $airstamp;
+
+        return $this;
     }
 
     /**

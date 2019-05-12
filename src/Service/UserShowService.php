@@ -7,6 +7,7 @@ use App\Entity\Show;
 use App\Entity\UserShow;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
 
 class UserShowService
 {
@@ -30,8 +31,14 @@ class UserShowService
             ;
     }
 
+    /**
+     * @param $id
+     * @param array $data
+     * @throws ORMException
+     */
     public function updateShow($id, $data = [])
     {
+        /** @var Show $show */
         $show = $this->entityManager->getReference(Show::class, $id);
         $userShow = $this->entityManager
             ->getRepository(UserShow::class)
@@ -72,10 +79,8 @@ class UserShowService
             $now = (new DateTime())->modify(sprintf('-%d hours', $userShow->getOffset()));
 
             foreach ($episodes as $episode) {
-                $time = $episode->getAirtime() ?: '00:00';
-                $date = (new DateTime())->createFromFormat('Y-m-d H:i', $episode->getAirdate() . ' ' . $time);
-
                 /** @var Episode $episode */
+                $date = $episode->getAirstamp();
                 if ($date < $now) {
                     $lastEpisode = $episode
                         ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));

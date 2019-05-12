@@ -75,10 +75,10 @@ class UserShow
     }
 
     /**
-     * @param Show $user
+     * @param User $user
      * @return UserShow
      */
-    public function setUser(Show $user): UserShow
+    public function setUser(User $user): UserShow
     {
         $this->user = $user;
 

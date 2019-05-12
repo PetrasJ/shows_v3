@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Episode;
 use App\Entity\Show;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 
@@ -27,6 +28,8 @@ class EpisodesManager
         foreach ($episodes as $episode) {
             $saved++;
             if (($episode->name) && ($episode->airdate)) {
+
+                $dateTime = (new DateTime())->createFromFormat('Y-m-d\TH:i:s\+00:00', $episode->airstamp);
                 $newEpisode = new Episode();
                 $newEpisode
                     ->setId($episode->id)
@@ -34,6 +37,7 @@ class EpisodesManager
                     ->setName($episode->name)
                     ->setSeason($episode->season)
                     ->setEpisode($episode->number)
+                    ->setAirstamp($dateTime)
                     ->setAirdate($episode->airdate)
                     ->setAirtime($episode->airtime)
                     ->setSummary($episode->summary)
