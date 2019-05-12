@@ -6,7 +6,6 @@ use App\Entity\Episode;
 use App\Entity\UserShow;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 
 class UserShowService
 {
@@ -54,14 +53,18 @@ class UserShowService
             $lastEpisode = null;
             $nextEpisode = null;
             $now = (new DateTime())->modify(sprintf('-%d hours', $userShow->getOffset()));
-            foreach ($episodes as $episode) {
-                $time = $episode->getAirtime() ? $episode->getAirtime() . ':00' : '00:00:00';
-                $date = (new DateTime())->createFromFormat('Y-m-d h:i:s', $episode->getAirdate() . ' ' . $time);
 
+            foreach ($episodes as $episode) {
+                $time = $episode->getAirtime() ?: '00:00';
+                $date = (new DateTime())->createFromFormat('Y-m-d H:i', $episode->getAirdate() . ' ' . $time);
+
+                /** @var Episode $episode */
                 if ($date < $now) {
-                    $lastEpisode = $episode;
+                    $lastEpisode = $episode
+                        ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));
                 } else {
-                    $nextEpisode = $episode;
+                    $nextEpisode = $episode
+                        ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));
                     break;
                 }
             }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
@@ -64,6 +65,11 @@ class Episode
      * @ORM\Column(type="string", length=250, nullable=true)
      */
     private $summary = null;
+
+    /**
+     * @var DateTime
+     */
+    private $modifiedDate;
 
     /**
      * @return mixed
@@ -239,6 +245,25 @@ class Episode
     public function setShow(Show $show): Episode
     {
         $this->show = $show;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getModifiedDate(): DateTime
+    {
+        return $this->modifiedDate;
+    }
+
+    /**
+     * @param DateTime $modifiedDate
+     * @return Episode
+     */
+    public function setModifiedDate(DateTime $modifiedDate): Episode
+    {
+        $this->modifiedDate = $modifiedDate;
 
         return $this;
     }
