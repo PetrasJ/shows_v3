@@ -20,7 +20,7 @@ class Show
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Episode", mappedBy="show")
+     * @ORM\OneToMany(targetEntity="Episode", mappedBy="show", fetch="EAGER")
      */
     private $episodes;
 

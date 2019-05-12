@@ -14,7 +14,7 @@ class UserShowRepository extends EntityRepository
     public function getShows(User $user, $status = 0)
     {
         return $this->createQueryBuilder('us')
-            ->select('s.id, s.name, count(e) as episodes, count(ue) as watched')
+            ->select('us')
             ->innerJoin('us.show', 's')
             ->innerJoin('s.episodes', 'e')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id AND ue.status = :watched')

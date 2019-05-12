@@ -1,7 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ shows|length }}<br>
     {% for show in shows %}
-        {{ show.name }} {{ show.episodes }} {{ show.watched }} <br>
+        {{  show.name }} {{ show.episodesCount }} {{ show.watched }}
+        {% if show.lastEpisode %}
+            last: {{ show.lastEpisode.airdate }}
+        {% endif %}
+        {% if show.nextEpisode %}
+            next: {{ show.nextEpisode.airdate }}
+        {% endif %}
+        <br>
     {% endfor %}
 {% endblock %}

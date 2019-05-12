@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,18 +24,24 @@ class UserShow
     private $id;
 
     /**
-     * @var Show
+     * @var User
      * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
-     * @var User
-     * @ORM\OneToOne(targetEntity="Show")
+     * @var Show
+     * @ORM\OneToOne(targetEntity="Show", fetch="EAGER")
      * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
      */
     private $show;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="UserEpisode", mappedBy="userShow")
+     */
+    private $userEpisodes;
         
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
@@ -46,6 +53,10 @@ class UserShow
      */
     private $offset;
 
+    public function __construct()
+    {
+        $this->userEpisodes = new ArrayCollection();
+    }
 
     /**
      * @return integer
@@ -89,6 +100,25 @@ class UserShow
     public function setShow(Show $show): UserShow
     {
         $this->show = $show;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUserEpisodes()
+    {
+        return $this->userEpisodes;
+    }
+
+    /**
+     * @param ArrayCollection $userEpisodes
+     * @return UserShow
+     */
+    public function setUserEpisodes(ArrayCollection $userEpisodes): UserShow
+    {
+        $this->userEpisodes = $userEpisodes;
 
         return $this;
     }

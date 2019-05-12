@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\Index;
  * @ORM\Entity
  * @ORM\Table(name="user_episodes",indexes={
  *      @Index(name="showID", columns={"show_id"}),
+ *      @Index(name="userShowID", columns={"user_show_id"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\UserEpisodeRepository")
  */
@@ -40,6 +41,13 @@ class UserEpisode
      * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
      */
     private $show;
+
+    /**
+     * @var UserShow
+     * @ORM\ManyToOne(targetEntity="UserShow", inversedBy="userEpisodes")
+     * @ORM\JoinColumn(name="user_show_id", referencedColumnName="id")
+     */
+    private $userShow;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -105,6 +113,25 @@ class UserEpisode
     public function setShow(Show $show): UserEpisode
     {
         $this->show = $show;
+
+        return $this;
+    }
+
+    /**
+     * @return UserShow
+     */
+    public function getUserShow(): UserShow
+    {
+        return $this->userShow;
+    }
+
+    /**
+     * @param UserShow $userShow
+     * @return UserEpisode
+     */
+    public function setUserShow(UserShow $userShow): UserEpisode
+    {
+        $this->userShow = $userShow;
 
         return $this;
     }

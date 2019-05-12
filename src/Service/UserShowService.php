@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Episode;
 use App\Entity\UserShow;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 
@@ -35,9 +36,45 @@ class UserShowService
      */
     public function getShows($status)
     {
-        return $this->entityManager
+        $shows = $this->entityManager
             ->getRepository(UserShow::class)
             ->getShows($this->user, $status)
-            ;
+        ;
+
+        return $this->formatShows($shows);
+    }
+
+    private function formatShows($shows)
+    {
+        $formatted = [];
+        foreach ($shows as $userShow) {
+            /** @var UserShow $userShow */
+            $episodes = $userShow->getShow()->getEpisodes();
+
+            $lastEpisode = null;
+            $nextEpisode = null;
+            $now = (new DateTime())->modify(sprintf('-%d hours', $userShow->getOffset()));
+            foreach ($episodes as $episode) {
+                $time = $episode->getAirtime() ? $episode->getAirtime() . ':00' : '00:00:00';
+                $date = (new DateTime())->createFromFormat('Y-m-d h:i:s', $episode->getAirdate() . ' ' . $time);
+
+                if ($date < $now) {
+                    $lastEpisode = $episode;
+                } else {
+                    $nextEpisode = $episode;
+                    break;
+                }
+            }
+
+            $formatted[] = [
+                'name' => $userShow->getShow()->getName(),
+                'episodesCount' => $userShow->getShow()->getEpisodes()->count(),
+                'watchedCount' => $userShow->getUserEpisodes()->count(),
+                'lastEpisode' => $lastEpisode,
+                'nextEpisode' => $nextEpisode,
+            ];
+        }
+
+        return $formatted;
     }
 }
