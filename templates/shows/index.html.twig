@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    test
+    {% for show in shows %}
+        {{ show.name }} {{ show.episodes }} <br>
+    {% endfor %}
 {% endblock %}

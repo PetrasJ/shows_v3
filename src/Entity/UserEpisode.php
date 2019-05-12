@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
@@ -27,30 +28,23 @@ class UserEpisode
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @var User
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $userID;
+    private $user;
+
+    /**
+     * @var Show
+     * @ORM\OneToOne(targetEntity="Show")
+     * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
+     */
+    private $show;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-
-    private $showID;
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-
     private $episodeID;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $airdate;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $airtime;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
@@ -65,7 +59,7 @@ class UserEpisode
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @ORM\Version
-     * @var \DateTime
+     * @var DateTime
      */
     protected $created;
 
@@ -78,43 +72,41 @@ class UserEpisode
     }
 
     /**
-     * @param integer $userID
-     *
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
      * @return UserEpisode
      */
-    public function setUserID($userID)
+    public function setUser(User $user): UserEpisode
     {
-        $this->userID = $userID;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * @return integer
+     * @return Show
      */
-    public function getUserID()
+    public function getShow(): Show
     {
-        return $this->userID;
+        return $this->show;
     }
 
     /**
-     * @param integer $showID
-     *
+     * @param Show $show
      * @return UserEpisode
      */
-    public function setShowID($showID)
+    public function setShow(Show $show): UserEpisode
     {
-        $this->showID = $showID;
+        $this->show = $show;
 
         return $this;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getShowID()
-    {
-        return $this->showID;
     }
 
     /**
@@ -195,45 +187,5 @@ class UserEpisode
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * @param string $airdate
-     *
-     * @return UserEpisode
-     */
-    public function setAirdate($airdate)
-    {
-        $this->airdate = $airdate;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAirdate()
-    {
-        return $this->airdate;
-    }
-
-    /**
-     * @param string $airtime
-     *
-     * @return UserEpisode
-     */
-    public function setAirtime($airtime)
-    {
-        $this->airtime = $airtime;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAirtime()
-    {
-        return $this->airtime;
     }
 }

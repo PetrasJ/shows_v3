@@ -23,12 +23,14 @@ class UserShow
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @var Show
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $userID;
+    private $user;
 
     /**
-     * @var Show
+     * @var User
      * @ORM\OneToOne(targetEntity="Show")
      * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
      */
@@ -37,7 +39,6 @@ class UserShow
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
      */
-
     private $status;
 
     /**
@@ -55,23 +56,22 @@ class UserShow
     }
 
     /**
-     * @param integer $userID
-     *
-     * @return UserShow
+     * @return User
      */
-    public function setUserID($userID)
+    public function getUser(): User
     {
-        $this->userID = $userID;
-
-        return $this;
+        return $this->user;
     }
 
     /**
-     * @return integer
+     * @param Show $user
+     * @return UserShow
      */
-    public function getUserID()
+    public function setUser(Show $user): UserShow
     {
-        return $this->userID;
+        $this->user = $user;
+
+        return $this;
     }
 
     /**

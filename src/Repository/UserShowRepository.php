@@ -2,8 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
+use App\Entity\UserEpisode;
 use App\Entity\UserShow;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * ItemsRepository
@@ -17,39 +21,42 @@ class UserShowRepository extends EntityRepository
      * @param $userID
      * @param string $status
      * @return array
+     * @throws ORMException
      */
     public function getShows($userID, $status = UserShow::STATUS_WATCHING)
     {
+        $user = $this->getEntityManager()->getReference(User::class, $userID);
+
         if ($status == UserShow::STATUS_WATCHING) {
             $ignore = [UserShow::STATUS_ARCHIVED, UserShow::STATUS_WATCH_LATER];
-            $result = $this->createQueryBuilder('p')
-                ->where('p.userID = :userID')
-                ->setParameter('userID', $userID)
-                ->andWhere('p.status is NULL')
-                ->orWhere('p.status NOT IN (:status)')
+            $result = $this->createQueryBuilder('us')
+                ->where('us.user = :user')
+                ->setParameter('user', $user)
+                ->andWhere('us.status is NULL')
+                ->orWhere('us.status NOT IN (:status)')
                 ->setParameter('status', array_values($ignore))
                 ->getQuery()
                 ->getResult();
         } elseif ($status == UserShow::STATUS_ARCHIVED) {
-            $result = $this->createQueryBuilder('p')
-                ->where('p.userID = :userID')
-                ->setParameter('userID', $userID)
-                ->andWhere('p.status = :status')
+            $result = $this->createQueryBuilder('us')
+                ->where('us.user = :user')
+                ->setParameter('user', $user)
+                ->andWhere('us.status = :status')
                 ->setParameter('status', UserShow::STATUS_ARCHIVED)
                 ->getQuery()
                 ->getResult();
         } elseif ($status == UserShow::STATUS_WATCH_LATER) {
-            $result = $this->createQueryBuilder('p')
-                ->where('p.userID = :userID')
-                ->setParameter('userID', $userID)
-                ->andWhere('p.status = :status')
+            $result = $this->createQueryBuilder('us')
+                ->where('us.user = :user')
+                ->setParameter('user', $user)
+                ->andWhere('us.status = :status')
                 ->setParameter('status', UserShow::STATUS_WATCH_LATER)
                 ->getQuery()
                 ->getResult();
         } else {
-            $result = $this->createQueryBuilder('p')
-                ->where('p.userID = :userID')
-                ->setParameter('userID', $userID)
+            $result = $this->createQueryBuilder('us')
+                ->where('us.user = :user')
+                ->setParameter('user', $user)
                 ->getQuery()
                 ->getResult();
         }
@@ -63,11 +70,29 @@ class UserShowRepository extends EntityRepository
     public function getAllUsersShows()
     {
         $result = $this->createQueryBuilder('p')
-            ->select('p')
-            ->groupBy('p.show')
+            ->select('s.id')
+            ->innerJoin('p.show', 's')
+            ->groupBy('s')
             ->getQuery()
             ->getResult();
 
-        return array_map(function($userShow) {return $userShow->getShow()->getId();}, $result);
+        return array_column($result, 'id');
+    }
+
+    public function getUnwachedShows()
+    {
+        $user = $this->getEntityManager()->getReference(User::class, 1);
+        $result = $this->createQueryBuilder('us')
+            ->select('us, s')
+            ->innerJoin('us.show', 's')
+            ->where('us.userID = :userID')
+            ->innerJoin('s.episodes', 'e')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.show = s AND ')
+            ->andWhere('ue.status IS NULL')
+            ->setParameter('userID', 1)
+            ->getQuery()
+            ->getResult();
+
+        return $result;
     }
 }

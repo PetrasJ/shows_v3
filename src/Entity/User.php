@@ -22,7 +22,7 @@ class User extends BaseUser
      * @var string
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
      */
-    private $facebook_id;
+    private $facebookId;
 
     /**
      * @var string
@@ -111,16 +111,16 @@ class User extends BaseUser
      */
     public function getFacebookId(): string
     {
-        return $this->facebook_id;
+        return $this->facebookId;
     }
 
     /**
-     * @param string $facebook_id
+     * @param string $facebookId
      * @return User
      */
-    public function setFacebookId(string $facebook_id): User
+    public function setFacebookId(string $facebookId): User
     {
-        $this->facebook_id = $facebook_id;
+        $this->facebookId = $facebookId;
 
         return $this;
     }

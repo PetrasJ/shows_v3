@@ -186,9 +186,9 @@ class EpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e.id, e.airdate')
-            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.userID = :userID')
-            ->innerJoin(User::class, 'u', Join::WITH, 'u.id = :userID')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.userID = :userID AND ue.episodeID = e.id')
+            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
+            ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
             ->where('e.show = :show')
             ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf($this->dateSub, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
@@ -196,7 +196,7 @@ class EpisodeRepository extends EntityRepository
                 'watched' => UserEpisode::STATUS_WATCHED,
                 'dateTo' => date("Y-m-d H:i"),
                 'show' => $show,
-                'userID' => $user->getId()
+                'user' => $user
             ])
             ->orderBy('e.airdate', 'DESC')
             ->getQuery()
@@ -208,20 +208,22 @@ class EpisodeRepository extends EntityRepository
      *
      * @return array
      */
-    public function getUnwatchedEpisodes(User $user)
+    public function getShowsWithUnwatchedEpisodes(User $user)
     {
         return $this->createQueryBuilder('e')
-            ->select('e.id, e.airdate')
-            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.showID = e.showID AND us.userID = :userID')
-            ->innerJoin(User::class, 'u', Join::WITH, 'u.id = :userID')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.userID = :userID AND ue.episodeID = e.episodeID')
+            ->select('s.name, count(e.id) as episodes')
+            ->innerJoin('e.show', 's')
+            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
+            ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
             ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf($this->dateSub, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->setParameters([
                 'watched' => UserEpisode::STATUS_WATCHED,
                 'dateTo' => date("Y-m-d H:i"),
-                'userID' => $user->getId()
+                'user' => $user
             ])
+            ->groupBy('s')
             ->orderBy('e.airdate', 'DESC')
             ->getQuery()
             ->getResult();
