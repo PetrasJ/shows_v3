@@ -1,5 +1,5 @@
 {% block body %}
     {% for episode in episodes %}
-        {{ episode.id }} {{ episode.season }} {{ episode.episode }} {{ episode.name }}  <br>
+        {{ episode.id }} {{ episode.season }} {{ episode.episode }} {{ episode.name }}  {% include 'form/watch.html.twig' with {id: episode.id} %}<br>
     {% endfor %}
 {% endblock %}

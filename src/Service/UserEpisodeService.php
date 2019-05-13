@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Episode;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserEpisodeService
 {
@@ -24,7 +25,7 @@ class UserEpisodeService
                 ->getRepository(Episode::class)
                 ->getUnwatchedEpisodes($this->user, $showId);
         } catch (Exception $e) {
-            return null;
+            throw new NotFoundHttpException();
         }
     }
 }

@@ -7,6 +7,7 @@ use App\Service\UserShowService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -22,8 +23,12 @@ class UnwatchedShowsController extends AbstractController
      */
     public function unwatched(UserShowService $userShowService)
     {
-        $shows = $userShowService->getShowsWithUnwatchedEpisodes();
-
+        try {
+            $shows = $userShowService->getShowsWithUnwatchedEpisodes();
+        } catch (NotFoundHttpException $e) {
+            return new Response([], 404);
+        }
+        
         return $this->render('unwatched-shows/index.html.twig', ['shows' => $shows]);
     }
 
@@ -35,7 +40,11 @@ class UnwatchedShowsController extends AbstractController
      */
     public function unwatchedEpisodes(int $showId, UserEpisodeService $userEpisodeService)
     {
-        $episodes = $userEpisodeService->getUnwatchedEpisodes($showId);
+        try {
+            $episodes = $userEpisodeService->getUnwatchedEpisodes($showId);
+        } catch (NotFoundHttpException $e) {
+            return new Response([], 404);
+        }
 
         return $this->render('unwatched-shows/episodes.html.twig', ['episodes' => $episodes]);
     }
