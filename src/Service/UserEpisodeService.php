@@ -32,7 +32,7 @@ class UserEpisodeService
         }
     }
 
-    public function comment($id, $comment)
+    public function update($id, $action)
     {
         $episode = $this->entityManager->find(Episode::class, $id);
         $userEpisode = $this->entityManager
@@ -53,7 +53,15 @@ class UserEpisodeService
             ;
         }
 
-        $userEpisode->setComment($comment);
+        if (isset($action['comment'])) {
+            $userEpisode->setComment($action['comment'])->setStatus(UserEpisode::STATUS_COMMENTED);
+        }
+
+        if (isset($action['watch']) && $action['watch'] === true)
+        {
+            $userEpisode->setStatus(UserEpisode::STATUS_WATCHED);
+        }
+
         $this->entityManager->persist($userEpisode);
         $this->entityManager->flush();
     }

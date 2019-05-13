@@ -70,7 +70,20 @@ const app = {
     },
     initWatchActions: function () {
         $('.watch-episode').unbind().on('click', function () {
-            alert($(this).data('id'));
+            const id = $(this).data('id');
+            $.ajax({
+                type: 'post',
+                url: window.baseUrl + 'unwatched/watch',
+                data: {
+                    id: id,
+                },
+                success: (data) => {
+                    console.log(data);
+                    $('#' + id).hide();
+                }
+            }).fail(function () {
+                console.log('fail');
+            });
         });
 
         $('.comment-episode').unbind().submit(function (e) {

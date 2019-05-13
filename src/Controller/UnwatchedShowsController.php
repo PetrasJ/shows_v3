@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,7 +60,28 @@ class UnwatchedShowsController extends AbstractController
      */
     public function comment(Request $request, UserEpisodeService $userEpisodeService)
     {
-        $userEpisodeService->comment($request->get('id'), $request->get('comment'));
+        try {
+            $userEpisodeService->update($request->get('id'), ['comment' => $request->get('comment')]);
+        } catch (Exception $e) {
+            return new JsonResponse(['success' => false], 404);
+        }
+
+        return new JsonResponse(['success' => true]);
+    }
+
+    /**
+     * @param Request $request
+     * @param UserEpisodeService $userEpisodeService
+     * @Route("/watch", name="watch")
+     * @return JsonResponse
+     */
+    public function watch(Request $request, UserEpisodeService $userEpisodeService)
+    {
+        try {
+            $userEpisodeService->update($request->get('id'), ['watch' => true]);
+        } catch (Exception $e) {
+            return new JsonResponse(['success' => false], 404);
+        }
 
         return new JsonResponse(['success' => true]);
     }
