@@ -11,6 +11,50 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class UserShowRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function getAllUsersShows()
+    {
+        $result = $this->createQueryBuilder('p')
+            ->select('s.id')
+            ->innerJoin('p.show', 's')
+            ->groupBy('s')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return array_column($result, 'id');
+    }
+
+    /**
+     * @return mixed
+     * @throws ORMException
+     * @deprecated
+     */
+    public function getUnwachedShows()
+    {
+        $user = $this->getEntityManager()->getReference(User::class, 1);
+        $result = $this->createQueryBuilder('us')
+            ->select('us, s')
+            ->innerJoin('us.show', 's')
+            ->where('us.userID = :userID')
+            ->innerJoin('s.episodes', 'e')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.show = s AND ')
+            ->andWhere('ue.status IS NULL')
+            ->setParameter('userID', 1)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $result;
+    }
+
+    /**
+     * @param User $user
+     * @param int $status
+     * @return mixed
+     */
     public function getShows(User $user, $status = 0)
     {
         return $this->createQueryBuilder('us')
@@ -30,12 +74,12 @@ class UserShowRepository extends EntityRepository
             ->addOrderBy('s.name', 'asc')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
 
     /**
      * @param $userID
-     * @param string $status
+     * @param int $status
      * @return array
      * @throws ORMException
      * @deprecated
@@ -83,41 +127,8 @@ class UserShowRepository extends EntityRepository
         }
 
         return array_map(function ($userShow) {
+            /** @var UserShow $userShow */
             return $userShow->getShow();
         }, $result);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllUsersShows()
-    {
-        $result = $this->createQueryBuilder('p')
-            ->select('s.id')
-            ->innerJoin('p.show', 's')
-            ->groupBy('s')
-            ->getQuery()
-            ->getResult()
-        ;
-
-        return array_column($result, 'id');
-    }
-
-    public function getUnwachedShows()
-    {
-        $user = $this->getEntityManager()->getReference(User::class, 1);
-        $result = $this->createQueryBuilder('us')
-            ->select('us, s')
-            ->innerJoin('us.show', 's')
-            ->where('us.userID = :userID')
-            ->innerJoin('s.episodes', 'e')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.show = s AND ')
-            ->andWhere('ue.status IS NULL')
-            ->setParameter('userID', 1)
-            ->getQuery()
-            ->getResult()
-        ;
-
-        return $result;
     }
 }
