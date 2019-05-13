@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,7 +38,11 @@ class ShowsController extends AbstractController
      */
     public function update(Request $request, UserShowService $userShowService)
     {
+        try {
         $userShowService->updateShow($request->get('id'), ['offset' => $request->get('value')]);
+        } catch (NotFoundHttpException $e) {
+            return new JsonResponse(['success' => false], 404);
+        }
 
         return new JsonResponse(['success' => true]);
     }

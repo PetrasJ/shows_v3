@@ -8,6 +8,7 @@ use App\Entity\UserShow;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserShowService
 {
@@ -34,18 +35,21 @@ class UserShowService
     /**
      * @param $id
      * @param array $data
-     * @throws ORMException
      */
     public function updateShow($id, $data = [])
     {
+        try {
         /** @var Show $show */
         $show = $this->entityManager->getReference(Show::class, $id);
         $userShow = $this->entityManager
             ->getRepository(UserShow::class)
             ->findOneBy(['show' => $show, 'user' => $this->user]);
+        } catch (ORMException $e) {
+            throw new NotFoundHttpException();
+        }
 
         if (!$userShow) {
-            $userShow = (new UserShow())->setUser($this->user)->setShow($show);
+            throw new NotFoundHttpException();
         }
 
         $userShow->setOffset($data['offset']);
