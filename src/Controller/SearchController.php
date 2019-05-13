@@ -29,11 +29,4 @@ class SearchController extends AbstractController
 
         return new JsonResponse($this->showsManager->find($keyword));
     }
-
-    public function searchForm()
-    {
-        $form = $this->createForm(SearchShowType::class);
-
-        return $this->render('form/search.html.twig', ['form' => $form->createView()]);
-    }
 }

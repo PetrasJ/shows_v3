@@ -12,7 +12,7 @@ const app = {
         this.initUnwatchedEpisodes();
     },
     initSearch: function () {
-        $('#search_show_search').autocomplete({
+        $('#search_show').autocomplete({
             source: window.baseUrl + 'search',
             minLength: 2,
             delay: 100,
@@ -43,11 +43,8 @@ const app = {
                     id: $(this).data('id'),
                     value: $(this).val()
                 },
-                success: function (data) {
-                    console.log(data);
-                }
-            }).fail(function () {
-                console.log('fail');
+            }).fail(function (data) {
+                console.log(data);
             });
 
         })
@@ -59,11 +56,11 @@ const app = {
                 type: 'get',
                 url: $(this).data('link'),
                 success: (data) => {
-                    $('#result').html(data);
+                    $('#result').hide().html(data).slideDown();
                     t.initWatchActions()
                 }
-            }).fail(function () {
-                console.log('fail');
+            }).fail(function (data) {
+                console.log(data);
             });
 
         })
@@ -77,12 +74,11 @@ const app = {
                 data: {
                     id: id,
                 },
-                success: (data) => {
-                    console.log(data);
-                    $('#' + id).hide();
+                success: () => {
+                    $('#' + id).slideUp();
                 }
-            }).fail(function () {
-                console.log('fail');
+            }).fail(function (data) {
+                console.log(data);
             });
         });
 
@@ -95,11 +91,8 @@ const app = {
                     id: $(this).data('id'),
                     comment: $(this).find('.comment').val()
                 },
-                success: (data) => {
-                    console.log(data);
-                }
-            }).fail(function () {
-                console.log('fail');
+            }).fail(function (data) {
+                console.log(data);
             });
         });
     }

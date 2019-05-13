@@ -10,7 +10,14 @@
     </div>
 {% endblock form_row %}
 
+{%- block button_row -%}
+    2341234123
+{%- endblock button_row -%}
+
 {{ form_start(form) }}
 {{ form_errors(form) }}
 {{ form_widget(form) }}
+<input type="submit" class="btn" value="Create"/>
+{{ block(button_row) }}
 {{ form_end(form) }}
+

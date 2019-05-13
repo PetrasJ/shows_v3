@@ -50,20 +50,20 @@ class ShowRepository extends EntityRepository
         $names = preg_replace("/\s+/", " ", $names);
         $names = explode(" ", $names);
 
-        $qb = $this->createQueryBuilder('p')
-            ->select('p.name')
-            ->leftJoin(UserShow::class, 'us', 'WITH', 'us.showID = p.showID')
-            ->where('p.name LIKE :word')
+        $qb = $this->createQueryBuilder('s')
+            ->select('s.name')
+            ->leftJoin(UserShow::class, 'us', 'WITH', 'us.show = s')
+            ->where('s.name LIKE :word')
             ->setParameter('word', '%' . $names[0] . '%')
-            ->orderBy('us.showID', 'desc')
-            ->addOrderBy('p.rating', 'desc')
-            ->addOrderBy('p.weight', 'desc')
-            ->groupBy('p.showID')
+            ->orderBy('us.id', 'desc')
+            ->addOrderBy('s.rating', 'desc')
+            ->addOrderBy('s.weight', 'desc')
+            ->groupBy('s')
             ->setMaxResults(10);
 
         unset($names[0]);
         foreach ($names as $key => $name) {
-            $qb->andWhere('p.name LIKE :word' . $key)
+            $qb->andWhere('s.name LIKE :word' . $key)
                 ->setParameter('word' . $key, '%' . $name . '%');
         }
 
