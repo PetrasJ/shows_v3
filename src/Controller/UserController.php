@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Form\UserType;
 use App\Service\Storage;
+use App\Service\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,14 +18,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @param Storage $storage
+     * @param Storage     $storage
+     * @param Request     $request
+     * @param UserManager $userManager
      * @Route("/settings", name="settings")
      * @return Response
      */
-    public function settings(Storage $storage)
+    public function settings(Storage $storage, Request $request, UserManager $userManager)
     {
         $user = $storage->getUser();
         $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userManager->save($user);
+        }
 
         return $this->render('user/settings.html.twig', ['form' => $form->createView()]);
     }
