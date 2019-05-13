@@ -53,18 +53,42 @@ const app = {
         })
     },
     initUnwatchedEpisodes: function () {
+        const t = this;
         $('.unwatched-episodes').unbind().on('click', function () {
             $.ajax({
                 type: 'get',
                 url: $(this).data('link'),
-                success: function (data) {
+                success: (data) => {
                     $('#result').html(data);
+                    t.initWatchActions()
                 }
             }).fail(function () {
                 console.log('fail');
             });
 
         })
+    },
+    initWatchActions: function () {
+        $('.watch-episode').unbind().on('click', function () {
+            alert($(this).data('id'));
+        });
+
+        $('.comment-episode').unbind().submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
+                url: window.baseUrl + 'unwatched/comment',
+                data: {
+                    id: $(this).data('id'),
+                    comment: $(this).find('.comment').val()
+                },
+                success: (data) => {
+                    console.log(data);
+                }
+            }).fail(function () {
+                console.log('fail');
+            });
+        });
     }
 };
 

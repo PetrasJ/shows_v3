@@ -1,5 +1,13 @@
-<form class="watch-show" data-id="{{ id }}">
-    <input type="text" class="form-control comment">
-    <button class="btn btn-secondary save"><i class="fa fa-save"></i></button>
+<form class="comment-episode d-inline-block w-auto" data-id="{{ episode.id }}">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control comment" placeholder="{{ 'comment'|trans }}"
+               aria-label="{{ 'comment'|trans }}" aria-describedby="basic-addon2"
+                value="{{ episode.comment }}">
+        <div class="input-group-append">
+            <button class="btn btn-secondary save"><i class="fa fa-save"></i></button>
+        </div>
+    </div>
 </form>
-<button class="btn btn-success watch"><i class="fa fa-eye" aria-hidden="true"></i></button>
+
+<button class="btn btn-success align-top watch-episode" type="button" data-id="{{ episode.id }}"><i class="fa fa-eye" aria-hidden="true"></i></button>
+

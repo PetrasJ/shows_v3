@@ -1,5 +1,18 @@
 {% block body %}
     {% for episode in episodes %}
-        {{ episode.id }} {{ episode.season }} {{ episode.episode }} {{ episode.name }}  {% include 'form/watch.html.twig' with {id: episode.id} %}<br>
+        <div class="row" id="{{ episode.id }}">
+            <div class="col-3">
+                <span title="{{ 'airdate'|trans }} {{ episode.airstamp|date('Y-m-d h:i') }}">{{ episode.airstamp|dateTimezone }}</span>
+                <span class="episode" title="{{ 'duration'|trans }} {{ episode.duration }} {{ 'min'|trans }}"></span>
+                <b>S{{ '%02d'|format(episode.season) }}E{{ '%02d'|format(episode.episode) }}</b>
+            </div>
+            <div class="col-5">
+                <h6>{{ episode.name }}</h6>
+                {{ episode.summary|raw }}
+            </div>
+            <div class="col-4">
+                {% include 'form/watch.html.twig' with {episode: episode} %}<br>
+            </div>
+        </div>
     {% endfor %}
 {% endblock %}

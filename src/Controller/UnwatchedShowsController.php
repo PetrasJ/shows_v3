@@ -6,6 +6,8 @@ use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +30,7 @@ class UnwatchedShowsController extends AbstractController
         } catch (NotFoundHttpException $e) {
             return new Response([], 404);
         }
-        
+
         return $this->render('unwatched-shows/index.html.twig', ['shows' => $shows]);
     }
 
@@ -47,5 +49,18 @@ class UnwatchedShowsController extends AbstractController
         }
 
         return $this->render('unwatched-shows/episodes.html.twig', ['episodes' => $episodes]);
+    }
+
+    /**
+     * @param Request $request
+     * @param UserEpisodeService $userEpisodeService
+     * @Route("/comment", name="comment")
+     * @return JsonResponse
+     */
+    public function comment(Request $request, UserEpisodeService $userEpisodeService)
+    {
+        $userEpisodeService->comment($request->get('id'), $request->get('comment'));
+
+        return new JsonResponse(['success' => true]);
     }
 }

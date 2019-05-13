@@ -212,7 +212,7 @@ class EpisodeRepository extends EntityRepository
     public function getUnwatchedEpisodes(User $user, $showId, $order = 'desc')
     {
         return $this->createQueryBuilder('e')
-            ->select('e')
+            ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment')
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
