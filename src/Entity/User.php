@@ -34,31 +34,31 @@ class User extends BaseUser
      * @var int
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $defaultOffset = 0;
+    private $defaultOffset;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $calendarShow = null;
+    private $calendarShow;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=2, nullable=true)
      */
-    private $locale = null;
+    private $locale;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $style = null;
+    private $style;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $timezone = null;
+    private $timezone;
 
     /**
      * @return int
@@ -90,7 +90,7 @@ class User extends BaseUser
     /**
      * @return int
      */
-    public function getDefaultOffset(): int
+    public function getDefaultOffset(): ?int
     {
         return $this->defaultOffset;
     }
@@ -99,7 +99,7 @@ class User extends BaseUser
      * @param int $defaultOffset
      * @return User
      */
-    public function setDefaultOffset(int $defaultOffset): User
+    public function setDefaultOffset(int $defaultOffset = null): User
     {
         $this->defaultOffset = $defaultOffset;
 
@@ -109,7 +109,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getFacebookId(): string
+    public function getFacebookId(): ?string
     {
         return $this->facebookId;
     }
@@ -147,7 +147,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getLocale(): string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }

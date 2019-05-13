@@ -122,3 +122,5 @@ save comment: save comment
 comment: comment
 watched: watched
 Timezone: Timezone
+locale: Locale
+facebook_id: Facebook ID

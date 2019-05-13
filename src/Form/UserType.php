@@ -8,7 +8,9 @@ use DateTimeZone;
 use Exception;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,9 +23,24 @@ class UserType extends AbstractType
                 'choices' => $this->getTimezones(),
                 'choice_translation_domain' => false,
             ])
+            ->add('locale', ChoiceType::class, [
+                'label' => 'locale',
+                'choices' => [
+                    'English' => 'en',
+                    'Lietuvių' => 'lt',
+                    'Pусский' => 'ru',
+                ],
+                'choice_translation_domain' => false,
+            ])
+            ->add('facebookId', TextType::class, [
+                'label' => 'facebook_id',
+            ])
+            ->add('defaultOffset', NumberType::class, [
+                'label' => 'show.offset',
+            ])
             ->add('submit', SubmitType::class, [
-                'label' => 'save',
-            ]);
+        'label' => 'save',
+    ]);
     }
 
     /**
