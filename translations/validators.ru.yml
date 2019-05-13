@@ -1,5 +1,4 @@
 user:
     password:
-        difficulty: "Легко"
-        short: "Короткие"
-        
+        difficulty: Легко
+        short: Короткие
