@@ -20,7 +20,7 @@ const app = {
                 event.preventDefault();
             },
             select: function (event, ui) {
-                alert(ui.item.value);
+                window.location.href = window.baseUrl + 'search/select/' +ui.item.value;
             }
         });
     },

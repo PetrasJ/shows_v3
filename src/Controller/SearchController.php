@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
-use App\Form\SearchShowType;
 use App\Service\ShowsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/search", name="search_")
+ */
 class SearchController extends AbstractController
 {
     private $showsManager;
@@ -20,7 +23,7 @@ class SearchController extends AbstractController
 
     /**
      * @param Request $request
-     * @Route("/search", name="search")
+     * @Route("/", name="search")
      * @return JsonResponse
      */
     public function search(Request $request)
@@ -28,5 +31,16 @@ class SearchController extends AbstractController
         $keyword = $shows = $request->get('term');
 
         return new JsonResponse($this->showsManager->find($keyword));
+    }
+
+    /**
+     * @param string $string
+     * @param ShowsManager $showsManager
+     * @Route("/select/{string}", name="select")
+     * @return Response
+     */
+    public function select($string, ShowsManager $showsManager)
+    {
+        return $this->render('search/results.html.twig', ['shows' => $showsManager->findFull($string)]);
     }
 }
