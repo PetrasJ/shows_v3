@@ -1,0 +1,13 @@
+{% extends 'form/regular.html.twig' %}
+
+{% block _user_timezone_row %}
+    <div class="form-group row">
+        <div class="col-4">
+            {{ form_label(form) }}
+        </div>
+        <div class="col-8">
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock _user_timezone_row %}
