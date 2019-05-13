@@ -4,12 +4,14 @@ window.$ = $;
 require('bootstrap');
 
 require('jquery-ui/ui/widgets/autocomplete');
+require('bootstrap-select');
 
 const app = {
     init: function () {
         this.initSearch();
         this.initModals();
         this.initUnwatchedEpisodes();
+        $('.selectpicker').selectpicker()
     },
     initSearch: function () {
         $('#search_show').autocomplete({

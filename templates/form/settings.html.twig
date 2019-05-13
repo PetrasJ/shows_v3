@@ -7,7 +7,7 @@
         </div>
         <div class="col-8">
             {{ form_errors(form) }}
-            {{ form_widget(form) }}
+            {{ form_widget(form, {'attr': {'class': 'selectpicker', 'data-live-search': 'true'}}) }}
         </div>
     </div>
 {% endblock _user_timezone_row %}
