@@ -82,10 +82,12 @@ class UserShowService
             $nextEpisode = null;
             $now = (new DateTime())->modify(sprintf('-%d hours', $userShow->getOffset()));
 
+            $count = 0;
             foreach ($episodes as $episode) {
                 /** @var Episode $episode */
                 $date = $episode->getAirstamp();
                 if ($date < $now) {
+                    $count++;
                     $lastEpisode = $episode
                         ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));
                 } else {
@@ -99,7 +101,7 @@ class UserShowService
                 'id' => $userShow->getShow()->getId(),
                 'status' => $userShow->getShow()->getStatus(),
                 'name' => $userShow->getShow()->getName(),
-                'episodesCount' => $userShow->getShow()->getEpisodes()->count(),
+                'episodesCount' => $count,
                 'watchedCount' => $userShow->getUserEpisodes()->count(),
                 'lastEpisode' => $lastEpisode,
                 'nextEpisode' => $nextEpisode,
