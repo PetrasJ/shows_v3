@@ -33,17 +33,18 @@ class UserShowService
     }
 
     /**
-     * @param $id
+     * @param       $id
      * @param array $data
      */
     public function updateShow($id, $data = [])
     {
         try {
-        /** @var Show $show */
-        $show = $this->entityManager->getReference(Show::class, $id);
-        $userShow = $this->entityManager
-            ->getRepository(UserShow::class)
-            ->findOneBy(['show' => $show, 'user' => $this->user]);
+            /** @var Show $show */
+            $show = $this->entityManager->getReference(Show::class, $id);
+            $userShow = $this->entityManager
+                ->getRepository(UserShow::class)
+                ->findOneBy(['show' => $show, 'user' => $this->user])
+            ;
         } catch (ORMException $e) {
             throw new NotFoundHttpException();
         }
@@ -110,5 +111,49 @@ class UserShowService
         }
 
         return $formatted;
+    }
+
+    /**
+     * @param string $id
+     * @param string $type
+     * @throws ORMException
+     */
+    public function update($id, $type)
+    {
+        /** @var Show|null $show */
+        $show = $this->entityManager->getReference(Show::class, $id);
+        $userShow = $this->entityManager
+            ->getRepository(UserShow::class)
+            ->findBy(['user' => $this->user, 'show' => $show])
+        ;
+
+        if (!$userShow) {
+            $userShow = (new UserShow())
+                ->setUser($this->user)
+                ->setShow($show)
+            ;
+        }
+
+        if ($type === 'add') {
+            $userShow->setStatus(UserShow::STATUS_WATCHING);
+        }
+
+        $this->entityManager->persist($userShow);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param string $id
+     * @throws ORMException
+     */
+    public function remove($id)
+    {
+        $show = $this->entityManager->getReference(Show::class, $id);
+        $userShow = $this->entityManager
+            ->getRepository(UserShow::class)
+            ->findOneBy(['user' => $this->user, 'show' => $show])
+        ;
+        $this->entityManager->remove($userShow);
+        $this->entityManager->flush();
     }
 }

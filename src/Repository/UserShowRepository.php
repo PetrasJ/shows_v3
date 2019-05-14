@@ -77,6 +77,26 @@ class UserShowRepository extends EntityRepository
             ;
     }
 
+    public function getUserShows(User $user, array $shows)
+    {
+        $userShows = $this->createQueryBuilder('us')
+            ->select('s.id, us.status')
+            ->innerJoin('us.show', 's')
+            ->where('us.user = :user')
+            ->andWhere('us.show IN (:shows)')
+            ->setParameters(['user' => $user, 'shows' => $shows])
+            ->getQuery()
+            ->getResult();
+
+        $result = [];
+        foreach ($userShows as $userShow)
+        {
+            $result[$userShow['id']] = $userShow['status'];
+        }
+
+        return $result;
+    }
+
     /**
      * @param $userID
      * @param int $status

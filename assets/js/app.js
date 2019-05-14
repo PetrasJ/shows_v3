@@ -11,7 +11,8 @@ const app = {
         this.initSearch();
         this.initModals();
         this.initUnwatchedEpisodes();
-        $('.selectpicker').selectpicker()
+        $('.selectpicker').selectpicker();
+        this.initAddRemoveShow();
     },
     initSearch: function () {
         $('#search_show').autocomplete({
@@ -24,6 +25,15 @@ const app = {
             select: function (event, ui) {
                 window.location.href = window.baseUrl + 'search/select/' +ui.item.value;
             }
+        });
+    },
+    initAddRemoveShow: function () {
+        $('.add-show').unbind().on('click', function(e) {
+           alert($(this).data('id'));
+        });
+
+        $('.remove-show').unbind().on('click', function(e) {
+            alert($(this).data('id'));
         });
     },
     initModals: function () {

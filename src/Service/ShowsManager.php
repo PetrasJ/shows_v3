@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Show;
+use App\Entity\User;
 use App\Entity\UserShow;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -16,16 +17,23 @@ class ShowsManager
     private $episodesManager;
     private $client;
 
+    /**
+     * @var User|null
+     */
+    private $user;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         ImageService $imageService,
-        EpisodesManager $episodesManager
+        EpisodesManager $episodesManager,
+        Storage $storage
     )
     {
         $this->entityManager = $entityManager;
         $this->imageService = $imageService;
         $this->episodesManager = $episodesManager;
         $this->client = new Client();
+        $this->user = $storage->getUser();
     }
 
     public function load()
@@ -62,7 +70,13 @@ class ShowsManager
     }
 
     public function findFull(string $term) {
-        return $this->entityManager->getRepository(Show::class)->findBy(['name' => $term]);
+        $shows = $this->entityManager->getRepository(Show::class)->findBy(['name' => $term]);
+        $userShows = $this->user
+            ? $this->entityManager
+                ->getRepository(UserShow::class)
+                ->getUserShows($this->user, $shows)
+            : [];
+        return ['shows' => $shows, 'userShows' => $userShows];
     }
 
     private function addShows($shows)
