@@ -26,7 +26,7 @@ class DefaultController extends AbstractController
      * @Route("/feedback", name="feedback")
      * @return Response
      */
-    public function settings(Request $request, Mailer $mailer)
+    public function feedback(Request $request, Mailer $mailer)
     {
         $feedback = new Feedback();
 
@@ -34,7 +34,7 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $mailer->send($feedback);
+            $mailer->sendFeedback($feedback);
         }
 
         return $this->render('feedback.html.twig', ['form' => $form->createView()]);
