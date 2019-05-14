@@ -2,51 +2,59 @@
 
 {% block body %}
     {{ shows|length }}
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">{{ 'show.show'|trans }}</th>
-            <th scope="col">{{ 'show.Previous Episode'|trans }}</th>
-            <th scope="col">{{ 'show.Next Episode'|trans }}</th>
-            <th scope="col">{{ 'show.Actions'|trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="row">
+        <div class="col-3">
+            {{ 'show.show'|trans }}
+        </div>
+        <div class="col-3">
+            {{ 'show.Previous Episode'|trans }}
+        </div>
+        <div class="col-3">
+            {{ 'show.Next Episode'|trans }}
+        </div>
+        <div class="col-3">
+            {{ 'show.Actions'|trans }}
+        </div>
+    </div>
 
-        {% set showstatus = null %}
-        {% for show in shows %}
-            {% if (showstatus != show.status) %}
-                {% set showstatus = show.status %}
-                <tr>
-                    <td colspan="4"><h4>{{ ('show.'~show.status)|trans }}</h4></td>
-                </tr>
-            {% endif %}
-            <tr>
-                <td>{{ show.name }} ({{ show.episodesCount-show.watchedCount }})</td>
-                <td>{% if show.lastEpisode %}
-                        {{ show.lastEpisode.modifiedDate|dateTimezone }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if show.nextEpisode %}
-                        {{ show.nextEpisode.modifiedDate|dateTimezone }}
-                    {% endif %}
-                </td>
-                <td>
-                    <button data-toggle="modal" data-target="#show-settings"
-                            class="btn btn-warning show-settings"
-                            data-id="{{ show.id }}"
-                            data-title="{{ show.name }}"
-                            data-offset="{{ show.offset }}">
-                        <i class="fa fa-cog" aria-hidden="true"></i>
-                    </button>
-
-
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+    {% set showstatus = null %}
+    {% for show in shows %}
+        {% if (showstatus != show.status) %}
+            {% set showstatus = show.status %}
+            <div class="col-12">
+                <h4>{{ ('show.'~show.status)|trans }}</h4>
+            </div>
+        {% endif %}
+        <div id="{{ show.id }}" class="row py-1 border-bottom">
+            <div class="col-3">
+                {{ show.name }} ({{ show.episodesCount-show.watchedCount }})
+            </div>
+            <div class="col-3">
+                {% if show.lastEpisode %}
+                    {{ show.lastEpisode.modifiedDate|dateTimezone }}
+                {% endif %}
+            </div>
+            <div class="col-3">
+                {% if show.nextEpisode %}
+                    {{ show.nextEpisode.modifiedDate|dateTimezone }}
+                {% endif %}
+            </div>
+            <div class="col-3">
+                <button data-toggle="modal" data-target="#show-settings"
+                        class="btn btn-warning show-settings"
+                        data-id="{{ show.id }}"
+                        data-title="{{ show.name }}"
+                        data-offset="{{ show.offset }}">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-secondary archive-show" data-id="{{ show.id }}">
+                    <i class="fa fa-archive" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-secondary postpone-show" data-id="{{ show.id }}">
+                    <i class="fa fa-tasks" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
     {% include 'modals/show-settings.html.twig' %}
 {% endblock %}
