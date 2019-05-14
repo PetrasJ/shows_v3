@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
@@ -44,7 +45,7 @@ class Feedback
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @ORM\Version
+     * @Gedmo\Timestampable(on="create")
      * @var DateTime
      */
     protected $created;

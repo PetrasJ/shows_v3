@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04ad8ebe-cb9f-49c4-9091-0e48b806700b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/feedback/sent.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DefaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Mailer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Mailer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Feedback.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Feedback.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/FeedbackType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/FeedbackType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/feedback.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/feedback/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,30 +22,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/UserType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
-              <folding>
-                <element signature="e#28#48#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Service/EpisodesManager.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="69" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="69" />
-              <folding>
-                <element signature="e#31#54#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Service/Mailer.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="145">
@@ -53,45 +33,70 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/symfony/http-kernel/HttpKernel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="66" column="53" selection-start-line="66" selection-start-column="53" selection-end-line="66" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/feedback.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-              <folding>
-                <element signature="e#52#74#0#Twig" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+            <state relative-caret-position="178">
+              <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
               <folding>
                 <element signature="e#34#58#0#PHP" expanded="true" />
-                <element signature="e#1013#1033#0#PHP" expanded="true" />
+                <element signature="e#1007#1032#1#PHP" expanded="true" />
+                <element signature="e#1021#1047#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/symfony/framework-bundle/Controller/ControllerTrait.php">
+        <entry file="file://$PROJECT_DIR$/templates/feedback/sent.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-103">
-              <caret line="315" selection-start-line="315" selection-end-line="315" />
+            <state relative-caret-position="51">
+              <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+              <folding>
+                <element signature="e#12#26#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/translations/messages.en.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="147">
+              <caret line="103" column="8" selection-start-line="103" selection-start-column="4" selection-end-line="103" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/feedback/index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="16" />
+              <folding>
+                <element signature="e#12#26#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/default/index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret selection-end-column="30" />
+              <folding>
+                <element signature="e#12#26#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -99,11 +104,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Entity/Feedback.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-              <folding>
-                <element signature="e#30#62#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="85">
+              <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -111,23 +122,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Form/FeedbackType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+            <state relative-caret-position="345">
+              <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
               <folding>
                 <element signature="e#30#54#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="39" />
-              <folding>
-                <element signature="e#34#56#0#PHP" expanded="true" />
-                <element signature="e#1088#1113#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -137,7 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>episode_id</find>
       <find>getEpisodes</find>
       <find>user</find>
       <find>getShows</find>
@@ -167,6 +164,7 @@
       <find>orm</find>
       <find>rende</find>
       <find>renderView</find>
+      <find>sent</find>
     </findStrings>
     <replaceStrings>
       <replace>$show-&gt;</replace>
@@ -194,8 +192,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/modals/modal.html.twig" />
-        <option value="$PROJECT_DIR$/templates/modals/show-settings.html.twig" />
         <option value="$PROJECT_DIR$/src/Service/EpisodesManager.php" />
         <option value="$PROJECT_DIR$/src/Entity/Show.php" />
         <option value="$PROJECT_DIR$/src/EventListener/RequestListener.php" />
@@ -232,7 +228,6 @@
         <option value="$PROJECT_DIR$/src/Repository/UserShowRepository.php" />
         <option value="$PROJECT_DIR$/templates/search/results.html.twig" />
         <option value="$PROJECT_DIR$/config/packages/doctrine.yaml" />
-        <option value="$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml" />
         <option value="$PROJECT_DIR$/config/services.yaml" />
         <option value="$PROJECT_DIR$/src/Entity/UserShow.php" />
         <option value="$PROJECT_DIR$/src/Service/UserShowService.php" />
@@ -240,10 +235,13 @@
         <option value="$PROJECT_DIR$/assets/js/app.js" />
         <option value="$PROJECT_DIR$/templates/shows/index.html.twig" />
         <option value="$PROJECT_DIR$/templates/feedback.html.twig" />
-        <option value="$PROJECT_DIR$/src/Entity/Feedback.php" />
         <option value="$PROJECT_DIR$/src/Form/UserType.php" />
-        <option value="$PROJECT_DIR$/src/Form/FeedbackType.php" />
         <option value="$PROJECT_DIR$/src/Service/Mailer.php" />
+        <option value="$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml" />
+        <option value="$PROJECT_DIR$/src/Entity/Feedback.php" />
+        <option value="$PROJECT_DIR$/src/Form/FeedbackType.php" />
+        <option value="$PROJECT_DIR$/templates/feedback/index.html.twig" />
+        <option value="$PROJECT_DIR$/templates/feedback/sent.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/DefaultController.php" />
       </list>
     </option>
@@ -357,9 +355,8 @@
     </include_path>
   </component>
   <component name="PhpXdebugProxy" ide_key="PHPSTORM" port="9000" />
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2" />
-    <option name="y" value="6" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="778" />
     <option name="width" value="1137" />
     <option name="height" value="1000" />
   </component>
@@ -455,6 +452,18 @@
               <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
               <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="default" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="feedback" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="form" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -494,6 +503,7 @@
       <recent name="D:\xampp\htdocs\shows_v3\src\Resources\FOSUserBundle\views\Security" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\shows_v3\templates\feedback" />
       <recent name="D:\xampp\htdocs\shows_v3\src\Service" />
     </key>
   </component>
@@ -547,7 +557,7 @@
       <workItem from="1557774843767" duration="4565000" />
       <workItem from="1557808291383" duration="3722000" />
       <workItem from="1557845233965" duration="2853000" />
-      <workItem from="1557853521899" duration="1872000" />
+      <workItem from="1557853521899" duration="2912000" />
     </task>
     <task id="LOCAL-00001" summary="add fos user, templates">
       <created>1557467721664</created>
@@ -857,11 +867,18 @@
       <option name="project" value="LOCAL" />
       <updated>1557855374195</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="feedback save">
+      <created>1557855404119</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1557855404119</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98492000" />
+    <option name="totallyTimeSpent" value="99532000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -873,17 +890,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="778" y="0" width="1137" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49752882" visible="true" weight="0.17643923" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49752882" visible="true" weight="0.3073352" />
       <window_info id="Structure" order="1" sideWeight="0.50247115" side_tool="true" weight="0.478145" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.85231733" visible="true" weight="0.46333334" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.85231733" visible="true" weight="0.49407583" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" />
@@ -1041,11 +1058,6 @@
           <line>125</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Controller/DefaultController.php</url>
-          <line>32</line>
-          <option name="timeStamp" value="73" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -1099,23 +1111,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/bootstrap/dist/js/bootstrap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/unwatched-shows/episodes.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="72" selection-start-line="13" selection-start-column="72" selection-end-line="13" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/form/watch.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -1191,13 +1186,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/translations/messages.ru.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2125">
-          <caret line="125" column="24" selection-start-line="125" selection-start-column="24" selection-end-line="125" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/translations/messages.en.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2125">
           <caret line="125" column="24" selection-start-line="125" selection-start-column="24" selection-end-line="125" selection-end-column="24" />
@@ -1320,13 +1308,6 @@
     <entry file="file://$PROJECT_DIR$/config/packages/twig_extensions.yaml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/SearchController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="918">
@@ -1375,16 +1356,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3230">
-          <caret line="193" selection-start-line="193" selection-end-line="193" />
-          <folding>
-            <element signature="e#30#43#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/shows/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
@@ -1430,26 +1401,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/feedback.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-          <folding>
-            <element signature="e#52#74#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Feedback.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-          <folding>
-            <element signature="e#30#62#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/framework-bundle/Controller/ControllerTrait.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-103">
@@ -1463,16 +1414,6 @@
           <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
           <folding>
             <element signature="e#28#48#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Form/FeedbackType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
-          <folding>
-            <element signature="e#30#54#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1494,13 +1435,82 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Feedback.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/FeedbackType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+          <folding>
+            <element signature="e#30#54#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/default/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="30" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/feedback/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="16" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/translations/messages.en.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="103" column="8" selection-start-line="103" selection-start-column="4" selection-end-line="103" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/feedback/sent.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+        <state relative-caret-position="178">
+          <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
           <folding>
             <element signature="e#34#58#0#PHP" expanded="true" />
-            <element signature="e#1013#1033#0#PHP" expanded="true" />
+            <element signature="e#1007#1032#1#PHP" expanded="true" />
+            <element signature="e#1021#1047#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

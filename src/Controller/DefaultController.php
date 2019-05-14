@@ -35,8 +35,9 @@ class DefaultController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $mailer->sendFeedback($feedback);
+            return $this->render('feedback/sent.html.twig');
         }
 
-        return $this->render('feedback.html.twig', ['form' => $form->createView()]);
+        return $this->render('feedback/index.html.twig', ['form' => $form->createView()]);
     }
 }
