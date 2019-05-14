@@ -14,11 +14,13 @@ class UserShowService
 {
     private $entityManager;
     private $user;
+    private $episodesManager;
 
-    public function __construct(EntityManagerInterface $entityManager, Storage $storage)
+    public function __construct(EntityManagerInterface $entityManager, Storage $storage, EpisodesManager $episodesManager)
     {
         $this->entityManager = $entityManager;
         $this->user = $storage->getUser();
+        $this->episodesManager = $episodesManager;
     }
 
     /**
@@ -114,29 +116,34 @@ class UserShowService
     }
 
     /**
-     * @param string $id
-     * @param string $type
+     * @param string          $id
+     * @param string          $type
      * @throws ORMException
      */
     public function update($id, $type)
     {
         /** @var Show|null $show */
         $show = $this->entityManager->getReference(Show::class, $id);
+        $this->entityManager->getFilters()->disable('softdeleteable');
         $userShow = $this->entityManager
             ->getRepository(UserShow::class)
-            ->findBy(['user' => $this->user, 'show' => $show])
+            ->findOneBy(['user' => $this->user, 'show' => $show])
         ;
 
         if (!$userShow) {
             $userShow = (new UserShow())
                 ->setUser($this->user)
                 ->setShow($show)
+                ->setOffset(0)
             ;
         }
 
+        $userShow->setDeletedAt(null);
         if ($type === 'add') {
             $userShow->setStatus(UserShow::STATUS_WATCHING);
         }
+
+        $this->episodesManager->addEpisodes($show);
 
         $this->entityManager->persist($userShow);
         $this->entityManager->flush();

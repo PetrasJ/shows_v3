@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user_shows")
  * @ORM\Entity(repositoryClass="App\Repository\UserShowRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class UserShow
 {
@@ -52,6 +56,12 @@ class UserShow
      * @ORM\Column(type="integer", nullable=true)
      */
     private $offset;
+
+    /**
+     * @var DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $deletedAt;
 
     public function __construct()
     {
@@ -161,5 +171,24 @@ class UserShow
     public function getOffset()
     {
         return $this->offset;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDeletedAt(): ?DateTime
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param DateTime|null $deletedAt
+     * @return UserShow
+     */
+    public function setDeletedAt(?DateTime $deletedAt): UserShow
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
     }
 }
