@@ -28,7 +28,7 @@ class ShowsController extends AbstractController
     {
         $shows = $userShowService->getShows($status);
 
-        return $this->render('shows/index.html.twig', ['shows' => $shows]);
+        return $this->render('shows/index.html.twig', ['shows' => $shows, 'status' => $status]);
     }
 
     /**

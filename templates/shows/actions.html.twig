@@ -1,0 +1,30 @@
+{% if status != constant('App\\Entity\\UserShow::STATUS_WATCHING') %}
+    <button class="btn btn-success" data-id="{{ show.id }}"
+            data-action="{{ path('shows_add', {showId: show.id}) }}"
+            data-toggle="modal"
+            data-text="{{ 'show.restore show (add to watching)'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
+        <i class="fa fa-undo" aria-hidden="true"></i>
+    </button>
+{% endif %}
+{% if status != constant('App\\Entity\\UserShow::STATUS_ARCHIVED') %}
+    <button class="btn btn-secondary" data-id="{{ show.id }}"
+            data-action="{{ path('shows_archive', {showId: show.id}) }}"
+            data-toggle="modal"
+            data-text="{{ 'show.archive show'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
+        <i class="fa fa-archive" aria-hidden="true"></i>
+    </button>
+{% endif %}
+{% if status != constant('App\\Entity\\UserShow::STATUS_WATCH_LATER') %}
+    <button class="btn btn-secondary" data-id="{{ show.id }}"
+            data-action="{{ path('shows_watch_later', {showId: show.id}) }}"
+            data-toggle="modal"
+            data-text="{{ 'show.watch later'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
+        <i class="fa fa-tasks" aria-hidden="true"></i>
+    </button>
+{% endif %}
+<button class="btn btn-danger" data-id="{{ show.id }}"
+        data-action="{{ path('shows_remove', {showId: show.id}) }}"
+        data-toggle="modal"
+        data-text="{{ 'show.remove show'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
+    <i class="fa fa-trash" aria-hidden="true"></i>
+</button>
