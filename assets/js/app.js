@@ -13,6 +13,8 @@ const app = {
         this.initUnwatchedEpisodes();
         $('.selectpicker').selectpicker();
         this.initAddRemoveShow();
+        this.initShowList();
+        this.initConfirm();
     },
     initSearch: function () {
         $('#search_show').autocomplete({
@@ -23,15 +25,15 @@ const app = {
                 event.preventDefault();
             },
             select: function (event, ui) {
-                window.location.href = window.baseUrl + 'search/select/' +ui.item.value;
+                window.location.href = window.baseUrl + 'search/select/' + ui.item.value;
             }
         });
     },
     initAddRemoveShow: function () {
-        $('.add-show').unbind().on('click', function(e) {
+        $('.add-show').unbind().on('click', function () {
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + 'search/add/' + $(this).data('id'),
+                url: window.baseUrl + 'shows/add/' + $(this).data('id'),
                 data: {
                     id: $(this).data('id'),
                     value: $(this).val()
@@ -44,10 +46,10 @@ const app = {
             });
         });
 
-        $('.remove-show').unbind().on('click', function(e) {
+        $('.remove-show').unbind().on('click', function () {
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + 'search/remove/' + $(this).data('id'),
+                url: window.baseUrl + 'shows/remove/' + $(this).data('id'),
                 data: {
                     id: $(this).data('id'),
                     value: $(this).val()
@@ -69,6 +71,20 @@ const app = {
             modal.find('.show-offset').val(button.data('offset')).attr('data-id', button.data('id'));
             t.initSettings();
         })
+    },
+    initShowList: function () {
+        $('.update-show').unbind().on('click', function () {
+            const id = $(this).data('id');
+            $.ajax({
+                type: 'post',
+                url: window.baseUrl + 'shows/' + $(this).data('action') + '/' + id,
+                success: () => {
+                    $('#' + id).slideUp()
+                }
+            }).fail(function (data) {
+                console.log(data);
+            });
+        });
     },
     initSettings: function () {
         $('.show-offset').change(function () {
@@ -129,6 +145,26 @@ const app = {
                 },
             }).fail(function (data) {
                 console.log(data);
+            });
+        });
+    },
+    initConfirm: function () {
+        $('#confirm').on('show.bs.modal', function(e) {
+            const button = $(e.relatedTarget);
+            const modal = $(this);
+            modal.find('.modal-body').html(button.data('text'));
+            $(this).find('.confirm').unbind().on('click', function () {
+                $.ajax({
+                    type: 'post',
+                    url: button.data('action'),
+                    success: () => {
+                        $('#' + button.data('id')).slideUp()
+                    }
+                }).fail(function (data) {
+                    console.log(data);
+                }).always(function () {
+                    modal.modal('hide');
+                });
             });
         });
     }

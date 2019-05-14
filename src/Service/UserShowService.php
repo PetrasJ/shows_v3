@@ -55,6 +55,7 @@ class UserShowService
             throw new NotFoundHttpException();
         }
 
+
         $userShow->setOffset($data['offset']);
         $this->entityManager->persist($userShow);
         $this->entityManager->flush();
@@ -141,6 +142,10 @@ class UserShowService
         $userShow->setDeletedAt(null);
         if ($type === 'add') {
             $userShow->setStatus(UserShow::STATUS_WATCHING);
+        } elseif ($type === 'archive') {
+            $userShow->setStatus(UserShow::STATUS_ARCHIVED);
+        } elseif ($type === 'watch-later') {
+            $userShow->setStatus(UserShow::STATUS_WATCH_LATER);
         }
 
         $this->episodesManager->addEpisodes($show);

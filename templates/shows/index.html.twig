@@ -47,11 +47,23 @@
                         data-offset="{{ show.offset }}">
                     <i class="fa fa-cog" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-secondary archive-show" data-id="{{ show.id }}">
+                <button class="btn btn-secondary" data-id="{{ show.id }}"
+                        data-action="{{ path('shows_archive', {showId: show.id}) }}"
+                        data-toggle="modal"
+                        data-text="{{ 'show.archive show'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
                     <i class="fa fa-archive" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-secondary postpone-show" data-id="{{ show.id }}">
+                <button class="btn btn-secondary" data-id="{{ show.id }}"
+                        data-action="{{ path('shows_watch_later', {showId: show.id}) }}"
+                        data-toggle="modal"
+                        data-text="{{ 'show.watch later'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
                     <i class="fa fa-tasks" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-danger" data-id="{{ show.id }}"
+                        data-action="{{ path('shows_remove', {showId: show.id}) }}"
+                        data-toggle="modal"
+                        data-text="{{ 'show.remove show'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
