@@ -29,11 +29,35 @@ const app = {
     },
     initAddRemoveShow: function () {
         $('.add-show').unbind().on('click', function(e) {
-           alert($(this).data('id'));
+            $.ajax({
+                type: 'post',
+                url: window.baseUrl + 'search/add/' + $(this).data('id'),
+                data: {
+                    id: $(this).data('id'),
+                    value: $(this).val()
+                },
+                success: () => {
+                    $(this).hide()
+                }
+            }).fail(function (data) {
+                console.log(data);
+            });
         });
 
         $('.remove-show').unbind().on('click', function(e) {
-            alert($(this).data('id'));
+            $.ajax({
+                type: 'post',
+                url: window.baseUrl + 'search/remove/' + $(this).data('id'),
+                data: {
+                    id: $(this).data('id'),
+                    value: $(this).val()
+                },
+                success: () => {
+                    $(this).hide()
+                }
+            }).fail(function (data) {
+                console.log(data);
+            });
         });
     },
     initModals: function () {

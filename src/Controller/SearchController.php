@@ -58,11 +58,11 @@ class SearchController extends AbstractController
      */
     public function add($id, UserShowService $userShowService)
     {
-     //   try {
+        try {
             $userShowService->update($id, 'add');
-   /*     } catch (Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
-        }*/
+        }
 
         return new JsonResponse(['success' => true]);
     }
