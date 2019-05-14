@@ -32,15 +32,16 @@ class UserType extends AbstractType
                 ],
                 'choice_translation_domain' => false,
             ])
-      /*      ->add('facebookId', TextType::class, [
-                'label' => 'facebook_id',
-            ])*/
+            /*      ->add('facebookId', TextType::class, [
+                      'label' => 'facebook_id',
+                  ])*/
             ->add('defaultOffset', NumberType::class, [
                 'label' => 'show.offset',
             ])
             ->add('submit', SubmitType::class, [
-        'label' => 'save',
-    ]);
+                'label' => 'save',
+            ])
+        ;
     }
 
     /**
