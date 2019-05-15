@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping\Index;
  * @ORM\Entity
  * @ORM\Table(name="user_episodes",indexes={
  *      @Index(name="showID", columns={"show_id"}),
- *      @Index(name="userShowID", columns={"user_show_id"})
+ *      @Index(name="userShowID", columns={"user_show_id"}),
+ *      @Index(name="userId_episodeID", columns={"user_id", "episode_id"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\UserEpisodeRepository")
  */
