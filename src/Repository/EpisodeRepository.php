@@ -49,7 +49,7 @@ class EpisodeRepository extends EntityRepository
      * @param string $order
      * @return array
      */
-    public function getUnwatchedEpisodes(User $user, int $showId, string $order = 'desc'): ?array
+    public function getUnwatchedEpisodes(User $user, int $showId, string $order = 'asc'): ?array
     {
         return $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment')
@@ -66,7 +66,10 @@ class EpisodeRepository extends EntityRepository
                 'user' => $user,
                 'showId' => $showId,
             ])
-            ->orderBy('e.airdate', $order)
+            ->orderBy('e.airstamp', $order)
+            ->addOrderBy('e.season', $order)
+            ->addOrderBy('e.episode', $order)
+            ->setMaxResults(100)
             ->getQuery()
             ->getResult();
     }

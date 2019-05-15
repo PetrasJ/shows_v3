@@ -37,12 +37,14 @@ class Episode
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var int
+     * @ORM\Column(type="integer", length=100, nullable=true)
      */
     private $season;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var int
+     * @ORM\Column(type="integer", length=100, nullable=true)
      */
     private $episode;
 
