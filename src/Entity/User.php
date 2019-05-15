@@ -19,18 +19,6 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var string
-     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
-     */
-    private $facebookId;
-
-    /**
-     * @var string
-     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
-     */
-    private $facebookAccessToken;
-
-    /**
      * @var int
      * @ORM\Column(type="integer", nullable=false)
      */
@@ -102,44 +90,6 @@ class User extends BaseUser
     public function setDefaultOffset(int $defaultOffset = null): User
     {
         $this->defaultOffset = $defaultOffset;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFacebookId(): ?string
-    {
-        return $this->facebookId;
-    }
-
-    /**
-     * @param string $facebookId
-     * @return User
-     */
-    public function setFacebookId(string $facebookId): User
-    {
-        $this->facebookId = $facebookId;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFacebookAccessToken(): string
-    {
-        return $this->facebookAccessToken;
-    }
-
-    /**
-     * @param string $facebookAccessToken
-     * @return User
-     */
-    public function setFacebookAccessToken(string $facebookAccessToken): User
-    {
-        $this->facebookAccessToken = $facebookAccessToken;
 
         return $this;
     }
