@@ -31,7 +31,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->save($user);
-            if ($user->getLocale() && $request->getLocale() !== $user->getLocale()) {
+            if ($user->getLocale()) {
                 $request->setLocale($user->getLocale());
                 return $this->redirect($this->generateUrl('user_settings', ['_locale' => $user->getLocale()]));
             }

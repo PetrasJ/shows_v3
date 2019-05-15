@@ -32,9 +32,9 @@ menu:
     unwatched: Unwatched
     calendar: Calendar
     shows: Shows
-    user_shows: User Shows
-    archived_shows: Archived Shows
-    watchlater_shows: Watch Later Shows
+    watching: Watching
+    archived: Archived
+    watchlater: Watch Later
     update_your_shows: Update your Shows
     check_for_new_shows: Check for new Shows
     user: User

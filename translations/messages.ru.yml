@@ -32,9 +32,9 @@ menu:
     unwatched: не видел
     calendar: Календарь
     shows: Сериалы
-    user_shows: Пользовательские серийные номера
-    archived_shows: Архивирование серийных номеров
-    watchlater_shows: Отложить сеансы
+    watching: наблюдение
+    archived: Архивировано
+    watchlater: Отложить в сторону
     update_your_shows: Обновите свои серийные номера
     check_for_new_shows: Проверить новые сериалы
     user: пользователь

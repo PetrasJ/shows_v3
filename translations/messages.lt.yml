@@ -32,9 +32,9 @@ menu:
     unwatched: Nematyti
     calendar: Kalendorius
     shows: Serialai
-    user_shows: Vartotojo Serialai
-    archived_shows: Suarchyvuoti Serialai
-    watchlater_shows: Atidėti Serialai
+    watching: Žiūrimi
+    archived: Suarchyvuoti
+    watchlater: Atidėti
     update_your_shows: Atnaujinti savo Serialus
     check_for_new_shows: Patikrinti ar nėra naujų serialų
     user: Vartotojas

@@ -31,17 +31,17 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ 'menu.shows'|trans }}
+                            <i class="fa fa-film" aria-hidden="true"></i> {{ 'menu.shows'|trans }}
                         </a>
                         <div class="dropdown-menu">
                             <a class="nav-link" href="{{ path('shows_index') }}">
-                                <i class="fa fa-film" aria-hidden="true"></i> {{ 'menu.user_shows'|trans }}
+                                {{ 'menu.watching'|trans }}
                             </a>
                             <a class="nav-link" href="{{ path('shows_index', {'status': constant('App\\Entity\\UserShow::STATUS_ARCHIVED')}) }}">
-                                <i class="fa fa-archive" aria-hidden="true"></i> {{ 'menu.archived_shows'|trans }}
+                                {{ 'menu.archived'|trans }}
                             </a>
                             <a class="nav-link" href="{{ path('shows_index', {'status': constant('App\\Entity\\UserShow::STATUS_WATCH_LATER')}) }}">
-                                <i class="fa fa-tasks" aria-hidden="true"></i> {{ 'menu.watchlater_shows'|trans }}
+                                {{ 'menu.watchlater'|trans }}
                             </a>
                         </div>
                     </li>
