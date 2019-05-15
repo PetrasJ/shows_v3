@@ -15,12 +15,14 @@ class UserShowService
     private $entityManager;
     private $user;
     private $episodesManager;
+    private $showsManager;
 
-    public function __construct(EntityManagerInterface $entityManager, Storage $storage, EpisodesManager $episodesManager)
+    public function __construct(EntityManagerInterface $entityManager, Storage $storage, EpisodesManager $episodesManager, ShowsManager $showsManager)
     {
         $this->entityManager = $entityManager;
         $this->user = $storage->getUser();
         $this->episodesManager = $episodesManager;
+        $this->showsManager = $showsManager;
     }
 
     /**
@@ -122,8 +124,7 @@ class UserShowService
             $userShow->setStatus(UserShow::STATUS_WATCH_LATER);
         }
 
-        $this->episodesManager->addEpisodes($show);
-
+        $this->showsManager->updateShow($show->getId());
         $this->entityManager->persist($userShow);
         $this->entityManager->flush();
     }

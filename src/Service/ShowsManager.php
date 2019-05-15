@@ -121,7 +121,7 @@ class ShowsManager
         return $newShow;
     }
 
-    private function updateShow($showId): bool
+    public function updateShow($showId): bool
     {
         $show = json_decode($this->client->get(
             sprintf('%s/%d', self::API_URL, $showId))->getBody()
