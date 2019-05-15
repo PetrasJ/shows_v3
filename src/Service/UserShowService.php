@@ -75,50 +75,24 @@ class UserShowService
         return $this->formatShows($shows);
     }
 
-    private function formatShows($shows)
+    /**
+     * @param $showId
+     * @return UserShow|null
+     * @throws ORMException
+     */
+    public function getShow($showId)
     {
-        $formatted = [];
-        foreach ($shows as $userShow) {
-            /** @var UserShow $userShow */
-            $episodes = $userShow->getShow()->getEpisodes();
+        $show = $this->entityManager->getReference(Show::class, $showId);
 
-            $lastEpisode = null;
-            $nextEpisode = null;
-            $now = (new DateTime())->modify(sprintf('-%d hours', $userShow->getOffset()));
-
-            $count = 0;
-            foreach ($episodes as $episode) {
-                /** @var Episode $episode */
-                $date = $episode->getAirstamp();
-                if ($date < $now) {
-                    $count++;
-                    $lastEpisode = $episode
-                        ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));
-                } else {
-                    $nextEpisode = $episode
-                        ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));
-                    break;
-                }
-            }
-
-            $formatted[] = [
-                'id' => $userShow->getShow()->getId(),
-                'status' => $userShow->getShow()->getStatus(),
-                'name' => $userShow->getShow()->getName(),
-                'episodesCount' => $count,
-                'watchedCount' => $userShow->getUserEpisodes()->count(),
-                'lastEpisode' => $lastEpisode,
-                'nextEpisode' => $nextEpisode,
-                'offset' => $userShow->getOffset(),
-            ];
-        }
-
-        return $formatted;
+        return $this->entityManager
+            ->getRepository(UserShow::class)
+            ->findOneBy(['user' => $this->user, 'show' => $show])
+            ;
     }
 
     /**
-     * @param string          $id
-     * @param string          $type
+     * @param string $id
+     * @param string $type
      * @throws ORMException
      */
     public function update($id, $type)
@@ -167,5 +141,46 @@ class UserShowService
         ;
         $this->entityManager->remove($userShow);
         $this->entityManager->flush();
+    }
+
+    private function formatShows($shows): array
+    {
+        $formatted = [];
+        foreach ($shows as $userShow) {
+            /** @var UserShow $userShow */
+            $episodes = $userShow->getShow()->getEpisodes();
+
+            $lastEpisode = null;
+            $nextEpisode = null;
+            $now = (new DateTime())->modify(sprintf('-%d hours', $userShow->getOffset()));
+
+            $count = 0;
+            foreach ($episodes as $episode) {
+                /** @var Episode $episode */
+                $date = $episode->getAirstamp();
+                if ($date < $now) {
+                    $count++;
+                    $lastEpisode = $episode
+                        ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));
+                } else {
+                    $nextEpisode = $episode
+                        ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));
+                    break;
+                }
+            }
+
+            $formatted[] = [
+                'id' => $userShow->getShow()->getId(),
+                'status' => $userShow->getShow()->getStatus(),
+                'name' => $userShow->getShow()->getName(),
+                'episodesCount' => $count,
+                'watchedCount' => $userShow->getUserEpisodes()->count(),
+                'lastEpisode' => $lastEpisode,
+                'nextEpisode' => $nextEpisode,
+                'offset' => $userShow->getOffset(),
+            ];
+        }
+
+        return $formatted;
     }
 }

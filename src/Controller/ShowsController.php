@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\UserEpisode;
 use App\Service\UserShowService;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -18,29 +19,59 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ShowsController extends AbstractController
 {
+    private $userShowService;
+
+    public function __construct(UserShowService $userShowService)
+    {
+        $this->userShowService = $userShowService;
+    }
+
     /**
      * @param                 $status
-     * @param UserShowService $userShowService
      * @Route("/list/{status}", name="index", defaults={"status":"0"})
      * @return Response
      */
-    public function index($status, UserShowService $userShowService)
+    public function index($status)
     {
-        $shows = $userShowService->getShows($status);
+        $shows = $this->userShowService->getShows($status);
 
         return $this->render('shows/index.html.twig', ['shows' => $shows, 'status' => $status]);
     }
 
     /**
-     * @param Request         $request
-     * @param UserShowService $userShowService
+     * @param $showId
+     * @Route("/details/{showId}", name="details")
+     */
+    public function show($showId)
+    {
+        $show = $this->userShowService->getShow($showId);
+
+        return $this->render('shows/show.html.twig', [
+            'show' => $show->getShow(),
+            'episodes' => $show->getShow()->getEpisodes(),
+            'userEpisodes' => $this->formatUserEpisodes($show->getUserEpisodes())
+            ]);
+    }
+
+    private function formatUserEpisodes($userEpisodes)
+    {
+        $episodes = [];
+        foreach ($userEpisodes as $episode)
+        {
+            /** @var UserEpisode $episode */
+            $episodes[$episode->getId()] = $episode->getStatus();
+        }
+    }
+
+    /**
+     * @param Request $request
      * @Route("/update", name="update")
      * @return JsonResponse
      */
-    public function update(Request $request, UserShowService $userShowService)
+    public function update(Request $request)
     {
         try {
-            $userShowService->updateShow($request->get('id'), ['offset' => $request->get('value')]);
+            $this->userShowService->updateShow($request->get('id'), ['offset' => $request->get('value')]);
         } catch (NotFoundHttpException $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -49,15 +80,14 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param string          $showId
-     * @param UserShowService $userShowService
+     * @param string $showId
      * @Route("/add/{showId}", name="add")
      * @return JsonResponse
      */
-    public function add(string $showId, UserShowService $userShowService)
+    public function add(string $showId)
     {
         try {
-            $userShowService->update($showId, 'add');
+            $this->userShowService->update($showId, 'add');
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -66,15 +96,14 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param string          $showId
-     * @param UserShowService $userShowService
+     * @param string $showId
      * @Route("/archive/{showId}", name="archive")
      * @return JsonResponse
      */
-    public function archive(string $showId, UserShowService $userShowService)
+    public function archive(string $showId)
     {
         try {
-            $userShowService->update($showId, 'archive');
+            $this->userShowService->update($showId, 'archive');
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -83,15 +112,14 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param string          $showId
-     * @param UserShowService $userShowService
+     * @param string $showId
      * @Route("/watch-later/{showId}", name="watch_later")
      * @return JsonResponse
      */
-    public function watchLater(string $showId, UserShowService $userShowService)
+    public function watchLater(string $showId)
     {
         try {
-            $userShowService->update($showId, 'watch-later');
+            $this->userShowService->update($showId, 'watch-later');
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -100,15 +128,14 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param string          $showId
-     * @param UserShowService $userShowService
+     * @param string $showId
      * @Route("/remove/{showId}", name="remove")
      * @return Response
      */
-    public function remove(string $showId, UserShowService $userShowService)
+    public function remove(string $showId)
     {
         try {
-            $userShowService->remove($showId);
+            $this->userShowService->remove($showId);
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }

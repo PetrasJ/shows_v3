@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ show.name }}
+
+    {% for episode in episodes %}
+        {{ episode.season }} {{ episode.episode }} {{ episode.summary }} <br>
+    {% endfor %}
+{% endblock %}

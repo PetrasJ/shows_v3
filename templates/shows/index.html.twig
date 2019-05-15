@@ -27,7 +27,9 @@
         {% endif %}
         <div id="{{ show.id }}" class="row py-1 border-bottom">
             <div class="col-3">
-                {{ show.name }} ({{ show.episodesCount-show.watchedCount }})
+                <a href="{{ path('shows_details', {'showId': show.id}) }}">
+                    {{ show.name }} ({{ show.episodesCount-show.watchedCount }})
+                </a>
             </div>
             <div class="col-3">
                 {% if show.lastEpisode %}
