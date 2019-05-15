@@ -48,7 +48,8 @@ class UserShow
     private $userEpisodes;
         
     /**
-     * @ORM\Column(type="string", length=250, nullable=true)
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $status;
 

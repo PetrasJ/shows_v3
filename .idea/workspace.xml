@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04ad8ebe-cb9f-49c4-9091-0e48b806700b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/shows/show.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ShowsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ShowsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UserShowService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UserShowService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shows/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shows/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/UserShow.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/UserShow.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,15 +29,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EventListener/RequestListener.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
@@ -58,20 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/shows/show.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
               <caret line="6" column="77" selection-start-line="6" selection-start-column="77" selection-end-line="6" selection-end-column="77" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/search/results.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="120" selection-start-line="5" selection-start-column="70" selection-end-line="5" selection-end-column="120" />
             </state>
           </provider>
         </entry>
@@ -89,34 +68,55 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Repository/UserShowRepository.php">
+        <entry file="file://$PROJECT_DIR$/src/Controller/ShowsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="884">
-              <caret line="57" column="20" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+            <state relative-caret-position="136">
+              <caret line="48" selection-start-line="48" selection-end-line="48" />
               <folding>
-                <element signature="e#34#54#0#PHP" expanded="true" />
+                <element signature="e#34#61#0#PHP" expanded="true" />
+                <element signature="e#1584#1606#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/js/app.js">
+        <entry file="file://$PROJECT_DIR$/src/Entity/UserEpisode.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2856">
-              <caret line="168" column="11" selection-start-line="168" selection-start-column="11" selection-end-line="168" selection-end-column="11" />
+            <state relative-caret-position="170">
+              <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="267">
+              <caret line="51" column="33" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
+              <folding>
+                <element signature="e#30#43#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/ShowsController.php">
+        <entry file="file://$PROJECT_DIR$/src/Entity/Show.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="47" selection-start-line="47" selection-end-line="47" />
+            <state relative-caret-position="238">
+              <caret line="15" column="14" lean-forward="true" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
               <folding>
-                <element signature="e#34#61#0#PHP" expanded="true" />
-                <element signature="e#1584#1606#0#PHP" expanded="true" />
+                <element signature="e#30#72#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -188,7 +188,6 @@
         <option value="$PROJECT_DIR$/src/Service/Storage.php" />
         <option value="$PROJECT_DIR$/src/Twig/DateExtension.php" />
         <option value="$PROJECT_DIR$/src/Entity/Episode.php" />
-        <option value="$PROJECT_DIR$/src/Entity/UserEpisode.php" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/templates/unwatched-shows/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Twig/EpisodeTitleExtension.php" />
@@ -214,7 +213,6 @@
         <option value="$PROJECT_DIR$/templates/search/results.html.twig" />
         <option value="$PROJECT_DIR$/config/packages/doctrine.yaml" />
         <option value="$PROJECT_DIR$/config/services.yaml" />
-        <option value="$PROJECT_DIR$/src/Entity/UserShow.php" />
         <option value="$PROJECT_DIR$/templates/feedback.html.twig" />
         <option value="$PROJECT_DIR$/src/Form/UserType.php" />
         <option value="$PROJECT_DIR$/src/Service/Mailer.php" />
@@ -236,6 +234,8 @@
         <option value="$PROJECT_DIR$/templates/shows/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/ShowsController.php" />
         <option value="$PROJECT_DIR$/templates/shows/show.html.twig" />
+        <option value="$PROJECT_DIR$/src/Entity/UserEpisode.php" />
+        <option value="$PROJECT_DIR$/src/Entity/UserShow.php" />
       </list>
     </option>
   </component>
@@ -407,6 +407,12 @@
               <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
               <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Entity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Service" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -470,7 +476,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -536,21 +542,7 @@
       <workItem from="1557808291383" duration="3722000" />
       <workItem from="1557845233965" duration="2853000" />
       <workItem from="1557853521899" duration="10333000" />
-      <workItem from="1557892474428" duration="2311000" />
-    </task>
-    <task id="LOCAL-00001" summary="add fos user, templates">
-      <created>1557467721664</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1557467721664</updated>
-    </task>
-    <task id="LOCAL-00002" summary="add manager">
-      <created>1557468626033</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1557468626033</updated>
+      <workItem from="1557892474428" duration="4556000" />
     </task>
     <task id="LOCAL-00003" summary="add guzzle, config xdebug">
       <created>1557470398905</created>
@@ -881,11 +873,25 @@
       <option name="project" value="LOCAL" />
       <updated>1557893972651</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="show details in progress">
+      <created>1557895286710</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1557895286715</updated>
+    </task>
+    <task id="LOCAL-00051" summary="dd user_episode index">
+      <created>1557913086251</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1557913086251</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="109264000" />
+    <option name="totallyTimeSpent" value="111509000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -907,7 +913,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.85231733" visible="true" weight="0.49407583" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.85231733" weight="0.49407583" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" />
@@ -915,7 +921,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4969819" weight="0.34295613" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.14768264" side_tool="true" weight="0.46189377" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4668008" weight="0.32444444" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4668008" visible="true" weight="0.3234597" />
       <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -991,8 +997,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modal in progress" />
-    <MESSAGE value="update offset ajax" />
     <MESSAGE value="add airstamp" />
     <MESSAGE value="relations fix" />
     <MESSAGE value="data migration in progress" />
@@ -1016,7 +1020,9 @@
     <MESSAGE value="add confirm dialog, show list actions" />
     <MESSAGE value="moved actions" />
     <MESSAGE value="add apache-pack" />
-    <option name="LAST_COMMIT_MESSAGE" value="add apache-pack" />
+    <MESSAGE value="show details in progress" />
+    <MESSAGE value="dd user_episode index" />
+    <option name="LAST_COMMIT_MESSAGE" value="dd user_episode index" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1104,23 +1110,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Service/UserEpisodeService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-24">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-          <folding>
-            <element signature="e#31#54#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/form/regular.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/form/settings.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1146,16 +1135,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="95" column="5" selection-start-line="95" selection-start-column="5" selection-end-line="95" selection-end-column="5" />
-          <folding>
-            <element signature="e#30#72#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1365,16 +1344,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
-          <folding>
-            <element signature="e#30#43#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/modals/show-settings.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1492,10 +1461,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/shows/show.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="77" selection-start-line="6" selection-start-column="77" selection-end-line="6" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/ShowsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
+        <state relative-caret-position="136">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
           <folding>
             <element signature="e#34#61#0#PHP" expanded="true" />
             <element signature="e#1584#1606#0#PHP" expanded="true" />
@@ -1503,10 +1479,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/shows/show.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Entity/UserEpisode.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="77" selection-start-line="6" selection-start-column="77" selection-end-line="6" selection-end-column="77" />
+        <state relative-caret-position="170">
+          <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Show.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" column="14" lean-forward="true" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+          <folding>
+            <element signature="e#30#72#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="51" column="33" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
+          <folding>
+            <element signature="e#30#43#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
