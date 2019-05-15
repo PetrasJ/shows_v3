@@ -124,7 +124,7 @@ class UserShowService
             $userShow->setStatus(UserShow::STATUS_WATCH_LATER);
         }
 
-        $this->showsManager->updateShow($show->getId());
+        $this->showsManager->updateShow($id);
         $this->entityManager->persist($userShow);
         $this->entityManager->flush();
     }
