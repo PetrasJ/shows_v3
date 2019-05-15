@@ -38,6 +38,10 @@ form.watch-show {
   display: inline-block;
 }
 
+.unwatched-show {
+  display: inline-block;
+}
+
 .unwatched-show:hover {
   cursor: pointer;
 }

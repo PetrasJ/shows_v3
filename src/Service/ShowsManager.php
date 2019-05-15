@@ -79,16 +79,16 @@ class ShowsManager
         return ['shows' => $shows, 'userShows' => $userShows];
     }
 
+    public function getShow($showId)
+    {
+        return $this->entityManager->getRepository(Show::class)->findOneBy(['id' => $showId]);
+    }
+
     private function addShows($shows)
     {
         foreach ($shows as $show) {
             $this->addShow($show);
         }
-    }
-
-    private function getShow($show)
-    {
-        return $this->entityManager->getRepository(Show::class)->findOneBy(['id' => $show->id]);
     }
 
     private function addShow($show): ?Show
@@ -97,7 +97,7 @@ class ShowsManager
             return null;
         }
 
-        if ($this->getShow($show)) {
+        if ($this->getShow($show->id)) {
             return null;
         }
 
@@ -126,7 +126,7 @@ class ShowsManager
         $show = json_decode($this->client->get(
             sprintf('%s/%d', self::API_URL, $showId))->getBody()
         );
-        $showEntity = $this->getShow($show);
+        $showEntity = $this->getShow($show->id);
 
         if (!$showEntity) {
             $showEntity = $this->addShow($show);

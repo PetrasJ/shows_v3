@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ShowsManager;
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
 use Exception;
@@ -41,15 +42,16 @@ class UnwatchedShowsController extends AbstractController
      * @Route("/{showId}/episodes", name="episodes")
      * @return Response
      */
-    public function unwatchedEpisodes(int $showId, UserEpisodeService $userEpisodeService)
+    public function unwatchedEpisodes(int $showId, UserEpisodeService $userEpisodeService, ShowsManager $showsManager)
     {
         try {
+            $show = $showsManager->getShow($showId);
             $episodes = $userEpisodeService->getUnwatchedEpisodes($showId);
         } catch (NotFoundHttpException $e) {
             return new Response([], 404);
         }
 
-        return $this->render('unwatched-shows/episodes.html.twig', ['episodes' => $episodes]);
+        return $this->render('unwatched-shows/episodes.html.twig', ['episodes' => $episodes, 'show' => $show]);
     }
 
     /**

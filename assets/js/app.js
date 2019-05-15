@@ -109,7 +109,8 @@ const app = {
                 url: $(this).data('link'),
                 success: (data) => {
                     $('#result').hide().html(data).slideDown();
-                    t.initWatchActions()
+                    t.initWatchActions();
+                    $('.unwatched-shows').slideUp();
                 }
             }).fail(function (data) {
                 console.log(data);
@@ -120,6 +121,8 @@ const app = {
     initWatchActions: function () {
         $('.watch-episode').unbind().on('click', function () {
             const id = $(this).data('id');
+            const episode = $('#' + id);
+            const show = $('#show_' + episode.data('show-id'));
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'unwatched/watch',
@@ -127,7 +130,14 @@ const app = {
                     id: id,
                 },
                 success: () => {
-                    $('#' + id).slideUp();
+                    const showCount = show.find('.count');
+                    const count = parseInt(showCount.html()) - 1;
+                    showCount.html(count);
+                    if (count === 0) {
+                        show.hide();
+                        $('.unwatched-shows').slideDown();
+                    }
+                    episode.slideUp();
                 }
             }).fail(function (data) {
                 console.log(data);
@@ -149,7 +159,7 @@ const app = {
         });
     },
     initConfirm: function () {
-        $('#confirm').on('show.bs.modal', function(e) {
+        $('#confirm').on('show.bs.modal', function (e) {
             const button = $(e.relatedTarget);
             const modal = $(this);
             modal.find('.modal-body').html(button.data('text'));
