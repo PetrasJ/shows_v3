@@ -29,9 +29,12 @@ class UserController extends AbstractController
         $user = $storage->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->save($user);
+            if ($user->getLocale() && $request->getLocale() !== $user->getLocale()) {
+                $request->setLocale($user->getLocale());
+                return $this->redirect($this->generateUrl('user_settings', ['_locale' => $user->getLocale()]));
+            }
         }
 
         return $this->render('user/settings.html.twig', ['form' => $form->createView()]);

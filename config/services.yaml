@@ -40,3 +40,6 @@ services:
         class: Gedmo\SoftDeleteable\SoftDeleteableListener
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+    App\EventListener\LoginListener:
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login }
