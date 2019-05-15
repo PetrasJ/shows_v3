@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% for show in shows %}
-        <span class="unwatched-episodes" data-link="{{ path('unwatched_episodes', {'showId': show.id}) }}">
-        {{ show.name }} ({{ show.episodes }})
-        </span>
-    {% endfor %}
+    <div class="text-center unwatched-shows">
+        {% for show in shows %}
+            <div class="col-2 d-inline-block align-top unwatched-show">
+            <span class="unwatched-episodes" data-link="{{ path('unwatched_episodes', {'showId': show.id}) }}">
+            <img src="/img/shows/medium/{{ show.id }}.jpg" class="w-100" alt="{{ show.name }}">
+                {{ show.name }} ({{ show.episodes }})
+            </span>
+            </div>
+        {% endfor %}
+    </div>
 
     <div id="result"></div>
 {% endblock %}
