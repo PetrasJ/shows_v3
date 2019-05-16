@@ -214,7 +214,9 @@ const app = {
         $('.month-picker').datepicker( {
             format: "yyyy-mm",
             startView: "months",
-            minViewMode: "months"
+            minViewMode: "months",
+        }).on('changeMonth', function() {
+            alert($(this).val());
         });
     }
 };
