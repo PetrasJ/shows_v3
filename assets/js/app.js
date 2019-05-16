@@ -25,12 +25,13 @@ const app = {
                 event.preventDefault();
             },
             select: function (event, ui) {
-                window.location.href = window.baseUrl + 'search/select/' + ui.item.value;
+                window.location.href = window.baseUrl + 'search/results/' + ui.item.value;
             }
         });
     },
     initAddRemoveShow: function () {
         $('.add-show').unbind().on('click', function () {
+            loading();
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'shows/add/' + $(this).data('id'),
@@ -43,10 +44,13 @@ const app = {
                 }
             }).fail(function (data) {
                 console.log(data);
+            }).always(function () {
+                loaded();
             });
         });
 
         $('.remove-show').unbind().on('click', function () {
+            loading();
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'shows/remove/' + $(this).data('id'),
@@ -59,6 +63,8 @@ const app = {
                 }
             }).fail(function (data) {
                 console.log(data);
+            }).always(function () {
+                loaded();
             });
         });
     },
@@ -74,6 +80,7 @@ const app = {
     },
     initShowList: function () {
         $('.update-show').unbind().on('click', function () {
+            loading();
             const id = $(this).data('id');
             $.ajax({
                 type: 'post',
@@ -83,6 +90,8 @@ const app = {
                 }
             }).fail(function (data) {
                 console.log(data);
+            }).always(function () {
+                loaded();
             });
         });
     },
@@ -104,6 +113,7 @@ const app = {
     initUnwatchedEpisodes: function () {
         const t = this;
         $('.unwatched-episodes').unbind().on('click', function () {
+            loading();
             $.ajax({
                 type: 'get',
                 url: $(this).data('link'),
@@ -114,12 +124,15 @@ const app = {
                 }
             }).fail(function (data) {
                 console.log(data);
+            }).always(function () {
+                loaded();
             });
 
         })
     },
     initWatchActions: function () {
         $('.watch-episode').unbind().on('click', function () {
+            loading();
             const id = $(this).data('id');
             const episode = $('#' + id);
             const show = $('#show_' + episode.data('show-id'));
@@ -141,10 +154,13 @@ const app = {
                 }
             }).fail(function (data) {
                 console.log(data);
+            }).always(function() {
+                loaded();
             });
         });
 
         $('.comment-episode').unbind().submit(function (e) {
+            loading();
             e.preventDefault();
             $.ajax({
                 type: 'post',
@@ -155,6 +171,8 @@ const app = {
                 },
             }).fail(function (data) {
                 console.log(data);
+            }).always(function () {
+                loaded();
             });
         });
     },
@@ -164,6 +182,7 @@ const app = {
             const modal = $(this);
             modal.find('.modal-body').html(button.data('text'));
             $(this).find('.confirm').unbind().on('click', function () {
+                loading();
                 $.ajax({
                     type: 'post',
                     url: button.data('action'),
@@ -174,10 +193,20 @@ const app = {
                     console.log(data);
                 }).always(function () {
                     modal.modal('hide');
+                    loaded();
                 });
             });
         });
     }
+};
+
+function loading() {
+    $('.overlay').show().css('opacity', 1);
+};
+
+function loaded() {
+    $('.overlay').css('opacity', 0);
+    setTimeout(function(){ $('.overlay').hide() }, 300);
 };
 
 $(document).ready(function () {

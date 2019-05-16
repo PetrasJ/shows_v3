@@ -28,7 +28,11 @@
                             <i class="fa fa-eye-slash" aria-hidden="true"></i> {{ 'menu.unwatched'|trans }}
                         </a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('calendar_index') }}">
+                            <i class="fa fa-calendar" aria-hidden="true"></i> {{ 'menu.calendar'|trans }}
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-film" aria-hidden="true"></i> {{ 'menu.shows'|trans }}
@@ -70,5 +74,6 @@
     {% block body %}{% endblock %}
 </div>
 {% include 'modals/confirm.html.twig' %}
+<div class="overlay"></div>
 </body>
 </html>

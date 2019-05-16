@@ -45,3 +45,15 @@ form.watch-show {
 .unwatched-show:hover {
   cursor: pointer;
 }
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  opacity: 0;
+  transition: .3s;
+}

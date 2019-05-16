@@ -36,10 +36,10 @@ class SearchController extends AbstractController
     /**
      * @param string       $string
      * @param ShowsManager $showsManager
-     * @Route("/select/{string}", name="select")
+     * @Route("/results/{string}", name="results")
      * @return Response
      */
-    public function select($string, ShowsManager $showsManager)
+    public function results($string, ShowsManager $showsManager)
     {
         $shows = $showsManager->findFull($string);
 
