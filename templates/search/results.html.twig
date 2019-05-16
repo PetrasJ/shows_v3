@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% if shows|length == 0 %}
+        {{ 'no_results'|trans }}
+    {% else %}
+        {{ 'Search results for'|trans }}
+    {% endif %}
+    <b>{{ term }}</b>
+
     {% for show in shows %}
         <div class="p-1 border-bottom">
-            {{ show.name }} ({{ show.episodes|length }})
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and userShows[show.id] is defined and userShows[show.id] == constant('App\\Entity\\UserShow::STATUS_WATCHING') %}
-                <button class="btn btn-danger remove-show" data-id="{{ show.id }}">{{ 'remove'|trans }}</button>
-            {% else %}
-                <button class="btn btn-success add-show" data-id="{{ show.id }}">{{ 'add'|trans }}</button>
+            {{ show.name }}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if userShows[show.id] is defined and userShows[show.id] == constant('App\\Entity\\UserShow::STATUS_WATCHING') %}
+                    <button class="btn btn-danger remove-show" data-id="{{ show.id }}">{{ 'remove'|trans }}</button>
+                {% else %}
+                    <button class="btn btn-success add-show" data-id="{{ show.id }}">{{ 'add'|trans }}</button>
+                {% endif %}
             {% endif %}
         </div>
     {% endfor %}

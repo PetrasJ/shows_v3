@@ -41,6 +41,7 @@ class ShowsController extends AbstractController
     /**
      * @param $showId
      * @Route("/details/{showId}", name="details")
+     * @return Response
      */
     public function show($showId)
     {

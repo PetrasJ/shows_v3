@@ -80,16 +80,20 @@ class UserShowService
     /**
      * @param $showId
      * @return UserShow|null
-     * @throws ORMException
      */
     public function getShow($showId)
     {
+        try {
         $show = $this->entityManager->getReference(Show::class, $showId);
 
         return $this->entityManager
             ->getRepository(UserShow::class)
             ->findOneBy(['user' => $this->user, 'show' => $show])
             ;
+        } catch (OrmException $e)
+        {
+            return null;
+        }
     }
 
     /**

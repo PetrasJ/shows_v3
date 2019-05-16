@@ -20,7 +20,7 @@ class Show
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Episode", mappedBy="show", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Episode", mappedBy="show")
      * @ORM\OrderBy({"airstamp" = "ASC"})
      */
     private $episodes;

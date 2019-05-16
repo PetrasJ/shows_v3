@@ -28,23 +28,23 @@ class SearchController extends AbstractController
      */
     public function search(Request $request)
     {
-        $keyword = $shows = $request->get('term');
-
-        return new JsonResponse($this->showsManager->find($keyword));
+        return new JsonResponse($this->showsManager->find($request->get('term')));
     }
 
     /**
-     * @param string       $string
+     * @param string       $term
      * @param ShowsManager $showsManager
-     * @Route("/results/{string}", name="results")
+     * @Route("/results/{term}", name="results")
      * @return Response
      */
-    public function results($string, ShowsManager $showsManager)
+    public function results($term, ShowsManager $showsManager)
     {
-        $shows = $showsManager->findFull($string);
+        $shows = $showsManager->findFull($term);
 
         return $this->render('search/results.html.twig', [
             'shows' => $shows['shows'],
-            'userShows' => $shows['userShows']]);
+            'userShows' => $shows['userShows'],
+            'term' => $term,
+        ]);
     }
 }
