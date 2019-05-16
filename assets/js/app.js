@@ -5,6 +5,7 @@ require('bootstrap');
 
 require('jquery-ui/ui/widgets/autocomplete');
 require('bootstrap-select');
+require('bootstrap-datepicker');
 
 const app = {
     init: function () {
@@ -15,6 +16,7 @@ const app = {
         this.initAddRemoveShow();
         this.initShowList();
         this.initConfirm();
+        this.initCalendar();
     },
     initSearch: function () {
         const form = $('form#search');
@@ -206,6 +208,13 @@ const app = {
                     loaded();
                 });
             });
+        });
+    },
+    initCalendar: function () {
+        $('.month-picker').datepicker( {
+            format: "yyyy-mm",
+            startView: "months",
+            minViewMode: "months"
         });
     }
 };

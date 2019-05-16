@@ -17,7 +17,7 @@ class CalendarController extends AbstractController
      */
     public function index()
     {
-        return $this->render('calendar/index.html.twig');
+        return $this->render('calendar/index.html.twig', ['currentMonth' => date('Y-m')]);
     }
 
 }
