@@ -17,7 +17,8 @@ const app = {
         this.initConfirm();
     },
     initSearch: function () {
-        $('#search_show').autocomplete({
+        const form = $('form#search');
+        form.find('.term').autocomplete({
             source: window.baseUrl + 'search',
             minLength: 2,
             delay: 100,
@@ -28,6 +29,10 @@ const app = {
                 window.location.href = window.baseUrl + 'search/results/' + ui.item.value;
             }
         });
+        form.on('submit', function (e) {
+            e.preventDefault();
+            window.location.href = window.baseUrl + 'search/results/' + form.find('.term').val();
+        })
     },
     initAddRemoveShow: function () {
         $('.add-show').unbind().on('click', function () {
@@ -96,14 +101,19 @@ const app = {
         });
     },
     initSettings: function () {
-        $('.show-offset').change(function () {
+        $('.show-offset').unbind().change(function () {
+            const id = $(this).data('id');
+            const value = $(this).val();
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'shows/update',
                 data: {
-                    id: $(this).data('id'),
+                    id: id,
                     value: $(this).val()
                 },
+                success: function () {
+                    $('#' + id).find('.show-settings').data('offset', value)
+                }
             }).fail(function (data) {
                 console.log(data);
             });
@@ -154,7 +164,7 @@ const app = {
                 }
             }).fail(function (data) {
                 console.log(data);
-            }).always(function() {
+            }).always(function () {
                 loaded();
             });
         });
@@ -206,7 +216,9 @@ function loading() {
 
 function loaded() {
     $('.overlay').css('opacity', 0);
-    setTimeout(function(){ $('.overlay').hide() }, 300);
+    setTimeout(function () {
+        $('.overlay').hide()
+    }, 300);
 };
 
 $(document).ready(function () {

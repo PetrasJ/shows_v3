@@ -9,41 +9,11 @@ use Doctrine\ORM\Query;
 class ShowRepository extends EntityRepository
 {
     /**
-     * @param $name
-     * @return array
-     */
-    public function findAllByName($name)
-    {
-        $names = str_replace('"', " ", $name);
-        $names = str_replace('%20', " ", $names);
-        $names = preg_replace("/\s+/", " ", $names);
-        $names = explode(" ", $names);
-
-        $qb = $this->createQueryBuilder('p')
-            ->leftJoin(UserShow::class, 'us', 'WITH', 'us.showID = p.showID')
-            ->where('p.name LIKE :word')
-            ->setParameter('word', '%' . $names[0] . '%')
-            ->orderBy('us.showID', 'desc')
-            ->addOrderBy('p.rating', 'desc')
-            ->addOrderBy('p.weight', 'desc')
-            ->groupBy('p.showID')
-            ->setMaxResults(200);
-
-        unset($names[0]);
-        foreach ($names as $key => $name) {
-            $qb->andWhere('p.name LIKE :word' . $key)
-                ->setParameter('word' . $key, '%' . $name . '%');
-        }
-
-        return $qb->getQuery()
-            ->getResult(Query::HYDRATE_ARRAY);
-    }
-
-    /**
      * @param string $name
+     * @param bool   $full
      * @return array
      */
-    public function findAllByNameLimited($name)
+    public function findAllByName($name, $full = false)
     {
         $names = str_replace('"', " ", $name);
         $names = str_replace('%20', " ", $names);
@@ -51,7 +21,6 @@ class ShowRepository extends EntityRepository
         $names = explode(" ", $names);
 
         $qb = $this->createQueryBuilder('s')
-            ->select('s.name')
             ->leftJoin(UserShow::class, 'us', 'WITH', 'us.show = s')
             ->where('s.name LIKE :word')
             ->setParameter('word', '%' . $names[0] . '%')
@@ -59,22 +28,32 @@ class ShowRepository extends EntityRepository
             ->addOrderBy('s.rating', 'desc')
             ->addOrderBy('s.weight', 'desc')
             ->groupBy('s')
-            ->setMaxResults(10);
+        ;
 
         unset($names[0]);
         foreach ($names as $key => $name) {
             $qb->andWhere('s.name LIKE :word' . $key)
-                ->setParameter('word' . $key, '%' . $name . '%');
+                ->setParameter('word' . $key, '%' . $name . '%')
+            ;
+        }
+
+        if (!$full) {
+            $qb->select('s.name')
+                ->setMaxResults(10)
+            ;
+        } else {
+            $qb->select('s');
         }
 
         $result = $qb->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
 
-        return array_column($result, 'name');
+        return $full ? $result : array_column($result, 'name');
     }
 
     /**
-     * @param $userShows
+     * @param     $userShows
      * @param int $userID
      * @return array
      */
@@ -88,6 +67,7 @@ class ShowRepository extends EntityRepository
             ->setParameter('userID', $userID)
             ->orderBy('p.status', 'desc')->addOrderBy('p.name', 'asc')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 }

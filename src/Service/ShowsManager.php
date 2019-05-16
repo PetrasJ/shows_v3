@@ -66,11 +66,11 @@ class ShowsManager
 
     public function find(string $term)
     {
-        return $this->entityManager->getRepository(Show::class)->findAllByNameLimited($term);
+        return $this->entityManager->getRepository(Show::class)->findAllByName($term, false);
     }
 
     public function findFull(string $term) {
-        $shows = $this->entityManager->getRepository(Show::class)->findBy(['name' => $term]);
+        $shows = $this->entityManager->getRepository(Show::class)->findAllByName($term, true);
         $userShows = $this->user
             ? $this->entityManager
                 ->getRepository(UserShow::class)

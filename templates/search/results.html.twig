@@ -2,12 +2,13 @@
 
 {% block body %}
     {% for show in shows %}
-        {{ show.name }} ({{ show.episodes|length }})
-        {% if userShows[show.id] is defined and userShows[show.id] == constant('App\\Entity\\UserShow::STATUS_WATCHING') %}
+        <div class="p-1 border-bottom">
+            {{ show.name }} ({{ show.episodes|length }})
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and userShows[show.id] is defined and userShows[show.id] == constant('App\\Entity\\UserShow::STATUS_WATCHING') %}
                 <button class="btn btn-danger remove-show" data-id="{{ show.id }}">{{ 'remove'|trans }}</button>
-                {% else %}
+            {% else %}
                 <button class="btn btn-success add-show" data-id="{{ show.id }}">{{ 'add'|trans }}</button>
             {% endif %}
-        <br>
+        </div>
     {% endfor %}
 {% endblock %}
