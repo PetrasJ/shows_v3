@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/unwatched", name="unwatched_")
+ * @Route(name="unwatched_")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class UnwatchedShowsController extends AbstractController

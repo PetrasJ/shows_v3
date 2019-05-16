@@ -10,16 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController
+class FeedbackController extends AbstractController
 {
-    /**
-     * @Route("/", name="home")
-     */
-    public function index()
-    {
-        return $this->render('default/index.html.twig');
-    }
-
     /**
      * @param Request     $request
      * @param Mailer $mailer

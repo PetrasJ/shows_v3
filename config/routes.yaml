@@ -1,5 +1,5 @@
 index:
     path: /
-    controller: App\Controller\DefaultController::index
+    controller: App\Controller\UnwatchedShowsController::unwatched
 fos_user:
   resource: "@FOSUserBundle/Resources/config/routing/all.xml"
