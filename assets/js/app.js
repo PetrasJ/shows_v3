@@ -19,6 +19,10 @@ const app = {
         this.initShowList();
         this.initConfirm();
         this.initCalendar();
+        this.initTooltip();
+    },
+    initTooltip: function () {
+        $('[data-toggle="tooltip"]').tooltip();
     },
     initSearch: function () {
         const form = $('form#search');
@@ -189,6 +193,7 @@ const app = {
                 loaded();
             });
         });
+        this.initTooltip();
     },
     initConfirm: function () {
         $('#confirm').on('show.bs.modal', function (e) {
