@@ -220,9 +220,20 @@ const app = {
             language: $('html').attr('lang'),
             autoclose: true
         }).on('changeMonth', function() {
+            loading();
             const t = $(this);
             setTimeout(function () {
-                alert($('html').attr('lang') + ' ' + t.val());
+                $.ajax({
+                    type: 'get',
+                    url: window.baseUrl + 'calendar/month/' + t.val(),
+                    success: (data) => {
+                        $('.calendar').html(data)
+                    }
+                }).fail(function (data) {
+                    console.log(data);
+                }).always(function () {
+                    loaded();
+                });
             }, 10);
         });
     }

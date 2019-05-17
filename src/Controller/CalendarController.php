@@ -20,4 +20,14 @@ class CalendarController extends AbstractController
         return $this->render('calendar/index.html.twig', ['currentMonth' => date('Y-m')]);
     }
 
+    /**
+     * @param string $month
+     * @Route("/month/{month}", name="calendar")
+     * @return Response
+     */
+    public function month($month)
+    {
+        return $this->render('calendar/month.html.twig', ['month' => $month]);
+    }
+
 }
