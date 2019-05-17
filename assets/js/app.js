@@ -139,6 +139,7 @@ const app = {
                     $('#result').hide().html(data).slideDown();
                     t.initWatchActions();
                     $('.unwatched-shows').slideUp();
+                    window.location.hash = $(this).data('id');
                 }
             }).fail(function (data) {
                 console.log(data);
@@ -176,7 +177,6 @@ const app = {
                 loaded();
             });
         });
-
         $('.comment-episode').unbind().submit(function (e) {
             loading();
             e.preventDefault();
@@ -218,28 +218,38 @@ const app = {
         });
     },
     initCalendar: function () {
-        $('.month-picker').datepicker( {
-            format: "yyyy-mm",
-            startView: "months",
-            minViewMode: "months",
-            language: $('html').attr('lang'),
-            autoclose: true
-        }).on('changeMonth', function() {
-            loading();
-            const t = $(this);
-            setTimeout(function () {
-                $.ajax({
-                    type: 'get',
-                    url: window.baseUrl + 'calendar/month/' + t.val(),
-                    success: (data) => {
-                        $('.calendar').html(data)
-                    }
-                }).fail(function (data) {
-                    console.log(data);
-                }).always(function () {
-                    loaded();
-                });
-            }, 10);
+        if ($('.calendar').length !== 0) {
+            const monthPicker = $('.month-picker');
+            console.log(window.location.hash);
+            this.loadCalendar(monthPicker.val())
+            const t = this;
+            monthPicker.datepicker({
+                format: "yyyy-mm",
+                startView: "months",
+                minViewMode: "months",
+                language: $('html').attr('lang'),
+                autoclose: true
+            }).on('changeMonth', function () {
+                loading();
+                const el = $(this);
+                setTimeout(function () {
+                    t.loadCalendar(el.val());
+                    window.location.hash = el.val();
+                }, 10);
+            });
+        }
+    },
+    loadCalendar: function (id) {
+        $.ajax({
+            type: 'get',
+            url: window.baseUrl + 'calendar/month/' + id,
+            success: (data) => {
+                $('.calendar').html(data)
+            }
+        }).fail(function (data) {
+            console.log(data);
+        }).always(function () {
+            loaded();
         });
     }
 };
