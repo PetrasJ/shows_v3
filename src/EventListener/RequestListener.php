@@ -20,7 +20,7 @@ class RequestListener
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest()
     {
         if ($this->tokenStorage instanceof TokenStorageInterface
             && $this->tokenStorage->getToken() instanceof TokenInterface) {
@@ -29,8 +29,5 @@ class RequestListener
                 $this->storage->setUser($user);
             }
         }
-
-        $request = $event->getRequest();
-        $request->setLocale('lt');
     }
 }

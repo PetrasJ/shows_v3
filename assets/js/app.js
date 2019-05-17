@@ -6,6 +6,8 @@ require('bootstrap');
 require('jquery-ui/ui/widgets/autocomplete');
 require('bootstrap-select');
 require('bootstrap-datepicker');
+require('bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min');
+require('bootstrap-datepicker/dist/locales/bootstrap-datepicker.lt.min');
 
 const app = {
     init: function () {
@@ -215,8 +217,13 @@ const app = {
             format: "yyyy-mm",
             startView: "months",
             minViewMode: "months",
+            language: $('html').attr('lang'),
+            autoclose: true
         }).on('changeMonth', function() {
-            alert($(this).val());
+            const t = $(this);
+            setTimeout(function () {
+                alert($('html').attr('lang') + ' ' + t.val());
+            }, 10);
         });
     }
 };
