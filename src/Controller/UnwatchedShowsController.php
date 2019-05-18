@@ -40,7 +40,7 @@ class UnwatchedShowsController extends AbstractController
      * @param int $showId
      * @param UserEpisodeService $userEpisodeService
      * @param ShowsManager $showsManager
-     * @Route("/{showId}/episodes", name="episodes")
+     * @Route("/episodes/{showId}", name="episodes")
      * @return Response
      */
     public function unwatchedEpisodes(int $showId, UserEpisodeService $userEpisodeService, ShowsManager $showsManager)

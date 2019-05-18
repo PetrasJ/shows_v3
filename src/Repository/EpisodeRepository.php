@@ -113,44 +113,34 @@ class EpisodeRepository extends EntityRepository
      */
     public function getEpisodes($dateFrom, $dateTo, User $user = null, $status = [])
     {
-        if ($user instanceof User) {
-            $userID = $user->getId();
-        } else {
-            return $this->getAllUsersEpisodes($dateFrom, $dateTo);
-        }
-
-        $dateFrom = $dateFrom . ' 00:00';
-        $dateTo = $dateTo . ' 23:59';
-
         $qb = $this->createQueryBuilder('e')
-            ->select('e.episodeID, e.duration')
+            ->select('e.id, e.duration')
             ->addSelect(sprintf($this->dateAddSubstring, "concat(e.airdate, ' ', e.airtime)"))
             ->addSelect('e.airtime')
             ->addSelect("concat(e.airdate,' ',e.airtime) as original_airdatetime")
-            ->addSelect('s.name as showName, s.showID, us.status as userShowStatus')
+            ->addSelect('s.name as showName, s.id, us.status as userShowStatus')
             ->addSelect('e.name, e.season, e.episode')
             ->addSelect('u.defaultOffset, us.offset')
-            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.showID = e.showID AND us.userID = :userID')
-            ->innerJoin(User::class, 'u', Join::WITH, 'u.id = :userID')
-            ->innerJoin(Show::class, 's', Join::WITH, 's.showID = e.showID')
-            ->andWhere('e.airdate >= ' . sprintf($this->dateSub, ':dateFrom'))
-            ->andWhere('e.airdate <= ' . sprintf($this->dateSub, ':dateTo'))
+            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
+            ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
+            ->innerJoin('e.show', 's')
+            ->andWhere('e.airstamp >= ' . sprintf($this->dateSub, ':dateFrom'))
+            ->andWhere('e.airstamp <= ' . sprintf($this->dateSub, ':dateTo'))
             ->setParameters([
-                'userID' => $userID,
+                'user' => $user,
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,
             ])
-            ->orderBy('e.airdate', 'ASC')
-            ->addOrderBy('e.airtime', 'ASC')
+            ->orderBy('e.airstamp', 'ASC')
             ->addOrderBy('e.season', 'ASC')
             ->addOrderBy('e.episode', 'ASC');
 
-        if (!empty($status)) {
+   /*     if (!empty($status)) {
             $qb->andWhere($qb->expr()->orX('us.status IN (:status)', 'us.status IS NULL'))
                 ->setParameter('status', $status);
         } else {
             $qb->andWhere('us.status IS NULL');
-        }
+        }*/
 
         return $qb->getQuery()
             ->getResult();

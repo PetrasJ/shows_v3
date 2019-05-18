@@ -12,17 +12,19 @@ class EpisodesManager
 {
     private $entityManager;
     private $client;
+    private $user;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, Storage $storage)
     {
         $this->entityManager = $entityManager;
         $this->client = new Client();
+        $this->user = $storage->getUser();
     }
 
     public function addEpisodes(Show $show): int
     {
         $this->removeEpisodes($show);
-        $episodes = $this->getEpisodes($show);
+        $episodes = $this->getEpisodesApi($show);
 
         $saved = 0;
         foreach ($episodes as $episode) {
@@ -51,7 +53,14 @@ class EpisodesManager
         return $saved;
     }
 
-    private function getEpisodes(Show $show): array
+    public function getEpisodes(DateTime $from, DateTime $to)
+    {
+        $episodeRepo = $this->entityManager->getRepository(Episode::class);
+
+        return $episodeRepo->getEpisodes($from, $to, $this->user);
+    }
+
+    private function getEpisodesApi(Show $show): array
     {
         return json_decode(
             $this->client
