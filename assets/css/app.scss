@@ -41,6 +41,16 @@ form.watch-show {
 
 .unwatched-show {
   display: inline-block;
+  position: relative;
+}
+
+.unwatched-show span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  padding: 0 10px;
+  border-bottom-right-radius: 13px;
 }
 
 .unwatched-show:hover {
