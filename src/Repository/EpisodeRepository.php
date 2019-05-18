@@ -103,6 +103,8 @@ class EpisodeRepository extends EntityRepository
             ->getResult();
     }
 
+    private $dateAddSubstring2 = "DATE_ADD(%s, CASE WHEN us.offset IS NOT NULL THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
+
     /**
      * @param string $dateFrom
      * @param string $dateTo
@@ -115,15 +117,16 @@ class EpisodeRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.duration')
-            ->addSelect(sprintf($this->dateAddSubstring, "concat(e.airdate, ' ', e.airtime)"))
-            ->addSelect('e.airtime')
-            ->addSelect("concat(e.airdate,' ',e.airtime) as original_airdatetime")
+            ->addSelect(sprintf($this->dateAddSubstring2, 'e.airstamp', 'airdate'))
+            ->addSelect('e.airstamp')
             ->addSelect('s.name as showName, s.id, us.status as userShowStatus')
             ->addSelect('e.name, e.season, e.episode')
             ->addSelect('u.defaultOffset, us.offset')
+            ->addSelect('ue.status as episodeStatus')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->innerJoin('e.show', 's')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
             ->andWhere('e.airstamp >= ' . sprintf($this->dateSub, ':dateFrom'))
             ->andWhere('e.airstamp <= ' . sprintf($this->dateSub, ':dateTo'))
             ->setParameters([

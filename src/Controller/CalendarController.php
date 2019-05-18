@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Service\EpisodesManager;
-use App\Service\UserEpisodeService;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,7 +36,7 @@ class CalendarController extends AbstractController
         $to = DateTime::createFromFormat('Y-m', $month)->modify('last day of this month 23:59:59');
         $episodes = $episodesManager->getEpisodes($from, $to);
 
-        return $this->render('calendar/month.html.twig', ['month' => $month]);
+        return $this->render('calendar/month.html.twig', ['month' => $month, 'episodes' => $episodes]);
     }
 
 }

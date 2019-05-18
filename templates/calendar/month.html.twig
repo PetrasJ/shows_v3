@@ -1,1 +1,5 @@
 {{ month }}
+
+{% for episode in episodes %}
+{{ episode.showName }} {{ episode.id }} {{ episode.airstamp|date('Y-m-d h:i') }} {{ episode.airdate }} {{ episode.name }} {{ episode.episodeStatus }}<br>
+{% endfor %}
