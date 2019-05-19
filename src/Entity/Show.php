@@ -62,6 +62,7 @@ class Show
     private $imageMedium;
 
     /**
+     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
     private $summary;
