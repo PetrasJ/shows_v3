@@ -157,7 +157,7 @@ const app = {
             const show = $('#show_' + episode.data('show-id'));
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + 'unwatched/watch',
+                url: window.baseUrl + '/watch',
                 data: {
                     id: id,
                 },
@@ -182,7 +182,7 @@ const app = {
             e.preventDefault();
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + 'unwatched/comment',
+                url: window.baseUrl + '/comment',
                 data: {
                     id: $(this).data('id'),
                     comment: $(this).find('.comment').val()

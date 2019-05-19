@@ -70,7 +70,7 @@ class Episode
     private $duration;
 
     /**
-     * @ORM\Column(type="string", length=250, nullable=true)
+     * @ORM\Column(type="string", length=500, nullable=true)
      */
     private $summary;
 
@@ -204,8 +204,6 @@ class Episode
      */
     public function setSummary($summary)
     {
-        $this->summary = $summary;
-
         return $this;
     }
 
