@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04ad8ebe-cb9f-49c4-9091-0e48b806700b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Episode.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Episode.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Show.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Show.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,15 +19,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" selection-start-line="1" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Entity/Episode.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -58,8 +43,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assets/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="184" column="40" selection-start-line="184" selection-start-column="40" selection-end-line="184" selection-end-column="40" />
+            <state relative-caret-position="34">
+              <caret line="159" column="39" selection-start-line="159" selection-start-column="39" selection-end-line="159" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -235,7 +220,6 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="PhpDebugGeneral" break_at_first_line="true" listening_started="true" />
   <component name="PhpServers">
     <servers>
       <server host="127.0.0.1" id="f6555b78-fbef-4552-8cad-eaa179ae58cf" name="127.0.0.1" port="8000" />
@@ -490,14 +474,7 @@
       <workItem from="1558154242390" duration="5215000" />
       <workItem from="1558172628105" duration="599000" />
       <workItem from="1558174848374" duration="1865000" />
-      <workItem from="1558289389055" duration="264000" />
-    </task>
-    <task id="LOCAL-00023" summary="modal in progress">
-      <created>1557659520228</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1557659520234</updated>
+      <workItem from="1558289389055" duration="887000" />
     </task>
     <task id="LOCAL-00024" summary="update offset ajax">
       <created>1557661169610</created>
@@ -835,11 +812,18 @@
       <option name="project" value="LOCAL" />
       <updated>1558156192867</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="watch route fix">
+      <created>1558289827975</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1558289827977</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145241000" />
+    <option name="totallyTimeSpent" value="145864000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -854,14 +838,14 @@
     <frame x="-2" y="4" width="741" height="716" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49752882" visible="true" weight="0.26431718" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49752882" visible="true" weight="0.26431718" />
       <window_info id="Structure" order="1" sideWeight="0.50247115" side_tool="true" weight="0.478145" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.85231733" visible="true" weight="0.46312177" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.85231733" visible="true" weight="0.46312177" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" />
@@ -946,7 +930,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add confirm dialog, show list actions" />
     <MESSAGE value="moved actions" />
     <MESSAGE value="add apache-pack" />
     <MESSAGE value="show details in progress" />
@@ -971,7 +954,8 @@
     <MESSAGE value="tooltips in progress" />
     <MESSAGE value="unwatched count" />
     <MESSAGE value="calendar in progress" />
-    <option name="LAST_COMMIT_MESSAGE" value="calendar in progress" />
+    <MESSAGE value="watch route fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="watch route fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1074,16 +1058,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/shows/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-323">
-          <caret selection-end-line="2" selection-end-column="16" />
-          <folding>
-            <element signature="e#858#871#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Migrations/Version20190515202228.php" />
     <entry file="file://$PROJECT_DIR$/src/Migrations/Version20190515202526.php" />
     <entry file="file://$PROJECT_DIR$/src/Entity/UserShow.php">
@@ -1428,13 +1402,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/web-server-bundle/Resources/router.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/UnwatchedShowsController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
@@ -1445,10 +1412,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/bundles.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-33" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/web-server-bundle/Resources/router.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="184" column="40" selection-start-line="184" selection-start-column="40" selection-end-line="184" selection-end-column="40" />
+        <state relative-caret-position="34">
+          <caret line="159" column="39" selection-start-line="159" selection-start-column="39" selection-end-line="159" selection-end-column="39" />
         </state>
       </provider>
     </entry>
