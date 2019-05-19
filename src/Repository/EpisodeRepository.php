@@ -11,8 +11,8 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class EpisodeRepository extends EntityRepository
 {
-    private $dateAddSubstring = "substring(DATE_ADD(%s, CASE WHEN us.offset IS NOT NULL THEN us.offset ELSE u.defaultOffset END, 'hour'),1,16) as airdate";
-    private $dateSub = "DATE_SUB(%s, CASE WHEN us.offset IS NOT NULL THEN us.offset ELSE u.defaultOffset END, 'hour')";
+    private $dateAddSubstring = "substring(DATE_ADD(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour'),1,16) as airdate";
+    private $dateSub = "DATE_SUB(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
 
     /**
      * @param User $user
@@ -103,7 +103,7 @@ class EpisodeRepository extends EntityRepository
             ->getResult();
     }
 
-    private $dateAddSubstring2 = "DATE_ADD(%s, CASE WHEN us.offset IS NOT NULL THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
+    private $dateAddSubstring2 = "DATE_ADD(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
 
     /**
      * @param string $dateFrom
@@ -119,7 +119,7 @@ class EpisodeRepository extends EntityRepository
             ->select('e.id, e.duration')
             ->addSelect(sprintf($this->dateAddSubstring2, 'e.airstamp', 'airdate'))
             ->addSelect('e.airstamp')
-            ->addSelect('s.name as showName, s.id, us.status as userShowStatus')
+            ->addSelect('s.name as showName, s.id as showId, us.status as userShowStatus')
             ->addSelect('e.name, e.season, e.episode')
             ->addSelect('u.defaultOffset, us.offset')
             ->addSelect('ue.status as episodeStatus')

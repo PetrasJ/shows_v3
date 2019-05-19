@@ -156,13 +156,16 @@ class ShowsManager
             ->setStatus($show->status)
             ->setPremiered($show->premiered)
             ->setGenres(json_encode($show->genres))
-            ->setSummary($show->summary)
-            ->setUpdated($show->updated);
+            ->setSummary($show->summary);
+
 
         $this->entityManager->persist($showEntity);
         $this->entityManager->flush();
 
         $this->episodesManager->addEpisodes($showEntity);
+
+        $this->entityManager->persist($showEntity->setUpdated($show->updated));
+        $this->entityManager->flush();
 
         return true;
     }

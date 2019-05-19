@@ -4,6 +4,6 @@
     {{ show.name }}
 
     {% for episode in episodes %}
-        {{ episode.season }} {{ episode.episode }} {{ episode.summary }} <br>
+        {{ episode.season }} {{ episode.episode }} {{ episode.airdate }} {{ episode.airstamp|date('Y-m-d h:i:s') }} {{ episode.summary|raw }} <br>
     {% endfor %}
 {% endblock %}

@@ -1,5 +1,11 @@
 {{ month }}
-
+<br>
+{{ now|date('Y-m-d H:i:s') }}
+<br>
+{{ tz }}
+<br>
 {% for episode in episodes %}
-{{ episode.showName }} {{ episode.id }} {{ episode.airstamp|date('Y-m-d h:i') }} {{ episode.airdate }} {{ episode.name }} {{ episode.episodeStatus }}<br>
+{{ episode.showId }} {{ episode.showName }} {{ episode.id }} {{ episode.airstamp|date('Y-m-d H:i') }} {{ episode.airdate }} {{ episode.name }} {{ episode.episodeStatus }}<br>
 {% endfor %}
+
+

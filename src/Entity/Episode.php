@@ -31,20 +31,20 @@ class Episode
     private $show;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=250, nullable=true)
      */
 
     private $name;
 
     /**
      * @var int
-     * @ORM\Column(type="integer", length=100, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $season;
 
     /**
      * @var int
-     * @ORM\Column(type="integer", length=100, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $episode;
 
@@ -70,7 +70,7 @@ class Episode
     private $duration;
 
     /**
-     * @ORM\Column(type="string", length=500, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $summary;
 
@@ -204,6 +204,8 @@ class Episode
      */
     public function setSummary($summary)
     {
+        $this->summary = $summary;
+
         return $this;
     }
 
