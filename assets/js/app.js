@@ -23,7 +23,7 @@ const app = {
         this.initTooltip();
     },
     initTooltip: function () {
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-tooltip="true"]').tooltip();
     },
     initSearch: function () {
         const form = $('form#search');
