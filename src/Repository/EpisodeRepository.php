@@ -53,7 +53,7 @@ class EpisodeRepository extends EntityRepository
     public function getUnwatchedEpisodes(User $user, int $showId, string $order = 'asc'): ?array
     {
         return $this->createQueryBuilder('e')
-            ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment')
+            ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment, ue.status')
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
@@ -147,20 +147,23 @@ class EpisodeRepository extends EntityRepository
             ->getResult();
     }
 
-    public function getUserShowEpisodes(User $user, int $showId, $limit = 100)
+    public function getUserShowEpisodes(User $user, Show $show, $limit = 100)
     {
         $qb = $this->createQueryBuilder('e')
-            ->select('e.id, e.airstamp')
-            ->innerJoin('e.user', 'u')
+            ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary')
+            ->addSelect(sprintf($this->dateAdd, 'e.airstamp', 'userAirstamp'))
+            ->addSelect('ue.comment, ue.status')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
+            ->innerJoin('us.user', 'u')
             ->innerJoin('e.show', 's')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
             ->where('u = :user')
-            ->andWhere('s.id = :showId')
+            ->andWhere('e.show = :show')
             ->setParameters([
                 'user' => $user,
-                'showId' => $showId
-            ]);
+                'show' => $show
+            ])
+            ->orderBy('e.airstamp', 'desc');
 
             if ($limit) {
                 $qb->setMaxResults($limit);

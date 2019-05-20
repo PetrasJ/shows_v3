@@ -9,5 +9,6 @@
     </div>
 </form>
 
-<button class="btn btn-success align-top watch-episode" type="button" data-id="{{ episode.id }}"><i class="fa fa-eye" aria-hidden="true"></i></button>
+<button class="btn btn-success align-top watch-episode{% if episode.status == 1 %} d-none{% endif %}" type="button" data-id="{{ episode.id }}"><i class="fa fa-eye" aria-hidden="true"></i></button>
+<button class="btn btn-secondary align-top unwatch-episode{% if episode.status != 1 %} d-none{% endif %}" type="button" data-id="{{ episode.id }}"><i class="fa fa-eye-slash" aria-hidden="true"></i></button>
 

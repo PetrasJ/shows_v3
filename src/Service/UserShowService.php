@@ -8,6 +8,7 @@ use App\Entity\UserShow;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
+use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserShowService
@@ -32,8 +33,7 @@ class UserShowService
     {
         return $this->entityManager
             ->getRepository(Episode::class)
-            ->getShowsWithUnwatchedEpisodes($this->user, UserShow::STATUS_WATCHING)
-            ;
+            ->getShowsWithUnwatchedEpisodes($this->user, UserShow::STATUS_WATCHING);
     }
 
     /**
@@ -47,8 +47,7 @@ class UserShowService
             $show = $this->entityManager->getReference(Show::class, $id);
             $userShow = $this->entityManager
                 ->getRepository(UserShow::class)
-                ->findOneBy(['show' => $show, 'user' => $this->user])
-            ;
+                ->findOneBy(['show' => $show, 'user' => $this->user]);
         } catch (ORMException $e) {
             throw new NotFoundHttpException();
         }
@@ -71,29 +70,34 @@ class UserShowService
     {
         $shows = $this->entityManager
             ->getRepository(UserShow::class)
-            ->getShows($this->user, $status)
-        ;
+            ->getShows($this->user, $status);
 
         return $this->formatShows($shows);
     }
 
     /**
-     * @param $showId
+     * @param int $showId
+     * @param int $limit
      * @return UserShow|null
      */
-    public function getShow($showId)
+    public function getUserShowAndEpisodes($showId, $limit)
     {
         try {
-        $show = $this->entityManager->getReference(Show::class, $showId);
+            /** @var Show $show */
+            $show = $this->entityManager->getReference(Show::class, $showId);
 
-        return $this->entityManager
-            ->getRepository(UserShow::class)
-            ->findOneBy(['user' => $this->user, 'show' => $show])
-            ;
-        } catch (OrmException $e)
-        {
+            $return['episodes'] = $this->entityManager
+                ->getRepository(Episode::class)
+                ->getUserShowEpisodes($this->user, $show, $limit);
+
+            $return['show'] = $this->entityManager
+                ->getRepository(UserShow::class)
+                ->findOneBy(['user' => $this->user, 'show' => $show]);
+
+        } catch (Exception $e) {
             return null;
         }
+        return $return;
     }
 
     /**
@@ -108,15 +112,13 @@ class UserShowService
         $this->entityManager->getFilters()->disable('softdeleteable');
         $userShow = $this->entityManager
             ->getRepository(UserShow::class)
-            ->findOneBy(['user' => $this->user, 'show' => $show])
-        ;
+            ->findOneBy(['user' => $this->user, 'show' => $show]);
 
         if (!$userShow) {
             $userShow = (new UserShow())
                 ->setUser($this->user)
                 ->setShow($show)
-                ->setOffset(0)
-            ;
+                ->setOffset(0);
         }
 
         $userShow->setDeletedAt(null);
@@ -142,8 +144,7 @@ class UserShowService
         $show = $this->entityManager->getReference(Show::class, $id);
         $userShow = $this->entityManager
             ->getRepository(UserShow::class)
-            ->findOneBy(['user' => $this->user, 'show' => $show])
-        ;
+            ->findOneBy(['user' => $this->user, 'show' => $show]);
         $this->entityManager->remove($userShow);
         $this->entityManager->flush();
     }

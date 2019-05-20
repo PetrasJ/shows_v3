@@ -20,11 +20,6 @@ class UserEpisodeService
         $this->user = $storage->getUser();
     }
 
-    public function getUserShowEpisodes($showId)
-    {
-        return $this->entityManager->getRepository(Episode::class)->getShowEpisodes($this->user, $showId);
-    }
-
     public function getUnwatchedEpisodes($showId)
     {
         try {
@@ -59,7 +54,11 @@ class UserEpisodeService
         }
 
         if (isset($action['comment'])) {
-            $userEpisode->setComment($action['comment'])->setStatus(UserEpisode::STATUS_COMMENTED);
+            $userEpisode->setComment($action['comment']);
+
+            if ($userEpisode->getStatus() !== UserEpisode::STATUS_WATCHED) {
+                $userEpisode->setStatus(UserEpisode::STATUS_COMMENTED);
+            }
         }
 
         if (isset($action['watch']) && $action['watch'] === true)

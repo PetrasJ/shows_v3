@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ show.name }}
+    {{ show.show.name }}
 
     {% for episode in episodes %}
-        {{ episode.season }} {{ episode.episode }} {{ episode.airdate }} {{ episode.airstamp|date('Y-m-d h:i:s') }} {{ episode.summary|raw }} {% include 'form/episode-actions.html.twig' with {episode: episode} %}<br>
+       <div id="{{ episode.id }}"> {{ episode.season }} {{ episode.episode }} {{ episode.userAirstamp|dateTimezone }} {{ episode.airstamp|dateTimezone }} {{ episode.summary|raw }} {% include 'form/episode-actions.html.twig' with {episode: episode} %}</div>
     {% endfor %}
 {% endblock %}

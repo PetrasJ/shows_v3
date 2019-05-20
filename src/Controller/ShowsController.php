@@ -40,28 +40,18 @@ class ShowsController extends AbstractController
 
     /**
      * @param $showId
-     * @Route("/details/{showId}/{limit}", name="details", defaults={"limit"=true})
+     * @param int $limit
+     * @Route("/details/{showId}/{limit}", name="details", defaults={"limit"=100})
      * @return Response
      */
-    public function show($showId)
+    public function show($showId, $limit)
     {
-        $show = $this->userShowService->getShow($showId);
+        $show = $this->userShowService->getUserShowAndEpisodes($showId, $limit);
 
         return $this->render('shows/show.html.twig', [
-            'show' => $show->getShow(),
-            'episodes' => $show->getShow()->getEpisodes(),
-            'userEpisodes' => $this->formatUserEpisodes($show->getUserEpisodes())
+            'show' => $show['show'],
+            'episodes' => $show['episodes'],
             ]);
-    }
-
-    private function formatUserEpisodes($userEpisodes)
-    {
-        $episodes = [];
-        foreach ($userEpisodes as $episode)
-        {
-            /** @var UserEpisode $episode */
-            $episodes[$episode->getId()] = $episode->getStatus();
-        }
     }
 
     /**

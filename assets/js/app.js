@@ -14,6 +14,7 @@ const app = {
         this.initSearch();
         this.initModals();
         this.initUnwatchedEpisodes();
+        this.initWatchActions();
         $('.selectpicker').selectpicker();
         this.initAddRemoveShow();
         this.initShowList();
@@ -162,14 +163,19 @@ const app = {
                     id: id,
                 },
                 success: () => {
-                    const showCount = show.find('.count');
-                    const count = parseInt(showCount.html()) - 1;
-                    showCount.html(count);
-                    if (count === 0) {
-                        show.hide();
-                        $('.unwatched-shows').slideDown();
+                    if ($('.unwatched-shows').length) {
+                        const showCount = show.find('.count');
+                        const count = parseInt(showCount.html()) - 1;
+                        showCount.html(count);
+                        if (count === 0) {
+                            show.hide();
+                            $('.unwatched-shows').slideDown();
+                        }
+                        episode.slideUp();
+                    } else {
+                        episode.find('.unwatch-episode').removeClass('d-none');
+                        $(this).hide();
                     }
-                    episode.slideUp();
                 }
             }).fail(function (data) {
                 console.log(data);
