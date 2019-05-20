@@ -17,7 +17,7 @@ class DateExtension extends AbstractExtension
     public function __construct(Storage $storage)
     {
         $user = $storage->getUser();
-        if ($user instanceof User && $user->getTimezone()) {
+        if ($user && $user->getTimezone()) {
             $this->timezone = new DateTimeZone($user->getTimezone());
         } else {
             $this->timezone = new DateTimeZone('UTC');
@@ -37,7 +37,7 @@ class DateExtension extends AbstractExtension
             try {
                 $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
             } catch (Exception $e) {
-                $date = new DateTime();
+                return '';
             }
         }
         return $date->setTimeZone($this->timezone)->format('Y-m-d H:i');
