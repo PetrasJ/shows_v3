@@ -163,18 +163,19 @@ const app = {
                     id: id,
                 },
                 success: () => {
-                    if ($('.unwatched-shows').length) {
+                    const unwatchedShwos = $('.unwatched-shows');
+                    if (unwatchedShwos.length) {
                         const showCount = show.find('.count');
                         const count = parseInt(showCount.html()) - 1;
                         showCount.html(count);
                         if (count === 0) {
                             show.hide();
-                            $('.unwatched-shows').slideDown();
+                            unwatchedShwos.slideDown();
                         }
                         episode.slideUp();
                     } else {
                         episode.find('.unwatch-episode').removeClass('d-none');
-                        $(this).hide();
+                        $(this).addClass('d-none');
                     }
                 }
             }).fail(function (data) {
@@ -193,6 +194,27 @@ const app = {
                     id: $(this).data('id'),
                     comment: $(this).find('.comment').val()
                 },
+            }).fail(function (data) {
+                console.log(data);
+            }).always(function () {
+                loaded();
+            });
+        });
+        $('.unwatch-episode').unbind().on('click', function () {
+            loading();
+            const id = $(this).data('id');
+            const episode = $('#' + id);
+
+            $.ajax({
+                type: 'post',
+                url: window.baseUrl + 'shows/unwatch',
+                data: {
+                    id: id,
+                },
+                success: () => {
+                    episode.find('.watch-episode').removeClass('d-none');
+                    $(this).addClass('d-none');
+                }
             }).fail(function (data) {
                 console.log(data);
             }).always(function () {
@@ -227,7 +249,7 @@ const app = {
         if ($('.calendar').length !== 0) {
             const monthPicker = $('.month-picker');
             console.log(window.location.hash);
-            this.loadCalendar(monthPicker.val())
+            this.loadCalendar(monthPicker.val());
             const t = this;
             monthPicker.datepicker({
                 format: "yyyy-mm",
@@ -262,14 +284,14 @@ const app = {
 
 function loading() {
     $('.overlay').show().css('opacity', 1);
-};
+}
 
 function loaded() {
     $('.overlay').css('opacity', 0);
     setTimeout(function () {
         $('.overlay').hide()
     }, 300);
-};
+}
 
 $(document).ready(function () {
     app.init();

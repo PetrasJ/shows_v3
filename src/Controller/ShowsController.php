@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\UserEpisode;
+use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -52,6 +52,23 @@ class ShowsController extends AbstractController
             'show' => $show['show'],
             'episodes' => $show['episodes'],
             ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param UserEpisodeService $userEpisodeService
+     * @Route("/unwatch", name="watch")
+     * @return JsonResponse
+     */
+    public function unwatch(Request $request, UserEpisodeService $userEpisodeService)
+    {
+        try {
+            $userEpisodeService->update($request->get('id'), ['unwatch' => true]);
+        } catch (Exception $e) {
+            return new JsonResponse(['success' => false], 404);
+        }
+
+        return new JsonResponse(['success' => true]);
     }
 
     /**

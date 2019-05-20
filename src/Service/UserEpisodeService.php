@@ -66,6 +66,11 @@ class UserEpisodeService
             $userEpisode->setStatus(UserEpisode::STATUS_WATCHED);
         }
 
+        if (isset($action['unwatch']) && $action['unwatch'] === true)
+        {
+            $userEpisode->setStatus(UserEpisode::STATUS_UNWATCHED);
+        }
+
         $this->entityManager->persist($userEpisode);
         $this->entityManager->flush();
     }
