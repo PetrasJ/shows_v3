@@ -28,3 +28,9 @@
         data-text="{{ 'show.remove show'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
     <i class="fa fa-trash" aria-hidden="true"></i>
 </button>
+<button class="btn btn-danger" data-id="{{ show.id }}"
+        data-action="{{ path('shows_watch_all', {showId: show.id}) }}"
+        data-toggle="modal"
+        data-text="{{ 'show.check all episodes as watched'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
+    <i class="fa fa-eye" aria-hidden="true"></i>
+</button>

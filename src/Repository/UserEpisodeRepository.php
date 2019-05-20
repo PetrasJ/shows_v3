@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Episode;
+use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;
@@ -143,5 +145,20 @@ class UserEpisodeRepository extends EntityRepository
             ->getResult();
 
         return array_column($result, 'episodeID');
+    }
+
+    public function watchAll(User $user, Show $show)
+    {
+        $this->createQueryBuilder('ue')
+        ->update(UserEpisode::class, 'ue')
+        ->set('ue.status', UserEpisode::STATUS_WATCHED)
+        ->where('ue.user = :user')
+        ->andWhere('ue.show = :show')
+        ->setParameters([
+            'user' => $user,
+            'show' => $show,
+        ])
+        ->getQuery()
+        ->execute();
     }
 }

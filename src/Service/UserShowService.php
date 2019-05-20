@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Episode;
 use App\Entity\Show;
+use App\Entity\UserEpisode;
 use App\Entity\UserShow;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -147,6 +148,25 @@ class UserShowService
             ->findOneBy(['user' => $this->user, 'show' => $show]);
         $this->entityManager->remove($userShow);
         $this->entityManager->flush();
+    }
+
+    public function watchAll($showId)
+    {
+        /** @var Show $show */
+        $show = $this->entityManager->getReference(Show::class, $showId);
+
+        $episodes = $this->entityManager
+            ->getRepository(Episode::class)
+            ->getUnwatchedEpisodeEntities($this->user, $show);
+        foreach ($episodes as $episode)
+        {
+            $this->entityManager
+                ->persist((new UserEpisode())->setUser($this->user)->setShow($show)->setEpisodeID($episode->getId()));
+        }
+        $this->entityManager->flush();
+
+        $userRepo = $this->entityManager->getRepository(UserEpisode::class);
+        $userRepo->watchAll($this->user, $show);
     }
 
     private function formatShows($shows): array

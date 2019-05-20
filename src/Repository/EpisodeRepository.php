@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Episode;
 use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserEpisode;
@@ -164,9 +165,9 @@ class EpisodeRepository extends EntityRepository
             ])
             ->orderBy('e.airstamp', 'desc');
 
-            if ($limit) {
-                $qb->setMaxResults($limit);
-            }
+        if ($limit) {
+            $qb->setMaxResults($limit);
+        }
 
         return $qb->getQuery()
             ->getResult();
@@ -442,5 +443,18 @@ class EpisodeRepository extends EntityRepository
             error_log(__METHOD__ . ' fails: ' . $e->getMessage());
             return 0;
         }
+    }
+
+    public function getUnwatchedEpisodeEntities(User $user, Show $show)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
+            ->where('e.show = :show')
+            ->andWhere('ue.id IS NULL')
+            ->andWhere('e.airstamp < :now')
+            ->setParameters(['user' => $user, 'show' => $show, 'now' => new DateTime()])
+            ->getQuery()
+            ->getResult();
     }
 }

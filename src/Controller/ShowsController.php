@@ -150,4 +150,20 @@ class ShowsController extends AbstractController
 
         return new JsonResponse(['success' => true]);
     }
+
+    /**
+     * @param string $showId
+     * @Route("/watch-all/{showId}", name="watch_all")
+     * @return Response
+     */
+    public function watchAllEpisodes(string $showId)
+    {
+        try {
+            $this->userShowService->watchAll($showId);
+        } catch (Exception $e) {
+            return new JsonResponse(['success' => false], 404);
+        }
+
+        return new JsonResponse(['success' => true]);
+    }
 }
