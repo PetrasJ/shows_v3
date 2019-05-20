@@ -12,7 +12,7 @@
                 {{ episode.summary|raw }}
             </div>
             <div class="col-4">
-                {% include 'form/watch.html.twig' with {episode: episode} %}<br>
+                {% include 'form/episode-actions.html.twig' with {episode: episode} %}<br>
             </div>
         </div>
     {% endfor %}

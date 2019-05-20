@@ -15,8 +15,6 @@ use Doctrine\ORM\Mapping\Index;
  */
 class Episode
 {
-    public $watchedOn;
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -77,7 +75,17 @@ class Episode
     /**
      * @var DateTime
      */
-    private $modifiedDate;
+    private $userAirstamp;
+
+    /**
+     * @var int
+     */
+    private $userStatus;
+
+    /**
+     * @var string
+     */
+    private $userComment;
 
     /**
      * @return mixed
@@ -279,19 +287,54 @@ class Episode
     /**
      * @return DateTime
      */
-    public function getModifiedDate(): DateTime
+    public function getUserAirstamp(): DateTime
     {
-        return $this->modifiedDate;
+        return $this->userAirstamp;
     }
 
     /**
-     * @param DateTime $modifiedDate
+     * @param DateTime $userAirstamp
      * @return Episode
      */
-    public function setModifiedDate(DateTime $modifiedDate): Episode
+    public function setUserAirstamp(DateTime $userAirstamp): Episode
     {
-        $this->modifiedDate = $modifiedDate;
+        $this->userAirstamp = $userAirstamp;
+        return $this;
+    }
 
+    /**
+     * @return int
+     */
+    public function getUserStatus(): int
+    {
+        return $this->userStatus;
+    }
+
+    /**
+     * @param int $userStatus
+     * @return Episode
+     */
+    public function setUserStatus(int $userStatus): Episode
+    {
+        $this->userStatus = $userStatus;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserComment(): string
+    {
+        return $this->userComment;
+    }
+
+    /**
+     * @param string $userComment
+     * @return Episode
+     */
+    public function setUserComment(string $userComment): Episode
+    {
+        $this->userComment = $userComment;
         return $this;
     }
 }

@@ -20,6 +20,11 @@ class UserEpisodeService
         $this->user = $storage->getUser();
     }
 
+    public function getUserShowEpisodes($showId)
+    {
+        return $this->entityManager->getRepository(Episode::class)->getShowEpisodes($this->user, $showId);
+    }
+
     public function getUnwatchedEpisodes($showId)
     {
         try {

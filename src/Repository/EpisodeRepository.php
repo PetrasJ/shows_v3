@@ -6,12 +6,13 @@ use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 
 class EpisodeRepository extends EntityRepository
 {
-    private $dateAddSubstring = "substring(DATE_ADD(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour'),1,16) as airdate";
+    private $dateAdd = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
     private $dateSub = "DATE_SUB(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
 
     /**
@@ -103,21 +104,19 @@ class EpisodeRepository extends EntityRepository
             ->getResult();
     }
 
-    private $dateAddSubstring2 = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
-
     /**
-     * @param string $dateFrom
-     * @param string $dateTo
+     * @param DateTime $dateFrom
+     * @param DateTime $dateTo
      * @param User|null $user
      * @param array $status
      * @return array
      * @deprecated
      */
-    public function getEpisodes($dateFrom, $dateTo, User $user = null, $status = [])
+    public function getEpisodes(DateTime $dateFrom, DateTime $dateTo, User $user = null, $status = [])
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.duration')
-            ->addSelect(sprintf($this->dateAddSubstring2, 'e.airstamp', 'airdate'))
+            ->addSelect(sprintf($this->dateAdd, 'e.airstamp', 'userAirstamp'))
             ->addSelect('e.airstamp')
             ->addSelect('s.name as showName, s.id as showId, us.status as userShowStatus')
             ->addSelect('e.name, e.season, e.episode')
@@ -134,16 +133,38 @@ class EpisodeRepository extends EntityRepository
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,
             ])
-            ->orderBy('e.airstamp', 'ASC')
+            ->orderBy('userAirstamp', 'ASC')
             ->addOrderBy('e.season', 'ASC')
             ->addOrderBy('e.episode', 'ASC');
 
-        /*     if (!empty($status)) {
-                 $qb->andWhere($qb->expr()->orX('us.status IN (:status)', 'us.status IS NULL'))
-                     ->setParameter('status', $status);
-             } else {
-                 $qb->andWhere('us.status IS NULL');
-             }*/
+
+        $status[] = 0;
+        $qb->andWhere('us.status IN (:status)')
+            ->setParameter('status', $status);
+
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    public function getUserShowEpisodes(User $user, int $showId, $limit = 100)
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('e.id, e.airstamp')
+            ->innerJoin('e.user', 'u')
+            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
+            ->innerJoin('e.show', 's')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
+            ->where('u = :user')
+            ->andWhere('s.id = :showId')
+            ->setParameters([
+                'user' => $user,
+                'showId' => $showId
+            ]);
+
+            if ($limit) {
+                $qb->setMaxResults($limit);
+            }
 
         return $qb->getQuery()
             ->getResult();
@@ -161,7 +182,7 @@ class EpisodeRepository extends EntityRepository
 
         return $this->createQueryBuilder('e')
             ->select("e.episodeID, e.duration")
-            ->addSelect(sprintf($this->dateAddSubstring, "concat(e.airdate, ' ', e.airtime)"))
+            ->addSelect(sprintf($this->dateAdd, "concat(e.airdate, ' ', e.airtime)"))
             ->addSelect("concat(e.airdate,' ',e.airtime) as original_airdatetime")
             ->addSelect('e.season, e.episode, e.summary, e.name, s.name as showName')
             ->innerJoin(Show::class, 's', Join::WITH, 's.showID = :showID')

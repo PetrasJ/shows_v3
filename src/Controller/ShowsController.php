@@ -40,7 +40,7 @@ class ShowsController extends AbstractController
 
     /**
      * @param $showId
-     * @Route("/details/{showId}", name="details")
+     * @Route("/details/{showId}/{limit}", name="details", defaults={"limit"=true})
      * @return Response
      */
     public function show($showId)

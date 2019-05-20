@@ -166,10 +166,10 @@ class UserShowService
                 if ($date < $now) {
                     $count++;
                     $lastEpisode = $episode
-                        ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));
+                        ->setUserAirstamp($date->modify(sprintf('+%d hours', $userShow->getOffset())));
                 } else {
                     $nextEpisode = $episode
-                        ->setModifiedDate($date->modify(sprintf('+%d hours', $userShow->getOffset())));
+                        ->setUserAirstamp($date->modify(sprintf('+%d hours', $userShow->getOffset())));
                     break;
                 }
             }

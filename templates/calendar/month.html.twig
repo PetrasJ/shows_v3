@@ -5,7 +5,7 @@
 {{ tz }}
 <br>
 {% for episode in episodes %}
-{{ episode.showId }} {{ episode.showName }} {{ episode.id }} {{ episode.airstamp|dateTimezone }} {{ episode.airdate|dateTimezone }} {{ episode.name }} {{ episode.episodeStatus }}<br>
+{{ episode.showId }} {{ episode.showName }} {{ episode.id }} {{ episode.airstamp|dateTimezone }} {{ episode.userAirstamp|dateTimezone }} {{ episode.name }} {{ episode.episodeStatus }}<br>
 {% endfor %}
 
 
