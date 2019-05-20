@@ -103,7 +103,7 @@ class EpisodeRepository extends EntityRepository
             ->getResult();
     }
 
-    private $dateAddSubstring2 = "DATE_ADD(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
+    private $dateAddSubstring2 = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
 
     /**
      * @param string $dateFrom
@@ -138,12 +138,12 @@ class EpisodeRepository extends EntityRepository
             ->addOrderBy('e.season', 'ASC')
             ->addOrderBy('e.episode', 'ASC');
 
-   /*     if (!empty($status)) {
-            $qb->andWhere($qb->expr()->orX('us.status IN (:status)', 'us.status IS NULL'))
-                ->setParameter('status', $status);
-        } else {
-            $qb->andWhere('us.status IS NULL');
-        }*/
+        /*     if (!empty($status)) {
+                 $qb->andWhere($qb->expr()->orX('us.status IN (:status)', 'us.status IS NULL'))
+                     ->setParameter('status', $status);
+             } else {
+                 $qb->andWhere('us.status IS NULL');
+             }*/
 
         return $qb->getQuery()
             ->getResult();
@@ -268,7 +268,7 @@ class EpisodeRepository extends EntityRepository
         try {
             return $qb->getSingleScalarResult();
         } catch (\Exception $e) {
-            error_log(__METHOD__ .' fails: ' . $e->getMessage());
+            error_log(__METHOD__ . ' fails: ' . $e->getMessage());
             return 0;
         }
     }
@@ -364,37 +364,37 @@ class EpisodeRepository extends EntityRepository
     {
         $today = date("Y-m-d H:i");
         try {
-        $prev = $this->createQueryBuilder('e')
-            ->select("e.showID, e.episodeID, e.name, e.season, e.episode, e.duration, e.airtime, e.summary, "
-                . "concat(e.airdate,' ',e.airtime) as original_airdatetime,
+            $prev = $this->createQueryBuilder('e')
+                ->select("e.showID, e.episodeID, e.name, e.season, e.episode, e.duration, e.airtime, e.summary, "
+                    . "concat(e.airdate,' ',e.airtime) as original_airdatetime,
                     substring(DATE_ADD(concat(e.airdate,' ',e.airtime,':00'),:offset,'hour'),1,16) as airdate")
-            ->where("substring(DATE_ADD(concat(e.airdate,' ',e.airtime,':00'),:offset, 'HOUR'),1,16) <= :today")
-            ->setParameter('today', $today)
-            ->setParameter('offset', $offset)
-            ->andWhere('e.showID = :showID')
-            ->setParameter('showID', $showID)
-            ->orderBy('e.airdate', 'desc')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+                ->where("substring(DATE_ADD(concat(e.airdate,' ',e.airtime,':00'),:offset, 'HOUR'),1,16) <= :today")
+                ->setParameter('today', $today)
+                ->setParameter('offset', $offset)
+                ->andWhere('e.showID = :showID')
+                ->setParameter('showID', $showID)
+                ->orderBy('e.airdate', 'desc')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
 
-        $next = $this->createQueryBuilder('e')
-            ->select("e.showID, e.episodeID, e.name, e.season, e.episode, e.duration, e.airtime, e.summary,
+            $next = $this->createQueryBuilder('e')
+                ->select("e.showID, e.episodeID, e.name, e.season, e.episode, e.duration, e.airtime, e.summary,
                     concat(e.airdate,' ',e.airtime) as original_airdatetime,
                     substring(DATE_ADD(concat(e.airdate,' ',e.airtime,':00'),:offset, 'HOUR'),1,16) as airdate")
-            ->where("substring(DATE_ADD(concat(e.airdate,' ',e.airtime,':00'),:offset, 'HOUR'),1,16) > :today")
-            ->setParameter('today', $today)
-            ->setParameter('offset', $offset)
-            ->andWhere('e.showID = :showID')
-            ->setParameter('showID', $showID)
-            ->orderBy('e.airdate')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+                ->where("substring(DATE_ADD(concat(e.airdate,' ',e.airtime,':00'),:offset, 'HOUR'),1,16) > :today")
+                ->setParameter('today', $today)
+                ->setParameter('offset', $offset)
+                ->andWhere('e.showID = :showID')
+                ->setParameter('showID', $showID)
+                ->orderBy('e.airdate')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
 
             return ['prev' => $prev, 'next' => $next];
         } catch (\Exception $e) {
-            error_log(__METHOD__ .' fails: ' . $e->getMessage());
+            error_log(__METHOD__ . ' fails: ' . $e->getMessage());
             return ['prev' => null, 'next' => null];
         }
     }
@@ -414,9 +414,9 @@ class EpisodeRepository extends EntityRepository
             ->getQuery();
 
         try {
-            return  $qb->getOneOrNullResult();
+            return $qb->getOneOrNullResult();
         } catch (\Exception $e) {
-            error_log(__METHOD__ .' fails: ' . $e->getMessage());
+            error_log(__METHOD__ . ' fails: ' . $e->getMessage());
             return 0;
         }
     }

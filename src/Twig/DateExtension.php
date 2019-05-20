@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Service\Storage;
 use DateTime;
 use DateTimeZone;
+use Exception;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -30,8 +31,15 @@ class DateExtension extends AbstractExtension
         ];
     }
 
-    public function dateTimezone(DateTime $date)
+    public function dateTimezone($date)
     {
+        if (!$date instanceof DateTime){
+            try {
+                $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+            } catch (Exception $e) {
+                $date = new DateTime();
+            }
+        }
         return $date->setTimeZone($this->timezone)->format('Y-m-d H:i');
     }
 }
