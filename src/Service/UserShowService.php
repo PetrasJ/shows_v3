@@ -150,18 +150,29 @@ class UserShowService
         $this->entityManager->flush();
     }
 
+    /**
+     * @param $showId
+     * @throws ORMException
+     */
     public function watchAll($showId)
     {
         /** @var Show $show */
         $show = $this->entityManager->getReference(Show::class, $showId);
+        $userShow = $this->entityManager
+            ->getRepository(UserShow::class)
+            ->findOneBy(['user' => $this->user, 'show' => $show]);
 
         $episodes = $this->entityManager
             ->getRepository(Episode::class)
             ->getUnwatchedEpisodeEntities($this->user, $show);
-        foreach ($episodes as $episode)
-        {
+        foreach ($episodes as $episode) {
+            /** @var Episode $episode */
             $this->entityManager
-                ->persist((new UserEpisode())->setUser($this->user)->setShow($show)->setEpisodeID($episode->getId()));
+                ->persist((new UserEpisode())
+                    ->setUser($this->user)
+                    ->setShow($show)
+                    ->setUserShow($userShow)
+                    ->setEpisodeID($episode->getId()));
         }
         $this->entityManager->flush();
 

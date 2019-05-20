@@ -224,7 +224,7 @@ const app = {
         this.initTooltip();
     },
     initConfirm: function () {
-        $('#confirm').on('show.bs.modal', function (e) {
+        $('#confirm').unbind().on('show.bs.modal', function (e) {
             const button = $(e.relatedTarget);
             const modal = $(this);
             modal.find('.modal-body').html(button.data('text'));
@@ -234,7 +234,9 @@ const app = {
                     type: 'post',
                     url: button.data('action'),
                     success: () => {
-                        $('#' + button.data('id')).slideUp()
+                        if (button.data('remove')) {
+                            $('#' + button.data('id')).slideUp()
+                        }
                     }
                 }).fail(function (data) {
                     console.log(data);
