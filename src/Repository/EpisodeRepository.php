@@ -110,7 +110,6 @@ class EpisodeRepository extends EntityRepository
      * @param User|null $user
      * @param array $status
      * @return array
-     * @deprecated
      */
     public function getEpisodes(DateTime $dateFrom, DateTime $dateTo, User $user = null, $status = [])
     {
