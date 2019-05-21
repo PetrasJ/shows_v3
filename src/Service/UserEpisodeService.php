@@ -38,7 +38,7 @@ class UserEpisodeService
         $episode = $this->entityManager->find(Episode::class, $id);
         $userEpisode = $this->entityManager
             ->getRepository(UserEpisode::class)
-            ->findOneBy(['episodeID' => $id, 'user' => $this->user])
+            ->findOneBy(['episode' => $episode, 'user' => $this->user])
         ;
 
         if (!$userEpisode) {
@@ -48,7 +48,7 @@ class UserEpisodeService
             ;
             $userEpisode = (new UserEpisode())
                 ->setUser($this->user)
-                ->setEpisodeID($id)
+                ->setEpisode($episode)
                 ->setShow($episode->getShow())
                 ->setUserShow($userShow)
             ;
