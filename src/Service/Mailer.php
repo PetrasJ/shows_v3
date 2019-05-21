@@ -36,6 +36,6 @@ class Mailer
         $this->entityManager->persist($feedback);
         $this->entityManager->flush();
 
-        //$this->mailer->send($message);
+        $this->mailer->send($message);
     }
 }
