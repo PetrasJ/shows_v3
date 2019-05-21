@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\UserType;
 use App\Service\Storage;
+use App\Service\UserEpisodeService;
 use App\Service\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,10 +22,11 @@ class UserController extends AbstractController
      * @param Storage     $storage
      * @param Request     $request
      * @param UserManager $userManager
+     * @param UserEpisodeService $userEpisodeService
      * @Route("/settings", name="settings")
      * @return Response
      */
-    public function settings(Storage $storage, Request $request, UserManager $userManager)
+    public function settings(Storage $storage, Request $request, UserManager $userManager, UserEpisodeService  $userEpisodeService)
     {
         $user = $storage->getUser();
         $form = $this->createForm(UserType::class, $user);
@@ -37,6 +39,8 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('user/settings.html.twig', ['form' => $form->createView()]);
+        $lastEpisodes = $userEpisodeService->getLastEpisodes();
+
+        return $this->render('user/settings.html.twig', ['form' => $form->createView(), 'lastEpisodes' => $lastEpisodes]);
     }
 }

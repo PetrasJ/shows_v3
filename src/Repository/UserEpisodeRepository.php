@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Episode;
 use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserEpisode;
@@ -12,10 +11,38 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class UserEpisodeRepository extends EntityRepository
 {
+    public function watchAll(User $user, Show $show)
+    {
+        $this->createQueryBuilder('ue')
+            ->update(UserEpisode::class, 'ue')
+            ->set('ue.status', UserEpisode::STATUS_WATCHED)
+            ->where('ue.user = :user')
+            ->andWhere('ue.show = :show')
+            ->setParameters([
+                'user' => $user,
+                'show' => $show,
+            ])
+            ->getQuery()
+            ->execute();
+    }
+
+    public function getLastEpisodes(User $user, $limit)
+    {
+        return $this->createQueryBuilder('ue')
+            ->select('ue')
+            ->where('ue.user = :user')
+            ->orderBy('ue.created', 'desc')
+            ->setParameter('user', $user)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @param $showID
      * @param $user
      * @return array
+     * @deprecated
      */
     public function getEpisodes($showID, $user)
     {
@@ -44,6 +71,7 @@ class UserEpisodeRepository extends EntityRepository
      * @param $showID
      * @param $userID
      * @return array
+     * @deprecated
      */
     public function getWatchedEpisodes($showID, $userID)
     {
@@ -69,6 +97,7 @@ class UserEpisodeRepository extends EntityRepository
      * @param int $showID
      * @param int $userID
      * @return int
+     * @deprecated
      */
     public function countWatchedEpisodes($showID, $userID)
     {
@@ -93,6 +122,7 @@ class UserEpisodeRepository extends EntityRepository
     /**
      * @param $userID
      * @return array
+     * @deprecated
      */
     public function getAllWatchedEpisodes($userID)
     {
@@ -117,6 +147,7 @@ class UserEpisodeRepository extends EntityRepository
      * @param string $dateTo
      * @param User $user
      * @return array
+     * @deprecated
      */
     public function getWatchedEpisodesInRange($dateFrom, $dateTo, $user)
     {
@@ -145,20 +176,5 @@ class UserEpisodeRepository extends EntityRepository
             ->getResult();
 
         return array_column($result, 'episodeID');
-    }
-
-    public function watchAll(User $user, Show $show)
-    {
-        $this->createQueryBuilder('ue')
-        ->update(UserEpisode::class, 'ue')
-        ->set('ue.status', UserEpisode::STATUS_WATCHED)
-        ->where('ue.user = :user')
-        ->andWhere('ue.show = :show')
-        ->setParameters([
-            'user' => $user,
-            'show' => $show,
-        ])
-        ->getQuery()
-        ->execute();
     }
 }

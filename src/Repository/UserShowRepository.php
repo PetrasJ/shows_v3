@@ -61,7 +61,7 @@ class UserShowRepository extends EntityRepository
             ->select('us')
             ->innerJoin('us.show', 's')
             ->innerJoin('s.episodes', 'e')
-            ->leftJoin('us.userEpisodes', 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id AND ue.status = :watched')
+            ->leftJoin('us.userEpisodes', 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND ue.status = :watched')
             ->where('us.user = :user')
             ->andWhere('us.status = :status')
             ->setParameters([

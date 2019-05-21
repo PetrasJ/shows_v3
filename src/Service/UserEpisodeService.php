@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Episode;
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;
+use App\Repository\UserEpisodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -73,5 +74,10 @@ class UserEpisodeService
 
         $this->entityManager->persist($userEpisode);
         $this->entityManager->flush();
+    }
+
+    public function getLastEpisodes()
+    {
+        return $this->entityManager->getRepository(UserEpisode::class)->getLastEpisodes($this->user, 10);
     }
 }

@@ -4,4 +4,8 @@
 
 {% block body %}
     {{ form(form) }}
+
+    {% for episode in lastEpisodes %}
+        {{ episode.created|dateTimezone }}<br>
+    {% endfor %}
 {% endblock %}

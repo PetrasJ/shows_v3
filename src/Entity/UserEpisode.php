@@ -51,9 +51,11 @@ class UserEpisode
     private $userShow;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @var Episode
+     * @ORM\ManyToOne(targetEntity="Episode")
+     * @ORM\JoinColumn(name="episode_id", referencedColumnName="id")
      */
-    private $episodeID;
+    private $episode;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
@@ -138,23 +140,21 @@ class UserEpisode
     }
 
     /**
-     * @param integer $episodeID
-     *
-     * @return UserEpisode
+     * @return Episode
      */
-    public function setEpisodeID($episodeID)
+    public function getEpisode(): Episode
     {
-        $this->episodeID = $episodeID;
-
-        return $this;
+        return $this->episode;
     }
 
     /**
-     * @return integer
+     * @param Episode $episode
+     * @return UserEpisode
      */
-    public function getEpisodeID()
+    public function setEpisode(Episode $episode): UserEpisode
     {
-        return $this->episodeID;
+        $this->episode = $episode;
+        return $this;
     }
 
     /**

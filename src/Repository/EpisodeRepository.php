@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Episode;
 use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserEpisode;
@@ -29,7 +28,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
             ->andWhere('e.airstamp < ' . sprintf($this->dateSub, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->andWhere('us.status = :showStatus')
@@ -59,7 +58,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
             ->andWhere('e.airstamp < ' . sprintf($this->dateSub, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->andWhere('s.id = :showId')
@@ -126,7 +125,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->innerJoin('e.show', 's')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
             ->andWhere('e.airstamp >= ' . sprintf($this->dateSub, ':dateFrom'))
             ->andWhere('e.airstamp <= ' . sprintf($this->dateSub, ':dateTo'))
             ->setParameters([
@@ -157,7 +156,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin('us.user', 'u')
             ->innerJoin('e.show', 's')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
             ->where('u = :user')
             ->andWhere('e.show = :show')
             ->setParameters([
@@ -450,7 +449,7 @@ class EpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
             ->where('e.show = :show')
             ->andWhere('ue.id IS NULL')
             ->andWhere('e.airstamp < :now')

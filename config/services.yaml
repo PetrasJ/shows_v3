@@ -43,3 +43,6 @@ services:
     App\EventListener\LoginListener:
         tags:
             - { name: kernel.event_listener, event: security.interactive_login }
+    App\EventListener\PdoListener:
+        tags:
+            - { name: doctrine.event_listener, event: postConnect }
