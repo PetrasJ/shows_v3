@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\Index;
  * @ORM\Entity
  * @ORM\Table(name="episodes", indexes={
  *      @Index(name="showID", columns={"show_id"}),
+ *      @Index(name="airstamp", columns={"airstamp"}),
  * })
  * @ORM\Entity(repositoryClass="App\Repository\EpisodeRepository")
  */
