@@ -171,6 +171,7 @@ const app = {
                         if (count === 0) {
                             show.hide();
                             unwatchedShwos.slideDown();
+                            $('#result').html('');
                         }
                         episode.slideUp();
                     } else {

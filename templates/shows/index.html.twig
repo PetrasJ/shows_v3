@@ -33,11 +33,13 @@
             </div>
             <div class="col-3">
                 {% if show.lastEpisode %}
+                    <b>{{ show.lastEpisode.name }}</b><br>
                     {{ show.lastEpisode.userAirstamp|dateTimezone }}
                 {% endif %}
             </div>
             <div class="col-3">
                 {% if show.nextEpisode %}
+                    <b>{{ show.nextEpisode.name }}</b><br>
                     {{ show.nextEpisode.userAirstamp|dateTimezone }}
                 {% endif %}
             </div>

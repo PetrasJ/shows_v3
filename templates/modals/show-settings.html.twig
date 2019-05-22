@@ -8,9 +8,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input data-toggle="tooltip" title="" class="form-control show-offset"
+                <label for="offset">{{ 'show.offset (hours to add) 0 to use default'|trans }}</label>
+                <input data-tooltip="true" class="form-control show-offset" name="offset"
                        type="number" min="0" step="1" value="" placeholder="{{ 'show.offset'|trans }}"
-                       data-original-title="{{ 'show.offset (hours to add) 0 to use default'|trans }}">
+                       title="{{ 'show.offset (hours to add) 0 to use default'|trans }}">
             </div>
             <div class="modal-footer">
             </div>

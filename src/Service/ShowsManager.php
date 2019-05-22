@@ -81,7 +81,9 @@ class ShowsManager
 
     public function getShow($showId)
     {
-        return $this->entityManager->getRepository(Show::class)->findOneBy(['id' => $showId]);
+        return $this->entityManager
+            ->getRepository(UserShow::class)
+            ->getUserShow($this->user, $showId);
     }
 
     private function addShows($shows)

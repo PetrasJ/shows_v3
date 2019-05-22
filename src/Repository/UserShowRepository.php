@@ -97,6 +97,22 @@ class UserShowRepository extends EntityRepository
         return $result;
     }
 
+    public function getUserShow(User $user, $showId)
+    {
+        return $this->createQueryBuilder('us')
+            ->select('s.id, s.name, s.summary, s.status')
+            ->addSelect('SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
+            ->innerJoin('us.show', 's')
+            ->innerJoin('s.episodes', 'e')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
+            ->where('us.user = :user')
+            ->andWhere('s.id = :showId')
+            ->setParameters(['user' => $user, 'showId' => $showId])
+            ->groupBy('s')
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     /**
      * @param $userID
      * @param int $status

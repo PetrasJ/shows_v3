@@ -1,5 +1,7 @@
 {% block body %}
-    {{ show.name }}
+    <b>{{ show.name }}</b>{{ show.watched }}<br>
+    {{ show.summary|raw }}<br>
+    {{ show.status }}
     {% for episode in episodes %}
         <div class="row" id="{{ episode.id }}" data-show-id="{{ show.id }}">
             <div class="col-3">
