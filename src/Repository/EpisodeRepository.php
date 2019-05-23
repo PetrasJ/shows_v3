@@ -12,8 +12,8 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class EpisodeRepository extends EntityRepository
 {
-    private $dateAdd = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
-    private $dateSub = "DATE_SUB(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
+    const DATE_ADD = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
+    const DATE_SUB = "DATE_SUB(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
 
     /**
      * @param User $user
@@ -29,7 +29,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
-            ->andWhere('e.airstamp < ' . sprintf($this->dateSub, ':dateTo'))
+            ->andWhere('e.airstamp < ' . sprintf(self::DATE_SUB, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->andWhere('us.status = :showStatus')
             ->setParameters([
@@ -54,12 +54,12 @@ class EpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment, ue.status')
-            ->addSelect(sprintf($this->dateAdd, 'e.airstamp', 'userAirstamp'))
+            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
-            ->andWhere('e.airstamp < ' . sprintf($this->dateSub, ':dateTo'))
+            ->andWhere('e.airstamp < ' . sprintf(self::DATE_SUB, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->andWhere('s.id = :showId')
             ->setParameters([
@@ -115,7 +115,7 @@ class EpisodeRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.duration')
-            ->addSelect(sprintf($this->dateAdd, 'e.airstamp', 'userAirstamp'))
+            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
             ->addSelect('e.airstamp')
             ->addSelect('s.name as showName, s.id as showId, us.status as userShowStatus')
             ->addSelect('e.name, e.season, e.episode')
@@ -125,8 +125,8 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->innerJoin('e.show', 's')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
-            ->andWhere('e.airstamp >= ' . sprintf($this->dateSub, ':dateFrom'))
-            ->andWhere('e.airstamp <= ' . sprintf($this->dateSub, ':dateTo'))
+            ->andWhere('e.airstamp >= ' . sprintf(self::DATE_SUB, ':dateFrom'))
+            ->andWhere('e.airstamp <= ' . sprintf(self::DATE_SUB, ':dateTo'))
             ->setParameters([
                 'user' => $user,
                 'dateFrom' => $dateFrom,
@@ -153,7 +153,7 @@ class EpisodeRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary, e.duration')
-            ->addSelect(sprintf($this->dateAdd, 'e.airstamp', 'userAirstamp'))
+            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
             ->addSelect('ue.comment, ue.status')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin('us.user', 'u')
@@ -187,7 +187,7 @@ class EpisodeRepository extends EntityRepository
 
         return $this->createQueryBuilder('e')
             ->select("e.episodeID, e.duration")
-            ->addSelect(sprintf($this->dateAdd, "concat(e.airdate, ' ', e.airtime)"))
+            ->addSelect(sprintf(self::DATE_ADD, "concat(e.airdate, ' ', e.airtime)"))
             ->addSelect("concat(e.airdate,' ',e.airtime) as original_airdatetime")
             ->addSelect('e.season, e.episode, e.summary, e.name, s.name as showName')
             ->innerJoin(Show::class, 's', Join::WITH, 's.showID = :showID')
@@ -223,7 +223,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.showID = e.showID')
             ->innerJoin(User::class, 'u', Join::WITH, 'u.id = :userID')
             ->andWhere('e.showID = :showID')
-            ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf($this->dateSub, ':dateTo'))
+            ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf(self::DATE_SUB, ':dateTo'))
             ->setParameters([
                 'dateTo' => date("Y-m-d H:i"),
                 'showID' => $showID,
@@ -250,7 +250,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episodeID = e.id')
             ->where('e.show = :show')
-            ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf($this->dateSub, ':dateTo'))
+            ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf(self::DATE_SUB, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->setParameters([
                 'watched' => UserEpisode::STATUS_WATCHED,
@@ -280,7 +280,7 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(User::class, 'u', Join::WITH, 'u.id = :userID')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.userID = :userID AND ue.episodeID = e.episodeID')
             ->where('e.showID = :showID')
-            ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf($this->dateSub, ':dateTo'))
+            ->andWhere("concat(e.airdate, ' ', e.airtime) < " . sprintf(self::DATE_SUB, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->setParameters([
                 'watched' => UserEpisode::STATUS_WATCHED,
@@ -311,13 +311,13 @@ class EpisodeRepository extends EntityRepository
 
         return $this->createQueryBuilder('e')
             ->select('e.episodeID, e.episode, e.season, e.name, s.name as showName, s.showID, e.duration')
-            ->addSelect(sprintf($this->dateAddSubstring, "concat(e.airdate, ' ', e.airtime)"))
+            ->addSelect(sprintf(self::DATE_ADD, "concat(e.airdate, ' ', e.airtime)"))
             ->addSelect("concat(e.airdate,' ',e.airtime) as original_airdatetime")
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.showID = e.showID AND us.userID = :userID')
             ->innerJoin(User::class, 'u', Join::WITH, 'u.id = :userID')
             ->innerJoin(Show::class, 's', Join::WITH, 's.showID = us.showID')
-            ->where("concat(e.airdate, ' ',e.airtime) >= " . sprintf($this->dateSub, ':today'))
-            ->andWhere("concat(e.airdate, ' ',e.airtime) <= " . sprintf($this->dateSub, ':tomorrow'))
+            ->where("concat(e.airdate, ' ',e.airtime) >= " . sprintf(self::DATE_SUB, ':today'))
+            ->andWhere("concat(e.airdate, ' ',e.airtime) <= " . sprintf(self::DATE_SUB, ':tomorrow'))
             ->andWhere('us.status IS NULL')
             ->setParameters([
                 'userID' => $user->getId(),
@@ -329,58 +329,7 @@ class EpisodeRepository extends EntityRepository
             ->getResult();
     }
 
-    /**
-     * @param int $showID
-     * @param array $watchedIDs
-     * @param User $user
-     *
-     * @return array
-     * @deprecated
-     */
-    public function getFullEpisodesExclude($showID, $watchedIDs, User $user)
-    {
-        if ($watchedIDs == null) {
-            $watchedIDs = [0];
-        } else {
-            $watched = [0];
-            foreach ($watchedIDs as $key => $value) {
-                if ($value['status'] == UserEpisode::STATUS_WATCHED) {
-                    $watched[] = $key;
-                }
-            }
-            $watchedIDs = $watched;
-        }
-
-        $today = date("Y-m-d H:i");
-
-        $result = $this->createQueryBuilder('e')
-            ->select('e.id, e.showID, e.episodeID, e.name, e.season, e.episode, e.airtime')
-            ->addSelect("e.duration, e.summary, concat(e.airdate,' ',e.airtime) as original_airdatetime")
-            ->addSelect(sprintf($this->dateAddSubstring, "concat(e.airdate, ' ', e.airtime)"))
-            ->where('e.episodeID NOT IN (:watchedIds)')
-            ->andWhere('e.showID = :showID')
-            ->andWhere("concat(e.airdate,' ',e.airtime) <= " . sprintf($this->dateSub, ':today'))
-            ->innerJoin(User::class, 'u', Join::WITH, 'u.id = :userID')
-            ->leftJoin(UserShow::class, 'us', 'WITH', 'us.showID = e.showID AND us.userID = :userID')
-            ->setParameters([
-                'watchedIds' => $watchedIDs,
-                'showID' => $showID,
-                'today' => $today,
-                'userID' => $user->getId()
-            ])
-            ->orderBy('e.airdate')
-            ->addOrderBy('LENGTH(e.season)')
-            ->addOrderBy('e.season')
-            ->addOrderBy('LENGTH(e.episode)')
-            ->addOrderBy('e.episode')
-            ->setMaxResults(100)
-            ->getQuery()
-            ->getResult();
-
-        return $result;
-    }
-
-    /**
+     /**
      * @param int $showID
      * @param int $offset
      * @return array

@@ -76,6 +76,11 @@ class UserEpisodeService
         $this->entityManager->flush();
     }
 
+    public function getWatchedDuration()
+    {
+        return $this->entityManager->getRepository(UserEpisode::class)->getWatchedDuration($this->user);
+    }
+
     public function getLastEpisodes()
     {
         return $this->entityManager->getRepository(UserEpisode::class)->getLastEpisodes($this->user, 10);
