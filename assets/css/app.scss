@@ -68,3 +68,62 @@ form.watch-show {
   opacity: 0;
   transition: .3s;
 }
+
+.calendar td {
+  position: relative;
+  height: 30px;
+  padding-bottom: 20px !important;
+}
+
+td.current-day .inner {
+  height: 100%;
+}
+
+.calendar span.dayoftheweek {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: none;
+}
+
+.calendar span.day {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-left: 1px solid #999;
+  width: 25px;
+  height: 20px;
+  text-align: center;
+  padding: 1px;
+  font-weight: bold;
+  border-top-left-radius: 13px;
+}
+
+@media screen and (max-width: 992px) {
+  .calendar td, .calendar th {
+    width: 100%;
+    display: block;
+    height: auto;
+  }
+
+  .calendar tr {
+    background: none !important;
+  }
+
+  .calendar .weekdays, .calendar .day {
+    display: none;
+  }
+
+  .calendar span.dayoftheweek {
+    display: block;
+    margin: 2px 5px;
+  }
+
+  .calendar td {
+    display: none;
+  }
+
+  .calendar td.exists, .calendar td.current-day {
+    display: block;
+  }
+}
