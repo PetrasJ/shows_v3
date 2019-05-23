@@ -1,3 +1,4 @@
 <span data-tooltip="true" title="{{ 'airdate'|trans }} {{ episode.airstamp|dateTimezone }}">{{ episode.userAirstamp|dateTimezone }}</span>
-<span class="episode" title="{{ 'duration'|trans }} {{ episode.duration }} {{ 'min'|trans }}"></span>
-<b>S{{ '%02d'|format(episode.season) }}E{{ '%02d'|format(episode.episode) }}</b>
+<span data-tooltip="true" title="{{ 'duration'|trans }} {{ episode.duration }} {{ 'min'|trans }}">
+    <b>S{{ '%02d'|format(episode.season) }}E{{ '%02d'|format(episode.episode) }}</b>
+</span>

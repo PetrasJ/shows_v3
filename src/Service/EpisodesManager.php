@@ -55,9 +55,9 @@ class EpisodesManager
 
     public function getEpisodes(DateTime $from, DateTime $to)
     {
-        $episodeRepo = $this->entityManager->getRepository(Episode::class);
-
-        return $episodeRepo->getEpisodes($from, $to, $this->user);
+        return $this->entityManager
+            ->getRepository(Episode::class)
+            ->getEpisodes($from, $to, $this->user);
     }
 
     private function getEpisodesApi(Show $show): array

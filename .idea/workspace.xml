@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04ad8ebe-cb9f-49c4-9091-0e48b806700b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/_inc/episode-details.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Show.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Show.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/EpisodeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/EpisodeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UserShowService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UserShowService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shows/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shows/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shows/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shows/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/unwatched-shows/episodes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/unwatched-shows/episodes.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/EpisodesManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/EpisodesManager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/_inc/episode-details.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/_inc/episode-details.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/calendar/month.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/calendar/month.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/shows/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="42" column="99" selection-start-line="42" selection-start-column="99" selection-end-line="42" selection-end-column="99" />
+            <state relative-caret-position="227">
+              <caret line="36" column="20" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="99" />
               <folding>
                 <element signature="e#1186#1216#0#Twig" expanded="true" />
                 <element signature="e#1466#1496#0#Twig" expanded="true" />
@@ -69,62 +65,66 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/shows/show.html.twig">
+        <entry file="file://$PROJECT_DIR$/src/Repository/EpisodeRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="101" selection-start-line="6" selection-start-column="101" selection-end-line="6" selection-end-column="101" />
+            <state relative-caret-position="241">
+              <caret line="120" column="38" selection-start-line="120" selection-start-column="38" selection-end-line="120" selection-end-column="38" />
               <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-                <element signature="e#156#186#0#Twig" expanded="true" />
+                <element signature="e#34#54#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/UserEpisode.php">
+        <entry file="file://$PROJECT_DIR$/templates/_inc/episode-details.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+            <state>
+              <caret lean-forward="true" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Show.php">
+        <entry file="file://$PROJECT_DIR$/src/Twig/DateExtension.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="23" column="76" selection-start-line="23" selection-start-column="76" selection-end-line="23" selection-end-column="76" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Repository/UserShowRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Repository/ShowRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+            <state relative-caret-position="363">
+              <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Repository/EpisodeRepository.php">
+        <entry file="file://$PROJECT_DIR$/templates/calendar/month.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="154" column="90" selection-start-line="154" selection-start-column="90" selection-end-line="154" selection-end-column="90" />
+            <state relative-caret-position="156">
+              <caret line="52" column="86" selection-start-line="52" selection-start-column="86" selection-end-line="52" selection-end-column="86" />
               <folding>
-                <element signature="e#34#54#0#PHP" expanded="true" />
+                <element signature="e#2838#2868#0#Twig" expanded="true" />
+                <element signature="e#2915#2928#0#Twig" expanded="true" />
+                <element signature="e#3330#3336#1#HTML" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/CalendarController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="36" column="44" lean-forward="true" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
+              <folding>
+                <element signature="e#34#66#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Service/EpisodesManager.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="59" column="19" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -133,12 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>datep</find>
-      <find>changeMonth</find>
-      <find>local</find>
-      <find>tim</find>
-      <find>unwatched</find>
-      <find>first day of this month</find>
       <find>setsumm</find>
       <find>summar</find>
       <find>unwatched/</find>
@@ -160,15 +154,22 @@
       <find>leftjoin</find>
       <find>l</find>
       <find>lastE</find>
-      <find>last</find>
       <find>getusershow</find>
       <find>getshow</find>
+      <find>showStatus</find>
+      <find>current</find>
+      <find>episodes</find>
+      <find>userEpisodes</find>
+      <find>airdate</find>
+      <find>last</find>
+      <find>.airdate</find>
     </findStrings>
     <replaceStrings>
       <replace>$show-&gt;</replace>
       <replace>$show</replace>
       <replace>UserShow</replace>
       <replace>UserEpisode</replace>
+      <replace>episodes</replace>
     </replaceStrings>
     <dirStrings>
       <dir>D:\xampp\htdocs\shows_v3\src\Service</dir>
@@ -211,9 +212,7 @@
         <option value="$PROJECT_DIR$/public/php_errors.log" />
         <option value="$PROJECT_DIR$/src/Controller/CalendarController.php" />
         <option value="$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php" />
-        <option value="$PROJECT_DIR$/src/Service/EpisodesManager.php" />
         <option value="$PROJECT_DIR$/src/Twig/DateExtension.php" />
-        <option value="$PROJECT_DIR$/templates/calendar/month.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/ShowsController.php" />
         <option value="$PROJECT_DIR$/templates/form/search.html.twig" />
         <option value="$PROJECT_DIR$/templates/shows/actions.html.twig" />
@@ -237,13 +236,15 @@
         <option value="$PROJECT_DIR$/src/Entity/Episode.php" />
         <option value="$PROJECT_DIR$/src/Entity/User.php" />
         <option value="$PROJECT_DIR$/src/Form/UserType.php" />
-        <option value="$PROJECT_DIR$/templates/_inc/episode-details.html.twig" />
         <option value="$PROJECT_DIR$/templates/unwatched-shows/episodes.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/Show.php" />
         <option value="$PROJECT_DIR$/src/Service/UserShowService.php" />
         <option value="$PROJECT_DIR$/templates/shows/index.html.twig" />
         <option value="$PROJECT_DIR$/templates/shows/show.html.twig" />
         <option value="$PROJECT_DIR$/src/Repository/EpisodeRepository.php" />
+        <option value="$PROJECT_DIR$/src/Service/EpisodesManager.php" />
+        <option value="$PROJECT_DIR$/templates/_inc/episode-details.html.twig" />
+        <option value="$PROJECT_DIR$/templates/calendar/month.html.twig" />
       </list>
     </option>
   </component>
@@ -413,7 +414,25 @@
             <path>
               <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
               <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Twig" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="_inc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shows_v3" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="calendar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="shows_v3" type="b2602c69:ProjectViewProjectNode" />
@@ -530,14 +549,7 @@
       <workItem from="1558289389055" duration="13841000" />
       <workItem from="1558503199889" duration="4128000" />
       <workItem from="1558525169668" duration="1215000" />
-      <workItem from="1558592038451" duration="4080000" />
-    </task>
-    <task id="LOCAL-00040" summary="add buttons">
-      <created>1557810988209</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1557810988209</updated>
+      <workItem from="1558592038451" duration="5629000" />
     </task>
     <task id="LOCAL-00041" summary="add softdeleteable">
       <created>1557846960233</created>
@@ -875,11 +887,18 @@
       <option name="project" value="LOCAL" />
       <updated>1558593013632</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="add template for episode details">
+      <created>1558628310409</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1558628310409</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="180628000" />
+    <option name="totallyTimeSpent" value="182177000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -996,7 +1015,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove default controller" />
     <MESSAGE value="add overlay" />
     <MESSAGE value="twig if auth in progress" />
     <MESSAGE value="hide add button if anonymous" />
@@ -1021,7 +1039,8 @@
     <MESSAGE value="watch episode fix" />
     <MESSAGE value="improve queries for front" />
     <MESSAGE value="add calendar include show status" />
-    <option name="LAST_COMMIT_MESSAGE" value="add calendar include show status" />
+    <MESSAGE value="add template for episode details" />
+    <option name="LAST_COMMIT_MESSAGE" value="add template for episode details" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1150,13 +1169,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/calendar/month.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="120" selection-start-line="7" selection-start-column="120" selection-end-line="7" selection-end-column="120" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/form/episode-actions.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1198,13 +1210,6 @@
             <element signature="e#1367#1379#0#Twig" expanded="true" />
             <element signature="e#1677#1692#0#Twig" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Twig/DateExtension.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
         </state>
       </provider>
     </entry>
@@ -1377,23 +1382,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/CalendarController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="36" column="42" selection-start-line="36" selection-start-column="42" selection-end-line="36" selection-end-column="42" />
-          <folding>
-            <element signature="e#34#66#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service/EpisodesManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="59" column="36" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/unwatched-shows/episodes.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -1401,13 +1389,6 @@
           <folding>
             <element signature="e#290#320#0#Twig" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/_inc/episode-details.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="80" selection-start-line="2" selection-start-column="80" selection-end-line="2" selection-end-column="80" />
         </state>
       </provider>
     </entry>
@@ -1449,17 +1430,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/shows/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="42" column="99" selection-start-line="42" selection-start-column="99" selection-end-line="42" selection-end-column="99" />
-          <folding>
-            <element signature="e#1186#1216#0#Twig" expanded="true" />
-            <element signature="e#1466#1496#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/shows/show.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1495,12 +1465,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/shows/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="36" column="20" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="99" />
+          <folding>
+            <element signature="e#1186#1216#0#Twig" expanded="true" />
+            <element signature="e#1466#1496#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/CalendarController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="36" column="44" lean-forward="true" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
+          <folding>
+            <element signature="e#34#66#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/EpisodesManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="59" column="19" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Repository/EpisodeRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="154" column="90" selection-start-line="154" selection-start-column="90" selection-end-line="154" selection-end-column="90" />
+        <state relative-caret-position="241">
+          <caret line="120" column="38" selection-start-line="120" selection-start-column="38" selection-end-line="120" selection-end-column="38" />
           <folding>
             <element signature="e#34#54#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Twig/DateExtension.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/_inc/episode-details.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/calendar/month.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="52" column="86" selection-start-line="52" selection-start-column="86" selection-end-line="52" selection-end-column="86" />
+          <folding>
+            <element signature="e#2838#2868#0#Twig" expanded="true" />
+            <element signature="e#2915#2928#0#Twig" expanded="true" />
+            <element signature="e#3330#3336#1#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
