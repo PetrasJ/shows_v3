@@ -127,3 +127,9 @@ td.current-day .inner {
     display: block;
   }
 }
+
+@media screen and (max-width: 350px) {
+ #search .term {
+   max-width: 150px;
+ }
+}
