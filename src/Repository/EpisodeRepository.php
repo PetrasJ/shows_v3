@@ -152,7 +152,7 @@ class EpisodeRepository extends EntityRepository
     public function getUserShowEpisodes(User $user, Show $show, $limit = 100)
     {
         $qb = $this->createQueryBuilder('e')
-            ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary')
+            ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary, e.duration')
             ->addSelect(sprintf($this->dateAdd, 'e.airstamp', 'userAirstamp'))
             ->addSelect('ue.comment, ue.status')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')

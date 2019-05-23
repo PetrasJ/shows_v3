@@ -5,9 +5,7 @@
     {% for episode in episodes %}
         <div class="row" id="{{ episode.id }}" data-show-id="{{ show.id }}">
             <div class="col-3">
-                <span data-tooltip="true" title="{{ 'airdate'|trans }} {{ episode.airstamp|dateTimezone }}">{{ episode.userAirstamp|dateTimezone }}</span>
-                <span class="episode" title="{{ 'duration'|trans }} {{ episode.duration }} {{ 'min'|trans }}"></span>
-                <b>S{{ '%02d'|format(episode.season) }}E{{ '%02d'|format(episode.episode) }}</b>
+                {% include '_inc/episode-details.html.twig' with {episode: episode} %}
             </div>
             <div class="col-5">
                 <h6>{{ episode.name }}</h6>

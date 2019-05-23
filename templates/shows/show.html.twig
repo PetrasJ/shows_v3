@@ -4,6 +4,6 @@
     {{ show.show.name }}
 
     {% for episode in episodes %}
-       <div id="{{ episode.id }}"> {{ episode.season }} {{ episode.episode }} {{ episode.userAirstamp|dateTimezone }} {{ episode.airstamp|dateTimezone }} {{ episode.summary|raw }} {% include 'form/episode-actions.html.twig' with {episode: episode} %}</div>
+       <div id="{{ episode.id }}"> {% include '_inc/episode-details.html.twig' with {episode: episode} %} {{ episode.summary|raw }} {% include 'form/episode-actions.html.twig' with {episode: episode} %}</div>
     {% endfor %}
 {% endblock %}

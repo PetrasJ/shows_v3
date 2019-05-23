@@ -34,13 +34,13 @@
             <div class="col-3">
                 {% if show.lastEpisode %}
                     <b>{{ show.lastEpisode.name }}</b><br>
-                    {{ show.lastEpisode.userAirstamp|dateTimezone }}
+                    {% include '_inc/episode-details.html.twig' with {episode: show.lastEpisode} %}
                 {% endif %}
             </div>
             <div class="col-3">
                 {% if show.nextEpisode %}
                     <b>{{ show.nextEpisode.name }}</b><br>
-                    {{ show.nextEpisode.userAirstamp|dateTimezone }}
+                    {% include '_inc/episode-details.html.twig' with {episode: show.lastEpisode} %}
                 {% endif %}
             </div>
             <div class="col-3">

@@ -21,7 +21,7 @@ class Show
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Episode", mappedBy="show")
-     * @ORM\OrderBy({"airstamp" = "ASC"})
+     * @ORM\OrderBy({"airstamp" = "ASC", "season" = "ASC", "episode" = "ASC"})
      */
     private $episodes;
 

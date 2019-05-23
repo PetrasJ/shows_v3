@@ -183,13 +183,15 @@ class UserShowService
     private function formatShows($shows): array
     {
         $formatted = [];
+        $defaultOffset = $this->user->getDefaultOffset();
         foreach ($shows as $userShow) {
             /** @var UserShow $userShow */
             $episodes = $userShow->getShow()->getEpisodes();
 
             $lastEpisode = null;
             $nextEpisode = null;
-            $now = (new DateTime())->modify(sprintf('-%d hours', $userShow->getOffset()));
+            $offset = $userShow->getOffset() ?: $defaultOffset;
+            $now = (new DateTime())->modify(sprintf('-%d hours', $offset));
 
             $count = 0;
             foreach ($episodes as $episode) {
@@ -198,10 +200,10 @@ class UserShowService
                 if ($date < $now) {
                     $count++;
                     $lastEpisode = $episode
-                        ->setUserAirstamp($date->modify(sprintf('+%d hours', $userShow->getOffset())));
+                        ->setUserAirstamp((clone($date))->modify(sprintf('+%d hours', $offset)));
                 } else {
                     $nextEpisode = $episode
-                        ->setUserAirstamp($date->modify(sprintf('+%d hours', $userShow->getOffset())));
+                        ->setUserAirstamp((clone($date))->modify(sprintf('+%d hours', $offset)));
                     break;
                 }
             }
