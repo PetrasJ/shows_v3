@@ -23,9 +23,10 @@ security:
             logout:       true
             anonymous:    true
             remember_me:
-                secret:   '%env(APP_SECRET)%'
+                secret:   '%kernel.secret%'
                 lifetime: 31557600 # year
                 path:     /
+                always_remember_me: true
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

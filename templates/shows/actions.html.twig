@@ -1,6 +1,6 @@
 {% if status != constant('App\\Entity\\UserShow::STATUS_WATCHING') %}
     <button class="btn btn-success m-1 btn-sm" data-id="{{ show.id }}"
-            data-action="{{ path('shows_add', {showId: show.id}) }}" data-tooltip="true"
+            data-action="{{ path('shows_add', {showId: show.id}) }}"
             data-toggle="modal" title="{{ 'show.restore show (add to watching)'|trans }}"
             data-text="{{ 'show.restore show (add to watching)'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
         <i class="fa fa-undo" aria-hidden="true"></i>
@@ -8,7 +8,7 @@
 {% endif %}
 {% if status != constant('App\\Entity\\UserShow::STATUS_ARCHIVED') %}
     <button class="btn btn-secondary btn-sm m-1" data-id="{{ show.id }}" data-remove="true"
-            data-action="{{ path('shows_archive', {showId: show.id}) }}" data-tooltip="true"
+            data-action="{{ path('shows_archive', {showId: show.id}) }}"
             data-toggle="modal" title="{{ 'show.archive show'|trans }}"
             data-text="{{ 'show.archive show'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
         <i class="fa fa-archive" aria-hidden="true"></i>
@@ -16,7 +16,7 @@
 {% endif %}
 {% if status != constant('App\\Entity\\UserShow::STATUS_WATCH_LATER') %}
     <button class="btn btn-secondary btn-sm m-1" data-id="{{ show.id }}" data-remove="true"
-            data-action="{{ path('shows_watch_later', {showId: show.id}) }}" data-tooltip="true"
+            data-action="{{ path('shows_watch_later', {showId: show.id}) }}"
             data-toggle="modal" title="{{ 'show.watch later'|trans }}"
             data-text="{{ 'show.watch later'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
         <i class="fa fa-tasks" aria-hidden="true"></i>
@@ -24,13 +24,13 @@
 {% endif %}
 <button class="btn btn-danger m-1 btn-sm" data-id="{{ show.id }}"
         data-action="{{ path('shows_remove', {showId: show.id}) }}" data-remove="true"
-        data-toggle="modal" title="{{ 'show.remove show'|trans }}" data-tooltip="true"
+        data-toggle="modal" title="{{ 'show.remove show'|trans }}"
         data-text="{{ 'show.remove show'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
     <i class="fa fa-trash" aria-hidden="true"></i>
 </button>
 <button class="btn btn-danger m-1 btn-sm" data-id="{{ show.id }}"
         data-action="{{ path('shows_watch_all', {showId: show.id}) }}"
-        data-toggle="modal" title="{{ 'show.check all episodes as watched'|trans }}" data-tooltip="true"
+        data-toggle="modal" title="{{ 'show.check all episodes as watched'|trans }}"
         data-text="{{ 'show.check all episodes as watched'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
     <i class="fa fa-eye" aria-hidden="true"></i>
 </button>
