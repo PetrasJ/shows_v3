@@ -41,16 +41,11 @@ class UserController extends AbstractController
 
         $duration = $userEpisodeService->getWatchedDuration();
 
-        $zero = new \DateTime('@0');
-        $offset = new \DateTime('@' . $duration * 60);
-        $diff = $zero->diff($offset);
-        $time = $diff->format('%a');
-
         return $this->render('user/settings.html.twig',
             [
                 'form' => $form->createView(),
                 'lastEpisodes' => $userEpisodeService->getLastEpisodes(),
-                'duration' => $time,
+                'days' => (int) ($duration / 1440), //minutes to days
             ]
         );
     }

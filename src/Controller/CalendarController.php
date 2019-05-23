@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Service\EpisodesManager;
 use DateTime;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/calendar", name="calendar_")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class CalendarController extends AbstractController
 {

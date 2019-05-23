@@ -94,9 +94,10 @@ Search results for: Search results for
 no_results: No results
 Watchlater: Watchlater
 Archived: Archived
-Days: Days
+days: Days
 Hours: Hours
 Minutes: Minutes
+total_watched: Total watched
 Show/Hide Wached Episodes: Show/Hide Wached Episodes
 feedback:
     name: Name
