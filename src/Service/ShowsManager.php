@@ -69,7 +69,8 @@ class ShowsManager
         return $this->entityManager->getRepository(Show::class)->findAllByName($term, false);
     }
 
-    public function findFull(string $term) {
+    public function findFull(string $term)
+    {
         $shows = $this->entityManager->getRepository(Show::class)->findAllByName($term, true);
         $userShows = $this->user
             ? $this->entityManager
@@ -99,8 +100,9 @@ class ShowsManager
             return null;
         }
 
-        if ($this->getShow($show->id)) {
-            return null;
+        $showEntity = $this->entityManager->find(Show::class, $show->id);
+        if ($showEntity) {
+            return $showEntity;
         }
 
         $newShow = new Show();
@@ -114,8 +116,7 @@ class ShowsManager
             ->setStatus($show->status)
             ->setPremiered($show->premiered)
             ->setGenres(json_encode($show->genres))
-            ->setSummary($show->summary)
-        ;
+            ->setSummary($show->summary);
 
         $this->entityManager->persist($newShow);
         $this->entityManager->flush();
@@ -128,11 +129,8 @@ class ShowsManager
         $show = json_decode($this->client->get(
             sprintf('%s/%d', self::API_URL, $showId))->getBody()
         );
-        $showEntity = $this->getShow($show->id);
 
-        if (!$showEntity) {
-            $showEntity = $this->addShow($show);
-        };
+        $showEntity = $this->addShow($show);
 
         if ($show->updated === $showEntity->getUpdated()) {
             return false;
