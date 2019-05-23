@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\UserShow;
 use DateTime;
 use DateTimeZone;
 use Exception;
@@ -30,6 +31,14 @@ class UserType extends AbstractType
                     'Pусский' => 'ru',
                 ],
                 'choice_translation_domain' => false,
+            ])
+            ->add('calendarShow', ChoiceType::class, [
+                'label' => 'show.Calendar include',
+                'choices' => [
+                    'Archived' => UserShow::STATUS_ARCHIVED,
+                    'Watchlater' => UserShow::STATUS_WATCH_LATER,
+                ],
+                'multiple' => true
             ])
             ->add('defaultOffset', NumberType::class, [
                 'label' => 'show.offset',

@@ -25,8 +25,8 @@ class User extends BaseUser
     private $defaultOffset;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var array
+     * @ORM\Column(type="array", nullable=true)
      */
     private $calendarShow;
 
@@ -57,21 +57,20 @@ class User extends BaseUser
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getCalendarShow(): string
+    public function getCalendarShow(): ?array
     {
         return $this->calendarShow;
     }
 
     /**
-     * @param string $calendarShow
+     * @param array $calendarShow
      * @return User
      */
-    public function setCalendarShow(string $calendarShow): User
+    public function setCalendarShow(array $calendarShow): User
     {
         $this->calendarShow = $calendarShow;
-
         return $this;
     }
 

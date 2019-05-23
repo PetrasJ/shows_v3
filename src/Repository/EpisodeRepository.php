@@ -109,10 +109,9 @@ class EpisodeRepository extends EntityRepository
      * @param DateTime $dateFrom
      * @param DateTime $dateTo
      * @param User|null $user
-     * @param array $status
      * @return array
      */
-    public function getEpisodes(DateTime $dateFrom, DateTime $dateTo, User $user = null, $status = [])
+    public function getEpisodes(DateTime $dateFrom, DateTime $dateTo, User $user = null)
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.duration')
@@ -139,9 +138,12 @@ class EpisodeRepository extends EntityRepository
 
 
         $status[] = 0;
+        if ($user->getCalendarShow())
+        {
+            $status = array_merge($status, $user->getCalendarShow());
+        }
         $qb->andWhere('us.status IN (:status)')
             ->setParameter('status', $status);
-
 
         return $qb->getQuery()
             ->getResult();
