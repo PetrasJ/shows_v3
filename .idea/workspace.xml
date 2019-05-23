@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="04ad8ebe-cb9f-49c4-9091-0e48b806700b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Resources/FOSUserBundle/views/Security/login_content.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/Resources/FOSUserBundle/views/Security/login_content.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,22 +20,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Repository/EpisodeRepository.php">
+        <entry file="file://$PROJECT_DIR$/templates/_inc/episode-details.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1938">
-              <caret line="120" column="38" selection-start-line="120" selection-start-column="38" selection-end-line="120" selection-end-column="38" />
-              <folding>
-                <element signature="e#34#54#0#PHP" expanded="true" />
-              </folding>
+            <state>
+              <caret column="6" selection-start-column="6" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/_inc/episode-details.html.twig">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="3" selection-end-column="7" />
+            <state relative-caret-position="51">
+              <caret line="3" column="72" selection-start-line="3" selection-start-column="72" selection-end-line="3" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -46,12 +41,12 @@
         <entry file="file://$PROJECT_DIR$/templates/_inc/episode-details-time.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="141" selection-start-column="141" selection-end-column="141" />
+              <caret column="121" selection-start-column="121" selection-end-column="121" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="173">
@@ -121,9 +116,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>summary</find>
-      <find>datetime</find>
-      <find>modifie</find>
       <find>modified</find>
       <find>remove</find>
       <find>modal</find>
@@ -151,6 +143,9 @@
       <find>slice</find>
       <find>calendar</find>
       <find>inittool</find>
+      <find>data-tooltip=&quot;true&quot;</find>
+      <find>data-tooltip=&quot;true&quot;</find>
+      <find>data-tooltip=&quot;true&quot;</find>
     </findStrings>
     <replaceStrings>
       <replace>$show-&gt;</replace>
@@ -158,6 +153,7 @@
       <replace>UserShow</replace>
       <replace>UserEpisode</replace>
       <replace>episodes</replace>
+      <replace />
     </replaceStrings>
     <dirStrings>
       <dir>D:\xampp\htdocs\shows_v3\src\Service</dir>
@@ -169,6 +165,7 @@
       <dir>D:\xampp\htdocs\shows_v3\config</dir>
       <dir>D:\xampp\htdocs\shows_v3</dir>
       <dir>C:\www\shows_v3\src</dir>
+      <dir>C:\www\shows_v3\templates</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -185,7 +182,6 @@
         <option value="$PROJECT_DIR$/src/Controller/SearchController.php" />
         <option value="$PROJECT_DIR$/templates/search/results.html.twig" />
         <option value="$PROJECT_DIR$/src/EventSubscriber/LocaleSubscriber.php" />
-        <option value="$PROJECT_DIR$/templates/base.html.twig" />
         <option value="$PROJECT_DIR$/src/EventListener/RequestListener.php" />
         <option value="$PROJECT_DIR$/templates/calendar/calendar.html.twig" />
         <option value="$PROJECT_DIR$/templates/calendar/index.html.twig" />
@@ -227,12 +223,13 @@
         <option value="$PROJECT_DIR$/templates/shows/show.html.twig" />
         <option value="$PROJECT_DIR$/src/Repository/EpisodeRepository.php" />
         <option value="$PROJECT_DIR$/src/Service/EpisodesManager.php" />
-        <option value="$PROJECT_DIR$/templates/_inc/episode-details.html.twig" />
         <option value="$PROJECT_DIR$/templates/calendar/month.html.twig" />
         <option value="$PROJECT_DIR$/templates/_inc/episode-details-time.html.twig" />
         <option value="$PROJECT_DIR$/config/packages/security.yaml" />
         <option value="$PROJECT_DIR$/src/Resources/FOSUserBundle/views/Security/login_content.html.twig" />
         <option value="$PROJECT_DIR$/assets/js/app.js" />
+        <option value="$PROJECT_DIR$/templates/_inc/episode-details.html.twig" />
+        <option value="$PROJECT_DIR$/templates/base.html.twig" />
       </list>
     </option>
   </component>
@@ -542,14 +539,7 @@
       <workItem from="1558503199889" duration="4128000" />
       <workItem from="1558525169668" duration="1215000" />
       <workItem from="1558592038451" duration="7005000" />
-      <workItem from="1558634506125" duration="529000" />
-    </task>
-    <task id="LOCAL-00043" summary="show list in progress">
-      <created>1557847751107</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1557847751107</updated>
+      <workItem from="1558634506125" duration="964000" />
     </task>
     <task id="LOCAL-00044" summary="feedback save">
       <created>1557855374195</created>
@@ -887,11 +877,18 @@
       <option name="project" value="LOCAL" />
       <updated>1558630538532</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="tooltip for all elements with title, remember_me fix?">
+      <created>1558635322536</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1558635322537</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="184082000" />
+    <option name="totallyTimeSpent" value="184517000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -904,8 +901,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49752882" visible="true" weight="0.2700454" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49752882" visible="true" weight="0.2700454" />
       <window_info id="Structure" order="1" sideWeight="0.50247115" side_tool="true" weight="0.478145" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -920,7 +918,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.5839637" weight="0.2405892" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.24432677" side_tool="true" visible="true" weight="0.36497545" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.7556732" visible="true" weight="0.36497545" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.7556732" visible="true" weight="0.36497545" />
       <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="bottom" id="CSS Styles" order="13" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1007,7 +1005,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="hide add button if anonymous" />
     <MESSAGE value="month picker in progress" />
     <MESSAGE value="datetime locale" />
     <MESSAGE value="add month view" />
@@ -1032,7 +1029,8 @@
     <MESSAGE value="add template for episode details" />
     <MESSAGE value="calendar works" />
     <MESSAGE value="calendar hide date, show correct tooltips" />
-    <option name="LAST_COMMIT_MESSAGE" value="calendar hide date, show correct tooltips" />
+    <MESSAGE value="tooltip for all elements with title, remember_me fix?" />
+    <option name="LAST_COMMIT_MESSAGE" value="tooltip for all elements with title, remember_me fix?" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1126,13 +1124,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/Query/AST/Functions/DateSubFunction.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="33" column="6" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -1446,17 +1437,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/_inc/episode-details.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="3" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/_inc/episode-details-time.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="141" selection-start-column="141" selection-end-column="141" />
+          <caret column="121" selection-start-column="121" selection-end-column="121" />
         </state>
       </provider>
     </entry>
@@ -1509,6 +1493,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="173">
           <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/_inc/episode-details.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="72" selection-start-line="3" selection-start-column="72" selection-end-line="3" selection-end-column="72" />
         </state>
       </provider>
     </entry>
