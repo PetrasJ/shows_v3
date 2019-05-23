@@ -275,7 +275,8 @@ const app = {
             type: 'get',
             url: window.baseUrl + 'calendar/month/' + id,
             success: (data) => {
-                $('.calendar').html(data)
+                $('.calendar').html(data);
+                this.initTooltip();
             }
         }).fail(function (data) {
             console.log(data);

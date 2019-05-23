@@ -26,38 +26,30 @@
         </th>
     </tr>
     <tr class="weekdays">
-        <th width="15%">{{ 'calendar.Monday'|trans }}</th>
-        <th width="15%">{{ 'calendar.Tuesday'|trans }}</th>
-        <th width="14%">{{ 'calendar.Wednesday'|trans }}</th>
-        <th width="14%">{{ 'calendar.Thursday'|trans }}</th>
-        <th width="14%">{{ 'calendar.Friday'|trans }}</th>
-        <th width="14%">{{ 'calendar.Saturday'|trans }}</th>
-        <th width="14%">{{ 'calendar.Sunday'|trans }}</th>
+        <th style="width:15%">{{ 'calendar.Monday'|trans }}</th>
+        <th style="width:15%">{{ 'calendar.Tuesday'|trans }}</th>
+        <th style="width:14%">{{ 'calendar.Wednesday'|trans }}</th>
+        <th style="width:14%">{{ 'calendar.Thursday'|trans }}</th>
+        <th style="width:14%">{{ 'calendar.Friday'|trans }}</th>
+        <th style="width:14%">{{ 'calendar.Saturday'|trans }}</th>
+        <th style="width:14%">{{ 'calendar.Sunday'|trans }}</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        {% set daysInMonth = time|date('t')
-        %}{% set startDow = time|date('F 1\\s\\t Y')|date('N') - 1
-        %}{% set dow = startDow
-        %}{% for day in range(1,daysInMonth)
-        %}{% set currentDay = time|date('Y-m') ~ '-' ~ '%02d'|format(day)
-        %}{% if loop.first and startDow != 0 %}
-        <td colspan="{{ startDow }}"></td>{% endif
-        %}{% set break = false %}
+        {% set daysInMonth = time|date('t') %}{% set startDow = time|date('F 1\\s\\t Y')|date('N') - 1 %}{% set dow = startDow %}{% for day in range(1,daysInMonth) %}{% set currentDay = time|date('Y-m') ~ '-' ~ '%02d'|format(day) %}{% if loop.first and startDow != 0 %}
+        <td colspan="{{ startDow }}"></td>{% endif %}{% set break = false %}
         <td class="day {% for episode in episodes if break == false %}{% if episode.userAirstamp|slice(0, 10) == currentDay %}exists{% set break = true %}{% endif %}{% endfor %}{% if currentDay=="now"|date('Y-m-d') %} current-day alert-info{% endif %}">
             <div class="inner">{% for episode in episodes %}{% if episode.userAirstamp|slice(0, 10) == currentDay %}
                 <div class="episode {% if userWatchedEpisodes is defined and episode.episodeID in userWatchedEpisodes %}watched{% endif %}">
-                    <span data-toggle="tooltip" title="{{ 'airdate'|trans }} {{ episode.airstamp|dateTimezone }}">{{ episode.userAirstamp|dateTimezone }}</span>
-
-                    {% include '_inc/episode-details.html.twig' with {episode: episode} %}
+                    {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
 
                     <a href="{{ url('shows_details',{'showId': episode.showId}) }}">{{ episode.showName }}</a>
                     </div>{% endif %}{% endfor %}
             </div>
 
             <span class="dayoftheweek">{{ currentDay|date('Y-m-d') }} {{ ('calendar.'~currentDay|date('l'))|trans }}</span>
-            <span class="day">{{ day }}</span></div>
+            <span class="day">{{ day }}</span>
         </td>
         {% if loop.last and dow != 6 %}
             <td colspan="{{ 6 - dow }}">&nbsp;</td>
@@ -70,5 +62,3 @@
     </tr>
     </tbody>
 </table>
-
-
