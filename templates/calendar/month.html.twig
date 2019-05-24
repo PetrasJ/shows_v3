@@ -37,7 +37,7 @@
                 <div class="episode {% if userWatchedEpisodes is defined and episode.episodeID in userWatchedEpisodes %}watched{% endif %}">
                     {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
 
-                    <a href="{{ url('shows_details',{'showId': episode.showId}) }}">{{ episode.showName }}</a>
+                    <a href="{{ url('shows_details',{'showId': episode.showId}) }}" title="{{ episode.name }}">{{ episode.showName }}</a>
                     </div>{% endif %}{% endfor %}
             </div>
 
