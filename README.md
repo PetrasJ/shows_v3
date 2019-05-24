@@ -7,3 +7,5 @@ SET @ids = (SELECT ue.id FROM user_episodes ue
 LEFT JOIN episodes e ON e.id = ue.episode_id
 WHERE e.id IS NULL);
 DELETE FROM user_episodes WHERE id IN (@ids);
+
+UPDATE fos_user SET calendar_show = NULL;

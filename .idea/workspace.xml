@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="04ad8ebe-cb9f-49c4-9091-0e48b806700b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/calendar/month.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/calendar/month.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -587,14 +586,7 @@
       <workItem from="1558525169668" duration="1215000" />
       <workItem from="1558592038451" duration="7005000" />
       <workItem from="1558634506125" duration="5540000" />
-      <workItem from="1558642809674" duration="3881000" />
-    </task>
-    <task id="LOCAL-00053" summary="set locale on post and login">
-      <created>1557932463624</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1557932463624</updated>
+      <workItem from="1558642809674" duration="4123000" />
     </task>
     <task id="LOCAL-00054" summary="remove sample link">
       <created>1557932542225</created>
@@ -932,11 +924,18 @@
       <option name="project" value="LOCAL" />
       <updated>1558649674707</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="episode name hover">
+      <created>1558675667372</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1558675667372</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192974000" />
+    <option name="totallyTimeSpent" value="193216000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1029,7 +1028,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="twig datetime extension improvement" />
     <MESSAGE value="add unwatch action" />
     <MESSAGE value="remove deprecation" />
     <MESSAGE value="add watch all button" />
@@ -1054,7 +1052,8 @@
     <MESSAGE value="CS" />
     <MESSAGE value="duration" />
     <MESSAGE value="total watched improvement" />
-    <option name="LAST_COMMIT_MESSAGE" value="total watched improvement" />
+    <MESSAGE value="episode name hover" />
+    <option name="LAST_COMMIT_MESSAGE" value="episode name hover" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
