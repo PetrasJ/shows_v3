@@ -158,8 +158,16 @@ td.current-day .inner {
 
 .episode.watch-later {
   background-color: rgba(0,255,0,0.2);
+  margin-left: -12px;
+  padding-left: 12px;
+  margin-right: -12px;
+  padding-right: 12px;
 }
 
 .episode.archived {
   background-color: rgba(255,0,0,0.2);
+  margin-left: -12px;
+  padding-left: 12px;
+  margin-right: -12px;
+  padding-right: 12px;
 }

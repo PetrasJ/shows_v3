@@ -132,23 +132,34 @@ const app = {
     initUnwatchedEpisodes: function () {
         const t = this;
         $('.unwatched-episodes').unbind().on('click', function () {
-            loading();
-            $.ajax({
-                type: 'get',
-                url: $(this).data('link'),
-                success: (data) => {
-                    $('#result').hide().html(data).slideDown();
-                    t.initWatchActions();
-                    $('.unwatched-shows').slideUp();
-                    window.location.hash = $(this).data('id');
-                }
-            }).fail(function (data) {
-                console.log(data);
-            }).always(function () {
-                loaded();
-            });
+            t.loadUnwatchedEpisodes($(this).data('id'), true);
+        });
 
-        })
+        if ($('.unwatched-shows').length > 0) {
+            const showId = window.location.hash.substr(1);
+            if (showId) {
+                t.loadUnwatchedEpisodes(showId, false)
+            }
+        }
+    },
+    loadUnwatchedEpisodes: function (showId, hideShows) {
+        loading();
+        $.ajax({
+            type: 'get',
+            url: window.baseUrl + 'episodes/' + showId,
+            success: (data) => {
+                $('#result').hide().html(data).slideDown();
+                this.initWatchActions();
+                if (hideShows) {
+                    $('.unwatched-shows').slideUp();
+                }
+                window.location.hash = showId;
+            }
+        }).fail((data) => {
+            console.log(data);
+        }).always(() => {
+            loaded();
+        });
     },
     initWatchActions: function () {
         $('.watch-episode').unbind().on('click', function () {
@@ -250,8 +261,11 @@ const app = {
     },
     initCalendar: function () {
         if ($('.calendar').length !== 0) {
+            const month = window.location.hash.substr(1);
             const monthPicker = $('.month-picker');
-            console.log(window.location.hash);
+            if (month) {
+                monthPicker.val(month);
+            }
             this.loadCalendar(monthPicker.val());
             const t = this;
             monthPicker.datepicker({

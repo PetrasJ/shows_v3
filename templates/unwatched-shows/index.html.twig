@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <button class="btn btn-secondary m-1" onclick="$('.unwatched-shows').slideToggle()">{{ 'show.Hide/Show'|trans }}</button>
+    <button class="btn btn-secondary m-1"
+            onclick="$('.unwatched-shows').slideToggle()">{{ 'show.Hide/Show'|trans }}</button>
     <div class="text-center unwatched-shows">
         {% for show in shows %}
-            <div id="show_{{ show.id }}" data-id="{{ show.id }}" class="col-2 px-0 mx-1 align-top unwatched-show unwatched-episodes"
-                 data-link="{{ path('unwatched_episodes', {'showId': show.id}) }}">
+            <div id="show_{{ show.id }}" data-id="{{ show.id }}"
+                 class="col-2 px-0 mx-1 align-top unwatched-show unwatched-episodes">
             <img src="/img/shows/medium/{{ show.id }}.jpg" class="w-100" alt="{{ show.name }}">
                 {{ show.name }}
                 <span class="count">{{ show.episodes }}</span>
             </div>
         {% endfor %}
     </div>
-
     <div id="result"></div>
 {% endblock %}
