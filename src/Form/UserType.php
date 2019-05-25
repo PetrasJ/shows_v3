@@ -40,6 +40,9 @@ class UserType extends AbstractType
                 ],
                 'multiple' => true,
                 'required' => false,
+                'attr' => [
+                    'size' => 2
+                ],
 
             ])
             ->add('defaultOffset', NumberType::class, [
