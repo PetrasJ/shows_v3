@@ -2,8 +2,26 @@
 
 {% block body %}
     <div class="calendar-nav">
-        <input class="form-control month-picker" value="{{ currentMonth }}">
+        <div class="input-group">
+            <input class="form-control month-picker" value="{{ currentMonth }}">
+            <div class="input-group-append">
+                <button class="btn btn-secondary calendar-show" data-show="true" data-class=".watched" title="{{ 'calendar.watched'|trans }}">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-secondary calendar-show" data-show="true" data-class=".watch-later" title="{{ 'calendar.show/hide watch later shows'|trans }}">
+                    <i class="fa fa-tasks" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-secondary calendar-show" data-show="true" data-class=".archived" title="{{ 'calendar.show/hide archived shows'|trans }}">
+                    <i class="fa fa-archive" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
     </div>
+
     <div class="calendar">
 
     </div>

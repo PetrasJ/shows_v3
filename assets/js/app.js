@@ -270,6 +270,20 @@ const app = {
             });
         }
     },
+    initCalendarHideActions: function () {
+        const buttons = $('.calendar-show');
+        buttons.attr('data-show', true).css('opacity', '1');
+        buttons.unbind().on('click', function () {
+            const element = $(this);
+            if (element.attr('data-show') === "true") {
+                $(element.data('class')).slideUp('fast');
+                element.attr('data-show', false).css('opacity', '0.7');
+            } else {
+                $(element.data('class')).slideDown('fast');
+                element.attr('data-show', true).css('opacity', '1');
+            }
+        })
+    },
     loadCalendar: function (id) {
         $.ajax({
             type: 'get',
@@ -277,6 +291,7 @@ const app = {
             success: (data) => {
                 $('.calendar').html(data);
                 this.initTooltip();
+                this.initCalendarHideActions();
             }
         }).fail(function (data) {
             console.log(data);
