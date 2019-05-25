@@ -37,13 +37,13 @@
                             <i class="fa fa-film" aria-hidden="true"></i> {{ 'menu.shows'|trans }}
                         </a>
                         <div class="dropdown-menu">
-                            <a class="nav-link" href="{{ path('shows_index') }}">
+                            <a class="dropdown-item" href="{{ path('shows_index') }}">
                                 {{ 'menu.watching'|trans }}
                             </a>
-                            <a class="nav-link" href="{{ path('shows_index', {'status': constant('App\\Entity\\UserShow::STATUS_ARCHIVED')}) }}">
+                            <a class="dropdown-item" href="{{ path('shows_index', {'status': constant('App\\Entity\\UserShow::STATUS_ARCHIVED')}) }}">
                                 {{ 'menu.archived'|trans }}
                             </a>
-                            <a class="nav-link" href="{{ path('shows_index', {'status': constant('App\\Entity\\UserShow::STATUS_WATCH_LATER')}) }}">
+                            <a class="dropdown-item" href="{{ path('shows_index', {'status': constant('App\\Entity\\UserShow::STATUS_WATCH_LATER')}) }}">
                                 {{ 'menu.watchlater'|trans }}
                             </a>
                         </div>

@@ -147,8 +147,12 @@ td.current-day .inner {
 }
 
 @media screen and (max-width: 350px) {
- #search .term {
-   max-width: 150px;
+ #search, .navbar-toggler {
+   display: inline-block;
+ }
+
+ #search {
+   width: 60%;
  }
 }
 
