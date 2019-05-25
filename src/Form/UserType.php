@@ -38,7 +38,9 @@ class UserType extends AbstractType
                     'Archived' => UserShow::STATUS_ARCHIVED,
                     'Watchlater' => UserShow::STATUS_WATCH_LATER,
                 ],
-                'multiple' => true
+                'multiple' => true,
+                'required' => false,
+
             ])
             ->add('defaultOffset', NumberType::class, [
                 'label' => 'show.offset',

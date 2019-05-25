@@ -34,7 +34,7 @@
         <td colspan="{{ startDow }}"></td>{% endif %}{% set break = false %}
         <td class="day {% for episode in episodes if break == false %}{% if episode.userAirstamp|slice(0, 10) == currentDay %}exists{% set break = true %}{% endif %}{% endfor %}{% if currentDay=="now"|date('Y-m-d') %} current-day alert-info{% endif %}">
             <div class="inner">{% for episode in episodes %}{% if episode.userAirstamp|slice(0, 10) == currentDay %}
-                <div class="episode {% if userWatchedEpisodes is defined and episode.episodeID in userWatchedEpisodes %}watched{% endif %}">
+                <div class="episode{{ episode|class }}">
                     {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
 
                     <a href="{{ url('shows_details',{'showId': episode.showId}) }}" title="{{ episode.name }}">{{ episode.showName }}</a>

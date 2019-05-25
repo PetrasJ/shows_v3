@@ -151,3 +151,15 @@ td.current-day .inner {
    max-width: 150px;
  }
 }
+
+.episode.watched {
+  opacity: 0.6;
+}
+
+.episode.watch-later {
+  background-color: rgba(0,255,0,0.2);
+}
+
+.episode.archived {
+  background-color: rgba(255,0,0,0.2);
+}

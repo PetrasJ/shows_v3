@@ -117,7 +117,7 @@ class EpisodeRepository extends EntityRepository
             ->select('e.id, e.duration')
             ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
             ->addSelect('e.airstamp')
-            ->addSelect('s.name as showName, s.id as showId, us.status as userShowStatus')
+            ->addSelect('s.name as showName, s.id as showId, us.status as showStatus')
             ->addSelect('e.name, e.season, e.episode')
             ->addSelect('u.defaultOffset, us.offset')
             ->addSelect('ue.status as episodeStatus')
