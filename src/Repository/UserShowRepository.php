@@ -100,7 +100,7 @@ class UserShowRepository extends EntityRepository
     public function getUserShow(User $user, $showId)
     {
         return $this->createQueryBuilder('us')
-            ->select('s.id, s.name, s.summary, s.status')
+            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset')
             ->addSelect('SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
             ->innerJoin('us.show', 's')
             ->innerJoin('s.episodes', 'e')

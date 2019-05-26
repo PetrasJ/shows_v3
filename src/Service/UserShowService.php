@@ -89,7 +89,7 @@ class UserShowService
 
             $return['userShow'] = $this->entityManager
                 ->getRepository(UserShow::class)
-                ->findOneBy(['user' => $this->user, 'id' => $userShowId])
+                ->getUserShow($this->user, $userShowId)
             ;
 
         } catch (Exception $e) {

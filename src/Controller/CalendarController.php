@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/calendar", name="calendar_")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED')")
  */
 class CalendarController extends AbstractController
 {
