@@ -12,16 +12,16 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class UserEpisodeRepository extends EntityRepository
 {
-    public function watchAll(User $user, Show $show)
+    public function watchAll(User $user, UserShow $userShow)
     {
         $this->createQueryBuilder('ue')
             ->update(UserEpisode::class, 'ue')
             ->set('ue.status', UserEpisode::STATUS_WATCHED)
             ->where('ue.user = :user')
-            ->andWhere('ue.show = :show')
+            ->andWhere('ue.userShow = :userShow')
             ->setParameters([
                 'user' => $user,
-                'show' => $show,
+                'userShow' => $userShow,
             ])
             ->getQuery()
             ->execute();

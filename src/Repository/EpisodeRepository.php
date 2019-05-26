@@ -403,7 +403,7 @@ class EpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e, ue.userShow = :userShow')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND ue.userShow = :userShow')
             ->where('e.show = :show')
             ->andWhere('ue.id IS NULL')
             ->andWhere('e.airstamp < :now')

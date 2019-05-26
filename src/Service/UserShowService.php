@@ -183,14 +183,14 @@ class UserShowService
             $this->entityManager
                 ->persist((new UserEpisode())
                     ->setUser($this->user)
-                    ->setShow($show)
+                    ->setShow($userShow->getShow())
                     ->setUserShow($userShow)
                     ->setEpisode($episode));
         }
         $this->entityManager->flush();
 
         $userRepo = $this->entityManager->getRepository(UserEpisode::class);
-        $userRepo->watchAll($this->user, $show);
+        $userRepo->watchAll($this->user, $userShow);
     }
 
     private function formatShows($shows): array
