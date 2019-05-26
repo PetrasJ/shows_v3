@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\EpisodesManager;
+use App\Service\Storage;
 use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,12 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalendarController extends AbstractController
 {
     /**
+     * @param Storage $storage
      * @Route("/", name="index")
      * @return Response
      */
-    public function index()
+    public function index(Storage $storage)
     {
-        return $this->render('calendar/index.html.twig', ['currentMonth' => date('Y-m')]);
+        return $this
+            ->render('calendar/index.html.twig',
+                ['currentMonth' => date('Y-m'), 'include' => $storage->getUser()->getCalendarShow()]
+            );
     }
 
     /**
@@ -38,9 +43,10 @@ class CalendarController extends AbstractController
         $to = DateTime::createFromFormat('Y-m', $month)->modify('last day of this month 23:59:59');
         $episodes = $episodesManager->getEpisodes($from, $to);
 
-        $now = new DateTime();
-        $tz = date_default_timezone_get();
-        return $this->render('calendar/month.html.twig', ['month' => $month, 'episodes' => $episodes, 'now' => $now, 'tz' => $tz]);
+        return $this->render('calendar/month.html.twig', [
+            'month' => $month,
+            'episodes' => $episodes,
+        ]);
     }
 
 }
