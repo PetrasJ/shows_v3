@@ -37,7 +37,7 @@
                 <div class="episode{{ episode|class }}">
                     {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
 
-                    <a href="{{ url('shows_details',{'showId': episode.showId}) }}" title="{{ episode.name }}">{{ episode.showName }}</a>
+                    <a href="{{ url('shows_details',{'userShowId': episode.userShowId}) }}" title="{{ episode.name }}">{{ episode.showName }}</a>
                     </div>{% endif %}{% endfor %}
             </div>
 

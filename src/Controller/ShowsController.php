@@ -39,17 +39,17 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param $showId
+     * @param $userShowId
      * @param int $limit
-     * @Route("/details/{showId}/{limit}", name="details", defaults={"limit"=100})
+     * @Route("/details/{userShowId}/{limit}", name="details", defaults={"limit"=100})
      * @return Response
      */
-    public function show($showId, $limit)
+    public function show($userShowId, $limit)
     {
-        $show = $this->userShowService->getUserShowAndEpisodes($showId, $limit);
+        $show = $this->userShowService->getUserShowAndEpisodes($userShowId, $limit);
 
         return $this->render('shows/show.html.twig', [
-            'show' => $show['show'],
+            'userShow' => $show['userShow'],
             'episodes' => $show['episodes'],
             ]);
     }
@@ -63,7 +63,7 @@ class ShowsController extends AbstractController
     public function unwatch(Request $request, UserEpisodeService $userEpisodeService)
     {
         try {
-            $userEpisodeService->update($request->get('id'), ['unwatch' => true]);
+            $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['unwatch' => true]);
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -79,7 +79,7 @@ class ShowsController extends AbstractController
     public function update(Request $request)
     {
         try {
-            $this->userShowService->updateShow($request->get('id'), ['offset' => $request->get('value')]);
+            $this->userShowService->updateShow($request->get('userShowId'), ['offset' => $request->get('value')]);
         } catch (NotFoundHttpException $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -95,7 +95,7 @@ class ShowsController extends AbstractController
     public function add(string $showId)
     {
         try {
-            $this->userShowService->update($showId, 'add');
+            $this->userShowService->add($showId);
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -104,14 +104,14 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param string $showId
-     * @Route("/archive/{showId}", name="archive")
+     * @param string $userShowId
+     * @Route("/archive/{userShowId}", name="archive")
      * @return JsonResponse
      */
-    public function archive(string $showId)
+    public function archive(string $userShowId)
     {
         try {
-            $this->userShowService->update($showId, 'archive');
+            $this->userShowService->update($userShowId, 'archive');
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -120,14 +120,14 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param string $showId
-     * @Route("/watch-later/{showId}", name="watch_later")
+     * @param string $userShowId
+     * @Route("/watch-later/{userShowId}", name="watch_later")
      * @return JsonResponse
      */
-    public function watchLater(string $showId)
+    public function watchLater(string $userShowId)
     {
         try {
-            $this->userShowService->update($showId, 'watch-later');
+            $this->userShowService->update($userShowId, 'watch-later');
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -136,14 +136,14 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param string $showId
-     * @Route("/remove/{showId}", name="remove")
+     * @param string $userShowId
+     * @Route("/remove/{userShowId}", name="remove")
      * @return Response
      */
-    public function remove(string $showId)
+    public function remove(string $userShowId)
     {
         try {
-            $this->userShowService->remove($showId);
+            $this->userShowService->remove($userShowId);
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -152,14 +152,14 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param string $showId
-     * @Route("/watch-all/{showId}", name="watch_all")
+     * @param string $userShowId
+     * @Route("/watch-all/{userShowId}", name="watch_all")
      * @return Response
      */
-    public function watchAllEpisodes(string $showId)
+    public function watchAllEpisodes(string $userShowId)
     {
         try {
-            $this->userShowService->watchAll($showId);
+            $this->userShowService->watchAll($userShowId);
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }

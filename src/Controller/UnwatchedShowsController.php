@@ -37,17 +37,17 @@ class UnwatchedShowsController extends AbstractController
     }
 
     /**
-     * @param int $showId
+     * @param int $userShowId
      * @param UserEpisodeService $userEpisodeService
      * @param ShowsManager $showsManager
-     * @Route("/episodes/{showId}", name="episodes")
+     * @Route("/episodes/{userShowId}", name="episodes")
      * @return Response
      */
-    public function unwatchedEpisodes(int $showId, UserEpisodeService $userEpisodeService, ShowsManager $showsManager)
+    public function unwatchedEpisodes(int $userShowId, UserEpisodeService $userEpisodeService, ShowsManager $showsManager)
     {
         try {
-            $show = $showsManager->getShow($showId);
-            $episodes = $userEpisodeService->getUnwatchedEpisodes($showId);
+            $episodes = $userEpisodeService->getUnwatchedEpisodes($userShowId);
+            $show = $showsManager->getShow($userShowId);
         } catch (NotFoundHttpException $e) {
             return new Response([], 404);
         }
@@ -64,7 +64,7 @@ class UnwatchedShowsController extends AbstractController
     public function comment(Request $request, UserEpisodeService $userEpisodeService)
     {
         try {
-            $userEpisodeService->update($request->get('id'), ['comment' => $request->get('comment')]);
+            $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['comment' => $request->get('comment')]);
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }
@@ -81,7 +81,7 @@ class UnwatchedShowsController extends AbstractController
     public function watch(Request $request, UserEpisodeService $userEpisodeService)
     {
         try {
-            $userEpisodeService->update($request->get('id'), ['watch' => true]);
+            $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['watch' => true]);
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 404);
         }

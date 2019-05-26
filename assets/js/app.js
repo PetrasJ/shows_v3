@@ -67,7 +67,7 @@ const app = {
             loading();
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + 'shows/remove/' + $(this).data('id'),
+                url: window.baseUrl + 'shows/remove/' + $(this).data('user-show-id'),
                 data: {
                     id: $(this).data('id'),
                     value: $(this).val()
@@ -88,14 +88,14 @@ const app = {
             const button = $(e.relatedTarget);
             const modal = $(this);
             modal.find('.modal-title').html(button.data('title'));
-            modal.find('.show-offset').val(button.data('offset')).attr('data-id', button.data('id'));
+            modal.find('.show-offset').val(button.data('offset')).attr('data-user-show-id', button.data('user-show-id'));
             t.initSettings();
         })
     },
     initShowList: function () {
         $('.update-show').unbind().on('click', function () {
             loading();
-            const id = $(this).data('id');
+            const id = $(this).data('user-show-id');
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'shows/' + $(this).data('action') + '/' + id,
@@ -111,17 +111,17 @@ const app = {
     },
     initSettings: function () {
         $('.show-offset').unbind().change(function () {
-            const id = $(this).data('id');
+            const userShowId = $(this).data('user-show-id');
             const value = $(this).val();
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'shows/update',
                 data: {
-                    id: id,
+                    userShowId: userShowId,
                     value: $(this).val()
                 },
                 success: function () {
-                    $('#' + id).find('.show-settings').data('offset', value)
+                    $('#' + userShowId).find('.show-settings').data('offset', value)
                 }
             }).fail(function (data) {
                 console.log(data);
@@ -172,6 +172,7 @@ const app = {
                 url: window.baseUrl + 'watch',
                 data: {
                     id: id,
+                    userShowId: $(this).data('user-show-id')
                 },
                 success: () => {
                     const unwatchedShwos = $('.unwatched-shows');
@@ -204,7 +205,8 @@ const app = {
                 url: window.baseUrl + 'comment',
                 data: {
                     id: $(this).data('id'),
-                    comment: $(this).find('.comment').val()
+                    comment: $(this).find('.comment').val(),
+                    userShowId: $(this).data('user-show-id')
                 },
             }).fail(function (data) {
                 console.log(data);
@@ -222,6 +224,7 @@ const app = {
                 url: window.baseUrl + 'shows/unwatch',
                 data: {
                     id: id,
+                    userShowId: $(this).data('user-show-id')
                 },
                 success: () => {
                     episode.find('.watch-episode').removeClass('d-none');
@@ -247,7 +250,7 @@ const app = {
                     url: button.data('action'),
                     success: () => {
                         if (button.data('remove')) {
-                            $('#' + button.data('id')).slideUp()
+                            $('#' + button.data('user-show-id')).slideUp()
                         }
                     }
                 }).fail(function (data) {

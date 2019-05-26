@@ -33,18 +33,18 @@ class UserEpisodeService
         }
     }
 
-    public function update($id, $action)
+    public function update($id, $userShowId, $action)
     {
         $episode = $this->entityManager->find(Episode::class, $id);
         $userEpisode = $this->entityManager
             ->getRepository(UserEpisode::class)
-            ->findOneBy(['episode' => $episode, 'user' => $this->user])
+            ->findOneBy(['episode' => $episode, 'userShow' => $userShowId, 'user' => $this->user])
         ;
 
         if (!$userEpisode) {
             $userShow = $this->entityManager
                 ->getRepository(UserShow::class)
-                ->findOneBy(['show' => $episode->getShow(), 'user' => $this->user])
+                ->findOneBy(['id' => $userShowId, 'user' => $this->user])
             ;
             $userEpisode = (new UserEpisode())
                 ->setUser($this->user)

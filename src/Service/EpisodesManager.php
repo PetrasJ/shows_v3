@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Episode;
 use App\Entity\Show;
 use DateTime;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 
@@ -69,13 +70,19 @@ class EpisodesManager
         );
     }
 
+    /**
+     * @param Show $show
+     * @throws DBALException
+     */
     private function removeEpisodes(Show $show)
     {
         $episodes = $this->entityManager->getRepository(Episode::class)->findBy(['show' => $show]);
+
         foreach ($episodes as $episode) {
             $this->entityManager->remove($episode);
         }
 
+        $this->entityManager->getConnection()->exec('SET FOREIGN_KEY_CHECKS = 0;');
         $this->entityManager->flush();
     }
 }

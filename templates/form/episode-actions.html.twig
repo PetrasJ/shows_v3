@@ -1,4 +1,4 @@
-<form class="comment-episode d-inline-block w-auto" data-id="{{ episode.id }}">
+<form class="comment-episode d-inline-block w-auto" data-id="{{ episode.id }}" data-user-show-id="{{ episode.userShowId }}">
     <div class="input-group mb-3">
         <input type="text" class="form-control comment" placeholder="{{ 'comment'|trans }}"
                aria-label="{{ 'comment'|trans }}" aria-describedby="basic-addon2"
@@ -9,6 +9,6 @@
     </div>
 </form>
 
-<button class="btn btn-success align-top watch-episode{% if episode.status == 1 %} d-none{% endif %}" type="button" data-id="{{ episode.id }}"><i class="fa fa-eye" aria-hidden="true"></i></button>
-<button class="btn btn-secondary align-top unwatch-episode{% if episode.status != 1 %} d-none{% endif %}" type="button" data-id="{{ episode.id }}"><i class="fa fa-eye-slash" aria-hidden="true"></i></button>
+<button class="btn btn-success align-top watch-episode{% if episode.status == 1 %} d-none{% endif %}" type="button" data-id="{{ episode.id }}" data-user-show-id="{{ episode.userShowId }}"><i class="fa fa-eye" aria-hidden="true"></i></button>
+<button class="btn btn-secondary align-top unwatch-episode{% if episode.status != 1 %} d-none{% endif %}" type="button" data-id="{{ episode.id }}" data-user-show-id="{{ episode.userShowId }}"><i class="fa fa-eye-slash" aria-hidden="true"></i></button>
 
