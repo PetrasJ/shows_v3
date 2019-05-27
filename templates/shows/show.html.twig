@@ -5,7 +5,7 @@
         <img src="/img/shows/{{ userShow.id }}.jpg" class="show-image" alt="{{ userShow.name }}"><br>
     </div>
     <h3 title="{{ userShow.watched }}">{{ userShow.name }}</h3>
-    {{ userShow.summary|raw }}
+    {{ userShow.summary|raw }}<br>
 
     <button data-toggle="modal" data-target="#show-settings"
             class="btn btn-warning btn-sm show-settings m-1"
@@ -18,7 +18,11 @@
     {% include 'shows/actions.html.twig' with {'show': userShow, 'status': userShow.status} %}
 
     {% for episode in episodes %}
-       <div id="{{ episode.id }}"> {% include '_inc/episode-details.html.twig' with {episode: episode} %} {{ episode.summary|raw }} {% include 'form/episode-actions.html.twig' with {episode: episode} %}</div>
+        <div id="{{ episode.id }}" class="row">
+            <div class="col-lg-3 col-sm-12">{% include '_inc/episode-details.html.twig' with {episode: episode} %}</div>
+            <div class="col-lg-5 col-sm-6">{{ episode.summary|raw }}</div>
+            <div class="col-lg-4 col-sm-6">{% include 'form/episode-actions.html.twig' with {episode: episode} %}</div>
+        </div>
     {% endfor %}
     {% include 'modals/show-settings.html.twig' %}
 {% endblock %}

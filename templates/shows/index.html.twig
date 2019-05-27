@@ -6,7 +6,7 @@
         <div class="col-3">
             {{ 'show.show'|trans }}
         </div>
-        <div class="col-3">
+        <div class="d-none col-lg-3 d-lg-inline-block">
             {{ 'show.Previous Episode'|trans }}
         </div>
         <div class="col-3">
@@ -31,7 +31,7 @@
                     {{ show.name }} ({{ show.episodesCount-show.watchedCount }})
                 </a>
             </div>
-            <div class="col-3">
+            <div class="d-none col-lg-3 d-lg-inline-block">
                 {% if show.lastEpisode %}
                     <b>{{ show.lastEpisode.name }}</b><br>
                     {% include '_inc/episode-details.html.twig' with {episode: show.lastEpisode} %}
@@ -43,7 +43,7 @@
                     {% include '_inc/episode-details.html.twig' with {episode: show.nextEpisode} %}
                 {% endif %}
             </div>
-            <div class="col-3">
+            <div class="col-lg-3 col-sm-6">
                 <button data-toggle="modal" data-target="#show-settings"
                         class="btn btn-warning btn-sm show-settings m-1"
                         data-user-show-id="{{ show.userShowId }}"

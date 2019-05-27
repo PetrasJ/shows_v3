@@ -6,7 +6,7 @@
     <div class="text-center unwatched-shows">
         {% for show in shows %}
             <div id="show_{{ show.id }}" data-id="{{ show.userShowId }}"
-                 class="col-2 px-0 mx-1 align-top unwatched-show unwatched-episodes">
+                 class="col-lg-1 col-md-2 col-sm-3 px-0 mx-1 align-top unwatched-show unwatched-episodes">
             <img src="/img/shows/medium/{{ show.id }}.jpg" class="w-100" alt="{{ show.name }}">
                 {{ show.name }}
                 <span class="count">{{ show.episodes }}</span>
