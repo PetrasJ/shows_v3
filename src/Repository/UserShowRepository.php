@@ -28,29 +28,6 @@ class UserShowRepository extends EntityRepository
     }
 
     /**
-     * @return mixed
-     * @throws ORMException
-     * @deprecated
-     */
-    public function getUnwachedShows()
-    {
-        $user = $this->getEntityManager()->getReference(User::class, 1);
-        $result = $this->createQueryBuilder('us')
-            ->select('us, s')
-            ->innerJoin('us.show', 's')
-            ->where('us.userID = :userID')
-            ->innerJoin('s.episodes', 'e')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.show = s AND ')
-            ->andWhere('ue.status IS NULL')
-            ->setParameter('userID', 1)
-            ->getQuery()
-            ->getResult()
-        ;
-
-        return $result;
-    }
-
-    /**
      * @param User $user
      * @param int $status
      * @return mixed
@@ -111,60 +88,5 @@ class UserShowRepository extends EntityRepository
             ->groupBy('s')
             ->getQuery()
             ->getSingleResult();
-    }
-
-    /**
-     * @param $userID
-     * @param int $status
-     * @return array
-     * @throws ORMException
-     * @deprecated
-     */
-    public function getShowsDeprecaated($userID, $status = UserShow::STATUS_WATCHING)
-    {
-        $user = $this->getEntityManager()->getReference(User::class, $userID);
-
-        if ($status == UserShow::STATUS_WATCHING) {
-            $ignore = [UserShow::STATUS_ARCHIVED, UserShow::STATUS_WATCH_LATER];
-            $result = $this->createQueryBuilder('us')
-                ->where('us.user = :user')
-                ->setParameter('user', $user)
-                ->andWhere('us.status is NULL')
-                ->orWhere('us.status NOT IN (:status)')
-                ->setParameter('status', array_values($ignore))
-                ->getQuery()
-                ->getResult()
-            ;
-        } elseif ($status == UserShow::STATUS_ARCHIVED) {
-            $result = $this->createQueryBuilder('us')
-                ->where('us.user = :user')
-                ->setParameter('user', $user)
-                ->andWhere('us.status = :status')
-                ->setParameter('status', UserShow::STATUS_ARCHIVED)
-                ->getQuery()
-                ->getResult()
-            ;
-        } elseif ($status == UserShow::STATUS_WATCH_LATER) {
-            $result = $this->createQueryBuilder('us')
-                ->where('us.user = :user')
-                ->setParameter('user', $user)
-                ->andWhere('us.status = :status')
-                ->setParameter('status', UserShow::STATUS_WATCH_LATER)
-                ->getQuery()
-                ->getResult()
-            ;
-        } else {
-            $result = $this->createQueryBuilder('us')
-                ->where('us.user = :user')
-                ->setParameter('user', $user)
-                ->getQuery()
-                ->getResult()
-            ;
-        }
-
-        return array_map(function ($userShow) {
-            /** @var UserShow $userShow */
-            return $userShow->getShow();
-        }, $result);
     }
 }

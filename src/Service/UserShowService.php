@@ -8,7 +8,6 @@ use App\Entity\UserEpisode;
 use App\Entity\UserShow;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMException;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

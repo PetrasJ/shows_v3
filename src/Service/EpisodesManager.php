@@ -58,7 +58,8 @@ class EpisodesManager
     {
         return $this->entityManager
             ->getRepository(Episode::class)
-            ->getEpisodes($from, $to, $this->user);
+            ->getEpisodes($from, $to, $this->user)
+            ;
     }
 
     private function getEpisodesApi(Show $show): array
@@ -72,7 +73,6 @@ class EpisodesManager
 
     /**
      * @param Show $show
-     * @throws DBALException
      */
     private function removeEpisodes(Show $show)
     {
@@ -81,8 +81,10 @@ class EpisodesManager
         foreach ($episodes as $episode) {
             $this->entityManager->remove($episode);
         }
-
-        $this->entityManager->getConnection()->exec('SET FOREIGN_KEY_CHECKS = 0;');
+        try {
+            $this->entityManager->getConnection()->exec('SET FOREIGN_KEY_CHECKS = 0;');
+        } catch (DBALException $e) {
+        }
         $this->entityManager->flush();
     }
 }

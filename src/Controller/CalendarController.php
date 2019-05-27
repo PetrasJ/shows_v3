@@ -48,5 +48,4 @@ class CalendarController extends AbstractController
             'episodes' => $episodes,
         ]);
     }
-
 }
