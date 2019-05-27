@@ -40,7 +40,7 @@
             <div class="col-3">
                 {% if show.nextEpisode %}
                     <b>{{ show.nextEpisode.name }}</b><br>
-                    {% include '_inc/episode-details.html.twig' with {episode: show.lastEpisode} %}
+                    {% include '_inc/episode-details.html.twig' with {episode: show.nextEpisode} %}
                 {% endif %}
             </div>
             <div class="col-3">
