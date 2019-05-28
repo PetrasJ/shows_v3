@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for episode in episodes %}
+        {% include '_inc/episode-details.html.twig' with {episode: episode} %} <b>{{ episode.showName }}</b>
+    {% endfor %}
+    <br>
     <button class="btn btn-secondary m-1"
             onclick="$('.unwatched-shows').slideToggle()">{{ 'show.Hide/Show'|trans }}</button>
     <div class="text-center unwatched-shows">

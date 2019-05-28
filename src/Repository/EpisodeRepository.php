@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;

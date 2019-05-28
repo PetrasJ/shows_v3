@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Service\EpisodesManager;
 use App\Service\ShowsManager;
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
+use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,10 +22,12 @@ class UnwatchedShowsController extends AbstractController
 {
     /**
      * @param UserShowService $userShowService
+     * @param EpisodesManager $episodesManager
      * @Route("/", name="index")
      * @return Response
+     * @throws Exception
      */
-    public function unwatched(UserShowService $userShowService)
+    public function unwatched(UserShowService $userShowService, EpisodesManager $episodesManager)
     {
         try {
             $shows = $userShowService->getShowsWithUnwatchedEpisodes();
@@ -31,13 +35,17 @@ class UnwatchedShowsController extends AbstractController
             return new Response([], 404);
         }
 
-        return $this->render('unwatched-shows/index.html.twig', ['shows' => $shows]);
+        $from = new DateTime();
+        $to = (new DateTime())->modify('+2 days');
+        $episodes = $episodesManager->getEpisodes($from, $to);
+
+        return $this->render('unwatched-shows/index.html.twig', ['shows' => $shows, 'episodes' => $episodes]);
     }
 
     /**
-     * @param int $userShowId
+     * @param int                $userShowId
      * @param UserEpisodeService $userEpisodeService
-     * @param ShowsManager $showsManager
+     * @param ShowsManager       $showsManager
      * @Route("/episodes/{userShowId}", name="episodes")
      * @return Response
      */
@@ -54,7 +62,7 @@ class UnwatchedShowsController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request            $request
      * @param UserEpisodeService $userEpisodeService
      * @Route("/comment", name="comment")
      * @return JsonResponse
@@ -71,7 +79,7 @@ class UnwatchedShowsController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request            $request
      * @param UserEpisodeService $userEpisodeService
      * @Route("/watch", name="watch")
      * @return JsonResponse
