@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/shows", name="shows_")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED')")
  */
 class ShowsController extends AbstractController
 {

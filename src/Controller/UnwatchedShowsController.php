@@ -6,7 +6,6 @@ use App\Service\ShowsManager;
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(name="unwatched_")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED')")
  */
 class UnwatchedShowsController extends AbstractController
 {
