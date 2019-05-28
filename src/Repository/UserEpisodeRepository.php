@@ -50,6 +50,7 @@ class UserEpisodeRepository extends EntityRepository
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->where('ue.user = :user')
             ->orderBy('ue.created', 'desc')
+            ->groupBy('ue')
             ->setParameter('user', $user)
             ->setMaxResults($limit)
             ->getQuery()
