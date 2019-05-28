@@ -17,6 +17,7 @@
         </div>
     {% endfor %}
 
+    {% if nextEpisode %}
     <h6>{{ 'show.Next episode'|trans }}</h6>
     <div class="row" id="{{ nextEpisode.id }}" data-show-id="{{ show.id }}">
         <div class="col-lg-3 col-sm-5 col-xs-12">
@@ -27,4 +28,5 @@
             {{ nextEpisode.summary|raw }}
         </div>
     </div>
+    {% endif %}
 {% endblock %}
