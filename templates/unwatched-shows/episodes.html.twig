@@ -1,7 +1,7 @@
 {% block body %}
     <a href={{ path('shows_details', {userShowId: show.userShowId}) }} title="{{ show.watched }}">{{ show.name }}</a><br>
     {{ show.summary|raw }}<br>
-    {{ show.status }}
+    {{ ('show.'~show.status)|trans }}
     {% for episode in episodes %}
         <div class="row" id="{{ episode.id }}" data-show-id="{{ show.id }}">
             <div class="col-lg-3 col-sm-5 col-xs-12">
@@ -16,4 +16,15 @@
             </div>
         </div>
     {% endfor %}
+
+    <h6>{{ 'show.Next episode'|trans }}</h6>
+    <div class="row" id="{{ nextEpisode.id }}" data-show-id="{{ show.id }}">
+        <div class="col-lg-3 col-sm-5 col-xs-12">
+            {% include '_inc/episode-details.html.twig' with {episode: nextEpisode} %}
+        </div>
+        <div class="col-lg-5 d-none d-lg-inline-block">
+            <h6>{{ nextEpisode.name }}</h6>
+            {{ nextEpisode.summary|raw }}
+        </div>
+    </div>
 {% endblock %}

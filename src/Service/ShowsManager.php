@@ -2,9 +2,11 @@
 
 namespace App\Service;
 
+use App\Entity\Episode;
 use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserShow;
+use App\Repository\EpisodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use GuzzleHttp\Client;
@@ -168,5 +170,17 @@ class ShowsManager
         $this->entityManager->flush();
 
         return true;
+    }
+
+    public function getNextEpisode($showId)
+    {
+        try {
+            return $this->entityManager
+                ->getRepository(Episode::class)
+                ->getNextEpisode($this->user, $showId)
+                ;
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }

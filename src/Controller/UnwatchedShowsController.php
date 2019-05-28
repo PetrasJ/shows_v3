@@ -54,11 +54,16 @@ class UnwatchedShowsController extends AbstractController
         try {
             $episodes = $userEpisodeService->getUnwatchedEpisodes($userShowId);
             $show = $showsManager->getShow($userShowId);
+            $nextEpisode = $showsManager->getNextEpisode($show['id']);
         } catch (NotFoundHttpException $e) {
             return new Response([], 404);
         }
 
-        return $this->render('unwatched-shows/episodes.html.twig', ['episodes' => $episodes, 'show' => $show]);
+        return $this->render('unwatched-shows/episodes.html.twig', [
+            'episodes' => $episodes,
+            'show' => $show,
+            'nextEpisode' => $nextEpisode,
+        ]);
     }
 
     /**

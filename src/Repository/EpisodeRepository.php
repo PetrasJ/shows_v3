@@ -7,6 +7,7 @@ use App\Entity\UserEpisode;
 use App\Entity\UserShow;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
 
 class EpisodeRepository extends EntityRepository
@@ -73,6 +74,36 @@ class EpisodeRepository extends EntityRepository
             ->setMaxResults(100)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @param int  $showId
+     * @return array
+     * @throws NonUniqueResultException
+     */
+    public function getNextEpisode(User $user, int $showId): ?array
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment, ue.status, us.id as userShowId')
+            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
+            ->innerJoin('e.show', 's')
+            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = s AND us.user = :user')
+            ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND ue.userShow = us')
+            ->where('s.id = :showId')
+            ->andWhere('e.airstamp > ' . sprintf(self::DATE_SUB, ':dateFrom'))
+            ->setParameters([
+                'user' => $user,
+                'dateFrom' => date("Y-m-d H:i"),
+                'showId' => $showId,
+            ])
+            ->orderBy('e.airstamp', 'asc')
+            ->addOrderBy('e.season', 'asc')
+            ->addOrderBy('e.episode', 'asc')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
