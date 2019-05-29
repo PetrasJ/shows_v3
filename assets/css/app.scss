@@ -143,11 +143,11 @@ td.current-day .inner {
 }
 
 @media screen and (max-width: 350px) {
- #search, .navbar-toggler {
+ .search-box, .navbar-toggler {
    display: inline-block;
  }
 
- #search {
+ .search-box {
    width: 60%;
  }
 }
@@ -179,8 +179,8 @@ td.current-day .inner {
 }
 
 #remember_me {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   vertical-align: middle;
 }
 
