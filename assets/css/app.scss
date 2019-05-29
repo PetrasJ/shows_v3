@@ -194,3 +194,9 @@ td.current-day .inner {
 .unwatched-show:hover {
   cursor: pointer;
 }
+
+@media screen and (max-width: 767px) {
+  #content {
+    text-align: center;
+  }
+}
