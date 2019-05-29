@@ -30,10 +30,6 @@ class RequestListener
             $user = $this->tokenStorage->getToken()->getUser();
             if ($user instanceof User) {
                 $this->storage->setUser($user);
-                if ($user->getLocale()) {
-                    $request = $this->requestStack->getCurrentRequest();
-                    $request->setLocale($user->getLocale());
-                }
             }
         }
     }
