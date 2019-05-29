@@ -71,10 +71,6 @@ form.watch-show {
   border-bottom-right-radius: 13px;
 }
 
-.unwatched-show:hover {
-  cursor: pointer;
-}
-
 .overlay {
   background-color: rgba(255, 255, 255, 0.1);
   z-index: 1;
@@ -186,4 +182,15 @@ td.current-day .inner {
   width: 20px;
   height: 20px;
   vertical-align: middle;
+}
+
+.unwatched-show {
+  width: 100%;
+  max-width: 125px;
+  vertical-align: top;
+  margin: 5px;
+}
+
+.unwatched-show:hover {
+  cursor: pointer;
 }
