@@ -11,7 +11,7 @@
     {% for show in shows %}
         <div class="p-1 border-bottom">
             {{ show.name }}
-            {% if is_granted('IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED') %}
+            {% if is_granted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED']) %}
                 {% if userShows[show.id] is defined and userShows[show.id] == constant('App\\Entity\\UserShow::STATUS_WATCHING') %}
                     <button class="btn btn-danger add-show" data-id="{{ show.id }}">{{ 'add_rewatch'|trans }}</button>
                 {% else %}
