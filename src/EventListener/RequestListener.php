@@ -5,6 +5,7 @@ namespace App\EventListener;
 use App\Entity\User;
 use App\Service\Storage;
 
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -13,11 +14,13 @@ class RequestListener
 {
     private $storage;
     private $tokenStorage;
+    private $requestStack;
 
-    public function __construct(Storage $storage, TokenStorageInterface $tokenStorage)
+    public function __construct(Storage $storage, TokenStorageInterface $tokenStorage, RequestStack $requestStack)
     {
         $this->storage = $storage;
         $this->tokenStorage = $tokenStorage;
+        $this->requestStack = $requestStack;
     }
 
     public function onKernelRequest()
@@ -27,6 +30,10 @@ class RequestListener
             $user = $this->tokenStorage->getToken()->getUser();
             if ($user instanceof User) {
                 $this->storage->setUser($user);
+                if ($user->getLocale()) {
+                    $request = $this->requestStack->getCurrentRequest();
+                    $request->setLocale($user->getLocale());
+                }
             }
         }
     }
