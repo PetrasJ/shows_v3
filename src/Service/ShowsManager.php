@@ -85,6 +85,7 @@ class ShowsManager
                 ->getRepository(UserShow::class)
                 ->getUserShows($this->user, $shows)
             : [];
+
         return ['shows' => $shows, 'userShows' => $userShows];
     }
 
@@ -92,7 +93,8 @@ class ShowsManager
     {
         return $this->entityManager
             ->getRepository(UserShow::class)
-            ->getUserShow($this->user, $showId);
+            ->getUserShow($this->user, $showId)
+            ;
     }
 
     private function addShows($shows)
@@ -124,7 +126,8 @@ class ShowsManager
             ->setStatus($show->status)
             ->setPremiered($show->premiered)
             ->setGenres(json_encode($show->genres))
-            ->setSummary($show->summary);
+            ->setSummary($show->summary)
+        ;
 
         $this->entityManager->persist($newShow);
         $this->entityManager->flush();
@@ -164,7 +167,8 @@ class ShowsManager
             ->setStatus($show->status)
             ->setPremiered($show->premiered)
             ->setGenres(json_encode($show->genres))
-            ->setSummary($show->summary);
+            ->setSummary($show->summary)
+        ;
 
 
         $this->entityManager->persist($showEntity);
@@ -195,11 +199,7 @@ class ShowsManager
      */
     private function checkForNewShows()
     {
-        $lastShow = $this->entityManager
-            ->getRepository(Show::class)->findOneBy(
-                [],
-                ['id' => 'desc']
-            );
+        $lastShow = $this->entityManager->getRepository(Show::class)->findOneBy([], ['id' => 'desc']);
         $nextShowId = $lastShow ? $lastShow->getId() : 0;
         $saved = [];
         $gap = 0;
