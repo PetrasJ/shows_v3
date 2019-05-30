@@ -38,8 +38,9 @@ class CalendarController extends AbstractController
      */
     public function month($month, EpisodesManager $episodesManager)
     {
-        $from = DateTime::createFromFormat('Y-m', $month)->modify('first day of this month 00:00:00');
-        $to = DateTime::createFromFormat('Y-m', $month)->modify('last day of this month 23:59:59');
+        $date = explode('-', $month);
+        $from = (new DateTime)->setDate($date[0], $date[1], 15)->modify('first day of this month 00:00:00');
+        $to = (new DateTime)->setDate($date[0], $date[1], 15)->modify('last day of this month 23:59:59');
         $episodes = $episodesManager->getEpisodes($from, $to);
 
         return $this->render('calendar/month.html.twig', [
