@@ -6,7 +6,6 @@ use App\Entity\Episode;
 use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserShow;
-use App\Repository\EpisodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use GuzzleHttp\Client;
@@ -61,9 +60,16 @@ class ShowsManager
     public function update()
     {
         $shows = $this->entityManager->getRepository(UserShow::class)->getAllUsersShows();
+        $updated = 0;
         foreach ($shows as $showId) {
-            $this->updateShow($showId);
+            if ($this->updateShow($showId)) {
+                $updated++;
+            };
         }
+
+        $newShows = $this->checkForNewShows();
+
+        return ['updated' => $updated, 'newShows' => $newShows];
     }
 
     public function find(string $term)
@@ -182,5 +188,43 @@ class ShowsManager
         } catch (Exception $e) {
             return null;
         }
+    }
+
+    /**
+     * @return array
+     */
+    private function checkForNewShows()
+    {
+        $lastShow = $this->entityManager
+            ->getRepository(Show::class)->findOneBy(
+                [],
+                ['id' => 'desc']
+            );
+        $nextShowId = $lastShow ? $lastShow->getId() : 0;
+        $saved = [];
+        $gap = 0;
+        while (true) {
+            $nextShowId++;
+            try {
+                $show = json_decode($this->client
+                    ->get(sprintf('%s/%d', self::API_URL, $nextShowId))
+                    ->getBody()
+                );
+
+                $newShow = $this->addShow($show);
+                if ($newShow) {
+                    $saved[] = $newShow->getName();
+                }
+
+                $gap = 0;
+            } catch (Exception $e) {
+                $gap++;
+                if ($gap === 5) {
+                    break;
+                }
+            }
+        }
+
+        return $saved;
     }
 }

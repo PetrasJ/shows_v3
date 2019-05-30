@@ -38,7 +38,19 @@ class UpdateShowsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln([(new DateTime())->format('Y-m-d h:i:s') . ' Started']);
-        $this->showsManager->update();
+
+        $result = $this->showsManager->update();
+        $output->writeln(['Updated Shows: ' . $result['updated']]);
+
+        if (count($result['newShows']) > 0)
+        {
+            $output->writeln(['New Shows: ']);
+            foreach ($result['newShows'] as $newShow)
+            {
+                $output->writeln([$newShow]);
+            }
+        }
+
         $output->writeln([(new DateTime())->format('Y-m-d h:i:s') . ' Finished']);
     }
 }
