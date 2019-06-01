@@ -4,14 +4,14 @@
     {{ ('show.'~show.status)|trans }}
     {% for episode in episodes %}
         <div class="row" id="{{ episode.id }}" data-show-id="{{ show.id }}">
-            <div class="col-lg-3 col-sm-5 col-xs-12">
+            <div class="col-lg-3 col-12">
                 {% include '_inc/episode-details.html.twig' with {episode: episode} %}
             </div>
-            <div class="col-lg-5 d-none d-lg-inline-block">
+            <div class="col-lg-5 col-12">
                 <h6>{{ episode.name }}</h6>
                 {{ episode.summary|raw }}
             </div>
-            <div class="col-lg-4 col-sm-7 col-xs-12">
+            <div class="col-lg-4 col-12">
                 {% include 'form/episode-actions.html.twig' with {episode: episode} %}<br>
             </div>
         </div>
@@ -20,10 +20,10 @@
     {% if nextEpisode %}
     <h6>{{ 'show.Next episode'|trans }}</h6>
     <div class="row" id="{{ nextEpisode.id }}" data-show-id="{{ show.id }}">
-        <div class="col-lg-3 col-sm-5 col-xs-12">
+        <div class="col-lg-3 col-12">
             {% include '_inc/episode-details.html.twig' with {episode: nextEpisode} %}
         </div>
-        <div class="col-lg-5 d-none d-lg-inline-block">
+        <div class="col-lg-5 col-12">
             <h6>{{ nextEpisode.name }}</h6>
             {{ nextEpisode.summary|raw }}
         </div>
