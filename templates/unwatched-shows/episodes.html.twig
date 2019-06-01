@@ -3,7 +3,7 @@
        title="{{ show.watched }}">{{ show.name }}</a></b> {{ ('show.'~show.status)|trans }}<br>
     {{ show.summary|raw }}<br>
     {% for episode in episodes %}
-        <div class="row" id="{{ episode.id }}" data-show-id="{{ show.id }}">
+        <div class="row episode" id="{{ episode.id }}" data-show-id="{{ show.id }}">
             <div class="col-lg-3 col-12">
                 {% include '_inc/episode-details.html.twig' with {episode: episode} %}
             </div>
@@ -11,7 +11,7 @@
                 <h6>{{ episode.name }}</h6>
                 {{ episode.summary|raw }}
             </div>
-            <div class="col-lg-4 col-12">
+            <div class="col-lg-4 col-12 actions">
                 {% include 'form/episode-actions.html.twig' with {episode: episode} %}<br>
             </div>
         </div>

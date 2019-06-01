@@ -199,3 +199,11 @@ td.current-day .inner {
     text-align: center;
   }
 }
+
+#content .episode:nth-child(2n), #content .show:nth-child(2n) {
+  background-color: rgba(70, 70, 70, 0.1);
+}
+
+.unwatched-episodes .actions {
+  padding: 5px;
+}

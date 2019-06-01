@@ -25,7 +25,7 @@
                 <h4>{{ ('show.'~show.status)|trans }}</h4>
             </div>
         {% endif %}
-        <div id="{{ show.userShowId }}" class="row py-1 border-bottom">
+        <div id="{{ show.userShowId }}" class="show row py-1 border-bottom">
             <div class="col-12 col-md-3">
                 <a href="{{ path('shows_details', {'userShowId': show.userShowId}) }}">
                     {{ show.name }} ({{ show.episodesCount-show.watchedCount }})
