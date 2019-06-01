@@ -39,7 +39,7 @@ class EpisodeRepository extends EntityRepository
                 'showStatus' => $status,
             ])
             ->groupBy('us')
-            ->orderBy('e.airdate', 'DESC')
+            ->orderBy('s.name', 'asc')
             ->getQuery()
             ->getResult();
     }
