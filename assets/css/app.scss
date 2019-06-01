@@ -200,7 +200,7 @@ td.current-day .inner {
   }
 }
 
-#content .episode:nth-child(2n), #content .show:nth-child(2n) {
+#content .unwatched-episodes .episode:nth-child(2n), #content .show:nth-child(2n) {
   background-color: rgba(70, 70, 70, 0.1);
 }
 
