@@ -44,11 +44,8 @@ class UpdateShowsCommand extends Command
 
         if (count($result['newShows']) > 0)
         {
-            $output->writeln(['New Shows: ']);
-            foreach ($result['newShows'] as $newShow)
-            {
-                $output->writeln([$newShow]);
-            }
+            $output->writeln(['New Shows: ' . count($result['newShows'])]);
+            $output->writeln(implode($result['newShows'], ', '));
         }
 
         $output->writeln([(new DateTime())->format('Y-m-d h:i:s') . ' Finished']);
