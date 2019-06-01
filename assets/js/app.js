@@ -100,7 +100,7 @@ const app = {
                 type: 'post',
                 url: window.baseUrl + 'shows/' + $(this).data('action') + '/' + id,
                 success: () => {
-                    $('#' + id).slideUp()
+                    $('#' + id).slideUp('fast')
                 }
             }).fail(function (data) {
                 console.log(data);
@@ -148,10 +148,10 @@ const app = {
             type: 'get',
             url: window.baseUrl + 'episodes/' + showId,
             success: (data) => {
-                $('#result').hide().html(data).slideDown();
+                $('#result').hide().html(data).slideDown('fast');
                 this.initWatchActions();
                 if (hideShows) {
-                    $('.unwatched-shows').slideUp();
+                    $('.unwatched-shows').slideUp('fast');
                 }
                 window.location.hash = showId;
             }
@@ -182,10 +182,10 @@ const app = {
                         showCount.html(count);
                         if (count === 0) {
                             show.hide();
-                            unwatchedShwos.slideDown();
+                            unwatchedShwos.slideDown('fast');
                             $('#result').html('');
                         }
-                        episode.slideUp();
+                        episode.slideUp('fast');
                     } else {
                         episode.find('.unwatch-episode').removeClass('d-none');
                         $(this).addClass('d-none');
@@ -250,7 +250,7 @@ const app = {
                     url: button.data('action'),
                     success: () => {
                         if (button.data('remove')) {
-                            $('#' + button.data('user-show-id')).slideUp()
+                            $('#' + button.data('user-show-id')).slideUp('fast')
                         }
                     }
                 }).fail(function (data) {
