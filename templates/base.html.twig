@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('build/style.css') }}">
 
     {% if app.user.theme is defined and app.user.theme != '' %}
-        <link rel="stylesheet" href="/css/themes/{{ app.user.theme }}.css">
+        <link rel="stylesheet" href="/css/themes/{{ app.user.theme }}.min.css">
     {% endif %}
 
     <script src="{{ asset('build/app.js') }}"></script>

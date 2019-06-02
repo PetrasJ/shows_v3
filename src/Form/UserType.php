@@ -35,8 +35,13 @@ class UserType extends AbstractType
             ->add('theme', ChoiceType::class, [
                 'label' => 'theme',
                 'choices' => [
-                    'Default' => '',
-                    'Darkster' => 'darkster',
+                    '' => '',
+                    'darkster' => 'darkster',
+                    'fresca' => 'fresca',
+                    'greyson' => 'greyson',
+                    'herbie' => 'herbie',
+                    'monotony' => 'monotony',
+                    'tequila' => 'tequila',
                 ],
                 'choice_translation_domain' => false,
                 'required' => false,
