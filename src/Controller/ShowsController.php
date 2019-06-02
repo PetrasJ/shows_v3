@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

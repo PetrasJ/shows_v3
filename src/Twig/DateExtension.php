@@ -2,7 +2,6 @@
 
 namespace App\Twig;
 
-use App\Entity\User;
 use App\Service\Storage;
 use DateTime;
 use DateTimeZone;

@@ -6,7 +6,6 @@ use App\Form\UserType;
 use App\Service\Storage;
 use App\Service\UserEpisodeService;
 use App\Service\UserManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

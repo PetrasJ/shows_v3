@@ -5,11 +5,13 @@ namespace App\EventListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\RequestContextAwareInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoginListener
 {
     private $em;
+    /** @var DataCollectorTranslator  */
     private $translator;
     private $router;
 

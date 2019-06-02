@@ -4,10 +4,9 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Entity\UserEpisode;
-use App\Entity\UserShow;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query\Expr\Join;
+use Exception;
 
 class UserShowRepository extends EntityRepository
 {
@@ -76,6 +75,7 @@ class UserShowRepository extends EntityRepository
 
     public function getUserShow(User $user, $showId)
     {
+        try {
         return $this->createQueryBuilder('us')
             ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset')
             ->addSelect('SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
@@ -88,5 +88,8 @@ class UserShowRepository extends EntityRepository
             ->groupBy('s')
             ->getQuery()
             ->getSingleResult();
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }

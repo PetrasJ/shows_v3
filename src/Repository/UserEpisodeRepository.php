@@ -7,6 +7,7 @@ use App\Entity\UserEpisode;
 use App\Entity\UserShow;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Exception;
 
 class UserEpisodeRepository extends EntityRepository
 {
@@ -28,15 +29,19 @@ class UserEpisodeRepository extends EntityRepository
 
     public function getWatchedDuration(User $user)
     {
-        return $this->createQueryBuilder('ue')
-            ->select('SUM(e.duration)')
-            ->innerJoin('ue.episode', 'e')
-            ->where('ue.user = :user')
-            ->andWhere('ue.status = :watched')
-            ->setParameters(['watched' => UserEpisode::STATUS_WATCHED, 'user' => $user])
-            ->getQuery()
-            ->getSingleScalarResult()
-            ;
+        try {
+            return $this->createQueryBuilder('ue')
+                ->select('SUM(e.duration)')
+                ->innerJoin('ue.episode', 'e')
+                ->where('ue.user = :user')
+                ->andWhere('ue.status = :watched')
+                ->setParameters(['watched' => UserEpisode::STATUS_WATCHED, 'user' => $user])
+                ->getQuery()
+                ->getSingleScalarResult()
+                ;
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     public function getLastEpisodes(User $user, $limit)

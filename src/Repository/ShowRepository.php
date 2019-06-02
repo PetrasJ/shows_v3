@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\UserShow;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
 
 class ShowRepository extends EntityRepository
 {

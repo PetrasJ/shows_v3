@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Twig;
-
 
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;
