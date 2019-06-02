@@ -22,7 +22,7 @@ class User extends BaseUser
      * @var int
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $defaultOffset;
+    private $defaultOffset = 0;
 
     /**
      * @var array
