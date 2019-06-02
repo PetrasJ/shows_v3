@@ -211,3 +211,17 @@ td.current-day .inner {
 .unwatched-episodes .actions {
   padding: 5px;
 }
+
+#back-to-top {
+  transition: .5s;
+  opacity: 0.2;
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  z-index: 2;
+}
+
+#back-to-top:hover {
+  cursor: pointer;
+  opacity: 1;
+}

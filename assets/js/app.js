@@ -21,6 +21,20 @@ const app = {
         this.initConfirm();
         this.initCalendar();
         this.initTooltip();
+        this.initBackToTop();
+    },
+    initBackToTop: function () {
+        const backToTop = $('#back-to-top');
+        $(window).scroll(function () {
+            $(window).scrollTop() > 200 ? backToTop.fadeIn(500) : backToTop.fadeOut(500);
+        });
+        $(window).scrollTop() > 200 ? backToTop.fadeIn(500) : backToTop.fadeOut(500);
+
+        backToTop.unbind().click(function () {
+            return $('html, body').animate({
+                scrollTop: 0
+            }, "800");
+        });
     },
     initTooltip: function () {
         $('[title]').tooltip();
