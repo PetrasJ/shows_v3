@@ -131,14 +131,14 @@ const app = {
     },
     initUnwatchedEpisodes: function () {
         const t = this;
-        $('.unwatched-episodes').unbind().on('click', function () {
+        $('.unwatched-show').unbind().on('click', function () {
             t.loadUnwatchedEpisodes($(this).data('id'), true);
         });
 
         if ($('.unwatched-shows').length > 0) {
             const showId = window.location.hash.substr(1);
             if (showId) {
-                t.loadUnwatchedEpisodes(showId, false)
+                t.loadUnwatchedEpisodes(showId, false);
             }
         }
     },
