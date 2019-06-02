@@ -32,7 +32,7 @@ class UnwatchedShowsController extends AbstractController
         try {
             $shows = $userShowService->getShowsWithUnwatchedEpisodes();
         } catch (NotFoundHttpException $e) {
-            return new Response([], 404);
+            return new Response([], 500);
         }
 
         $from = new DateTime();
@@ -56,7 +56,7 @@ class UnwatchedShowsController extends AbstractController
             $show = $showsManager->getShow($userShowId);
             $nextEpisode = $showsManager->getNextEpisode($show['id']);
         } catch (NotFoundHttpException $e) {
-            return new Response([], 404);
+            return new Response([], 500);
         }
 
         return $this->render('unwatched-shows/episodes.html.twig', [
@@ -77,7 +77,7 @@ class UnwatchedShowsController extends AbstractController
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['comment' => $request->get('comment')]);
         } catch (Exception $e) {
-            return new JsonResponse(['success' => false], 404);
+            return new JsonResponse(['success' => false], 500);
         }
 
         return new JsonResponse(['success' => true]);
@@ -94,7 +94,7 @@ class UnwatchedShowsController extends AbstractController
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['watch' => true]);
         } catch (Exception $e) {
-            return new JsonResponse(['success' => false], 404);
+            return new JsonResponse(['success' => false], 500);
         }
 
         return new JsonResponse(['success' => true]);

@@ -64,7 +64,7 @@ class ShowsController extends AbstractController
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['unwatch' => true]);
         } catch (Exception $e) {
-            return new JsonResponse(['success' => false], 404);
+            return new JsonResponse(['success' => false], 500);
         }
 
         return new JsonResponse(['success' => true]);
@@ -80,7 +80,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->updateShow($request->get('userShowId'), ['offset' => $request->get('value')]);
         } catch (NotFoundHttpException $e) {
-            return new JsonResponse(['success' => false], 404);
+            return new JsonResponse(['success' => false], 500);
         }
 
         return new JsonResponse(['success' => true]);
@@ -96,7 +96,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->add($showId);
         } catch (Exception $e) {
-            return new JsonResponse(['success' => false], 404);
+            return new JsonResponse(['success' => false], 500);
         }
 
         return new JsonResponse(['success' => true]);
@@ -112,7 +112,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->update($userShowId, 'archive');
         } catch (Exception $e) {
-            return new JsonResponse(['success' => false], 404);
+            return new JsonResponse(['success' => false], 500);
         }
 
         return new JsonResponse(['success' => true]);
@@ -128,7 +128,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->update($userShowId, 'watch-later');
         } catch (Exception $e) {
-            return new JsonResponse(['success' => false], 404);
+            return new JsonResponse(['success' => false], 500);
         }
 
         return new JsonResponse(['success' => true]);
@@ -144,7 +144,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->remove($userShowId);
         } catch (Exception $e) {
-            return new JsonResponse(['success' => false], 404);
+            return new JsonResponse(['success' => false], 500);
         }
 
         return new JsonResponse(['success' => true]);
@@ -160,7 +160,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->watchAll($userShowId);
         } catch (Exception $e) {
-            return new JsonResponse(['success' => false], 404);
+            return new JsonResponse(['success' => false], 500);
         }
 
         return new JsonResponse(['success' => true]);
