@@ -32,6 +32,15 @@ class UserType extends AbstractType
                 ],
                 'choice_translation_domain' => false,
             ])
+            ->add('theme', ChoiceType::class, [
+                'label' => 'theme',
+                'choices' => [
+                    'Default' => '',
+                    'Darkster' => 'darkster',
+                ],
+                'choice_translation_domain' => false,
+                'required' => false,
+            ])
             ->add('calendarShow', ChoiceType::class, [
                 'label' => 'show.Calendar include',
                 'choices' => [
