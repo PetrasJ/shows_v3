@@ -40,7 +40,7 @@ class User extends BaseUser
      * @var string
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $style;
+    private $theme;
 
     /**
      * @var string
@@ -115,18 +115,18 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getStyle(): string
+    public function getTheme(): string
     {
-        return $this->style;
+        return $this->theme;
     }
 
     /**
-     * @param string $style
+     * @param string $theme
      * @return User
      */
-    public function setStyle(string $style): User
+    public function setTheme(string $theme): User
     {
-        $this->style = $style;
+        $this->theme = $theme;
 
         return $this;
     }
