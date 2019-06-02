@@ -40,7 +40,7 @@ class User extends BaseUser
      * @var string
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $theme;
+    private $theme = '';
 
     /**
      * @var string
