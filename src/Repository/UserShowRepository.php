@@ -26,31 +26,40 @@ class UserShowRepository extends EntityRepository
         return array_column($result, 'id');
     }
 
-    /**
-     * @param User $user
-     * @param int $status
-     * @return mixed
-     */
     public function getShows(User $user, $status = 0)
     {
         return $this->createQueryBuilder('us')
-            ->select('us')
+            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset, us.status as userShowStatus')
+            ->addSelect('SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
             ->innerJoin('us.show', 's')
             ->innerJoin('s.episodes', 'e')
-            ->leftJoin('us.userEpisodes', 'ue', Join::WITH, 'us = ue.userShow AND ue.user = :user AND ue.episode = e AND ue.status = :watched')
+            ->innerJoin('us.user', 'u')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND us = ue.userShow')
             ->where('us.user = :user')
             ->andWhere('us.status = :status')
-            ->setParameters([
-                'watched' => UserEpisode::STATUS_WATCHED,
-                'user' => $user,
-                'status' => $status,
-            ])
+            ->setParameters(['user' => $user, 'status' => $status])
             ->groupBy('us')
             ->orderBy('s.status', 'desc')
             ->addOrderBy('s.name', 'asc')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
+    }
+
+    public function getEpisodes(User $user, $status)
+    {
+        return $this->createQueryBuilder('us')
+            ->select('us.id as userShowId, e.id, e.season, e.episode, e.airstamp, e.name, e.duration')
+            ->addSelect(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp', 'userAirstamp'))
+            ->innerJoin('us.show', 's')
+            ->innerJoin('s.episodes', 'e')
+            ->innerJoin('us.user', 'u')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND us = ue.userShow')
+            ->where('us.user = :user')
+            ->andWhere('us.status = :status')
+            ->setParameters(['user' => $user, 'status' => $status])
+            ->groupBy('e.id')
+            ->getQuery()
+            ->getResult();
     }
 
     public function getUserShows(User $user, array $shows)

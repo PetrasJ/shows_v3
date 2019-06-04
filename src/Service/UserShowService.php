@@ -65,10 +65,61 @@ class UserShowService
     {
         $shows = $this->entityManager
             ->getRepository(UserShow::class)
-            ->getShows($this->user, $status)
-        ;
+            ->getShows($this->user, $status);
+        $episodes = $this->entityManager
+            ->getRepository(UserShow::class)
+            ->getEpisodes($this->user, $status);
 
-        return $this->formatShows($shows);
+        return $this->formatShows($shows, $episodes);
+    }
+
+    private function formatShows($shows, $episodes)
+    {
+        $arr = [];
+        foreach ($episodes as $episode) {
+            $arr[$episode['userShowId']][] = $episode;
+        }
+
+        $formatted = [];
+        foreach ($shows as $show)
+        {
+            if (isset($arr[$show['userShowId']])) {
+                $count = 0;
+                $lastEpisode = null;
+                $nextEpisode = null;
+                foreach ($arr[$show['userShowId']] as $episode) {
+
+                    $now = (new DateTime())->modify(sprintf('-%d hours', $show['offset']));
+                        if ($episode['airstamp'] < $now) {
+                            $count++;
+                            $lastEpisode = $episode;
+
+                        } else {
+                            $nextEpisode = $episode;
+
+                            break;
+                        }
+                    }
+
+                }
+
+
+
+            $formatted[] = [
+                'id' => $show['id'],
+                'status' => $show['status'],
+                'name' => $show['name'],
+                'episodesCount' => $count,
+                'watchedCount' => $show['watched'],
+                'lastEpisode' => $lastEpisode,
+                'nextEpisode' => $nextEpisode,
+                'offset' => $show['offset'],
+                'userShowId' => $show['userShowId'],
+            ];
+
+        }
+
+        return $formatted;
     }
 
     /**
@@ -190,49 +241,5 @@ class UserShowService
 
         $userRepo = $this->entityManager->getRepository(UserEpisode::class);
         $userRepo->watchAll($this->user, $userShow);
-    }
-
-    private function formatShows($shows): array
-    {
-        $formatted = [];
-        $defaultOffset = $this->user->getDefaultOffset();
-        foreach ($shows as $userShow) {
-            /** @var UserShow $userShow */
-            $episodes = $userShow->getShow()->getEpisodes();
-
-            $lastEpisode = null;
-            $nextEpisode = null;
-            $offset = $userShow->getOffset() ?: $defaultOffset;
-            $now = (new DateTime())->modify(sprintf('-%d hours', $offset));
-
-            $count = 0;
-            foreach ($episodes as $episode) {
-                /** @var Episode $episode */
-                $date = $episode->getAirstamp();
-                if ($date < $now) {
-                    $count++;
-                    $lastEpisode = $episode
-                        ->setUserAirstamp((clone($date))->modify(sprintf('+%d hours', $offset)));
-                } else {
-                    $nextEpisode = $episode
-                        ->setUserAirstamp((clone($date))->modify(sprintf('+%d hours', $offset)));
-                    break;
-                }
-            }
-
-            $formatted[] = [
-                'id' => $userShow->getShow()->getId(),
-                'status' => $userShow->getShow()->getStatus(),
-                'name' => $userShow->getShow()->getName(),
-                'episodesCount' => $count,
-                'watchedCount' => $userShow->getUserEpisodes()->count(),
-                'lastEpisode' => $lastEpisode,
-                'nextEpisode' => $nextEpisode,
-                'offset' => $userShow->getOffset(),
-                'userShowId' => $userShow->getId(),
-            ];
-        }
-
-        return $formatted;
     }
 }
