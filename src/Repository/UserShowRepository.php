@@ -91,7 +91,7 @@ class UserShowRepository extends EntityRepository
             ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset')
             ->addSelect('SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
             ->innerJoin('us.show', 's')
-            ->innerJoin('s.episodes', 'e')
+            ->leftJoin('s.episodes', 'e')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND us = ue.userShow')
             ->where('us.user = :user')
             ->andWhere('us.id = :showId')
