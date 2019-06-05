@@ -24,5 +24,10 @@
             <div class="col-lg-4 col-12">{% include 'form/episode-actions.html.twig' with {episode: episode} %}</div>
         </div>
     {% endfor %}
+    {% if episodes|length == 100 %}<br>
+        <a href="{{ path('shows_details', {'userShowId': userShow.userShowId, 'limit': 0}) }}" class="btn btn-success">
+            {{ 'unlimited'|trans }}
+        </a>
+    {% endif %}
     {% include 'modals/show-settings.html.twig' %}
 {% endblock %}

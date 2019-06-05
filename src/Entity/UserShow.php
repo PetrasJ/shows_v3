@@ -20,6 +20,12 @@ class UserShow
     const STATUS_WATCH_LATER = 1;
     const STATUS_ARCHIVED = 2;
 
+    const STATUS = [
+      0 => 'watching',
+      1 => 'watch later',
+      2 => 'archived',
+    ];
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

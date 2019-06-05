@@ -169,7 +169,9 @@ class EpisodeRepository extends EntityRepository
                 'userShow' => $userShow
             ])
             ->groupBy('e')
-            ->orderBy('e.airstamp', 'desc');
+            ->orderBy('e.airstamp', 'desc')
+            ->addOrderBy('e.season', 'desc')
+            ->addOrderBy('e.episode', 'desc');
 
         if ($limit) {
             $qb->setMaxResults($limit);
