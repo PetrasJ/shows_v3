@@ -87,9 +87,8 @@ class UserShowService
             $lastEpisode = null;
             $nextEpisode = null;
             if (isset($arr[$show['userShowId']])) {
+                $now = (new DateTime())->modify(sprintf('-%d hours', $show['offset']));
                 foreach ($arr[$show['userShowId']] as $episode) {
-
-                    $now = (new DateTime())->modify(sprintf('-%d hours', $show['offset']));
                         if ($episode['airstamp'] < $now) {
                             $count++;
                             $lastEpisode = $episode;
