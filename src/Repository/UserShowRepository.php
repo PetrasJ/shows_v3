@@ -57,7 +57,9 @@ class UserShowRepository extends EntityRepository
             ->where('us.user = :user')
             ->andWhere('us.status = :status')
             ->setParameters(['user' => $user, 'status' => $status])
-            ->groupBy('e.id')
+            ->orderBy('e.airstamp', 'asc')
+            ->addOrderBy('e.season', 'asc')
+            ->addOrderBy('e.episode', 'asc')
             ->getQuery()
             ->getResult();
     }

@@ -83,10 +83,10 @@ class UserShowService
         $formatted = [];
         foreach ($shows as $show)
         {
+            $count = 0;
+            $lastEpisode = null;
+            $nextEpisode = null;
             if (isset($arr[$show['userShowId']])) {
-                $count = 0;
-                $lastEpisode = null;
-                $nextEpisode = null;
                 foreach ($arr[$show['userShowId']] as $episode) {
 
                     $now = (new DateTime())->modify(sprintf('-%d hours', $show['offset']));
@@ -100,10 +100,7 @@ class UserShowService
                             break;
                         }
                     }
-
                 }
-
-
 
             $formatted[] = [
                 'id' => $show['id'],
