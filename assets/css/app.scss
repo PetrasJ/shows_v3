@@ -146,13 +146,13 @@ td.current-day .inner {
 }
 
 @media screen and (max-width: 400px) {
- .search-box, .navbar-toggler {
-   display: inline-block;
- }
+  .search-box, .navbar-toggler {
+    display: inline-block;
+  }
 
- .search-box {
-   width: 60%;
- }
+  .search-box {
+    width: 60%;
+  }
 }
 
 .episode.watched {
@@ -160,7 +160,7 @@ td.current-day .inner {
 }
 
 .episode.watch-later {
-  background-color: rgba(0,255,0,0.1);
+  background-color: rgba(0, 255, 0, 0.1);
   margin-left: -12px;
   padding-left: 12px;
   margin-right: -12px;
@@ -168,7 +168,7 @@ td.current-day .inner {
 }
 
 .episode.archived {
-  background-color: rgba(255,0,0,0.1);
+  background-color: rgba(255, 0, 0, 0.1);
   margin-left: -12px;
   padding-left: 12px;
   margin-right: -12px;
