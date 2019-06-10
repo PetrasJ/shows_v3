@@ -39,6 +39,8 @@ class DateExtension extends AbstractExtension
                 return '';
             }
         }
-        return $date->setTimeZone($this->timezone)->format('Y-m-d H:i');
+        return $date instanceof DateTime
+            ? $date->setTimeZone($this->timezone)->format('Y-m-d H:i')
+            : '';
     }
 }

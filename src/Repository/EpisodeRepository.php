@@ -53,7 +53,7 @@ class EpisodeRepository extends EntityRepository
     public function getUnwatchedEpisodes(User $user, int $showId, string $order = 'asc'): ?array
     {
         return $this->createQueryBuilder('e')
-            ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment, ue.status, us.id as userShowId')
+            ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment, ue.created, ue.status, us.id as userShowId')
             ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = s AND us.user = :user')
@@ -155,7 +155,7 @@ class EpisodeRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary, e.duration')
             ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
-            ->addSelect('ue.comment, ue.status, us.id as userShowId')
+            ->addSelect('ue.comment, ue.status, ue.created, us.id as userShowId')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin('us.user', 'u')
             ->innerJoin('e.show', 's')
