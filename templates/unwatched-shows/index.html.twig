@@ -1,9 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% set upcomingEpisode = 0 %}
     {% for episode in episodes %}
+        {% set upcomingEpisode = upcomingEpisode + 1 %}
         {% include '_inc/episode-details.html.twig' with {episode: episode} %} <b>{{ episode.showName }}</b>
+
+        {% if upcomingEpisode == 3 and episodes|length > 3 %}
+            <button class="btn btn-secondary-m1"
+                    onclick="$('.upcoming-episodes').slideToggle()">{{ episodes|length - 3 }}+
+            </button>
+            <div class="upcoming-episodes" style="display: none">
+        {% endif %}
     {% endfor %}
+    {% if episodes|length > 3 %}
+        </div>
+    {% endif %}
     <br>
     <button class="btn btn-secondary m-1"
             onclick="$('.unwatched-shows').slideToggle()">{{ 'show.Hide/Show'|trans }}</button>
@@ -11,7 +23,7 @@
         {% for show in shows %}
             <div id="show_{{ show.id }}" data-id="{{ show.userShowId }}"
                  class="unwatched-show">
-            <img src="/img/shows/medium/{{ show.id }}.jpg" class="w-100" alt="{{ show.name }}">
+                <img src="/img/shows/medium/{{ show.id }}.jpg" class="w-100" alt="{{ show.name }}">
                 {{ show.name }}
                 <span class="count">{{ show.episodes }}</span>
             </div>

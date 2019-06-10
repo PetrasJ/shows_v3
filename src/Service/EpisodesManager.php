@@ -54,11 +54,17 @@ class EpisodesManager
         return $saved;
     }
 
-    public function getEpisodes(DateTime $from, DateTime $to)
+    /**
+     * @param DateTime $from
+     * @param DateTime $to
+     * @param bool     $watching
+     * @return array
+     */
+    public function getEpisodes(DateTime $from, DateTime $to, $watching = false)
     {
         return $this->entityManager
             ->getRepository(Episode::class)
-            ->getEpisodes($from, $to, $this->user)
+            ->getEpisodes($from, $to, $this->user, $watching)
             ;
     }
 

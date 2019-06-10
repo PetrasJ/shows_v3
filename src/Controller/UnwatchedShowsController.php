@@ -37,7 +37,7 @@ class UnwatchedShowsController extends AbstractController
 
         $from = new DateTime();
         $to = (new DateTime())->modify('+2 days');
-        $episodes = $episodesManager->getEpisodes($from, $to);
+        $episodes = $episodesManager->getEpisodes($from, $to, true);
 
         return $this->render('unwatched-shows/index.html.twig', ['shows' => $shows, 'episodes' => $episodes]);
     }
