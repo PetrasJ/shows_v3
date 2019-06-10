@@ -1,6 +1,6 @@
 {% block body %}
     <b><a href={{ path('shows_details', {userShowId: show.userShowId}) }}
-       title="{{ show.watched }}">{{ show.name }}</a></b> {{ ('show.'~show.status)|trans }}<br>
+       title="{{ show.watched }}" class="show-title">{{ show.name }}</a></b> {{ ('show.'~show.status)|trans }}<br>
     {{ show.summary|raw }}<br>
     {% for episode in episodes %}
         <div class="row episode" id="{{ episode.id }}" data-show-id="{{ show.id }}">

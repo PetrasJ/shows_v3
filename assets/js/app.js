@@ -181,6 +181,7 @@ const app = {
             const id = $(this).data('id');
             const episode = $('#' + id);
             const show = $('#show_' + episode.data('show-id'));
+            const result = $('#result');
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'watch',
@@ -189,17 +190,20 @@ const app = {
                     userShowId: $(this).data('user-show-id')
                 },
                 success: () => {
-                    const unwatchedShwos = $('.unwatched-shows');
-                    if (unwatchedShwos.length) {
+                    const unwatchedShows = $('.unwatched-shows');
+                    if (unwatchedShows.length) {
                         const showCount = show.find('.count');
                         const count = parseInt(showCount.html()) - 1;
                         showCount.html(count);
                         if (count === 0) {
                             show.hide();
-                            unwatchedShwos.slideDown('fast');
-                            $('#result').html('');
+                            unwatchedShows.slideDown('fast');
+                            result.html('');
                         }
                         episode.slideUp('fast');
+                        const title = result.find('.show-title');
+                        const watched = parseInt(title.attr('data-original-title')) + 1;
+                        title.attr('data-original-title', watched);
                     } else {
                         episode.find('.unwatch-episode').removeClass('d-none');
                         $(this).addClass('d-none');
