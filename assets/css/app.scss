@@ -235,3 +235,8 @@ td.current-day .inner {
   cursor: pointer;
   opacity: 1;
 }
+
+.datepicker .datepicker-switch:hover, .datepicker .next:hover, .datepicker .prev:hover, .datepicker tfoot tr th:hover,
+.datepicker table tr td span.focused, .datepicker table tr td span:hover {
+  background: rgba(70, 70, 70, 0.2);
+}
