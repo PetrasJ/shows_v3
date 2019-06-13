@@ -43,7 +43,7 @@ class UserController extends AbstractController
             [
                 'form' => $form->createView(),
                 'lastEpisodes' => $userEpisodeService->getLastEpisodes(),
-                'days' => (int) ($duration / 1440), //minutes to days
+                'duration' => $duration,
             ]
         );
     }
