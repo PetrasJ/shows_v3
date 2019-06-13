@@ -31,13 +31,14 @@ class UnwatchedShowsController extends AbstractController
     {
         try {
             $shows = $userShowService->getShowsWithUnwatchedEpisodes();
+            $episodes = $episodesManager->getEpisodes(
+                new DateTime(),
+                (new DateTime())->modify('+2 days'),
+                true
+            );
         } catch (NotFoundHttpException $e) {
             return new Response([], 500);
         }
-
-        $from = new DateTime();
-        $to = (new DateTime())->modify('+2 days');
-        $episodes = $episodesManager->getEpisodes($from, $to, true);
 
         return $this->render('unwatched-shows/index.html.twig', ['shows' => $shows, 'episodes' => $episodes]);
     }
