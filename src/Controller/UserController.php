@@ -37,13 +37,11 @@ class UserController extends AbstractController
             }
         }
 
-        $duration = $userEpisodeService->getWatchedDuration();
-
         return $this->render('user/settings.html.twig',
             [
                 'form' => $form->createView(),
                 'lastEpisodes' => $userEpisodeService->getLastEpisodes(),
-                'duration' => $duration,
+                'duration' => $userEpisodeService->getWatchedDuration(),
             ]
         );
     }
