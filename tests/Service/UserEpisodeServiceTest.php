@@ -53,9 +53,9 @@ class UserEpisodeServiceTest extends TestCase
     public function dpUpdate()
     {
         return [
-            ['watch' => true],
-            ['comment' => '123'],
-            ['unwatch' => true],
+            [['watch' => true]],
+            [['comment' => '123']],
+            [['unwatch' => true]],
         ];
     }
 }
