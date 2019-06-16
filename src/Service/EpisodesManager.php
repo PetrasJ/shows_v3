@@ -12,13 +12,11 @@ use GuzzleHttp\Client;
 class EpisodesManager
 {
     private $entityManager;
-    private $client;
     private $user;
 
     public function __construct(EntityManagerInterface $entityManager, Storage $storage)
     {
         $this->entityManager = $entityManager;
-        $this->client = new Client();
         $this->user = $storage->getUser();
     }
 
@@ -68,10 +66,15 @@ class EpisodesManager
             ;
     }
 
+    public function getClient()
+    {
+        return new Client();
+    }
+
     private function getEpisodesApi(Show $show): array
     {
         return json_decode(
-            $this->client
+            $this->getClient()
                 ->get(sprintf('%s/%d/episodes', ShowsManager::API_URL, $show->getId()))
                 ->getBody()
         );
