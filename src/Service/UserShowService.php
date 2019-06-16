@@ -75,9 +75,9 @@ class UserShowService
 
     private function formatShows($shows, $episodes)
     {
-        $arr = [];
+        $showEpisodes = [];
         foreach ($episodes as $episode) {
-            $arr[$episode['userShowId']][] = $episode;
+            $showEpisodes[$episode['userShowId']][] = $episode;
         }
 
         $formatted = [];
@@ -86,9 +86,9 @@ class UserShowService
             $count = 0;
             $lastEpisode = null;
             $nextEpisode = null;
-            if (isset($arr[$show['userShowId']])) {
+            if (isset($showEpisodes[$show['userShowId']])) {
                 $now = (new DateTime())->modify(sprintf('-%d hours', $show['offset']));
-                foreach ($arr[$show['userShowId']] as $episode) {
+                foreach ($showEpisodes[$show['userShowId']] as $episode) {
                         if ($episode['airstamp'] < $now) {
                             $count++;
                             $lastEpisode = $episode;
