@@ -18,7 +18,11 @@ use PHPUnit\Framework\TestCase;
 
 class UserEpisodeServiceTest extends TestCase
 {
-    public function testUpdate()
+    /**
+     * @param array $action
+     * @dataProvider dpUpdate
+     */
+    public function testUpdate($action)
     {
         /** @var EntityManager|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManager::class);
@@ -43,6 +47,15 @@ class UserEpisodeServiceTest extends TestCase
             ->method('persist')
             ->with($this->isInstanceOf(UserEpisode::class));
 
-        $service->update(1, 1, ['watch' => true]);
+        $service->update(1, 1, $action);
+    }
+
+    public function dpUpdate()
+    {
+        return [
+            ['watch' => true],
+            ['comment' => '123'],
+            ['unwatch' => true],
+        ];
     }
 }

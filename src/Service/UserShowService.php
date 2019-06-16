@@ -171,17 +171,6 @@ class UserShowService
             ->findOneBy(['user' => $this->user, 'id' => $userShowId])
         ;
 
-        /** @var Show|null $show */
-        $show = $userShow->getShow();
-
-        if (!$userShow) {
-            $userShow = (new UserShow())
-                ->setUser($this->user)
-                ->setShow($show)
-                ->setOffset(0)
-            ;
-        }
-
         $userShow->setDeletedAt(null);
         if ($type === 'add') {
             $userShow->setStatus(UserShow::STATUS_WATCHING);
