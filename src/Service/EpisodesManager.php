@@ -24,12 +24,10 @@ class EpisodesManager
     {
         $this->removeEpisodes($show);
         $episodes = $this->getEpisodesApi($show);
-
         $saved = 0;
         foreach ($episodes as $episode) {
             $saved++;
             if (($episode->name) && ($episode->airdate)) {
-
                 $dateTime = (new DateTime())->createFromFormat('Y-m-d\TH:i:s\+00:00', $episode->airstamp);
                 $newEpisode = new Episode();
                 $newEpisode

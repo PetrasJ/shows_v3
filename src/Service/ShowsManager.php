@@ -16,7 +16,6 @@ class ShowsManager
     private $entityManager;
     private $imageService;
     private $episodesManager;
-    private $client;
 
     /**
      * @var User|null
@@ -33,8 +32,12 @@ class ShowsManager
         $this->entityManager = $entityManager;
         $this->imageService = $imageService;
         $this->episodesManager = $episodesManager;
-        $this->client = new Client();
         $this->user = $storage->getUser();
+    }
+
+    public function getClient()
+    {
+        return new Client();
     }
 
     public function load()
@@ -43,7 +46,7 @@ class ShowsManager
         for ($page = 0; $page <= 1200; $page++) {
             try {
 
-                $this->addShows(json_decode($this->client
+                $this->addShows(json_decode($this->getClient()
                     ->get(sprintf('%s?page=%d', self::API_URL, $page))
                     ->getBody()
                 ));
@@ -137,7 +140,7 @@ class ShowsManager
 
     public function updateShow($showId): bool
     {
-        $show = json_decode($this->client->get(
+        $show = json_decode($this->getClient()->get(
             sprintf('%s/%d', self::API_URL, $showId))->getBody()
         );
 
@@ -206,7 +209,7 @@ class ShowsManager
         while (true) {
             $nextShowId++;
             try {
-                $show = json_decode($this->client
+                $show = json_decode($this->getClient()
                     ->get(sprintf('%s/%d', self::API_URL, $nextShowId))
                     ->getBody()
                 );
