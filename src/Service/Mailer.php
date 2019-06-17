@@ -26,9 +26,9 @@ class Mailer
         $message = (new Swift_Message('shows.botai.eu feedback'))
             ->setFrom('no-reply@botai.eu')
             ->setTo('petras.jodkonis@gmail.com')
-            ->setBody('name: ' . $feedback->getName() . '\n' .
-                'userId: ' . $user . '\n' .
-                'email: ' . $feedback->getEmail() . '\n' .
+            ->setBody('name: ' . $feedback->getName() . PHP_EOL .
+                'userId: ' . $user . PHP_EOL .
+                'email: ' . $feedback->getEmail() . PHP_EOL .
                 'message' . $feedback->getMessage()
             )
         ;
