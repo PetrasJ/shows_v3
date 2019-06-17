@@ -219,7 +219,7 @@ const app = {
             loading();
             e.preventDefault();
             const comment = $(this).find('.comment');
-            comment.addClass('saving');
+            comment.prop('disabled', true);
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'comment',
@@ -232,7 +232,7 @@ const app = {
                 console.log(data);
             }).always(function () {
                 loaded();
-                comment.removeClass('saving');
+                comment.prop('disabled', false);
             });
         });
         $('.unwatch-episode').unbind().on('click', function () {
