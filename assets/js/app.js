@@ -218,18 +218,21 @@ const app = {
         $('.comment-episode').unbind().submit(function (e) {
             loading();
             e.preventDefault();
+            const comment = $(this).find('.comment');
+            comment.addClass('saving');
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'comment',
                 data: {
                     id: $(this).data('id'),
-                    comment: $(this).find('.comment').val(),
+                    comment: comment.val(),
                     userShowId: $(this).data('user-show-id')
                 },
             }).fail(function (data) {
                 console.log(data);
             }).always(function () {
                 loaded();
+                comment.removeClass('saving');
             });
         });
         $('.unwatch-episode').unbind().on('click', function () {

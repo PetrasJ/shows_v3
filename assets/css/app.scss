@@ -240,3 +240,11 @@ td.current-day .inner {
 .datepicker table tr td span.focused, .datepicker table tr td span:hover {
   background: rgba(70, 70, 70, 0.2);
 }
+
+.comment-episode .comment {
+  transition: 1s;
+}
+
+.comment-episode .saving {
+  border: 1px solid red;
+}
