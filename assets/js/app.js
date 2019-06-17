@@ -232,7 +232,10 @@ const app = {
                 console.log(data);
             }).always(function () {
                 loaded();
-                comment.prop('disabled', false);
+                setTimeout(function () {
+                    comment.prop('disabled', false);
+                }, 300);
+
             });
         });
         $('.unwatch-episode').unbind().on('click', function () {
