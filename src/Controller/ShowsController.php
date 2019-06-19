@@ -53,6 +53,22 @@ class ShowsController extends AbstractController
     }
 
     /**
+     * @param $userShowId
+     * @Route("/actions/{userShowId}", name="actions")
+     * @return Response
+     */
+    public function actions($userShowId)
+    {
+        $show = $this->userShowService->getUserShow($userShowId);
+        return $this->render('shows/actions.html.twig',
+            [
+                'show' => $show,
+                'status' => $show['userShowStatus'],
+                'unwatched' => $show['episodesCount'] - $show['watched']
+            ]);
+    }
+
+    /**
      * @param Request $request
      * @param UserEpisodeService $userEpisodeService
      * @Route("/unwatch", name="watch")
@@ -94,6 +110,22 @@ class ShowsController extends AbstractController
     {
         try {
             $this->userShowService->add($showId);
+        } catch (Exception $e) {
+            return new JsonResponse(['success' => false], 500);
+        }
+
+        return new JsonResponse(['success' => true]);
+    }
+
+    /**
+     * @param string $userShowId
+     * @Route("/restore/{userShowId}", name="restore")
+     * @return JsonResponse
+     */
+    public function restore(string $userShowId)
+    {
+        try {
+            $this->userShowService->update($userShowId, 'add');
         } catch (Exception $e) {
             return new JsonResponse(['success' => false], 500);
         }

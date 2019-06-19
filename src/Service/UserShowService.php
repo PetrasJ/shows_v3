@@ -145,6 +145,11 @@ class UserShowService
         return $return;
     }
 
+    public function getUserShow($userShowId)
+    {
+        return $this->entityManager->getRepository(UserShow::class)->getUserShow($this->user, $userShowId);
+    }
+
     public function add($showId)
     {
         $show = $this->entityManager->find(Show::class, $showId);

@@ -5,8 +5,9 @@ namespace App\Repository;
 use App\Entity\User;
 use App\Entity\UserEpisode;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\Expr\Join;
-use Exception;
 
 class UserShowRepository extends EntityRepository
 {
@@ -84,23 +85,29 @@ class UserShowRepository extends EntityRepository
         return $result;
     }
 
+    /**
+     * @param User $user
+     * @param      $showId
+     * @return mixed
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
     public function getUserShow(User $user, $showId)
     {
-        try {
         return $this->createQueryBuilder('us')
-            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset')
+            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset, us.status as userShowStatus')
             ->addSelect('SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
+            ->addSelect('COUNT(e.id) as episodesCount')
             ->innerJoin('us.show', 's')
+            ->innerJoin('us.user', 'u')
             ->leftJoin('s.episodes', 'e')
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND us = ue.userShow')
             ->where('us.user = :user')
+            ->andWhere('e.airstamp < ' . sprintf(EpisodeRepository::DATE_SUB, ':now'))
             ->andWhere('us.id = :showId')
-            ->setParameters(['user' => $user, 'showId' => $showId])
+            ->setParameters(['user' => $user, 'showId' => $showId, 'now' => date('Y-m-d H:i')])
             ->groupBy('s')
             ->getQuery()
             ->getSingleResult();
-        } catch (Exception $e) {
-            return null;
-        }
     }
 }

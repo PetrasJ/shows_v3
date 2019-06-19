@@ -14,8 +14,13 @@
             data-offset="{{ userShow.offset }}">
         <i class="fa fa-cog" aria-hidden="true"></i>
     </button>
-
-    {% include 'shows/actions.html.twig' with {'show': userShow, 'status': userShow.status} %}
+    <div class="show-actions">
+    {%
+        include 'shows/actions.html.twig'
+        with
+        {'show': userShow, 'status': userShow.userShowStatus, 'unwatched': episodes|length - userShow.watched}
+    %}
+    </div>
 
     {% for episode in episodes %}
         <div id="{{ episode.id }}" class="row">

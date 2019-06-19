@@ -13,7 +13,7 @@ use Doctrine\ORM\Query\Expr\Join;
 class EpisodeRepository extends EntityRepository
 {
     const DATE_ADD = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
-    const DATE_SUB = "DATE_SUB(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
+    const DATE_SUB = "date_sub(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
 
     /**
      * @param User $user

@@ -263,6 +263,7 @@ const app = {
         this.initTooltip();
     },
     initConfirm: function () {
+        const t = this;
         $('#confirm').unbind().on('show.bs.modal', function (e) {
             const button = $(e.relatedTarget);
             const modal = $(this);
@@ -273,7 +274,13 @@ const app = {
                     type: 'post',
                     url: button.data('action'),
                     success: () => {
-                        if (button.data('remove')) {
+                        if ($('.show-actions').length) {
+                            if (button.data('hide')) {
+                                $('.show-actions').html('');
+                            }
+                            t.loadActions(button.data('user-show-id'));
+                        }
+                        else if (button.data('remove')) {
                             $('#' + button.data('user-show-id')).slideUp('fast')
                         }
                     }
@@ -284,6 +291,22 @@ const app = {
                     loaded();
                 });
             });
+        });
+    },
+    loadActions: function (id) {
+        const t = this;
+        loading();
+        $.ajax({
+            type: 'get',
+            url: window.baseUrl + 'shows/actions/' + id,
+            success: (data) => {
+                $('.show-actions').html(data);
+                t.initModals();
+            }
+        }).fail(function (data) {
+            console.log(data);
+        }).always(function () {
+            loaded();
         });
     },
     initCalendar: function () {
