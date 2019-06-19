@@ -28,7 +28,7 @@
         <div id="{{ show.userShowId }}" class="show row py-1 border-bottom">
             <div class="col-12 col-md-3">
                 <a href="{{ path('shows_details', {'userShowId': show.userShowId}) }}">
-                    {{ show.name }} ({{ show.episodesCount-show.watchedCount }})
+                    {{ show.name }} (<span class="unwatched">{{ show.episodesCount-show.watchedCount }}</span>)
                 </a>
             </div>
             <div class="col-12 col-md-3">

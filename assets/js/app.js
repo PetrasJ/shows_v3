@@ -286,6 +286,11 @@ const app = {
                             shows.html(parseInt(shows.html()) - 1);
                             $('#' + button.data('user-show-id')).slideUp('fast')
                         }
+
+                        if (button.data('watch-all')) {
+                            button.hide();
+                            $('#' + button.data('user-show-id')).find('.unwatched').html('0');
+                        }
                     }
                 }).fail(function (data) {
                     console.log(data);
