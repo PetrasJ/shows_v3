@@ -1,6 +1,6 @@
 {% if status != constant('App\\Entity\\UserShow::STATUS_WATCHING') %}
     <button class="btn btn-success m-1 btn-sm" data-user-show-id="{{ show.userShowId }}"
-            data-action="{{ path('shows_restore', {userShowId: show.userShowId}) }}"
+            data-action="{{ path('shows_restore', {userShowId: show.userShowId}) }}" data-remove="true"
             data-toggle="modal" title="{{ 'show.restore show (add to watching)'|trans }}"
             data-text="{{ 'show.restore show (add to watching)'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
         <i class="fa fa-undo" aria-hidden="true"></i>

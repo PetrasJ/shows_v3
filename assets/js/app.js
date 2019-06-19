@@ -274,13 +274,16 @@ const app = {
                     type: 'post',
                     url: button.data('action'),
                     success: () => {
-                        if ($('.show-actions').length) {
+                        const showActions = $('.show-actions');
+                        if (showActions.length) {
                             if (button.data('hide')) {
-                                $('.show-actions').html('');
+                                showActions.html('');
                             }
                             t.loadActions(button.data('user-show-id'));
                         }
                         else if (button.data('remove')) {
+                            const shows = $('.shows');
+                            shows.html(parseInt(shows.html()) - 1);
                             $('#' + button.data('user-show-id')).slideUp('fast')
                         }
                     }
