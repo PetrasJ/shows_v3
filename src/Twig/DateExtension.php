@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use App\Service\Storage;
+use App\Traits\LoggerTrait;
 use DateTime;
 use DateTimeZone;
 use Exception;
@@ -11,6 +12,8 @@ use Twig\TwigFilter;
 
 class DateExtension extends AbstractExtension
 {
+    use LoggerTrait;
+
     private $timezone;
 
     public function __construct(Storage $storage)
@@ -36,6 +39,8 @@ class DateExtension extends AbstractExtension
             try {
                 $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
             } catch (Exception $e) {
+                $this->error($e->getMessage(), $e->getTrace());
+
                 return '';
             }
         }

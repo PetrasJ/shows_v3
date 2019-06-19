@@ -6,6 +6,7 @@ use App\Service\EpisodesManager;
 use App\Service\ShowsManager;
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
+use App\Traits\LoggerTrait;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +21,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UnwatchedShowsController extends AbstractController
 {
+    use LoggerTrait;
+
     /**
      * @param UserShowService $userShowService
      * @param EpisodesManager $episodesManager
@@ -37,6 +40,8 @@ class UnwatchedShowsController extends AbstractController
                 true
             );
         } catch (NotFoundHttpException $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new Response([], 500);
         }
 
@@ -57,6 +62,8 @@ class UnwatchedShowsController extends AbstractController
             $show = $showsManager->getShow($userShowId);
             $nextEpisode = $showsManager->getNextEpisode($show['id']);
         } catch (NotFoundHttpException $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new Response([], 500);
         }
 
@@ -78,6 +85,8 @@ class UnwatchedShowsController extends AbstractController
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['comment' => $request->get('comment')]);
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new JsonResponse(['success' => false], 500);
         }
 
@@ -95,6 +104,7 @@ class UnwatchedShowsController extends AbstractController
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['watch' => true]);
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
             return new JsonResponse(['success' => false], 500);
         }
 

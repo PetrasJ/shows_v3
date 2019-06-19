@@ -6,12 +6,16 @@ use App\Entity\Episode;
 use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserShow;
+use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use GuzzleHttp\Client;
 
 class ShowsManager
 {
+    use LoggerTrait;
+
     const API_URL = 'http://api.tvmaze.com/shows';
     private $entityManager;
     private $imageService;
@@ -94,10 +98,14 @@ class ShowsManager
 
     public function getShow($showId)
     {
-        return $this->entityManager
-            ->getRepository(UserShow::class)
-            ->getUserShow($this->user, $showId)
-            ;
+        try {
+            return $this->entityManager
+                ->getRepository(UserShow::class)
+                ->getUserShow($this->user, $showId)
+                ;
+        } catch (NonUniqueResultException $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+        }
     }
 
     private function addShows($shows)
@@ -193,6 +201,7 @@ class ShowsManager
                 ->getNextEpisode($this->user, $showId)
                 ;
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
             return null;
         }
     }

@@ -5,12 +5,16 @@ namespace App\Service;
 use App\Entity\Episode;
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;
+use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserEpisodeService
 {
+    use LoggerTrait;
+
     private $entityManager;
     private $user;
 
@@ -77,7 +81,13 @@ class UserEpisodeService
 
     public function getWatchedDuration()
     {
-        return $this->entityManager->getRepository(UserEpisode::class)->getWatchedDuration($this->user);
+        try {
+            return $this->entityManager->getRepository(UserEpisode::class)->getWatchedDuration($this->user);
+        } catch (NonUniqueResultException $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
+            return null;
+        }
     }
 
     public function getLastEpisodes()

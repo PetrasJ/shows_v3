@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
 use Exception;
 
@@ -27,21 +28,22 @@ class UserEpisodeRepository extends EntityRepository
         ;
     }
 
+    /**
+     * @param User $user
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
     public function getWatchedDuration(User $user)
     {
-        try {
-            return $this->createQueryBuilder('ue')
-                ->select('SUM(e.duration)')
-                ->innerJoin('ue.episode', 'e')
-                ->where('ue.user = :user')
-                ->andWhere('ue.status = :watched')
-                ->setParameters(['watched' => UserEpisode::STATUS_WATCHED, 'user' => $user])
-                ->getQuery()
-                ->getSingleScalarResult()
-                ;
-        } catch (Exception $e) {
-            return null;
-        }
+        return $this->createQueryBuilder('ue')
+            ->select('SUM(e.duration)')
+            ->innerJoin('ue.episode', 'e')
+            ->where('ue.user = :user')
+            ->andWhere('ue.status = :watched')
+            ->setParameters(['watched' => UserEpisode::STATUS_WATCHED, 'user' => $user])
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
     }
 
     public function getLastEpisodes(User $user, $limit)

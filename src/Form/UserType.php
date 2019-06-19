@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\UserShow;
+use App\Traits\LoggerTrait;
 use DateTime;
 use DateTimeZone;
 use Exception;
@@ -16,6 +17,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
+    use LoggerTrait;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -104,6 +107,7 @@ class UserType extends AbstractType
                 $timezones[$timezone . ' (' . $time->format('H:i') . ')'] = $timezone;
             }
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
         }
 
         return $timezones;

@@ -2,11 +2,14 @@
 
 namespace App\Service;
 
+use App\Traits\LoggerTrait;
 use Exception;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class ImageService
 {
+    use LoggerTrait;
+
     /**
      * @var string
      */
@@ -32,13 +35,13 @@ class ImageService
             $newFilename = $dir . $showID . "." . pathinfo($imageUrl, PATHINFO_EXTENSION);
             copy($imageUrl, $newFilename);
         } catch (Exception $e) {
-            error_log(__METHOD__ .' fails: ' . $e->getMessage());
+            $this->error($e->getMessage(), $e->getTrace());
         }
         try {
             $newFilename = $dir . '/medium/' . $showID . "." . pathinfo($imageMediumUrl, PATHINFO_EXTENSION);
             copy($imageMediumUrl, $newFilename);
         } catch (Exception $e) {
-            error_log(__METHOD__ .' fails: ' . $e->getMessage());
+            $this->error($e->getMessage(), $e->getTrace());
         }
     }
 }

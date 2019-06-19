@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
+use App\Traits\LoggerTrait;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ShowsController extends AbstractController
 {
+    use LoggerTrait;
+
     private $userShowService;
 
     public function __construct(UserShowService $userShowService)
@@ -60,6 +63,7 @@ class ShowsController extends AbstractController
     public function actions($userShowId)
     {
         $show = $this->userShowService->getUserShow($userShowId);
+
         return $this->render('shows/actions.html.twig',
             [
                 'show' => $show,
@@ -79,6 +83,8 @@ class ShowsController extends AbstractController
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['unwatch' => true]);
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new JsonResponse(['success' => false], 500);
         }
 
@@ -95,6 +101,8 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->updateShow($request->get('userShowId'), ['offset' => $request->get('value')]);
         } catch (NotFoundHttpException $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new JsonResponse(['success' => false], 500);
         }
 
@@ -111,6 +119,8 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->add($showId);
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new JsonResponse(['success' => false], 500);
         }
 
@@ -127,6 +137,8 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->update($userShowId, 'add');
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new JsonResponse(['success' => false], 500);
         }
 
@@ -143,6 +155,8 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->update($userShowId, 'archive');
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new JsonResponse(['success' => false], 500);
         }
 
@@ -159,6 +173,8 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->update($userShowId, 'watch-later');
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new JsonResponse(['success' => false], 500);
         }
 
@@ -175,6 +191,8 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->remove($userShowId);
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new JsonResponse(['success' => false], 500);
         }
 
@@ -191,6 +209,8 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->watchAll($userShowId);
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
             return new JsonResponse(['success' => false], 500);
         }
 

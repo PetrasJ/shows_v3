@@ -6,6 +6,7 @@ use App\Entity\Episode;
 use App\Entity\Show;
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;
+use App\Traits\LoggerTrait;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserShowService
 {
+    use LoggerTrait;
+
     private $entityManager;
     private $user;
     private $episodesManager;
@@ -139,6 +142,7 @@ class UserShowService
             ;
 
         } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
             return null;
         }
 
@@ -147,7 +151,13 @@ class UserShowService
 
     public function getUserShow($userShowId)
     {
-        return $this->entityManager->getRepository(UserShow::class)->getUserShow($this->user, $userShowId);
+        try {
+            return $this->entityManager->getRepository(UserShow::class)->getUserShow($this->user, $userShowId);
+        } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getTrace());
+
+            return null;
+        }
     }
 
     public function add($showId)
@@ -171,6 +181,7 @@ class UserShowService
     public function update($userShowId, $type)
     {
         $this->entityManager->getFilters()->disable('softdeleteable');
+        /** @var UserShow $userShow */
         $userShow = $this->entityManager
             ->getRepository(UserShow::class)
             ->findOneBy(['user' => $this->user, 'id' => $userShowId])
