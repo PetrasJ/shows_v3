@@ -19,7 +19,7 @@ show:
     Settings: Настройки
     Calendar include: Включить календарь
     Offset (hours to add): Офсет (добавление часы)
-    Latest episodes watched: Последние просмотренные эпизоды
+    latest_episodes_watched: Последние просмотренные эпизоды
     Time spent: Время просмотра
     To Be Determined: Ещё не решено
     Running: Показывают

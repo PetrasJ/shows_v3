@@ -19,7 +19,7 @@ show:
     Settings: Settings
     Calendar include: Calendar include
     Offset (hours to add): Offset (hours to add)
-    Latest episodes watched: Latest episodes watched
+    latest_episodes_watched: Latest episodes watched
     Time spent: Time spent
     To Be Determined: To Be Determined
     Running: Running

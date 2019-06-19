@@ -19,7 +19,7 @@ show:
     Settings: Nustatymai
     Calendar include: Į kalendorių įtraukti
     Offset (hours to add): ofsetas (poslinkis, pridėti valandų)
-    Latest episodes watched: Paskutiniai žiūrėti epizodai
+    latest_episodes_watched: Paskutiniai žiūrėti epizodai
     Time spent: Praleistas laikas
     To Be Determined: Dar nenuspresta
     Running: Rodoma

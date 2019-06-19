@@ -5,6 +5,7 @@
 {% block body %}
     {{ form(form) }}
 {{ 'total_watched'|trans }} <b title="{{ duration }} {{ 'min'|trans }}">{{ (duration / 1440)|round(0, 'floor') }}</b> {{ 'days'|trans }}<br>
+    {{ 'show.latest_episodes_watched'|trans }}<br>
     {% for episode in lastEpisodes %}
         <u>{{ episode.created|dateTimezone }}</u> {% include '_inc/episode-details.html.twig' with {episode: episode} %}
         <b>{{ episode.showName }}</b> {{ episode.name }}<br>
