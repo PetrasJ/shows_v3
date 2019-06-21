@@ -170,6 +170,7 @@ class UserShowService
             ->setOffset(0)
         ;
 
+        $this->showsManager->updateShow($showId);
         $this->entityManager->persist($userShow);
         $this->entityManager->flush();
     }
