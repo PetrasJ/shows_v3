@@ -69,7 +69,8 @@ class UserShowRepository extends EntityRepository
     public function getUserShows(User $user, array $shows)
     {
         $userShows = $this->createQueryBuilder('us')
-            ->select('s.id, us.id as userShowId, us.status, count(distinct e.id) as episodes, count(distinct ue.id) as watched')
+            ->select('s.id, us.id as userShowId, us.status')
+            ->addSelect('count(distinct e.id) as episodes, count(distinct ue.id) as watched')
             ->innerJoin('us.show', 's')
             ->leftJoin('us.userEpisodes', 'ue')
             ->leftJoin('s.episodes', 'e')
@@ -93,6 +94,7 @@ class UserShowRepository extends EntityRepository
             $result[$userShow['id']][] = [
                 'userShowId' => $userShow['userShowId'],
                 'status' => $userShow['status'],
+                'watched' => $userShow['watched'],
                 'unwatched' => $userShow['episodes'] - $userShow['watched'],
             ];
         }
