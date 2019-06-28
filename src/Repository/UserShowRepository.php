@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Entity\UserEpisode;
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -68,13 +69,20 @@ class UserShowRepository extends EntityRepository
     public function getUserShows(User $user, array $shows)
     {
         $userShows = $this->createQueryBuilder('us')
-            ->select('s.id, us.id as userShowId, us.status, count(ue.id) as watched')
+            ->select('s.id, us.id as userShowId, us.status, count(distinct e.id) as episodes, count(distinct ue.id) as watched')
             ->innerJoin('us.show', 's')
             ->leftJoin('us.userEpisodes', 'ue')
+            ->leftJoin('s.episodes', 'e')
             ->where('us.user = :user')
             ->andWhere('ue.status = :watched')
             ->andWhere('us.show IN (:shows)')
-            ->setParameters(['user' => $user, 'shows' => $shows, 'watched' => UserEpisode::STATUS_WATCHED])
+            ->andWhere('e.airstamp < :now')
+            ->setParameters([
+                'user' => $user,
+                'shows' => $shows,
+                'watched' => UserEpisode::STATUS_WATCHED,
+                'now' => new DateTime(),
+            ])
             ->groupBy('us.id')
             ->getQuery()
             ->getResult();
@@ -85,7 +93,7 @@ class UserShowRepository extends EntityRepository
             $result[$userShow['id']][] = [
                 'userShowId' => $userShow['userShowId'],
                 'status' => $userShow['status'],
-                'watched' => $userShow['watched'],
+                'unwatched' => $userShow['episodes'] - $userShow['watched'],
             ];
         }
 
