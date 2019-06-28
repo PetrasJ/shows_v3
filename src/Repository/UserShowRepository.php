@@ -85,7 +85,7 @@ class UserShowRepository extends EntityRepository
             $result[$userShow['id']][] = [
                 'userShowId' => $userShow['userShowId'],
                 'status' => $userShow['status'],
-                'watched' => $userShow['watched']
+                'watched' => $userShow['watched'],
             ];
         }
 
