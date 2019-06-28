@@ -68,18 +68,25 @@ class UserShowRepository extends EntityRepository
     public function getUserShows(User $user, array $shows)
     {
         $userShows = $this->createQueryBuilder('us')
-            ->select('s.id, us.status')
+            ->select('s.id, us.id as userShowId, us.status, count(ue.id) as watched')
             ->innerJoin('us.show', 's')
+            ->leftJoin('us.userEpisodes', 'ue')
             ->where('us.user = :user')
+            ->andWhere('ue.status = :watched')
             ->andWhere('us.show IN (:shows)')
-            ->setParameters(['user' => $user, 'shows' => $shows])
+            ->setParameters(['user' => $user, 'shows' => $shows, 'watched' => UserEpisode::STATUS_WATCHED])
+            ->groupBy('us.id')
             ->getQuery()
             ->getResult();
 
         $result = [];
         foreach ($userShows as $userShow)
         {
-            $result[$userShow['id']] = $userShow['status'];
+            $result[$userShow['id']][] = [
+                'userShowId' => $userShow['userShowId'],
+                'status' => $userShow['status'],
+                'watched' => $userShow['watched']
+            ];
         }
 
         return $result;

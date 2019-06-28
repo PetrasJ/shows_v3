@@ -15,7 +15,9 @@
             {% if is_granted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED']) %}
                 {% if userShows[show.id] is defined %}
                     <button class="btn btn-danger add-show" data-id="{{ show.id }}">{{ 'add_rewatch'|trans }}</button>
-                    {{ constant('App\\Entity\\UserShow::STATUS')[userShows[show.id]]|trans  }}
+                    {% for userShow in userShows[show.id] %}
+                    <a href="{{ path('shows_details', {'userShowId': userShow.userShowId}) }}">{{ constant('App\\Entity\\UserShow::STATUS')[userShow.status]|trans  }} ({{ userShow.watched }})</a>
+                    {% endfor %}
                 {% else %}
                     <button class="btn btn-success add-show" data-id="{{ show.id }}">{{ 'add'|trans }}</button>
                 {% endif %}
