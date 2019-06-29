@@ -12,7 +12,7 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class EpisodeRepository extends EntityRepository
 {
-    const DATE_ADD = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour') as %s";
+    const DATE_ADD = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
     const DATE_SUB = "date_sub(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
 
     /**
@@ -54,7 +54,7 @@ class EpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment, ue.created, ue.status, us.id as userShowId')
-            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
+            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = s AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
@@ -86,7 +86,7 @@ class EpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment, ue.status, us.id as userShowId')
-            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
+            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = s AND us.user = :user')
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
@@ -117,7 +117,7 @@ class EpisodeRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.duration')
-            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
+            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->addSelect('e.airstamp')
             ->addSelect('s.name as showName, s.id as showId, us.status as showStatus')
             ->addSelect('e.name, e.season, e.episode')
@@ -155,7 +155,7 @@ class EpisodeRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary, e.duration')
-            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp', 'userAirstamp'))
+            ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->addSelect('ue.comment, ue.status, ue.created, us.id as userShowId')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin('us.user', 'u')

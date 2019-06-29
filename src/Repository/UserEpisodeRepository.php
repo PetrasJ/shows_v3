@@ -12,8 +12,6 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class UserEpisodeRepository extends EntityRepository
 {
-    const DATE_ADD = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
-
     public function watchAll(UserShow $userShow)
     {
         $this->createQueryBuilder('ue')
@@ -34,7 +32,7 @@ class UserEpisodeRepository extends EntityRepository
             ->innerJoin('ue.userShow', 'us')
             ->innerJoin('ue.user', 'u')
             ->where('ue.userShow = :userShow')
-            ->andWhere(sprintf(self::DATE_ADD, 'e.airstamp') . ' > :now')
+            ->andWhere(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp') . ' > :now')
             ->setParameters(['userShow' => $userShow, 'now' => new DateTime()])
             ->getQuery()
             ->getResult();
@@ -62,7 +60,7 @@ class UserEpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('ue')
             ->select('ue.created, e.season, e.episode, e.airstamp, e.name, e.duration, s.name as showName')
-            ->addSelect(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp', 'userAirstamp'))
+            ->addSelect(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->innerJoin('ue.episode', 'e')
             ->innerJoin('e.show', 's')
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
