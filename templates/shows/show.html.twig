@@ -4,7 +4,7 @@
     <div class="text-center">
         <img src="/img/shows/{{ userShow.id }}.jpg" class="show-image" alt="{{ userShow.name }}"><br>
     </div>
-    <h3 title="{{ userShow.watched }}">{{ userShow.name }}</h3>
+    <h3 title="{{ userShow.watched }}" class="show-details-title">{{ userShow.name }}</h3>
     {{ userShow.summary|raw }}<br>
 
     <button data-toggle="modal" data-target="#show-settings"
@@ -18,7 +18,7 @@
     {%
         include 'shows/actions.html.twig'
         with
-        {'show': userShow, 'status': userShow.userShowStatus, 'unwatched': episodes|length - userShow.watched}
+        {'show': userShow, 'status': userShow.userShowStatus, 'unwatched': userShow.episodesCount - userShow.watched}
     %}
     </div>
 

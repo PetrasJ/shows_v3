@@ -298,6 +298,10 @@ const app = {
                                 $('[data-id=' + button.data('user-show-id') + ']').hide();
                                 $('.unwatched-shows').slideDown('fast');
                             }
+
+                            if ($('.show-details-title').length) {
+                                window.location.reload();
+                            }
                         }
                     }
                 }).fail(function (data) {
