@@ -27,20 +27,25 @@
         {% endif %}
         <div id="{{ show.userShowId }}" class="show row py-1 border-bottom">
             <div class="col-12 col-md-3">
-                <a href="{{ path('shows_details', {'userShowId': show.userShowId}) }}">
+                <a title={{ show.watchedCount }}
+                   href="{{ path('shows_details', {'userShowId': show.userShowId}) }}">
                     {{ show.name }} (<span class="unwatched">{{ show.episodesCount-show.watchedCount }}</span>)
                 </a>
             </div>
             <div class="col-12 col-md-3">
                 {% if show.lastEpisode %}
-                    <b>{{ show.lastEpisode.name }}</b><br>
-                    {% include '_inc/episode-details.html.twig' with {episode: show.lastEpisode} %}
+                    <span class="episode{% if show.lastEpisode.userEpisodeStatus == constant('App\\Entity\\UserEpisode::STATUS_WATCHED') %} watched{% endif %}">
+                        <b>{{ show.lastEpisode.name }}</b><br>
+                        {% include '_inc/episode-details.html.twig' with {episode: show.lastEpisode} %}
+                    </span>
                 {% endif %}
             </div>
             <div class="col-12 col-md-3">
                 {% if show.nextEpisode %}
-                    <b>{{ show.nextEpisode.name }}</b><br>
-                    {% include '_inc/episode-details.html.twig' with {episode: show.nextEpisode} %}
+                    <span class="episode{% if show.nextEpisode.userEpisodeStatus == constant('App\\Entity\\UserEpisode::STATUS_WATCHED') %} watched{% endif %}">
+                        <b>{{ show.nextEpisode.name }}</b><br>
+                        {% include '_inc/episode-details.html.twig' with {episode: show.nextEpisode} %}
+                    </span>
                 {% endif %}
             </div>
             <div class="col-12 col-md-3">
