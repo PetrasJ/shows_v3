@@ -5,27 +5,39 @@ namespace App\Repository;
 use App\Entity\User;
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
-use Exception;
 
 class UserEpisodeRepository extends EntityRepository
 {
-    public function watchAll(User $user, UserShow $userShow)
+    const DATE_ADD = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
+
+    public function watchAll(UserShow $userShow)
     {
         $this->createQueryBuilder('ue')
             ->update(UserEpisode::class, 'ue')
             ->set('ue.status', UserEpisode::STATUS_WATCHED)
-            ->where('ue.user = :user')
-            ->andWhere('ue.userShow = :userShow')
-            ->setParameters([
-                'user' => $user,
-                'userShow' => $userShow,
-            ])
+            ->where('ue.userShow = :userShow')
+            ->setParameter('userShow', $userShow)
             ->getQuery()
             ->execute()
         ;
+    }
+
+    public function getUpcomingUpdatedEpisodes(UserShow $userShow)
+    {
+        return $this->createQueryBuilder('ue')
+            ->select('ue')
+            ->innerJoin('ue.episode', 'e')
+            ->innerJoin('ue.userShow', 'us')
+            ->innerJoin('ue.user', 'u')
+            ->where('ue.userShow = :userShow')
+            ->andWhere(sprintf(self::DATE_ADD, 'e.airstamp') . ' > :now')
+            ->setParameters(['userShow' => $userShow, 'now' => new DateTime()])
+            ->getQuery()
+            ->getResult();
     }
 
     /**

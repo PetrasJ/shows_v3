@@ -242,6 +242,12 @@ class UserShowService
         $this->entityManager->flush();
 
         $userRepo = $this->entityManager->getRepository(UserEpisode::class);
-        $userRepo->watchAll($this->user, $userShow);
+        $upcomingEpisodes = $userRepo->getUpcomingUpdatedEpisodes($userShow);
+        foreach ($upcomingEpisodes as $episode) {
+            $this->entityManager->remove($episode);
+        }
+        $this->entityManager->flush();
+
+        $userRepo->watchAll($userShow);
     }
 }
