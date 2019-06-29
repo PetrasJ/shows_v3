@@ -37,6 +37,7 @@ const app = {
         });
     },
     initTooltip: function () {
+        $('.tooltip').hide();
         $('[title]').tooltip();
     },
     initSearch: function () {
@@ -290,6 +291,13 @@ const app = {
                         if (button.data('watch-all')) {
                             button.hide();
                             $('#' + button.data('user-show-id')).find('.unwatched').html('0');
+
+                            const unwatchedEpisodes = $('.unwatched-episodes');
+                            if (unwatchedEpisodes.length) {
+                                unwatchedEpisodes.html('');
+                                $('[data-id=' + button.data('user-show-id') + ']').hide();
+                                $('.unwatched-shows').slideDown('fast');
+                            }
                         }
                     }
                 }).fail(function (data) {
@@ -309,6 +317,7 @@ const app = {
             url: window.baseUrl + 'shows/actions/' + id,
             success: (data) => {
                 $('.show-actions').html(data);
+                t.initTooltip();
                 t.initModals();
             }
         }).fail(function (data) {

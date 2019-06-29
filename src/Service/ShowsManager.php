@@ -9,6 +9,7 @@ use App\Entity\UserShow;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Exception;
 use GuzzleHttp\Client;
 
@@ -105,7 +106,11 @@ class ShowsManager
                 ;
         } catch (NonUniqueResultException $e) {
             $this->error($e->getMessage(), $e->getTrace());
+        } catch (NoResultException $e) {
+            $this->error($e->getMessage(), $e->getTrace());
         }
+
+        return null;
     }
 
     private function addShows($shows)

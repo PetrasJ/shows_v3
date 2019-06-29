@@ -1,6 +1,15 @@
 {% block body %}
     <b><a href={{ path('shows_details', {userShowId: show.userShowId}) }}
-       title="{{ show.watched }}" class="show-title">{{ show.name }}</a></b> {{ ('show.'~show.status)|trans }}<br>
+       title="{{ show.watched }}" class="show-title">{{ show.name }}</a></b> {{ ('show.'~show.status)|trans }}
+
+    <button class="btn btn-secondary btn-sm m-1 float-right" onclick="$('.show-actions').toggleClass('d-none')">
+        <i class="fa fa-cog" aria-hidden="true"></i>
+    </button>
+    <div class="show-actions float-right d-none">
+        {% include 'shows/actions.html.twig'
+            with
+            {'show': show, 'status': show.userShowStatus, 'unwatched': show.episodesCount-show.watched} %}
+    </div>
     {{ show.summary|raw }}<br>
     {% for episode in episodes %}
         <div class="row episode" id="{{ episode.id }}" data-show-id="{{ show.id }}">
