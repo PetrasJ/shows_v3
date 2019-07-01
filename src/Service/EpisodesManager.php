@@ -4,13 +4,18 @@ namespace App\Service;
 
 use App\Entity\Episode;
 use App\Entity\Show;
+use App\Traits\LoggerTrait;
 use DateTime;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use GuzzleHttp\Client;
+use Psr\Log\LogLevel;
 
 class EpisodesManager
 {
+    use LoggerTrait;
+
     private $entityManager;
     private $user;
 
@@ -22,8 +27,12 @@ class EpisodesManager
 
     public function addEpisodes(Show $show): int
     {
-        $this->removeEpisodes($show);
         $episodes = $this->getEpisodesApi($show);
+
+        if ($episodes) {
+            $this->removeEpisodes($show);
+        }
+
         $saved = 0;
         foreach ($episodes as $episode) {
             $saved++;
@@ -71,11 +80,18 @@ class EpisodesManager
 
     private function getEpisodesApi(Show $show): array
     {
-        return json_decode(
-            $this->getClient()
-                ->get(sprintf('%s/%d/episodes', ShowsManager::API_URL, $show->getId()))
-                ->getBody()
-        );
+        try {
+            return json_decode(
+                $this->getClient()
+                    ->get(sprintf('%s/%d/episodes', ShowsManager::API_URL, $show->getId()))
+                    ->getBody()
+            );
+        } catch (Exception $e) {
+            $this->logger->log(LogLevel::ERROR, $e->getMessage());
+
+            return [];
+        }
+
     }
 
     /**

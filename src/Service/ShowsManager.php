@@ -12,6 +12,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Exception;
 use GuzzleHttp\Client;
+use Psr\Log\LogLevel;
 
 class ShowsManager
 {
@@ -50,7 +51,6 @@ class ShowsManager
         $gap = 0;
         for ($page = 0; $page <= 1200; $page++) {
             try {
-
                 $this->addShows(json_decode($this->getClient()
                     ->get(sprintf('%s?page=%d', self::API_URL, $page))
                     ->getBody()
@@ -153,9 +153,15 @@ class ShowsManager
 
     public function updateShow($showId): bool
     {
-        $show = json_decode($this->getClient()->get(
-            sprintf('%s/%d', self::API_URL, $showId))->getBody()
-        );
+        try {
+            $show = json_decode($this->getClient()->get(
+                sprintf('%s/%d', self::API_URL, $showId))->getBody()
+            );
+        } catch (Exception $e) {
+            $this->logger->log(LogLevel::ERROR, $e->getMessage());
+
+            return false;
+        }
 
         $showEntity = $this->addShow($show);
 
