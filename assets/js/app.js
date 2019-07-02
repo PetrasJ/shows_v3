@@ -60,7 +60,7 @@ const app = {
     },
     initAddRemoveShow: function () {
         $('.add-show').unbind().on('click', function () {
-            loading();
+            loading(true);
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'shows/add/' + $(this).data('id'),
@@ -79,7 +79,7 @@ const app = {
         });
 
         $('.remove-show').unbind().on('click', function () {
-            loading();
+            loading(true);
             $.ajax({
                 type: 'post',
                 url: window.baseUrl + 'shows/remove/' + $(this).data('user-show-id'),
@@ -109,7 +109,7 @@ const app = {
     },
     initShowList: function () {
         $('.update-show').unbind().on('click', function () {
-            loading();
+            loading(true);
             const id = $(this).data('user-show-id');
             $.ajax({
                 type: 'post',
@@ -158,7 +158,7 @@ const app = {
         }
     },
     loadUnwatchedEpisodes: function (showId, hideShows) {
-        loading();
+        loading(false);
         $.ajax({
             type: 'get',
             url: window.baseUrl + 'episodes/' + showId,
@@ -178,7 +178,7 @@ const app = {
     },
     initWatchActions: function () {
         $('.watch-episode').unbind().on('click', function () {
-            loading();
+            loading(false);
             const id = $(this).data('id');
             const episode = $('#' + id);
             const show = $('#show_' + episode.data('show-id'));
@@ -217,7 +217,7 @@ const app = {
             });
         });
         $('.comment-episode').unbind().submit(function (e) {
-            loading();
+            loading(false);
             e.preventDefault();
             const comment = $(this).find('.comment');
             comment.prop('disabled', true);
@@ -240,7 +240,7 @@ const app = {
             });
         });
         $('.unwatch-episode').unbind().on('click', function () {
-            loading();
+            loading(false);
             const id = $(this).data('id');
             const episode = $('#' + id);
 
@@ -270,7 +270,7 @@ const app = {
             const modal = $(this);
             modal.find('.modal-body').html(button.data('text'));
             $(this).find('.confirm').unbind().on('click', function () {
-                loading();
+                loading(true);
                 $.ajax({
                     type: 'post',
                     url: button.data('action'),
@@ -315,7 +315,7 @@ const app = {
     },
     loadActions: function (id) {
         const t = this;
-        loading();
+        loading(false);
         $.ajax({
             type: 'get',
             url: window.baseUrl + 'shows/actions/' + id,
@@ -346,7 +346,7 @@ const app = {
                 language: $('html').attr('lang'),
                 autoclose: true
             }).on('changeMonth', function () {
-                loading();
+                loading(false);
                 const el = $(this);
                 setTimeout(function () {
                     t.loadCalendar(el.val());
@@ -386,14 +386,18 @@ const app = {
     }
 };
 
-function loading() {
-    $('.overlay').show().css('opacity', 1);
+function loading(dark) {
+    const overlay = $('.overlay');
+    overlay.show().css('opacity', 1);
+    if (dark) {
+        overlay.addClass('dark');
+    }
 }
 
 function loaded() {
     $('.overlay').css('opacity', 0);
     setTimeout(function () {
-        $('.overlay').hide()
+        $('.overlay').hide().removeClass('dark')
     }, 300);
 }
 
