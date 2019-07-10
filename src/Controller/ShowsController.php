@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Service\ShowsManager;
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
 use App\Traits\LoggerTrait;
+use DateTime;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +24,12 @@ class ShowsController extends AbstractController
     use LoggerTrait;
 
     private $userShowService;
+    private $showsManager;
 
-    public function __construct(UserShowService $userShowService)
+    public function __construct(UserShowService $userShowService, ShowsManager $showsManager)
     {
         $this->userShowService = $userShowService;
+        $this->showsManager = $showsManager;
     }
 
     /**
@@ -40,7 +45,7 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param $userShowId
+     * @param     $userShowId
      * @param int $limit
      * @Route("/details/{userShowId}/{limit}", name="details", defaults={"limit"=100})
      * @return Response
@@ -52,7 +57,7 @@ class ShowsController extends AbstractController
         return $this->render('shows/show.html.twig', [
             'userShow' => $show['userShow'],
             'episodes' => $show['episodes'],
-            ]);
+        ]);
     }
 
     /**
@@ -68,12 +73,12 @@ class ShowsController extends AbstractController
             [
                 'show' => $show,
                 'status' => $show['userShowStatus'],
-                'unwatched' => $show['episodesCount'] - $show['watched']
+                'unwatched' => $show['episodesCount'] - $show['watched'],
             ]);
     }
 
     /**
-     * @param Request $request
+     * @param Request            $request
      * @param UserEpisodeService $userEpisodeService
      * @Route("/unwatch", name="watch")
      * @return JsonResponse
@@ -215,5 +220,28 @@ class ShowsController extends AbstractController
         }
 
         return new JsonResponse(['success' => true]);
+    }
+
+    /**
+     * @Route("/update-all", name="update_all")
+     * @return Response
+     * @throws Exception
+     * @Security("is_granted('ROLE_ADMIN')")
+     */
+    public function updateShows()
+    {
+        $start = (new DateTime())->format('Y-m-d h:i:s');
+        $result = $this->showsManager->update();
+        $finish = (new DateTime())->format('Y-m-d h:i:s');
+
+        return $this->render('shows/update.html.twig',
+            [
+                'start' => $start,
+                'updated' => $result['updated'],
+                'updatedList' => implode($result['updated'], ', '),
+                'added' => $result['newShows'],
+                'addedList' => implode($result['newShows'], ', '),
+                'finish' => $finish,
+            ]);
     }
 }

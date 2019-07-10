@@ -53,6 +53,11 @@
                             <a class="dropdown-item" href="{{ path('shows_index', {'status': constant('App\\Entity\\UserShow::STATUS_WATCH_LATER')}) }}">
                                 {{ 'menu.watchlater'|trans }}
                             </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="{{ path('shows_update_all') }}">
+                                    {{ 'menu.update_all'|trans }}
+                                </a>
+                            {% endif %}
                         </div>
                     </li>
 
