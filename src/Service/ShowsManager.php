@@ -68,10 +68,11 @@ class ShowsManager
     public function update()
     {
         $shows = $this->entityManager->getRepository(UserShow::class)->getAllUsersShows();
-        $updated = 0;
+        $updated = [];
         foreach ($shows as $showId) {
-            if ($this->updateShow($showId)) {
-                $updated++;
+            $show = $this->updateShow($showId);
+            if ($show) {
+                $updated[] = $show;
             };
         }
 
@@ -151,7 +152,7 @@ class ShowsManager
         return $newShow;
     }
 
-    public function updateShow($showId): bool
+    public function updateShow($showId): ?string
     {
         try {
             $show = json_decode($this->getClient()->get(
@@ -160,13 +161,13 @@ class ShowsManager
         } catch (Exception $e) {
             $this->logger->log(LogLevel::ERROR, $e->getMessage());
 
-            return false;
+            return null;
         }
 
         $showEntity = $this->addShow($show);
 
         if ($show->updated === $showEntity->getUpdated()) {
-            return false;
+            return null;
         }
 
         if (isset($show->image->original)) {
@@ -201,7 +202,7 @@ class ShowsManager
         $this->entityManager->persist($showEntity->setUpdated($show->updated));
         $this->entityManager->flush();
 
-        return true;
+        return $show->name;
     }
 
     public function getNextEpisode($showId)

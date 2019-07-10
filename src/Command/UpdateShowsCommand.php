@@ -40,7 +40,11 @@ class UpdateShowsCommand extends Command
         $output->writeln([(new DateTime())->format('Y-m-d h:i:s') . ' Started']);
 
         $result = $this->showsManager->update();
-        $output->writeln(['Updated Shows: ' . $result['updated']]);
+        if (count($result['updated']) > 0) {
+            $output->writeln(['Updated Shows: ' . count($result['updated'])]);
+            $output->writeln(implode($result['updated'], ', '));
+        }
+
 
         if (count($result['newShows']) > 0)
         {
