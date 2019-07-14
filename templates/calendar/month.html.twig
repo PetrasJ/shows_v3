@@ -32,7 +32,7 @@
     <tr>
         {% set daysInMonth = time|date('t') %}{% set startDow = time|date('F 1\\s\\t Y')|date('N') - 1 %}{% set dow = startDow %}{% for day in range(1,daysInMonth) %}{% set currentDay = time|date('Y-m') ~ '-' ~ '%02d'|format(day) %}{% if loop.first and startDow != 0 %}
         <td colspan="{{ startDow }}"></td>{% endif %}{% set break = false %}
-        <td class="day {% for episode in episodes if break == false %}{% if episode.userAirstamp|slice(0, 10) == currentDay %}exists{% set break = true %}{% endif %}{% endfor %}{% if currentDay=="now"|date('Y-m-d') %} current-day{% endif %}">
+        <td class="day{% for episode in episodes if break == false %}{% if episode.userAirstamp|slice(0, 10) == currentDay %} exists{% set break = true %}{% endif %}{% endfor %}{% if currentDay=="now"|date('Y-m-d') %} current-day border-primary{% endif %}">
             <div class="inner">{% for episode in episodes %}{% if episode.userAirstamp|slice(0, 10) == currentDay %}
                 <div class="episode{{ episode|class }}">
                     {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
