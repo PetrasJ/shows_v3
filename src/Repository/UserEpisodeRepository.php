@@ -68,7 +68,7 @@ class UserEpisodeRepository extends EntityRepository
             ->where('ue.user = :user')
             ->andWhere('ue.status = :statusWatched')
             ->orderBy('ue.created', 'desc')
-            ->groupBy('ue')
+            //->groupBy('ue')
             ->setParameters(['user' => $user, 'statusWatched' => UserEpisode::STATUS_WATCHED])
             ->setMaxResults($limit)
             ->getQuery()
