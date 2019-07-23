@@ -26,7 +26,6 @@ class ShowRepository extends EntityRepository
             ->orderBy('us.id', 'desc')
             ->addOrderBy('s.rating', 'desc')
             ->addOrderBy('s.weight', 'desc')
-            ->groupBy('s')
         ;
 
         unset($names[0]);
