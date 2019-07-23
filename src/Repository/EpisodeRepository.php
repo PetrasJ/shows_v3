@@ -169,7 +169,6 @@ class EpisodeRepository extends EntityRepository
                 'show' => $userShow->getShow(),
                 'userShow' => $userShow
             ])
-            ->groupBy('e')
             ->orderBy('e.airstamp', 'desc')
             ->addOrderBy('e.season', 'desc')
             ->addOrderBy('e.episode', 'desc');
