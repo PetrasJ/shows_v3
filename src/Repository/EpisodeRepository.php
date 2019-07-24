@@ -151,6 +151,33 @@ class EpisodeRepository extends EntityRepository
             ->getResult();
     }
 
+    /**
+     * @param DateTime $dateFrom
+     * @param DateTime $dateTo
+     * @return array
+     */
+    public function getEpisodesPublic(DateTime $dateFrom, DateTime $dateTo)
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('e.id, e.duration')
+            ->addSelect('e.airstamp')
+            ->addSelect('e.name, e.season, e.episode, s.name as showName')
+            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show')
+            ->innerJoin('e.show', 's')
+            ->andWhere('e.airstamp >=  :dateFrom')
+            ->andWhere('e.airstamp <= :dateTo')
+            ->setParameters([
+                'dateFrom' => $dateFrom,
+                'dateTo' => $dateTo,
+            ])
+            ->orderBy('e.airstamp', 'ASC')
+            ->addOrderBy('e.season', 'ASC')
+            ->addOrderBy('e.episode', 'ASC');
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
     public function getUserShowEpisodes(User $user, UserShow $userShow, $limit = 100)
     {
         $qb = $this->createQueryBuilder('e')

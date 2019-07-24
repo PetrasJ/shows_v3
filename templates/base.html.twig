@@ -79,6 +79,11 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ path('calendar_index') }}">
+                            <i class="fa fa-calendar" aria-hidden="true"></i> {{ 'menu.calendar'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('fos_user_registration_register') }}">{{ 'menu.register'|trans }}</a>
                     </li>
                     <li class="nav-item">

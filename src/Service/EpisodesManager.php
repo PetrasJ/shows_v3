@@ -67,6 +67,13 @@ class EpisodesManager
      */
     public function getEpisodes(DateTime $from, DateTime $to, $watching = false)
     {
+        if (!$this->user) {
+            return $this->entityManager
+                ->getRepository(Episode::class)
+                ->getEpisodesPublic($from, $to)
+                ;
+        }
+
         return $this->entityManager
             ->getRepository(Episode::class)
             ->getEpisodes($from, $to, $this->user, $watching)

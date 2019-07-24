@@ -4,11 +4,13 @@
     <div class="calendar-nav">
         <div class="input-group">
             <input class="form-control month-picker" value="{{ currentMonth }}">
+            {% if app.user.username is defined %}
             <div class="input-group-append">
                 <button class="btn btn-secondary calendar-show" data-show="true" data-class=".watched" title="{{ 'calendar.watched'|trans }}">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </button>
             </div>
+            {% endif %}
             {% if constant('App\\Entity\\UserShow::STATUS_WATCH_LATER') in  include %}
             <div class="input-group-append">
                 <button class="btn btn-secondary calendar-show" data-show="true" data-class=".watch-later" title="{{ 'calendar.show/hide watch later shows'|trans }}">

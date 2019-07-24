@@ -24,7 +24,10 @@ class CalendarController extends AbstractController
     {
         return $this
             ->render('calendar/index.html.twig',
-                ['currentMonth' => date('Y-m'), 'include' => $storage->getUser()->getCalendarShow()]
+                [
+                    'currentMonth' => date('Y-m'),
+                    'include' => $storage->getUser() ? $storage->getUser()->getCalendarShow() : []
+                ]
             );
     }
 
