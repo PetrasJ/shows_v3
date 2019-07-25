@@ -59,7 +59,7 @@ class UserEpisodeRepository extends EntityRepository
     public function getLastEpisodes(User $user, $limit)
     {
         return $this->createQueryBuilder('ue')
-            ->select('ue.created, e.season, e.episode, e.airstamp, e.name, e.duration, s.name as showName')
+            ->select('ue.id, ue.created, e.season, e.episode, e.airstamp, e.name, e.duration, s.name as showName')
             ->addSelect(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->innerJoin('ue.episode', 'e')
             ->innerJoin('e.show', 's')
@@ -68,6 +68,7 @@ class UserEpisodeRepository extends EntityRepository
             ->where('ue.user = :user')
             ->andWhere('ue.status = :statusWatched')
             ->orderBy('ue.created', 'desc')
+            ->groupBy('ue.id')
             ->setParameters(['user' => $user, 'statusWatched' => UserEpisode::STATUS_WATCHED])
             ->setMaxResults($limit)
             ->getQuery()

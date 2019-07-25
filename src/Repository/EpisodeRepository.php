@@ -129,6 +129,7 @@ class EpisodeRepository extends EntityRepository
             ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e')
             ->andWhere('e.airstamp >= ' . sprintf(self::DATE_SUB, ':dateFrom'))
             ->andWhere('e.airstamp <= ' . sprintf(self::DATE_SUB, ':dateTo'))
+            ->groupBy('e.id')
             ->setParameters([
                 'user' => $user,
                 'dateFrom' => $dateFrom,
@@ -170,6 +171,7 @@ class EpisodeRepository extends EntityRepository
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,
             ])
+            ->groupBy('e.id')
             ->orderBy('e.airstamp', 'ASC')
             ->addOrderBy('e.season', 'ASC')
             ->addOrderBy('e.episode', 'ASC');
