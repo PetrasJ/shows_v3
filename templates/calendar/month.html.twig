@@ -49,7 +49,7 @@
             <td class="day{% for episode in episodes if break == false %}{% if episode.airstamp|date('Y-m-d') == currentDay %} exists{% set break = true %}{% endif %}{% endfor %}{% if currentDay=="now"|date('Y-m-d') %} current-day border-primary{% endif %}">
                 <div class="inner">{% for episode in episodes %}{% if episode.airstamp|date('Y-m-d') == currentDay %}
                     <div class="episode">
-                        {{ episode.airstamp|date('Y-m-d h:i') }}
+                        {{ episode.airstamp|date('H:i') }}
                         <span title="{{ episode.name }}">{{ episode.showName }}</span>
                         </div>{% endif %}{% endfor %}
                 </div>
