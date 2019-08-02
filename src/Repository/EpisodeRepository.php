@@ -17,7 +17,7 @@ class EpisodeRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @param int $status
+     * @param int  $status
      *
      * @return array
      */
@@ -41,12 +41,13 @@ class EpisodeRepository extends EntityRepository
             ->groupBy('us')
             ->orderBy('s.name', 'asc')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
     /**
-     * @param User $user
-     * @param int $showId
+     * @param User   $user
+     * @param int    $showId
      * @param string $order
      * @return array
      */
@@ -73,7 +74,8 @@ class EpisodeRepository extends EntityRepository
             ->addOrderBy('e.episode', $order)
             ->setMaxResults(100)
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
     /**
@@ -103,18 +105,25 @@ class EpisodeRepository extends EntityRepository
             ->addOrderBy('e.episode', 'asc')
             ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+            ;
     }
 
     /**
-     * @param DateTime $dateFrom
-     * @param DateTime $dateTo
+     * @param DateTime  $dateFrom
+     * @param DateTime  $dateTo
      * @param User|null $user
-     * @param bool $watching
+     * @param bool      $watching
+     * @param bool      $excludeWatched
      * @return array
      */
-    public function getEpisodes(DateTime $dateFrom, DateTime $dateTo, User $user = null, $watching = false)
-    {
+    public function getEpisodes(
+        DateTime $dateFrom,
+        DateTime $dateTo,
+        User $user = null,
+        $watching = false,
+        $excludeWatched = false
+    ) {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.duration')
             ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
@@ -137,19 +146,25 @@ class EpisodeRepository extends EntityRepository
             ])
             ->orderBy('userAirstamp', 'ASC')
             ->addOrderBy('e.season', 'ASC')
-            ->addOrderBy('e.episode', 'ASC');
+            ->addOrderBy('e.episode', 'ASC')
+        ;
 
+        if ($excludeWatched) {
+            $qb->andWhere('ue.status IS NULL OR ue.status != :watched')
+                ->setParameter('watched', UserEpisode::STATUS_WATCHED);
+        }
 
         $status[] = 0;
-        if ($user->getCalendarShow() && $watching === false)
-        {
+        if ($user->getCalendarShow() && $watching === false) {
             $status = array_merge($status, $user->getCalendarShow());
         }
         $qb->andWhere('us.status IN (:status)')
-            ->setParameter('status', $status);
+            ->setParameter('status', $status)
+        ;
 
         return $qb->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
     /**
@@ -174,10 +189,12 @@ class EpisodeRepository extends EntityRepository
             ->groupBy('e.id')
             ->orderBy('e.airstamp', 'ASC')
             ->addOrderBy('e.season', 'ASC')
-            ->addOrderBy('e.episode', 'ASC');
+            ->addOrderBy('e.episode', 'ASC')
+        ;
 
         return $qb->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
     public function getUserShowEpisodes(User $user, UserShow $userShow, $limit = 100)
@@ -196,18 +213,20 @@ class EpisodeRepository extends EntityRepository
             ->setParameters([
                 'user' => $user,
                 'show' => $userShow->getShow(),
-                'userShow' => $userShow
+                'userShow' => $userShow,
             ])
             ->orderBy('e.airstamp', 'desc')
             ->addOrderBy('e.season', 'desc')
-            ->addOrderBy('e.episode', 'desc');
+            ->addOrderBy('e.episode', 'desc')
+        ;
 
         if ($limit) {
             $qb->setMaxResults($limit);
         }
 
         return $qb->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
     public function getUnwatchedEpisodeEntities(User $user, UserShow $userShow)
@@ -220,6 +239,7 @@ class EpisodeRepository extends EntityRepository
             ->andWhere('e.airstamp < :now')
             ->setParameters(['user' => $user, 'userShow' => $userShow, 'show' => $userShow->getShow(), 'now' => new DateTime()])
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 }

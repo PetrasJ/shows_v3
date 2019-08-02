@@ -4,7 +4,7 @@
     {% set upcomingEpisode = 0 %}
     {% for episode in episodes %}
         {% set upcomingEpisode = upcomingEpisode + 1 %}
-        {% include '_inc/episode-details.html.twig' with {episode: episode} %} <b>{{ episode.showName }}</b>
+        {% include '_inc/episode-details.html.twig' with {episode: episode} %} <b><a href="{{ path('shows_details', {userShowId: episode.userShowId}) }}">{{ episode.showName }}</a></b>
 
         {% if upcomingEpisode == 3 and episodes|length > 3 %}
             <button class="btn btn-secondary-m1"

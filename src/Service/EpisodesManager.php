@@ -63,9 +63,10 @@ class EpisodesManager
      * @param DateTime $from
      * @param DateTime $to
      * @param bool     $watching
+     * @param bool     $excludeWatched
      * @return array
      */
-    public function getEpisodes(DateTime $from, DateTime $to, $watching = false)
+    public function getEpisodes(DateTime $from, DateTime $to, $watching = false, $excludeWatched = false)
     {
         if (!$this->user) {
             return $this->entityManager
@@ -76,7 +77,7 @@ class EpisodesManager
 
         return $this->entityManager
             ->getRepository(Episode::class)
-            ->getEpisodes($from, $to, $this->user, $watching)
+            ->getEpisodes($from, $to, $this->user, $watching, $excludeWatched)
             ;
     }
 

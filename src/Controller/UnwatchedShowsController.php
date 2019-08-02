@@ -37,6 +37,7 @@ class UnwatchedShowsController extends AbstractController
             $episodes = $episodesManager->getEpisodes(
                 new DateTime(),
                 (new DateTime())->modify('+2 days'),
+                true,
                 true
             );
         } catch (NotFoundHttpException $e) {
