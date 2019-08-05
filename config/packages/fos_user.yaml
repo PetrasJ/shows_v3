@@ -10,4 +10,5 @@ fos_user:
       template: email/password_resetting.email.twig
   registration:
     confirmation:
+      enabled: true
       template: '@FOSUser/Registration/email.txt.twig'
