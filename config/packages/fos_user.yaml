@@ -3,5 +3,11 @@ fos_user:
   firewall_name: main
   user_class: App\Entity\User
   from_email:
-    address: "petras.jodkonis@gmail.com"
-    sender_name: "Petras"
+    address: petras.jodkonis@gmail.com
+    sender_name: 'Petras shows.botai.eu'
+  resetting:
+    email:
+      template: email/password_resetting.email.twig
+  registration:
+    confirmation:
+      template: '@FOSUser/Registration/email.txt.twig'

@@ -18,7 +18,7 @@
 
         <input type="checkbox" id="remember_me" name="_remember_me" checked/>
         <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-
+        <a href="{{ path('fos_user_resetting_request') }}">{{ 'resetting.email.subject'|trans }}</a>
         <br>
 
         <input class="btn btn-primary mt-1" type="submit" id="_submit" name="_submit"

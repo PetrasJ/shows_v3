@@ -3,12 +3,16 @@
 namespace App\Service;
 
 use App\Entity\Feedback;
+use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Swift_Mailer;
 use Swift_Message;
 
 class Mailer
 {
+    use LoggerTrait;
+
     private $entityManager;
     private $mailer;
     private $user;
@@ -29,13 +33,17 @@ class Mailer
             ->setBody('name: ' . $feedback->getName() . PHP_EOL .
                 'userId: ' . $user . PHP_EOL .
                 'email: ' . $feedback->getEmail() . PHP_EOL .
-                'message' . $feedback->getMessage()
+                'message: ' . $feedback->getMessage()
             )
         ;
 
         $this->entityManager->persist($feedback);
         $this->entityManager->flush();
 
+        try {
         $this->mailer->send($message);
+        } catch (Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
     }
 }
