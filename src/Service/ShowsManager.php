@@ -218,6 +218,41 @@ class ShowsManager
         }
     }
 
+    public function updateInDevelopment(): int
+    {
+        $inDevelopment = $this->entityManager
+            ->getRepository(Show::class)
+            ->findBy(['status' => 'In Development']);
+
+        $total = 0;
+        $count = 0;
+        foreach ($inDevelopment as $show) {
+            try {
+                $showDetails = json_decode($this->getClient()->get(
+                    sprintf('%s/%d', self::API_URL, $show->getId()))->getBody()
+                );
+
+                if ($showDetails->status !== 'In Development') {
+                    $count++;
+                    $total++;
+                    $show->setStatus($showDetails->status)->setPremiered($showDetails->premiered);
+                    $this->entityManager->persist($show);
+
+                    if ($count === 50) {
+                        $this->entityManager->flush();
+                        $count = 0;
+                    }
+                }
+            } catch (Exception $e) {
+
+            }
+        }
+
+        $this->entityManager->flush();
+
+        return $total;
+    }
+
     /**
      * @return array
      */

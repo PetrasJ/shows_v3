@@ -68,7 +68,7 @@
                                 </a>
 
                                 <a class="dropdown-item" href="{{ path('dir') }}">
-                                    <i class="fa fa-film" aria-hidden="true"></i> {{ 'menu.videos'|trans }}</a>
+                                    {{ 'menu.videos'|trans }}</a>
 
                             {% endif %}
                         </div>
@@ -76,7 +76,7 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false"> {{ 'menu.user'|trans }}
+                           aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> {{ 'menu.user'|trans }}
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('user_settings') }}">{{ 'menu.settings'|trans }}</a>
