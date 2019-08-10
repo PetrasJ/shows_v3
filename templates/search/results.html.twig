@@ -33,7 +33,7 @@
                         <button class="btn btn-sm btn-success add-show" data-id="{{ show.id }}">{{ 'add'|trans }}</button>
                     {% endif %}
                 {% endif %}
-                {% if show.summary and show.summary != 'NULL' %}<br>{{ show.summary|raw }} {% endif %}
+                {% if show.summary and show.summary != 'NULL' %}<br>{{ show.summary|striptags }} {% endif %}
             </div>
         </div>
     {% endfor %}
