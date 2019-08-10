@@ -9,22 +9,32 @@
     <b>{{ term }}</b>
 
     {% for show in shows %}
-        <div class="p-1 border-bottom">
-            <img class="float-left mr-2 search-image" alt="{{ show.name }}" src="{{ show.imageMedium }}"><b>{{ show.name }}</b> {{ ('show.'~show.status)|trans }} {% if (show.premiered) %}({{ show.premiered }}) {% endif %}
-
-            {% if is_granted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED']) %}
-                {% if userShows[show.id] is defined %}
-                    <button class="btn btn-danger add-show" data-id="{{ show.id }}">{{ 'add_rewatch'|trans }}</button>
-                    {% for userShow in userShows[show.id] %}
-                    <a href="{{ path('shows_details', {'userShowId': userShow.userShowId}) }}" title="{{ userShow.watched }}">
-                        {{ constant('App\\Entity\\UserShow::STATUS')[userShow.status]|trans  }} ({{ userShow.unwatched }})
-                    </a>
-                    {% endfor %}
-                {% else %}
-                    <button class="btn btn-success add-show" data-id="{{ show.id }}">{{ 'add'|trans }}</button>
+        <div class="p-1 border-bottom" style="position: relative">
+            <div class="d-inline-block search-image-block">
+                {% if show.imageMedium %}
+                    <img class="search-image" alt="{{ show.name }}" src="{{ show.imageMedium }}">
                 {% endif %}
-            {% endif %}
-            {% if show.summary and show.summary != 'NULL' %}<br>{{ show.summary|raw }} {% endif %}
+            </div>
+            <div class="d-inline-block search-info-block">
+                <b>{{ show.name }}</b> {{ ('show.'~show.status)|trans }} {% if (show.premiered) %}({{ show.premiered }}) {% endif %}
+
+                {% if is_granted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED']) %}
+                    {% if userShows[show.id] is defined %}
+                        <button class="btn btn-danger add-show"
+                                data-id="{{ show.id }}">{{ 'add_rewatch'|trans }}</button>
+                        {% for userShow in userShows[show.id] %}
+                            <a href="{{ path('shows_details', {'userShowId': userShow.userShowId}) }}"
+                               title="{{ userShow.watched }}">
+                                {{ constant('App\\Entity\\UserShow::STATUS')[userShow.status]|trans }}
+                                ({{ userShow.unwatched }})
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <button class="btn btn-success add-show" data-id="{{ show.id }}">{{ 'add'|trans }}</button>
+                    {% endif %}
+                {% endif %}
+                {% if show.summary and show.summary != 'NULL' %}<br>{{ show.summary|raw }} {% endif %}
+            </div>
         </div>
     {% endfor %}
 {% endblock %}

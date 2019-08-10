@@ -249,8 +249,17 @@ td.current-day .inner {
   display: inline-block;
 }
 
+.search-image-block {
+  position: absolute;
+  max-width: 100px;
+  overflow: hidden;
+}
 .search-image {
-  max-height: 120px;
+  max-width: 110px;
+}
+
+.search-info-block {
+  padding-left: 120px;
 }
 
 @import 'loader.css';
