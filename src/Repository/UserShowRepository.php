@@ -75,13 +75,11 @@ class UserShowRepository extends EntityRepository
             ->leftJoin('us.userEpisodes', 'ue')
             ->leftJoin('s.episodes', 'e')
             ->where('us.user = :user')
-            ->andWhere('ue.status = :watched')
             ->andWhere('us.show IN (:shows)')
             ->andWhere('e.airstamp < :now')
             ->setParameters([
                 'user' => $user,
                 'shows' => $shows,
-                'watched' => UserEpisode::STATUS_WATCHED,
                 'now' => new DateTime(),
             ])
             ->groupBy('us.id')
