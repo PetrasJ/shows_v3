@@ -10,7 +10,7 @@
 
     {% for show in shows %}
         <div class="p-1 border-bottom">
-            <b>{{ show.name }}</b> {{ ('show.'~show.status)|trans }} {% if (show.premiered) %}({{ show.premiered }}) {% endif %}
+            <img class="float-left mr-2 search-image" alt="{{ show.name }}" src="{{ show.imageMedium }}"><b>{{ show.name }}</b> {{ ('show.'~show.status)|trans }} {% if (show.premiered) %}({{ show.premiered }}) {% endif %}
 
             {% if is_granted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED']) %}
                 {% if userShows[show.id] is defined %}

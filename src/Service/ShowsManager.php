@@ -146,6 +146,13 @@ class ShowsManager
             ->setSummary($show->summary)
         ;
 
+        if (isset($show->image->original)) {
+            $newShow->setImage($show->image->original);
+        }
+        if (isset($show->image->medium)) {
+            $newShow->setImageMedium($show->image->medium);
+        }
+
         $this->entityManager->persist($newShow);
         $this->entityManager->flush();
 
