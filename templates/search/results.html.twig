@@ -16,11 +16,11 @@
                 {% endif %}
             </div>
             <div class="d-inline-block search-info-block">
-                <b>{{ show.name }}</b> {{ ('show.'~show.status)|trans }} {% if (show.premiered) %}({{ show.premiered }}) {% endif %}
+                <b>{{ show.name }}</b> {{ ('show.'~show.status)|trans }} {% if (show.premiered and show.premiered != 'NULL') %}({{ show.premiered }}) {% endif %}
 
                 {% if is_granted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED']) %}
                     {% if userShows[show.id] is defined %}
-                        <button class="btn btn-danger add-show"
+                        <button class="btn btn-sm btn-danger add-show"
                                 data-id="{{ show.id }}">{{ 'add_rewatch'|trans }}</button>
                         {% for userShow in userShows[show.id] %}
                             <a href="{{ path('shows_details', {'userShowId': userShow.userShowId}) }}"
@@ -30,7 +30,7 @@
                             </a>
                         {% endfor %}
                     {% else %}
-                        <button class="btn btn-success add-show" data-id="{{ show.id }}">{{ 'add'|trans }}</button>
+                        <button class="btn btn-sm btn-success add-show" data-id="{{ show.id }}">{{ 'add'|trans }}</button>
                     {% endif %}
                 {% endif %}
                 {% if show.summary and show.summary != 'NULL' %}<br>{{ show.summary|raw }} {% endif %}

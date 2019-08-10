@@ -254,6 +254,11 @@ td.current-day .inner {
   overflow: hidden;
 }
 
+.search-block:hover {
+  overflow: visible;
+  z-index: 1;
+}
+
 .search-image-block {
   position: absolute;
   max-width: 100px;
