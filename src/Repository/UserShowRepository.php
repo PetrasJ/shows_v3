@@ -76,7 +76,7 @@ class UserShowRepository extends EntityRepository
             ->leftJoin('s.episodes', 'e')
             ->where('us.user = :user')
             ->andWhere('us.show IN (:shows)')
-            ->andWhere('e.airstamp < :now')
+            ->andWhere('e.airstamp < :now OR e.airstamp IS NULL')
             ->setParameters([
                 'user' => $user,
                 'shows' => $shows,
