@@ -5,13 +5,13 @@ show:
     Previous Episode: Paskutinis epizodas
     Next Episode: Sekantis epizodas
     Actions: Veiksmai
-    offset: ofsetas
+    offset: Ofsetas
     remove show: Ištrinti serialą
     restore show (add to watching): Atstatyti (Perkelti į Žiūrimus)
     check all episodes as watched: Pažymėti visus epizodus kaip matytus
     archive show: Archyvuoti Serialą
     watch later: Atidėti Serialą
-    offset (hours to add) 0 to use default: ofsetas (poslinkis, pridėti valandų) 0 naudoti standartinį
+    offset (hours to add) 0 to use default: Ofsetas (poslinkis, pridėti valandų) 0 naudoti standartinį
     All: Visus
     Hide/Show: Slėpti/Rodyti
     Next episode: Sekantis epizodas
@@ -25,6 +25,7 @@ show:
     Running: Rodoma
     Ended: Pasibaigė
     In Development: Kuriama
+    season: Sezonas
 save: Saugoti
 source: Šaltinis
 style: Stilius

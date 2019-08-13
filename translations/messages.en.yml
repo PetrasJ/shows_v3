@@ -25,6 +25,7 @@ show:
     Running: Running
     Ended: Ended
     In Development: In Development
+    season: Season
 save: Save
 source: Source
 style: Style
