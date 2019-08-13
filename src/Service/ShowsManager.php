@@ -41,20 +41,25 @@ class ShowsManager
         $this->user = $storage->getUser();
     }
 
-    public function getClient()
+    public function getClient(): Client
     {
         return new Client();
     }
 
-    public function load()
+    public function load(bool $update = false): void
     {
         $gap = 0;
-        for ($page = 0; $page <= 1200; $page++) {
+        for ($page = 0; $page <= 2000; $page++) {
             try {
-                $this->addShows(json_decode($this->getClient()
+                $shows = json_decode($this->getClient()
                     ->get(sprintf('%s?page=%d', self::API_URL, $page))
                     ->getBody()
-                ));
+                );
+                if (!$update) {
+                    $this->addShows($shows);
+                } else {
+                    $this->updateShows($shows);
+                }
                 $gap = 0;
             } catch (Exception $e) {
                 if ($gap === 10) {
@@ -65,7 +70,7 @@ class ShowsManager
         }
     }
 
-    public function update()
+    public function update(): array
     {
         $shows = $this->entityManager->getRepository(UserShow::class)->getAllUsersShows();
         $updated = [];
@@ -86,7 +91,7 @@ class ShowsManager
         return $this->entityManager->getRepository(Show::class)->findAllByName($term, false);
     }
 
-    public function findFull(string $term)
+    public function findFull(string $term): array
     {
         $shows = $this->entityManager->getRepository(Show::class)->findAllByName($term, true);
         $userShows = $this->user
@@ -114,104 +119,6 @@ class ShowsManager
         return null;
     }
 
-    private function addShows($shows)
-    {
-        foreach ($shows as $show) {
-            $this->addShow($show);
-        }
-    }
-
-    private function addShow($show): ?Show
-    {
-        if (!$show->id) {
-            return null;
-        }
-
-        $showEntity = $this->entityManager->find(Show::class, $show->id);
-        if ($showEntity) {
-            return $showEntity;
-        }
-
-        $newShow = new Show();
-        $newShow
-            ->setId($show->id)
-            ->setName($show->name)
-            ->setUrl($show->url)
-            ->setOfficialSite($show->officialSite)
-            ->setRating($show->rating->average)
-            ->setWeight($show->weight)
-            ->setStatus($show->status)
-            ->setPremiered($show->premiered)
-            ->setGenres(json_encode($show->genres))
-            ->setSummary($show->summary)
-        ;
-
-        if (isset($show->image->original)) {
-            $newShow->setImage($show->image->original);
-        }
-        if (isset($show->image->medium)) {
-            $newShow->setImageMedium($show->image->medium);
-        }
-
-        $this->entityManager->persist($newShow);
-        $this->entityManager->flush();
-
-        return $newShow;
-    }
-
-    public function updateShow($showId): ?string
-    {
-        try {
-            $show = json_decode($this->getClient()->get(
-                sprintf('%s/%d', self::API_URL, $showId))->getBody()
-            );
-        } catch (Exception $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage());
-
-            return null;
-        }
-
-        $showEntity = $this->addShow($show);
-
-        if ($show->updated === $showEntity->getUpdated()) {
-            return null;
-        }
-
-        if (isset($show->image->original)) {
-            $showEntity->setImage($show->image->original);
-        }
-        if (isset($show->image->medium)) {
-            $showEntity->setImageMedium($show->image->medium);
-        }
-
-        if (isset($show->image->original) && isset($show->image->medium)) {
-            $this->imageService->saveShowImage($show->image->original, $show->image->medium, $show->id);
-        }
-
-        $showEntity
-            ->setName($show->name)
-            ->setUrl($show->url)
-            ->setOfficialSite($show->officialSite)
-            ->setRating($show->rating->average)
-            ->setWeight($show->weight)
-            ->setStatus($show->status)
-            ->setPremiered($show->premiered)
-            ->setGenres(json_encode($show->genres))
-            ->setSummary($show->summary)
-        ;
-
-
-        $this->entityManager->persist($showEntity);
-        $this->entityManager->flush();
-
-        $this->episodesManager->addEpisodes($showEntity);
-
-        $this->entityManager->persist($showEntity->setUpdated($show->updated));
-        $this->entityManager->flush();
-
-        return $show->name;
-    }
-
     public function getNextEpisode($showId)
     {
         try {
@@ -225,6 +132,9 @@ class ShowsManager
         }
     }
 
+    /**
+     * @deprecated
+     */
     public function updateInDevelopment(): int
     {
         $inDevelopment = $this->entityManager
@@ -260,10 +170,112 @@ class ShowsManager
         return $total;
     }
 
+    public function updateShow($showId): ?string
+    {
+        try {
+            $show = json_decode($this->getClient()->get(
+                sprintf('%s/%d', self::API_URL, $showId))->getBody()
+            );
+        } catch (Exception $e) {
+            $this->logger->log(LogLevel::ERROR, $e->getMessage());
+
+            return null;
+        }
+
+        $showEntity = $this->addShow($show);
+
+        if ($show->updated === $showEntity->getUpdated()) {
+            return null;
+        }
+
+        if (isset($show->image->original) && isset($show->image->medium)) {
+            $this->imageService->saveShowImage($show->image->original, $show->image->medium, $show->id);
+        }
+
+        $this->setShow($showEntity, $show);
+
+        $this->entityManager->persist($showEntity);
+        $this->entityManager->flush();
+
+        $this->episodesManager->addEpisodes($showEntity);
+
+        $this->entityManager->persist($showEntity->setUpdated($show->updated));
+        $this->entityManager->flush();
+
+        return $show->name;
+    }
+
+    private function addShows($shows): void
+    {
+        foreach ($shows as $show) {
+            $this->addShow($show);
+        }
+    }
+
+    private function updateShows($shows): void
+    {
+        $count = 0;
+        foreach ($shows as $show) {
+            $showEntity = $this->addShow($show);
+            $this->setShow($showEntity, $show);
+            $this->entityManager->persist($showEntity);
+            $count++;
+
+            if ($count === 50) {
+                $this->entityManager->flush();
+            }
+        }
+
+        $this->entityManager->flush();
+    }
+
+    private function addShow($show): ?Show
+    {
+        if (!$show->id) {
+            return null;
+        }
+
+        $showEntity = $this->entityManager->find(Show::class, $show->id);
+        if ($showEntity) {
+            return $showEntity;
+        }
+
+        $showEntity = new Show();
+        $this->setShow($showEntity, $show);
+
+        $this->entityManager->persist($showEntity);
+        $this->entityManager->flush();
+
+        return $showEntity;
+    }
+
+    private function setShow(Show $showEntity, $show): void
+    {
+        if (isset($show->image->original)) {
+            $showEntity->setImage($show->image->original);
+        }
+        if (isset($show->image->medium)) {
+            $showEntity->setImageMedium($show->image->medium);
+        }
+
+        $showEntity
+            ->setId($show->id)
+            ->setName($show->name)
+            ->setUrl($show->url)
+            ->setOfficialSite($show->officialSite)
+            ->setRating($show->rating->average)
+            ->setWeight($show->weight)
+            ->setStatus($show->status)
+            ->setPremiered($show->premiered)
+            ->setGenres(json_encode($show->genres))
+            ->setSummary($show->summary)
+        ;
+    }
+
     /**
      * @return array
      */
-    private function checkForNewShows()
+    private function checkForNewShows(): array
     {
         $lastShow = $this->entityManager->getRepository(Show::class)->findOneBy([], ['id' => 'desc']);
         $nextShowId = $lastShow ? $lastShow->getId() : 0;
