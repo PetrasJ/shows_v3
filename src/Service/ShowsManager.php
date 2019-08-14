@@ -12,7 +12,6 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Exception;
 use GuzzleHttp\Client;
-use Psr\Log\LogLevel;
 
 class ShowsManager
 {

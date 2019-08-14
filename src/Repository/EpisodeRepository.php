@@ -72,7 +72,7 @@ class EpisodeRepository extends EntityRepository
             ->orderBy('e.airstamp', $order)
             ->addOrderBy('e.season', $order)
             ->addOrderBy('e.episode', $order)
-            ->setMaxResults(100)
+            ->setMaxResults(UserEpisode::MAX_RESULT)
             ->getQuery()
             ->getResult()
             ;
@@ -197,7 +197,7 @@ class EpisodeRepository extends EntityRepository
             ;
     }
 
-    public function getUserShowEpisodes(User $user, UserShow $userShow, $limit = 100)
+    public function getUserShowEpisodes(User $user, UserShow $userShow, $limit = UserEpisode::MAX_RESULT)
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary, e.duration')

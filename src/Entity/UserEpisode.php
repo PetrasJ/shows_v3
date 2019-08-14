@@ -179,7 +179,7 @@ class UserEpisode
     }
 
     /**
-     * @param \DateTime $created
+     * @param DateTime $created
      *
      * @return UserEpisode
      */
@@ -191,7 +191,7 @@ class UserEpisode
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreated()
     {
