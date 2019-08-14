@@ -9,3 +9,5 @@ Difference with other calendars:
 * comment on episode
 * offset to shows independently
 * add show multiple times
+
+Shows & Episodes source: http://www.tvmaze.com/
