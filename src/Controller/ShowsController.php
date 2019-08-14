@@ -230,9 +230,9 @@ class ShowsController extends AbstractController
      */
     public function updateShows()
     {
-        $start = (new DateTime())->format('Y-m-d h:i:s');
+        $start = (new DateTime())->format('Y-m-d H:i:s');
         $result = $this->showsManager->update();
-        $finish = (new DateTime())->format('Y-m-d h:i:s');
+        $finish = (new DateTime())->format('Y-m-d H:i:s');
 
         return $this->render('shows/update.html.twig',
             [
