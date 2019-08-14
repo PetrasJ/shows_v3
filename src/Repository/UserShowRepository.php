@@ -77,10 +77,12 @@ class UserShowRepository extends EntityRepository
             ->where('us.user = :user')
             ->andWhere('us.show IN (:shows)')
             ->andWhere('e.airstamp < :now OR e.airstamp IS NULL')
+            ->andWhere('ue.status = :watched OR ue.status IS NULL')
             ->setParameters([
                 'user' => $user,
                 'shows' => $shows,
                 'now' => new DateTime(),
+                'watched' => UserEpisode::STATUS_WATCHED
             ])
             ->groupBy('us.id')
             ->getQuery()
