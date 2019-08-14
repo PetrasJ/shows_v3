@@ -41,7 +41,7 @@ class UnwatchedShowsController extends AbstractController
                 true
             );
         } catch (NotFoundHttpException $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new Response([], 500);
         }
@@ -63,7 +63,7 @@ class UnwatchedShowsController extends AbstractController
             $show = $showsManager->getShow($userShowId);
             $nextEpisode = $showsManager->getNextEpisode($show['id']);
         } catch (NotFoundHttpException $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new Response([], 500);
         }
@@ -86,7 +86,7 @@ class UnwatchedShowsController extends AbstractController
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['comment' => $request->get('comment')]);
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new JsonResponse(['success' => false], 500);
         }
@@ -105,7 +105,8 @@ class UnwatchedShowsController extends AbstractController
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['watch' => true]);
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+
             return new JsonResponse(['success' => false], 500);
         }
 

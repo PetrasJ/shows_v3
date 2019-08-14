@@ -107,7 +107,7 @@ class UserType extends AbstractType
                 $timezones[$timezone . ' (' . $time->format('H:i') . ')'] = $timezone;
             }
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
         }
 
         return $timezones;

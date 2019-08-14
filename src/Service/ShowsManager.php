@@ -73,6 +73,7 @@ class ShowsManager
     public function update(): array
     {
         $shows = $this->entityManager->getRepository(UserShow::class)->getAllUsersShows();
+
         $updated = [];
         foreach ($shows as $showId) {
             $show = $this->updateShow($showId);
@@ -111,9 +112,9 @@ class ShowsManager
                 ->getUserShow($this->user, $showId)
                 ;
         } catch (NonUniqueResultException $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
         } catch (NoResultException $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
         }
 
         return null;
@@ -127,47 +128,10 @@ class ShowsManager
                 ->getNextEpisode($this->user, $showId)
                 ;
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+
             return null;
         }
-    }
-
-    /**
-     * @deprecated
-     */
-    public function updateInDevelopment(): int
-    {
-        $inDevelopment = $this->entityManager
-            ->getRepository(Show::class)
-            ->findBy(['status' => 'In Development']);
-
-        $total = 0;
-        $count = 0;
-        foreach ($inDevelopment as $show) {
-            try {
-                $showDetails = json_decode($this->getClient()->get(
-                    sprintf('%s/%d', self::API_URL, $show->getId()))->getBody()
-                );
-
-                if ($showDetails->status !== 'In Development') {
-                    $count++;
-                    $total++;
-                    $show->setStatus($showDetails->status)->setPremiered($showDetails->premiered);
-                    $this->entityManager->persist($show);
-
-                    if ($count === 50) {
-                        $this->entityManager->flush();
-                        $count = 0;
-                    }
-                }
-            } catch (Exception $e) {
-
-            }
-        }
-
-        $this->entityManager->flush();
-
-        return $total;
     }
 
     public function updateShow($showId): ?string
@@ -177,7 +141,7 @@ class ShowsManager
                 sprintf('%s/%d', self::API_URL, $showId))->getBody()
             );
         } catch (Exception $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage());
+            $this->info($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return null;
         }

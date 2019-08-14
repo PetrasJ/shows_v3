@@ -35,13 +35,13 @@ class ImageService
             $newFilename = $dir . $showID . "." . pathinfo($imageUrl, PATHINFO_EXTENSION);
             copy($imageUrl, $newFilename);
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
         }
         try {
             $newFilename = $dir . '/medium/' . $showID . "." . pathinfo($imageMediumUrl, PATHINFO_EXTENSION);
             copy($imageMediumUrl, $newFilename);
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
         }
     }
 }

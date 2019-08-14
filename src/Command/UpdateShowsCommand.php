@@ -37,7 +37,7 @@ class UpdateShowsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln([(new DateTime())->format('Y-m-d h:i:s') . ' Started']);
+        $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update shows Started']);
 
         $result = $this->showsManager->update();
         if (count($result['updated']) > 0) {
@@ -52,6 +52,6 @@ class UpdateShowsCommand extends Command
             $output->writeln(implode($result['newShows'], ', '));
         }
 
-        $output->writeln([(new DateTime())->format('Y-m-d h:i:s') . ' Finished']);
+        $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update shows Finished']);
     }
 }

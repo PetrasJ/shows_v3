@@ -16,7 +16,7 @@ class PdoListener
         $args->getConnection()
             ->exec("SET time_zone = '+00:00'");
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
         }
     }
 }

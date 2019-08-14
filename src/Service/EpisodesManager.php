@@ -115,6 +115,7 @@ class EpisodesManager
         try {
             $this->entityManager->getConnection()->exec('SET FOREIGN_KEY_CHECKS = 0;');
         } catch (DBALException $e) {
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
         }
         $this->entityManager->flush();
     }

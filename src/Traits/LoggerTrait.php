@@ -22,4 +22,9 @@ trait LoggerTrait
     {
         $this->logger->error($message, $context);
     }
+
+    public function info(string $message, $context = [])
+    {
+        $this->logger->info($message, $context);
+    }
 }

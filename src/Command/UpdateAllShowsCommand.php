@@ -37,8 +37,8 @@ class UpdateAllShowsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln([(new DateTime())->format('Y-m-d h:i:s') . ' Started']);
+        $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update all shows Started']);
         $this->showsManager->load(true);
-        $output->writeln([(new DateTime())->format('Y-m-d h:i:s') . ' Finished']);
+        $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update all shows Finished']);
     }
 }

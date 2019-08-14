@@ -88,7 +88,7 @@ class ShowsController extends AbstractController
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['unwatch' => true]);
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new JsonResponse(['success' => false], 500);
         }
@@ -106,7 +106,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->updateShow($request->get('userShowId'), ['offset' => $request->get('value')]);
         } catch (NotFoundHttpException $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new JsonResponse(['success' => false], 500);
         }
@@ -124,7 +124,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->add($showId);
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new JsonResponse(['success' => false], 500);
         }
@@ -142,7 +142,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->update($userShowId, 'add');
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new JsonResponse(['success' => false], 500);
         }
@@ -160,7 +160,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->update($userShowId, 'archive');
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new JsonResponse(['success' => false], 500);
         }
@@ -178,7 +178,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->update($userShowId, 'watch-later');
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new JsonResponse(['success' => false], 500);
         }
@@ -196,7 +196,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->remove($userShowId);
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new JsonResponse(['success' => false], 500);
         }
@@ -214,7 +214,7 @@ class ShowsController extends AbstractController
         try {
             $this->userShowService->watchAll($userShowId);
         } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getTrace());
+            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
 
             return new JsonResponse(['success' => false], 500);
         }
