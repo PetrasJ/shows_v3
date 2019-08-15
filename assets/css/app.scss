@@ -274,7 +274,7 @@ td.current-day .inner {
 .image-list {
   left: 10px;
   max-height: 42px;
-  max-width: 32px;
+  max-width: 30px;
   position: absolute;
 }
 
@@ -288,6 +288,7 @@ td.current-day .inner {
     display: block;
     margin: auto;
     max-height: 100px;
+    max-width: 72px;
     position: unset;
   }
 }
