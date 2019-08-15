@@ -29,6 +29,9 @@
             <div class="col-12 col-md-3">
                 <a title={{ show.watchedCount }}
                    href="{{ path('shows_details', {'userShowId': show.userShowId}) }}">
+                    {% if show.image %}
+                        <img src="/img/shows/medium/{{ show.id }}.jpg" class="image-list" alt="{{ show.name }}">
+                    {% endif %}
                     {{ show.name }} (<span class="unwatched">{{ show.episodesCount-show.watchedCount }}</span>)
                 </a>
             </div>

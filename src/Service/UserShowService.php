@@ -108,6 +108,7 @@ class UserShowService
                 'id' => $show['id'],
                 'status' => $show['status'],
                 'name' => $show['name'],
+                'image' => $show['imageMedium'],
                 'episodesCount' => $count,
                 'watchedCount' => $show['watched'],
                 'lastEpisode' => $lastEpisode,
