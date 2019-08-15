@@ -32,7 +32,9 @@
                     {% if show.image %}
                         <img src="/img/shows/medium/{{ show.id }}.jpg" class="image-list" alt="{{ show.name }}">
                     {% endif %}
-                    {{ show.name }} (<span class="unwatched">{{ show.episodesCount-show.watchedCount }}</span>)
+                    <div class="show-title">
+                        {{ show.name }} (<span class="unwatched">{{ show.episodesCount-show.watchedCount }}</span>)
+                    </div>
                 </a>
             </div>
             <div class="col-12 col-md-3">

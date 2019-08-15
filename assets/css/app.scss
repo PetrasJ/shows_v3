@@ -272,7 +272,15 @@ td.current-day .inner {
 }
 
 .image-list {
-  max-height: 50px;
+  left: 10px;
+  max-height: 42px;
+  max-width: 32px;
+  position: absolute;
+}
+
+.show-title {
+  display: inline-block;
+  padding-left: 35px;
 }
 
 @media screen and (max-width: 767px) {
@@ -280,6 +288,7 @@ td.current-day .inner {
     display: block;
     margin: auto;
     max-height: 100px;
+    position: unset;
   }
 }
 

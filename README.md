@@ -11,3 +11,11 @@ Difference with other calendars:
 * add show multiple times
 
 Shows & Episodes source: http://www.tvmaze.com/
+
+Deployment:
+
+composer install
+
+npm install
+
+npm run-script build
