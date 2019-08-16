@@ -111,9 +111,9 @@ class ShowsManager
                 ->getUserShow($this->user, $showId)
                 ;
         } catch (NonUniqueResultException $e) {
-            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+            $this->error($e->getMessage(), [__METHOD__]);
         } catch (NoResultException $e) {
-            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+            $this->error($e->getMessage(), [__METHOD__]);
         }
 
         return null;
@@ -127,7 +127,7 @@ class ShowsManager
                 ->getNextEpisode($this->user, $showId)
                 ;
         } catch (Exception $e) {
-            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+            $this->error($e->getMessage(), [__METHOD__]);
 
             return null;
         }
@@ -140,7 +140,7 @@ class ShowsManager
                 sprintf('%s/%d', self::API_URL, $showId))->getBody()
             );
         } catch (Exception $e) {
-            $this->info($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+            $this->info($e->getMessage(), [__METHOD__]);
 
             return null;
         }

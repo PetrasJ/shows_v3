@@ -39,7 +39,7 @@ class DateExtension extends AbstractExtension
             try {
                 $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
             } catch (Exception $e) {
-                $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+                $this->error($e->getMessage(), [__METHOD__]);
 
                 return '';
             }

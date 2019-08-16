@@ -84,7 +84,7 @@ class UserEpisodeService
         try {
             return $this->entityManager->getRepository(UserEpisode::class)->getWatchedDuration($this->user);
         } catch (NonUniqueResultException $e) {
-            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+            $this->error($e->getMessage(), [__METHOD__]);
 
             return null;
         }

@@ -143,7 +143,7 @@ class UserShowService
             ;
 
         } catch (Exception $e) {
-            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+            $this->error($e->getMessage(), [__METHOD__]);
 
             return null;
         }
@@ -156,7 +156,7 @@ class UserShowService
         try {
             return $this->entityManager->getRepository(UserShow::class)->getUserShow($this->user, $userShowId);
         } catch (Exception $e) {
-            $this->error($e->getMessage(), [__METHOD__ . ':' . __LINE__]);
+            $this->error($e->getMessage(), [__METHOD__]);
 
             return null;
         }

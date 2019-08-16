@@ -14,8 +14,11 @@ Shows & Episodes source: http://www.tvmaze.com/
 
 Deployment:
 
-composer install
+* composer install
+* npm run-script build
 
-npm install
+Commands:
 
-npm run-script build
+* php bin/console import-shows
+* php bin/console update-shows
+* php bin/console update-all-shows
