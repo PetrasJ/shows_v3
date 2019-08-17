@@ -41,7 +41,7 @@ class Mailer
         $this->entityManager->flush();
 
         try {
-        $this->mailer->send($message);
+            $this->mailer->send($message);
         } catch (Exception $e) {
             $this->logger->error($e->getMessage());
         }

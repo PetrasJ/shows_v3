@@ -110,7 +110,9 @@ class StreamController extends AbstractController
      */
     public function stop()
     {
-        if (!empty($this->stream)) fclose($this->stream);
+        if (!empty($this->stream)) {
+            fclose($this->stream);
+        }
         ob_get_clean();
         $response = new Response("clean");
         $response->headers->set('Content-Type', 'application/json');

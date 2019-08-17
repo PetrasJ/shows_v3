@@ -13,8 +13,7 @@ class PdoListener
     public function postConnect(ConnectionEventArgs $args)
     {
         try {
-        $args->getConnection()
-            ->exec("SET time_zone = '+00:00'");
+            $args->getConnection()->exec("SET time_zone = '+00:00'");
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
         }

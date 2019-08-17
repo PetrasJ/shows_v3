@@ -32,8 +32,7 @@ class ShowsManager
         ImageService $imageService,
         EpisodesManager $episodesManager,
         Storage $storage
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->imageService = $imageService;
         $this->episodesManager = $episodesManager;

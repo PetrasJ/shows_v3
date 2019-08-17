@@ -62,8 +62,8 @@ class EpisodesManager
     /**
      * @param DateTime $from
      * @param DateTime $to
-     * @param bool     $watching
-     * @param bool     $excludeWatched
+     * @param bool $watching
+     * @param bool $excludeWatched
      * @return array
      */
     public function getEpisodes(DateTime $from, DateTime $to, $watching = false, $excludeWatched = false)

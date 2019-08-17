@@ -21,8 +21,12 @@ class UserShowService
     private $episodesManager;
     private $showsManager;
 
-    public function __construct(EntityManagerInterface $entityManager, Storage $storage, EpisodesManager $episodesManager, ShowsManager $showsManager)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        Storage $storage,
+        EpisodesManager $episodesManager,
+        ShowsManager $showsManager
+    ) {
         $this->entityManager = $entityManager;
         $this->user = $storage->getUser();
         $this->episodesManager = $episodesManager;
@@ -68,10 +72,12 @@ class UserShowService
     {
         $shows = $this->entityManager
             ->getRepository(UserShow::class)
-            ->getShows($this->user, $status);
+            ->getShows($this->user, $status)
+        ;
         $episodes = $this->entityManager
             ->getRepository(UserShow::class)
-            ->getEpisodes($this->user, $status);
+            ->getEpisodes($this->user, $status)
+        ;
 
         return $this->formatShows($shows, $episodes);
     }
@@ -84,25 +90,24 @@ class UserShowService
         }
 
         $formatted = [];
-        foreach ($shows as $show)
-        {
+        foreach ($shows as $show) {
             $count = 0;
             $lastEpisode = null;
             $nextEpisode = null;
             if (isset($showEpisodes[$show['userShowId']])) {
                 $now = (new DateTime())->modify(sprintf('-%d hours', $show['offset']));
                 foreach ($showEpisodes[$show['userShowId']] as $episode) {
-                        if ($episode['airstamp'] < $now) {
-                            $count++;
-                            $lastEpisode = $episode;
+                    if ($episode['airstamp'] < $now) {
+                        $count++;
+                        $lastEpisode = $episode;
 
-                        } else {
-                            $nextEpisode = $episode;
+                    } else {
+                        $nextEpisode = $episode;
 
-                            break;
-                        }
+                        break;
                     }
                 }
+            }
 
             $formatted[] = [
                 'id' => $show['id'],

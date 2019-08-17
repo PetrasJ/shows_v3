@@ -46,8 +46,7 @@ class UpdateShowsCommand extends Command
         }
 
 
-        if (count($result['newShows']) > 0)
-        {
+        if (count($result['newShows']) > 0) {
             $output->writeln(['New Shows: ' . count($result['newShows'])]);
             $output->writeln(implode($result['newShows'], ', '));
         }

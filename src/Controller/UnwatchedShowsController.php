@@ -50,14 +50,17 @@ class UnwatchedShowsController extends AbstractController
     }
 
     /**
-     * @param int                $userShowId
+     * @param int $userShowId
      * @param UserEpisodeService $userEpisodeService
-     * @param ShowsManager       $showsManager
+     * @param ShowsManager $showsManager
      * @Route("/episodes/{userShowId}", name="episodes")
      * @return Response
      */
-    public function unwatchedEpisodes(int $userShowId, UserEpisodeService $userEpisodeService, ShowsManager $showsManager)
-    {
+    public function unwatchedEpisodes(
+        int $userShowId,
+        UserEpisodeService $userEpisodeService,
+        ShowsManager $showsManager
+    ) {
         try {
             $episodes = $userEpisodeService->getUnwatchedEpisodes($userShowId);
             $show = $showsManager->getShow($userShowId);
@@ -76,7 +79,7 @@ class UnwatchedShowsController extends AbstractController
     }
 
     /**
-     * @param Request            $request
+     * @param Request $request
      * @param UserEpisodeService $userEpisodeService
      * @Route("/comment", name="comment")
      * @return JsonResponse
@@ -84,7 +87,8 @@ class UnwatchedShowsController extends AbstractController
     public function comment(Request $request, UserEpisodeService $userEpisodeService)
     {
         try {
-            $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['comment' => $request->get('comment')]);
+            $userEpisodeService->update($request->get('id'), $request->get('userShowId'),
+                ['comment' => $request->get('comment')]);
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
@@ -95,7 +99,7 @@ class UnwatchedShowsController extends AbstractController
     }
 
     /**
-     * @param Request            $request
+     * @param Request $request
      * @param UserEpisodeService $userEpisodeService
      * @Route("/watch", name="watch")
      * @return JsonResponse

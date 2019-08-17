@@ -20,9 +20,9 @@ class UserShow
     const STATUS_ARCHIVED = 2;
 
     const STATUS = [
-      0 => 'watching',
-      1 => 'watch later',
-      2 => 'archived',
+        0 => 'watching',
+        1 => 'watch later',
+        2 => 'archived',
     ];
 
     /**
@@ -51,7 +51,7 @@ class UserShow
      * @ORM\OneToMany(targetEntity="UserEpisode", mappedBy="userShow")
      */
     private $userEpisodes;
-        
+
     /**
      * @var int
      * @ORM\Column(type="integer", nullable=true)

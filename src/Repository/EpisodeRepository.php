@@ -17,7 +17,7 @@ class EpisodeRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @param int  $status
+     * @param int $status
      *
      * @return array
      */
@@ -46,8 +46,8 @@ class EpisodeRepository extends EntityRepository
     }
 
     /**
-     * @param User   $user
-     * @param int    $showId
+     * @param User $user
+     * @param int $showId
      * @param string $order
      * @return array
      */
@@ -80,7 +80,7 @@ class EpisodeRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @param int  $showId
+     * @param int $showId
      * @return array
      * @throws NonUniqueResultException
      */
@@ -110,11 +110,11 @@ class EpisodeRepository extends EntityRepository
     }
 
     /**
-     * @param DateTime  $dateFrom
-     * @param DateTime  $dateTo
+     * @param DateTime $dateFrom
+     * @param DateTime $dateTo
      * @param User|null $user
-     * @param bool      $watching
-     * @param bool      $excludeWatched
+     * @param bool $watching
+     * @param bool $excludeWatched
      * @return array
      */
     public function getEpisodes(
@@ -151,7 +151,8 @@ class EpisodeRepository extends EntityRepository
 
         if ($excludeWatched) {
             $qb->andWhere('ue.status IS NULL OR ue.status != :watched')
-                ->setParameter('watched', UserEpisode::STATUS_WATCHED);
+                ->setParameter('watched', UserEpisode::STATUS_WATCHED)
+            ;
         }
 
         $status[] = 0;
@@ -206,7 +207,8 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
             ->innerJoin('us.user', 'u')
             ->innerJoin('e.show', 's')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND ue.userShow = :userShow')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH,
+                'ue.user = :user AND ue.episode = e AND ue.userShow = :userShow')
             ->where('u = :user')
             ->andWhere('e.show = :show')
             ->andWhere('us = :userShow')
@@ -233,11 +235,17 @@ class EpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND ue.userShow = :userShow')
+            ->leftJoin(UserEpisode::class, 'ue', Join::WITH,
+                'ue.user = :user AND ue.episode = e AND ue.userShow = :userShow')
             ->where('e.show = :show')
             ->andWhere('ue.id IS NULL')
             ->andWhere('e.airstamp < :now')
-            ->setParameters(['user' => $user, 'userShow' => $userShow, 'show' => $userShow->getShow(), 'now' => new DateTime()])
+            ->setParameters([
+                'user' => $user,
+                'userShow' => $userShow,
+                'show' => $userShow->getShow(),
+                'now' => new DateTime()
+            ])
             ->getQuery()
             ->getResult()
             ;

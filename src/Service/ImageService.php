@@ -22,7 +22,7 @@ class ImageService
 
     public function saveShowImage($imageUrl, $imageMediumUrl, $showID): void
     {
-        $dir =$this->projectDir . '/public/img/shows/';
+        $dir = $this->projectDir . '/public/img/shows/';
         if (!is_dir($dir)) {
             mkdir($dir);
         }

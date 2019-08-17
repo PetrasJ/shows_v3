@@ -300,6 +300,7 @@ class Episode
     public function setUserAirstamp(DateTime $userAirstamp): Episode
     {
         $this->userAirstamp = $userAirstamp;
+
         return $this;
     }
 
@@ -318,6 +319,7 @@ class Episode
     public function setUserStatus(int $userStatus): Episode
     {
         $this->userStatus = $userStatus;
+
         return $this;
     }
 
@@ -336,6 +338,7 @@ class Episode
     public function setUserComment(string $userComment): Episode
     {
         $this->userComment = $userComment;
+
         return $this;
     }
 }

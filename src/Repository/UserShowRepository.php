@@ -50,7 +50,8 @@ class UserShowRepository extends EntityRepository
             ->orderBy('s.status', 'desc')
             ->addOrderBy('s.name', 'asc')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
     public function getEpisodes(User $user, $status)
@@ -69,7 +70,8 @@ class UserShowRepository extends EntityRepository
             ->addOrderBy('e.season', 'asc')
             ->addOrderBy('e.episode', 'asc')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
     public function getUserShows(User $user, array $shows)
@@ -92,11 +94,11 @@ class UserShowRepository extends EntityRepository
             ])
             ->groupBy('us.id')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
 
         $result = [];
-        foreach ($userShows as $userShow)
-        {
+        foreach ($userShows as $userShow) {
             $result[$userShow['id']][] = [
                 'userShowId' => $userShow['userShowId'],
                 'status' => $userShow['status'],
@@ -131,6 +133,7 @@ class UserShowRepository extends EntityRepository
             ->setParameters(['user' => $user, 'showId' => $showId, 'now' => date('Y-m-d H:i')])
             ->groupBy('s')
             ->getQuery()
-            ->getSingleResult();
+            ->getSingleResult()
+            ;
     }
 }

@@ -35,7 +35,8 @@ class UserEpisodeRepository extends EntityRepository
             ->andWhere(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp') . ' > :now')
             ->setParameters(['userShow' => $userShow, 'now' => new DateTime()])
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
     /**

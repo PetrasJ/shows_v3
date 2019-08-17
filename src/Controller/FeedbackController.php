@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FeedbackController extends AbstractController
 {
     /**
-     * @param Request     $request
+     * @param Request $request
      * @param Mailer $mailer
      * @Route("/feedback", name="feedback")
      * @return Response
@@ -27,6 +27,7 @@ class FeedbackController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $mailer->sendFeedback($feedback);
+
             return $this->render('feedback/sent.html.twig');
         }
 

@@ -32,7 +32,7 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * @param string          $month
+     * @param string $month
      * @param EpisodesManager $episodesManager
      * @Route("/month/{month}", name="calendar")
      * @return Response
@@ -41,8 +41,14 @@ class CalendarController extends AbstractController
     public function month($month, EpisodesManager $episodesManager)
     {
         $date = explode('-', $month);
-        $from = (new DateTime)->setDate($date[0], $date[1], 15)->modify('first day of this month 00:00:00');
-        $to = (new DateTime)->setDate($date[0], $date[1], 15)->modify('last day of this month 23:59:59');
+        $from = (new DateTime)
+            ->setDate($date[0], $date[1], 15)
+            ->modify('first day of this month 00:00:00')
+        ;
+        $to = (new DateTime)
+            ->setDate($date[0], $date[1], 15)
+            ->modify('last day of this month 23:59:59')
+        ;
         $episodes = $episodesManager->getEpisodes($from, $to);
 
         return $this->render('calendar/month.html.twig', [

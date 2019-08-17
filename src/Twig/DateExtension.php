@@ -35,7 +35,7 @@ class DateExtension extends AbstractExtension
 
     public function dateTimezone($date)
     {
-        if (!$date instanceof DateTime){
+        if (!$date instanceof DateTime) {
             try {
                 $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
             } catch (Exception $e) {
@@ -44,6 +44,7 @@ class DateExtension extends AbstractExtension
                 return '';
             }
         }
+
         return $date instanceof DateTime
             ? $date->setTimeZone($this->timezone)->format('Y-m-d H:i')
             : '';

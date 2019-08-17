@@ -155,6 +155,7 @@ class UserEpisode
     public function setEpisode(Episode $episode): UserEpisode
     {
         $this->episode = $episode;
+
         return $this;
     }
 

@@ -17,15 +17,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @param Storage     $storage
-     * @param Request     $request
+     * @param Storage $storage
+     * @param Request $request
      * @param UserManager $userManager
      * @param UserEpisodeService $userEpisodeService
      * @Route("/settings", name="settings")
      * @return Response
      */
-    public function settings(Storage $storage, Request $request, UserManager $userManager, UserEpisodeService  $userEpisodeService)
-    {
+    public function settings(
+        Storage $storage,
+        Request $request,
+        UserManager $userManager,
+        UserEpisodeService $userEpisodeService
+    ) {
         $user = $storage->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -33,6 +37,7 @@ class UserController extends AbstractController
             $userManager->save($user);
             if ($user->getLocale()) {
                 $request->setLocale($user->getLocale());
+
                 return $this->redirect($this->generateUrl('user_settings', ['_locale' => $user->getLocale()]));
             }
         }

@@ -78,7 +78,7 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param Request            $request
+     * @param Request $request
      * @param UserEpisodeService $userEpisodeService
      * @Route("/unwatch", name="watch")
      * @return JsonResponse
@@ -86,7 +86,8 @@ class ShowsController extends AbstractController
     public function unwatch(Request $request, UserEpisodeService $userEpisodeService)
     {
         try {
-            $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['unwatch' => true]);
+            $userEpisodeService
+                ->update($request->get('id'), $request->get('userShowId'), ['unwatch' => true]);
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
@@ -104,7 +105,8 @@ class ShowsController extends AbstractController
     public function update(Request $request)
     {
         try {
-            $this->userShowService->updateShow($request->get('userShowId'), ['offset' => $request->get('value')]);
+            $this->userShowService
+                ->updateShow($request->get('userShowId'), ['offset' => $request->get('value')]);
         } catch (NotFoundHttpException $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
@@ -242,6 +244,7 @@ class ShowsController extends AbstractController
                 'added' => $result['newShows'],
                 'addedList' => implode($result['newShows'], ', '),
                 'finish' => $finish,
-            ]);
+            ]
+        );
     }
 }

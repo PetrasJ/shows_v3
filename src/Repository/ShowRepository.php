@@ -9,7 +9,7 @@ class ShowRepository extends EntityRepository
 {
     /**
      * @param string $name
-     * @param bool   $full
+     * @param bool $full
      * @return array
      */
     public function findAllByName($name, $full = false)

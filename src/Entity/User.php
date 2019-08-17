@@ -71,6 +71,7 @@ class User extends BaseUser
     public function setCalendarShow(array $calendarShow): User
     {
         $this->calendarShow = $calendarShow;
+
         return $this;
     }
 

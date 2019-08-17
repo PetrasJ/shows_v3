@@ -32,7 +32,7 @@ class SearchController extends AbstractController
     }
 
     /**
-     * @param string       $term
+     * @param string $term
      * @param ShowsManager $showsManager
      * @Route("/results/{term}", name="results")
      * @return Response

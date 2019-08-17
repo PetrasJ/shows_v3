@@ -65,13 +65,11 @@ class UserEpisodeService
             }
         }
 
-        if (isset($action['watch']) && $action['watch'] === true)
-        {
+        if (isset($action['watch']) && $action['watch'] === true) {
             $userEpisode->setStatus(UserEpisode::STATUS_WATCHED);
         }
 
-        if (isset($action['unwatch']) && $action['unwatch'] === true)
-        {
+        if (isset($action['unwatch']) && $action['unwatch'] === true) {
             $userEpisode->setStatus(UserEpisode::STATUS_UNWATCHED);
         }
 
