@@ -186,6 +186,7 @@ class ShowsManager
 
             if ($count === 50) {
                 $this->entityManager->flush();
+                $count = 0;
             }
         }
 
