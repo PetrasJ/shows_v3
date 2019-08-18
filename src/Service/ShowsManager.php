@@ -182,11 +182,6 @@ class ShowsManager
             $this->setShow($showEntity, $show);
             $this->entityManager->persist($showEntity);
             $count++;
-
-            if ($count === 50) {
-                $this->entityManager->flush();
-                $count = 0;
-            }
         }
 
         $this->entityManager->flush();
