@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Service\EpisodesManager;
 use App\Service\Storage;
+use DateInterval;
+use DatePeriod;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +28,7 @@ class CalendarController extends AbstractController
             ->render('calendar/index.html.twig',
                 [
                     'currentMonth' => date('Y-m'),
-                    'include' => $storage->getUser() ? $storage->getUser()->getCalendarShow() : []
+                    'include' => $storage->getUser() ? $storage->getUser()->getCalendarShow() : [],
                 ]
             );
     }
@@ -40,20 +42,53 @@ class CalendarController extends AbstractController
      */
     public function month($month, EpisodesManager $episodesManager)
     {
-        $date = explode('-', $month);
-        $from = (new DateTime)
-            ->setDate($date[0], $date[1], 15)
-            ->modify('first day of this month 00:00:00')
-        ;
-        $to = (new DateTime)
-            ->setDate($date[0], $date[1], 15)
-            ->modify('last day of this month 23:59:59')
-        ;
-        $episodes = $episodesManager->getEpisodes($from, $to);
+        $period = $this->getPeriod($month);
+        $episodes = $episodesManager->getEpisodes($period['from'], $period['to']);
 
         return $this->render('calendar/month.html.twig', [
             'month' => $month,
+            'days' => $period['days'],
             'episodes' => $episodes,
         ]);
+    }
+
+    private function getPeriod(string $month): array
+    {
+        $date = explode('-', $month);
+        $from = (new DateTime)
+            ->setDate($date[0], $date[1], 15)
+            ->modify('first day of this month')
+        ;
+
+        $from = $from->format('D') === 'Mon'
+            ? $from->modify('+12 hour')
+            : $from->modify('previous monday')->modify('+12 hour');
+
+        $to = (new DateTime)
+            ->setDate($date[0], $date[1], 15)
+            ->modify('last day of this month')
+        ;
+
+        $to = $to->format('D') === 'Sun'
+            ? $to->modify('+20 hour')
+            : $to->modify('next sunday')->modify('+20 hour');
+
+        $period = new DatePeriod(
+            $from,
+            new DateInterval('P1D'),
+            $to
+        );
+
+        $days = [];
+        foreach ($period as $key => $value) {
+            /** @var DateTime $value */
+            $days[] = $value->format('Y-m-d');
+        }
+
+        return [
+          'from' => $from,
+          'to' => $to,
+          'days' => $days
+        ];
     }
 }

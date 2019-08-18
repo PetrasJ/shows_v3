@@ -2,16 +2,19 @@
 
 {% block body %}
     {% set upcomingEpisode = 0 %}
-    {% for episode in episodes %}
-        {% set upcomingEpisode = upcomingEpisode + 1 %}
-        {% include '_inc/episode-details.html.twig' with {episode: episode} %} <b><a href="{{ path('shows_details', {userShowId: episode.userShowId}) }}">{{ episode.showName }}</a></b>
+    {% for day in episodes %}
+        {% for episode in day %}
+            {% set upcomingEpisode = upcomingEpisode + 1 %}
+            {% include '_inc/episode-details.html.twig' with {episode: episode} %} <b><a
+                    href="{{ path('shows_details', {userShowId: episode.userShowId}) }}">{{ episode.showName }}</a></b>
 
-        {% if upcomingEpisode == 3 and episodes|length > 3 %}
-            <button class="btn btn-secondary-m1"
-                    onclick="$('.upcoming-episodes').slideToggle()">{{ episodes|length - 3 }}+
-            </button>
-            <div class="upcoming-episodes" style="display: none">
-        {% endif %}
+            {% if upcomingEpisode == 3 and episodes|length > 3 %}
+                <button class="btn btn-secondary-m1"
+                        onclick="$('.upcoming-episodes').slideToggle()">{{ episodes|length - 3 }}+
+                </button>
+                <div class="upcoming-episodes" style="display: none">
+            {% endif %}
+        {% endfor %}
     {% endfor %}
     {% if episodes|length > 3 %}
         </div>

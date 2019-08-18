@@ -69,16 +69,28 @@ class EpisodesManager
     public function getEpisodes(DateTime $from, DateTime $to, $watching = false, $excludeWatched = false): ?array
     {
         if (!$this->user) {
-            return $this->entityManager
+            $episodes = $this->entityManager
                 ->getRepository(Episode::class)
                 ->getEpisodesPublic($from, $to)
-                ;
+            ;
+        } else {
+            $episodes = $this->entityManager
+                ->getRepository(Episode::class)
+                ->getEpisodes($from, $to, $this->user, $watching, $excludeWatched)
+            ;
         }
 
-        return $this->entityManager
-            ->getRepository(Episode::class)
-            ->getEpisodes($from, $to, $this->user, $watching, $excludeWatched)
-            ;
+        return $this->formatEpisodes($episodes);
+    }
+
+    private function formatEpisodes($episodes)
+    {
+        $formatted = [];
+        foreach ($episodes as $episode) {
+            $formatted[substr($episode['userAirstamp'], 0, 10)][] = $episode;
+        }
+
+        return $formatted;
     }
 
     public function getClient()

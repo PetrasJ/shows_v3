@@ -30,43 +30,34 @@
     </thead>
     <tbody>
     <tr>
-        {% set daysInMonth = time|date('t') %}{% set startDow = time|date('F 1\\s\\t Y')|date('N') - 1 %}{% set dow = startDow %}{% for day in range(1,daysInMonth) %}{% set currentDay = time|date('Y-m') ~ '-' ~ '%02d'|format(day) %}{% if loop.first and startDow != 0 %}
-        <td colspan="{{ startDow }}"></td>{% endif %}{% set break = false %}
-        {% if app.user.username is defined %}
-        <td class="day{% for episode in episodes if break == false %}{% if episode.userAirstamp|slice(0, 10) == currentDay %} exists{% set break = true %}{% endif %}{% endfor %}{% if currentDay=="now"|date('Y-m-d') %} current-day border-primary{% endif %}">
-            <div class="inner">{% for episode in episodes %}{% if episode.userAirstamp|slice(0, 10) == currentDay %}
-                <div class="episode{{ episode|class }}">
-                    {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
-
-                    <a href="{{ url('shows_details',{'userShowId': episode.userShowId}) }}" title="{{ episode.name }}">{{ episode.showName }}</a>
-                    </div>{% endif %}{% endfor %}
-            </div>
-
-            <span class="dayoftheweek">{{ currentDay|date('Y-m-d') }} {{ ('calendar.'~currentDay|date('l'))|trans }}</span>
-            <span class="day">{{ day }}</span>
+        {% set dayOfTheWeek = 0 %}
+        {% for day in days %}
+        {% set currentDay = day|date('Y-m-d') %}
+            {% if dayOfTheWeek == 7 %}
+                </tr><tr>
+                {% set dayOfTheWeek = 0 %}
+            {% endif %}
+        {% set dayOfTheWeek = dayOfTheWeek + 1 %}
+        <td class="{% if day=="now"|date('Y-m-d') %} current-day border-primary{% endif %}{% if episodes[day] is defined %} exists{% endif %}">
+            {% if episodes[day] is defined %}
+                {% for episode in episodes[day] %}
+                    {% if app.user.username is defined %}
+                        <div class="episode{{ episode|class }}">
+                            {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
+                            <a href="{{ url('shows_details',{'userShowId': episode.userShowId}) }}" title="{{ episode.name }}">{{ episode.showName }}</a>
+                        </div>
+                        {% else %}
+                            <div class="episode">
+                                {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
+                                <span title="{{ episode.name }}">{{ episode.showName }}</span>
+                            </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <span class="dayoftheweek">{{ day }} {{ ('calendar.'~currentDay|date('l'))|trans }}</span>
+            <span class="day">{{ currentDay|date('d') }}</span>
         </td>
-        {% else %}
-            <td class="day{% for episode in episodes if break == false %}{% if episode.airstamp|date('Y-m-d') == currentDay %} exists{% set break = true %}{% endif %}{% endfor %}{% if currentDay=="now"|date('Y-m-d') %} current-day border-primary{% endif %}">
-                <div class="inner">{% for episode in episodes %}{% if episode.airstamp|date('Y-m-d') == currentDay %}
-                    <div class="episode">
-                        {{ episode.airstamp|date('H:i') }}
-                        <span title="{{ episode.name }}">{{ episode.showName }}</span>
-                        </div>{% endif %}{% endfor %}
-                </div>
-
-                <span class="dayoftheweek">{{ currentDay|date('Y-m-d') }} {{ ('calendar.'~currentDay|date('l'))|trans }}</span>
-                <span class="day">{{ day }}</span>
-            </td>
-
-        {% endif %}
-        {% if loop.last and dow != 6 %}
-
-        {% endif %}{% if dow == 6 %}{% set dow = 0 %}
-    </tr>
-    <tr>
-        {% else %}
-            {% set dow = dow + 1 %}
-        {% endif %}{% endfor %}
+        {% endfor %}
     </tr>
     </tbody>
 </table>
