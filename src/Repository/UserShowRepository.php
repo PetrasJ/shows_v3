@@ -15,7 +15,7 @@ class UserShowRepository extends EntityRepository
     /**
      * @return array
      */
-    public function getAllUsersShows()
+    public function getAllUsersShows(): ?array
     {
         $result = $this->createQueryBuilder('p')
             ->select('s.id')
@@ -28,7 +28,7 @@ class UserShowRepository extends EntityRepository
         return array_column($result, 'id');
     }
 
-    public function getShows(User $user, $status = 0)
+    public function getShows(User $user, $status = 0): ?array
     {
         return $this->createQueryBuilder('us')
             ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset')
@@ -54,15 +54,21 @@ class UserShowRepository extends EntityRepository
             ;
     }
 
-    public function getEpisodes(User $user, $status)
+    public function getEpisodes(User $user, $status): ?array
     {
         return $this->createQueryBuilder('us')
-            ->select('us.id as userShowId, e.id, e.season, e.episode, e.airstamp, e.name, e.duration, ue.status as userEpisodeStatus')
+            ->select('us.id as userShowId, e.id, e.season, e.episode, e.airstamp, e.name, e.duration')
+            ->addSelect('ue.status as userEpisodeStatus')
             ->addSelect(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->innerJoin('us.show', 's')
             ->innerJoin('s.episodes', 'e')
             ->innerJoin('us.user', 'u')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND us = ue.userShow')
+            ->leftJoin(
+                UserEpisode::class,
+                'ue',
+                Join::WITH,
+                'ue.user = :user AND ue.episode = e AND us = ue.userShow'
+            )
             ->where('us.user = :user')
             ->andWhere('us.status = :status')
             ->setParameters(['user' => $user, 'status' => $status])
@@ -74,7 +80,7 @@ class UserShowRepository extends EntityRepository
             ;
     }
 
-    public function getUserShows(User $user, array $shows)
+    public function getUserShows(User $user, array $shows): array
     {
         $userShows = $this->createQueryBuilder('us')
             ->select('s.id, us.id as userShowId, us.status')
@@ -112,21 +118,26 @@ class UserShowRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @param      $showId
-     * @return mixed
+     * @param int $showId
+     * @return null|array
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getUserShow(User $user, $showId)
+    public function getUserShow(User $user, int $showId): ?array
     {
         return $this->createQueryBuilder('us')
-            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset, us.status as userShowStatus')
-            ->addSelect('SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
+            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset')
+            ->addSelect('us.status as userShowStatus, SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
             ->addSelect('COUNT(e.id) as episodesCount')
             ->innerJoin('us.show', 's')
             ->innerJoin('us.user', 'u')
             ->leftJoin('s.episodes', 'e')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH, 'ue.user = :user AND ue.episode = e AND us = ue.userShow')
+            ->leftJoin(
+                UserEpisode::class,
+                'ue',
+                Join::WITH,
+                'ue.user = :user AND ue.episode = e AND us = ue.userShow'
+            )
             ->where('us.user = :user')
             ->andWhere('e.airstamp < ' . sprintf(EpisodeRepository::DATE_SUB, ':now'))
             ->andWhere('us.id = :showId')

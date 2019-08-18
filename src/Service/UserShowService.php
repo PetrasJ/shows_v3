@@ -33,10 +33,7 @@ class UserShowService
         $this->showsManager = $showsManager;
     }
 
-    /**
-     * @return array
-     */
-    public function getShowsWithUnwatchedEpisodes()
+    public function getShowsWithUnwatchedEpisodes(): ?array
     {
         return $this->entityManager
             ->getRepository(Episode::class)
@@ -44,11 +41,7 @@ class UserShowService
             ;
     }
 
-    /**
-     * @param       $userShowId
-     * @param array $data
-     */
-    public function updateShow($userShowId, $data = [])
+    public function updateShow(int $userShowId, array $data = []): void
     {
         $userShow = $this->entityManager
             ->getRepository(UserShow::class)
@@ -64,11 +57,7 @@ class UserShowService
         $this->entityManager->flush();
     }
 
-    /**
-     * @param $status
-     * @return array
-     */
-    public function getShows($status)
+    public function getShows(int $status): ?array
     {
         $shows = $this->entityManager
             ->getRepository(UserShow::class)
@@ -82,7 +71,7 @@ class UserShowService
         return $this->formatShows($shows, $episodes);
     }
 
-    private function formatShows($shows, $episodes)
+    private function formatShows($shows, $episodes): ?array
     {
         $showEpisodes = [];
         foreach ($episodes as $episode) {
@@ -121,18 +110,12 @@ class UserShowService
                 'offset' => $show['offset'],
                 'userShowId' => $show['userShowId'],
             ];
-
         }
 
         return $formatted;
     }
 
-    /**
-     * @param int $userShowId
-     * @param int $limit
-     * @return UserShow|null
-     */
-    public function getUserShowAndEpisodes($userShowId, $limit)
+    public function getUserShowAndEpisodes(int $userShowId, int $limit): ?array
     {
         try {
             $userShow = $this->entityManager->find(UserShow::class, $userShowId);
@@ -156,10 +139,13 @@ class UserShowService
         return $return;
     }
 
-    public function getUserShow($userShowId)
+    public function getUserShow(int $userShowId): ?array
     {
         try {
-            return $this->entityManager->getRepository(UserShow::class)->getUserShow($this->user, $userShowId);
+            return $this->entityManager
+                ->getRepository(UserShow::class)
+                ->getUserShow($this->user, $userShowId)
+                ;
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
@@ -167,7 +153,7 @@ class UserShowService
         }
     }
 
-    public function add($showId)
+    public function add(int $showId): void
     {
         $show = $this->entityManager->find(Show::class, $showId);
         $userShow = (new UserShow())
@@ -182,11 +168,7 @@ class UserShowService
         $this->entityManager->flush();
     }
 
-    /**
-     * @param string $userShowId
-     * @param string $type
-     */
-    public function update($userShowId, $type)
+    public function update(int $userShowId, string $type): void
     {
         $this->entityManager->getFilters()->disable('softdeleteable');
         /** @var UserShow $userShow */
@@ -209,10 +191,7 @@ class UserShowService
         $this->entityManager->flush();
     }
 
-    /**
-     * @param string $userShowId
-     */
-    public function remove($userShowId)
+    public function remove(int $userShowId): void
     {
         $userShow = $this->entityManager
             ->getRepository(UserShow::class)
@@ -222,10 +201,7 @@ class UserShowService
         $this->entityManager->flush();
     }
 
-    /**
-     * @param $userShowId
-     */
-    public function watchAll($userShowId)
+    public function watchAll(int $userShowId): void
     {
         /** @var Show $show */
         $userShow = $this->entityManager

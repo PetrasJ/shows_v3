@@ -85,7 +85,7 @@ class ShowsManager
         return ['updated' => $updated, 'newShows' => $newShows];
     }
 
-    public function find(string $term)
+    public function find(string $term): ?array
     {
         return $this->entityManager->getRepository(Show::class)->findAllByName($term, false);
     }
@@ -102,7 +102,7 @@ class ShowsManager
         return ['shows' => $shows, 'userShows' => $userShows];
     }
 
-    public function getShow($showId)
+    public function getShow($showId): ?array
     {
         try {
             return $this->entityManager
@@ -118,7 +118,7 @@ class ShowsManager
         return null;
     }
 
-    public function getNextEpisode($showId)
+    public function getNextEpisode($showId): ?array
     {
         try {
             return $this->entityManager
@@ -176,12 +176,10 @@ class ShowsManager
 
     private function updateShows($shows): void
     {
-        $count = 0;
         foreach ($shows as $show) {
             $showEntity = $this->addShow($show);
             $this->setShow($showEntity, $show);
             $this->entityManager->persist($showEntity);
-            $count++;
         }
 
         $this->entityManager->flush();

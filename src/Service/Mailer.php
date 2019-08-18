@@ -24,7 +24,7 @@ class Mailer
         $this->user = $storage->getUser();
     }
 
-    public function sendFeedback(Feedback $feedback)
+    public function sendFeedback(Feedback $feedback): void
     {
         $user = $this->user ? $this->user->getId() : '0';
         $message = (new Swift_Message('shows.botai.eu feedback'))

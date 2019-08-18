@@ -66,7 +66,7 @@ class EpisodesManager
      * @param bool $excludeWatched
      * @return array
      */
-    public function getEpisodes(DateTime $from, DateTime $to, $watching = false, $excludeWatched = false)
+    public function getEpisodes(DateTime $from, DateTime $to, $watching = false, $excludeWatched = false): ?array
     {
         if (!$this->user) {
             return $this->entityManager
@@ -105,7 +105,7 @@ class EpisodesManager
     /**
      * @param Show $show
      */
-    private function removeEpisodes(Show $show)
+    private function removeEpisodes(Show $show): void
     {
         $episodes = $this->entityManager->getRepository(Episode::class)->findBy(['show' => $show]);
 

@@ -12,7 +12,7 @@ class ShowRepository extends EntityRepository
      * @param bool $full
      * @return array
      */
-    public function findAllByName($name, $full = false)
+    public function findAllByName($name, $full = false): ?array
     {
         $names = str_replace('"', " ", $name);
         $names = str_replace('%20', " ", $names);
@@ -49,24 +49,5 @@ class ShowRepository extends EntityRepository
         ;
 
         return $full ? $result : array_column($result, 'name');
-    }
-
-    /**
-     * @param     $userShows
-     * @param int $userID
-     * @return array
-     */
-    public function getUserShows($userShows, $userID = 0)
-    {
-        return $this->createQueryBuilder('p')
-            ->select('p.showID, p.status, p.name, us.offset')
-            ->where('p.showID IN (:userShows)')
-            ->setParameter('userShows', array_values($userShows))
-            ->leftJoin("AppBundle:UserShows", 'us', 'WITH', 'us.showID = p.showID AND us.userID=:userID')
-            ->setParameter('userID', $userID)
-            ->orderBy('p.status', 'desc')->addOrderBy('p.name', 'asc')
-            ->getQuery()
-            ->getResult()
-            ;
     }
 }

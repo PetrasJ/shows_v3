@@ -36,7 +36,7 @@ class UserEpisodeService
         }
     }
 
-    public function update($id, $userShowId, $action)
+    public function update($id, $userShowId, $action): void
     {
         $episode = $this->entityManager->find(Episode::class, $id);
         $userEpisode = $this->entityManager
@@ -77,7 +77,7 @@ class UserEpisodeService
         $this->entityManager->flush();
     }
 
-    public function getWatchedDuration()
+    public function getWatchedDuration(): ?int
     {
         try {
             return $this->entityManager->getRepository(UserEpisode::class)->getWatchedDuration($this->user);
@@ -88,8 +88,11 @@ class UserEpisodeService
         }
     }
 
-    public function getLastEpisodes()
+    public function getLastEpisodes(): ?array
     {
-        return $this->entityManager->getRepository(UserEpisode::class)->getLastEpisodes($this->user, 10);
+        return $this->entityManager
+            ->getRepository(UserEpisode::class)
+            ->getLastEpisodes($this->user, 10)
+            ;
     }
 }

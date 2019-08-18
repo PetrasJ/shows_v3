@@ -12,7 +12,7 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class UserEpisodeRepository extends EntityRepository
 {
-    public function watchAll(UserShow $userShow)
+    public function watchAll(UserShow $userShow): void
     {
         $this->createQueryBuilder('ue')
             ->update(UserEpisode::class, 'ue')
@@ -24,7 +24,7 @@ class UserEpisodeRepository extends EntityRepository
         ;
     }
 
-    public function getUpcomingUpdatedEpisodes(UserShow $userShow)
+    public function getUpcomingUpdatedEpisodes(UserShow $userShow): ?array
     {
         return $this->createQueryBuilder('ue')
             ->select('ue')
@@ -41,10 +41,10 @@ class UserEpisodeRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @return mixed
+     * @return null|int
      * @throws NonUniqueResultException
      */
-    public function getWatchedDuration(User $user)
+    public function getWatchedDuration(User $user): ?int
     {
         return $this->createQueryBuilder('ue')
             ->select('SUM(e.duration)')
@@ -57,14 +57,19 @@ class UserEpisodeRepository extends EntityRepository
             ;
     }
 
-    public function getLastEpisodes(User $user, $limit)
+    public function getLastEpisodes(User $user, $limit): ?array
     {
         return $this->createQueryBuilder('ue')
             ->select('ue.id, ue.created, e.season, e.episode, e.airstamp, e.name, e.duration, s.name as showName')
             ->addSelect(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->innerJoin('ue.episode', 'e')
             ->innerJoin('e.show', 's')
-            ->innerJoin(UserShow::class, 'us', Join::WITH, 'us.show = e.show AND us.user = :user')
+            ->innerJoin(
+                UserShow::class,
+                'us',
+                Join::WITH,
+                'us.show = e.show AND us.user = :user'
+            )
             ->innerJoin(User::class, 'u', Join::WITH, 'u = :user')
             ->where('ue.user = :user')
             ->andWhere('ue.status = :statusWatched')
