@@ -19,13 +19,13 @@
         </th>
     </tr>
     <tr class="weekdays">
-        <th style="width:15%">{{ 'calendar.Monday'|trans }}</th>
-        <th style="width:15%">{{ 'calendar.Tuesday'|trans }}</th>
-        <th style="width:14%">{{ 'calendar.Wednesday'|trans }}</th>
-        <th style="width:14%">{{ 'calendar.Thursday'|trans }}</th>
-        <th style="width:14%">{{ 'calendar.Friday'|trans }}</th>
-        <th style="width:14%">{{ 'calendar.Saturday'|trans }}</th>
-        <th style="width:14%">{{ 'calendar.Sunday'|trans }}</th>
+        <th>{{ 'calendar.Monday'|trans }}</th>
+        <th>{{ 'calendar.Tuesday'|trans }}</th>
+        <th>{{ 'calendar.Wednesday'|trans }}</th>
+        <th>{{ 'calendar.Thursday'|trans }}</th>
+        <th>{{ 'calendar.Friday'|trans }}</th>
+        <th>{{ 'calendar.Saturday'|trans }}</th>
+        <th>{{ 'calendar.Sunday'|trans }}</th>
     </tr>
     </thead>
     <tbody>
@@ -33,10 +33,11 @@
         {% set dayOfTheWeek = 0 %}
         {% for day in days %}
         {% set currentDay = day|date('Y-m-d') %}
-            {% if dayOfTheWeek == 7 %}
-                </tr><tr>
-                {% set dayOfTheWeek = 0 %}
-            {% endif %}
+        {% if dayOfTheWeek == 7 %}
+    </tr>
+    <tr>
+        {% set dayOfTheWeek = 0 %}
+        {% endif %}
         {% set dayOfTheWeek = dayOfTheWeek + 1 %}
         <td class="{% if day=="now"|date('Y-m-d') %} current-day border-primary{% endif %}{% if episodes[day] is defined %} exists{% endif %}">
             {% if episodes[day] is defined %}
@@ -44,13 +45,14 @@
                     {% if app.user.username is defined %}
                         <div class="episode{{ episode|class }}">
                             {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
-                            <a href="{{ url('shows_details',{'userShowId': episode.userShowId}) }}" title="{{ episode.name }}">{{ episode.showName }}</a>
+                            <a href="{{ url('shows_details',{'userShowId': episode.userShowId}) }}"
+                               title="{{ episode.name }}">{{ episode.showName }}</a>
                         </div>
-                        {% else %}
-                            <div class="episode">
-                                {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
-                                <span title="{{ episode.name }}">{{ episode.showName }}</span>
-                            </div>
+                    {% else %}
+                        <div class="episode">
+                            {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
+                            <span title="{{ episode.name }}">{{ episode.showName }}</span>
+                        </div>
                     {% endif %}
                 {% endfor %}
             {% endif %}
