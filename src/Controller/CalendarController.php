@@ -61,8 +61,8 @@ class CalendarController extends AbstractController
         ;
 
         $from = $from->format('D') === 'Mon'
-            ? $from->modify('+12 hour')
-            : $from->modify('previous monday')->modify('+12 hour');
+            ? $from
+            : $from->modify('previous monday');
 
         $to = (new DateTime)
             ->setDate($date[0], $date[1], 15)
@@ -70,8 +70,8 @@ class CalendarController extends AbstractController
         ;
 
         $to = $to->format('D') === 'Sun'
-            ? $to->modify('+20 hour')
-            : $to->modify('next sunday')->modify('+20 hour');
+            ? $to->modify('+24 hour')
+            : $to->modify('next sunday')->modify('+24 hour');
 
         $period = new DatePeriod(
             $from,
