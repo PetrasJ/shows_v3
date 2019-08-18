@@ -26,7 +26,6 @@ class ShowRepository extends EntityRepository
             ->orderBy('us.id', 'desc')
             ->addOrderBy('s.rating', 'desc')
             ->addOrderBy('s.weight', 'desc')
-            ->groupBy('s.id')
         ;
 
         unset($names[0]);
@@ -38,10 +37,11 @@ class ShowRepository extends EntityRepository
 
         if (!$full) {
             $qb->select('s.id, s.name')
+                ->groupBy('s.name')
                 ->setMaxResults(10)
             ;
         } else {
-            $qb->select('s');
+            $qb->select('s')->groupBy('s.id');
         }
 
         $result = $qb->getQuery()
