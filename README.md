@@ -14,15 +14,18 @@ Shows & Episodes source: http://www.tvmaze.com/
 
 Deployment:
 
+* cp .env.prod .env
+* configure .env
 * composer install
-* configure .env, .env.dev
 * php bin/console doctrine:database:create
-* php bin/console make:migration
-* php bin/console doctrine:migrations:migrate
+* php bin/console doctrine:schema:update --force
 * npm run-script build
 
 Commands:
 
 * php bin/console import-shows
+    - initial, imports shows
 * php bin/console update-shows
+    - daily, updates user shows fully (episodes, images)
 * php bin/console update-all-shows
+    - weekly, updates all shows partially (-episodes, -images)
