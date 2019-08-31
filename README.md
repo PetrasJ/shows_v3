@@ -14,8 +14,7 @@ Shows & Episodes source: http://www.tvmaze.com/
 
 Deployment:
 
-* cp .env.prod .env
-* configure .env
+* cp .env.production .env (configure database, secret)
 * composer install
 * php bin/console doctrine:database:create
 * php bin/console doctrine:schema:update --force
