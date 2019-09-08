@@ -282,7 +282,7 @@ td.current-day .inner {
   position: absolute;
 }
 
-.show-title {
+.shows-list .show-title {
   display: inline-block;
   padding-left: 35px;
 }
@@ -294,6 +294,10 @@ td.current-day .inner {
     max-height: 100px;
     max-width: 72px;
     position: unset;
+  }
+
+  .shows-list .show-title {
+    padding-left: 0;
   }
 }
 

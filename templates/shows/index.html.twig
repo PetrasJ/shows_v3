@@ -2,72 +2,72 @@
 
 {% block body %}
     <div class="shows">{{ shows|length }}</div>
-    <div class="row">
-        <div class="d-none col-3 d-md-inline-block">
-            {{ 'show.show'|trans }}
+    <div class="shows-list">
+        <div class="row">
+            <div class="d-none col-3 d-md-inline-block">
+                {{ 'show.show'|trans }}
+            </div>
+            <div class="d-none col-3 d-md-inline-block">
+                {{ 'show.Previous Episode'|trans }}
+            </div>
+            <div class="d-none col-3 d-md-inline-block">
+                {{ 'show.Next Episode'|trans }}
+            </div>
+            <div class="d-none col-3 d-md-inline-block">
+                {{ 'show.Actions'|trans }}
+            </div>
         </div>
-        <div class="d-none col-3 d-md-inline-block">
-            {{ 'show.Previous Episode'|trans }}
-        </div>
-        <div class="d-none col-3 d-md-inline-block">
-            {{ 'show.Next Episode'|trans }}
-        </div>
-        <div class="d-none col-3 d-md-inline-block">
-            {{ 'show.Actions'|trans }}
-        </div>
-    </div>
 
-    {% set showstatus = null %}
-    {% for show in shows %}
-        {% if (showstatus != show.status) %}
-            {% set showstatus = show.status %}
-            <div class="col-12">
-                <h4>{{ ('show.'~show.status)|trans }}</h4>
-            </div>
-        {% endif %}
-        <div id="{{ show.userShowId }}" class="show row py-1 border-bottom">
-            <div class="col-12 col-md-3">
-                <a title={{ show.watchedCount }}
-                   href="{{ path('shows_details', {'userShowId': show.userShowId}) }}">
-                    {% if show.image %}
-                        <img src="/img/shows/medium/{{ show.id }}.jpg" class="image-list" alt="{{ show.name }}">
-                    {% endif %}
-                    <div class="show-title">
-                        {{ show.name }} (<span class="unwatched">{{ show.episodesCount-show.watchedCount }}</span>)
-                    </div>
-                </a>
-            </div>
-            <div class="col-12 col-md-3">
-                {% if show.lastEpisode %}
-                    <span class="episode{% if show.lastEpisode.userEpisodeStatus == constant('App\\Entity\\UserEpisode::STATUS_WATCHED') %} watched{% endif %}">
+        {% set showstatus = null %}
+        {% for show in shows %}
+            {% if (showstatus != show.status) %}
+                {% set showstatus = show.status %}
+                <div class="col-12">
+                    <h4>{{ ('show.'~show.status)|trans }}</h4>
+                </div>
+            {% endif %}
+            <div id="{{ show.userShowId }}" class="show row py-1 border-bottom">
+                <div class="col-12 col-md-3">
+                    <a title={{ show.watchedCount }}
+                       href="{{ path('shows_details', {'userShowId': show.userShowId}) }}">
+                        {% if show.image %}
+                            <img src="/img/shows/medium/{{ show.id }}.jpg" class="image-list" alt="{{ show.name }}">
+                        {% endif %}
+                        <div class="show-title">
+                            {{ show.name }} (<span class="unwatched">{{ show.episodesCount-show.watchedCount }}</span>)
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-3">
+                    {% if show.lastEpisode %}
+                        <span class="episode{% if show.lastEpisode.userEpisodeStatus == constant('App\\Entity\\UserEpisode::STATUS_WATCHED') %} watched{% endif %}">
                         <b>{{ show.lastEpisode.name }}</b><br>
                         {% include '_inc/episode-details.html.twig' with {episode: show.lastEpisode} %}
                     </span>
-                {% endif %}
-            </div>
-            <div class="col-12 col-md-3">
-                {% if show.nextEpisode %}
-                    <span class="episode{% if show.nextEpisode.userEpisodeStatus == constant('App\\Entity\\UserEpisode::STATUS_WATCHED') %} watched{% endif %}">
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-3">
+                    {% if show.nextEpisode %}
+                        <span class="episode{% if show.nextEpisode.userEpisodeStatus == constant('App\\Entity\\UserEpisode::STATUS_WATCHED') %} watched{% endif %}">
                         <b>{{ show.nextEpisode.name }}</b><br>
                         {% include '_inc/episode-details.html.twig' with {episode: show.nextEpisode} %}
                     </span>
-                {% endif %}
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-3">
+                    <button data-toggle="modal" data-target="#show-settings"
+                            class="btn btn-warning btn-sm show-settings m-1"
+                            data-user-show-id="{{ show.userShowId }}"
+                            data-title="{{ show.name }}"
+                            data-offset="{{ show.offset }}">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </button>
+                    {% include 'shows/actions.html.twig'
+                        with
+                        {'show': show, 'status': status, 'unwatched': show.episodesCount-show.watchedCount} %}
+                </div>
             </div>
-            <div class="col-12 col-md-3">
-                <button data-toggle="modal" data-target="#show-settings"
-                        class="btn btn-warning btn-sm show-settings m-1"
-                        data-user-show-id="{{ show.userShowId }}"
-                        data-title="{{ show.name }}"
-                        data-offset="{{ show.offset }}">
-                    <i class="fa fa-cog" aria-hidden="true"></i>
-                </button>
-            {%
-                include 'shows/actions.html.twig'
-                with
-                {'show': show, 'status': status, 'unwatched': show.episodesCount-show.watchedCount}
-            %}
-            </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
     {% include 'modals/show-settings.html.twig' %}
 {% endblock %}
