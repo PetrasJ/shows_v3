@@ -26,21 +26,18 @@ class FeedbackType extends AbstractType
                 'label' => 'feedback.name',
                 'attr' => [
                     'placeholder' => 'feedback.name',
-                    'class' => 'form-control'
                 ]
             ])
             ->add('email', EmailType::class, [
                 'label' => 'feedback.email',
                 'attr' => [
                     'placeholder' => 'feedback.email',
-                    'class' => 'form-control'
                 ]
             ])
             ->add('message', TextareaType::class, [
                 'label' => 'feedback.message',
                 'attr' => [
                     'placeholder' => 'feedback.message',
-                    'class' => 'form-control'
                 ]
             ])
             ->add('submit', SubmitType::class, [
