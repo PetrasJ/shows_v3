@@ -33,7 +33,7 @@ class EpisodesManagerTest extends TestCase
             (new DateTime())->modify('+2 days'),
             true);
 
-        $this->assertNull($result);
+        $this->assertEquals([], $result);
     }
 
     private function getEpisodes()
@@ -53,6 +53,7 @@ class EpisodesManagerTest extends TestCase
         $entityManager->method('getConnection')->willReturn($connection);
         $episodesRepo = $this->createMock(EpisodeRepository::class);
         $episodesRepo->method('findBy')->willReturn([new Episode(), new Episode()]);
+        $episodesRepo->method('getEpisodesPublic')->willReturn([]);
         $entityManager->method('getRepository')->with(Episode::class)->willReturn($episodesRepo);
         $storage = new Storage();
         $client = $this->getMockBuilder(Client::class)
@@ -64,10 +65,11 @@ class EpisodesManagerTest extends TestCase
         $client->method('get')->willReturn($response);
         /** @var EpisodesManager|MockObject $service */
         $service = $this->getMockBuilder(EpisodesManager::class)
-            ->setMethods(['getClient'])
+            ->setMethods(['getClient', 'error'])
             ->setConstructorArgs([$entityManager, $storage])
             ->getMock()
         ;
+        $service->method('error');
         $service->method('getClient')->willReturn($client);
 
         if ($update) {

@@ -61,9 +61,10 @@ class UserShowServiceTest extends TestCase
                 'summary' => '<p>Over the last ten years, technology has transformed almost every aspect of our lives before we\'ve had time to stop and question it. In every home; on every desk; in every palm - a plasma screen; a monitor; a smartphone--a black mirror of our 21st Century existence. <b>Black Mirror</b> is a contemporary British re-working of <i>The Twilight Zone</i> with stories that tap into the collective unease about our modern world.</p>',
                 'status' => 'To Be Determined',
                 'userShowId' => 1,
-                'offset' => NULL,
+                'offset' => null,
                 'userShowStatus' => 1,
                 'watched' => '0',
+                'imageMedium' => '1',
             ],
         ];
 
@@ -77,6 +78,7 @@ class UserShowServiceTest extends TestCase
                 'name' => 'Weight Gain 4000',
                 'duration' => '30',
                 'userAirstamp' => '1997-08-21 12:00:00',
+                'imageMedium' => '1',
             ],
             [
                 'userShowId' => 1,
@@ -87,6 +89,7 @@ class UserShowServiceTest extends TestCase
                 'name' => 'Weight Gain 4000',
                 'duration' => '30',
                 'userAirstamp' => '1997-08-21 12:00:00',
+                'imageMedium' => '1',
             ],
         ];
 
@@ -109,6 +112,7 @@ class UserShowServiceTest extends TestCase
                             'name' => 'Weight Gain 4000',
                             'duration' => '30',
                             'userAirstamp' => '1997-08-21 12:00:00',
+                            'imageMedium' => '1',
                         ],
                     'nextEpisode' =>
                         [
@@ -119,9 +123,11 @@ class UserShowServiceTest extends TestCase
                             'name' => 'Weight Gain 4000',
                             'duration' => '30',
                             'userAirstamp' => '1997-08-21 12:00:00',
+                            'imageMedium' => '1',
                         ],
                     'offset' => null,
                     'userShowId' => 1,
+                    'image' => '1',
                 ],
         ];
 
@@ -129,7 +135,7 @@ class UserShowServiceTest extends TestCase
 
         unset($result[0]['lastEpisode']['airstamp']);
         unset($result[0]['nextEpisode']['airstamp']);
-        $this->assertEquals($result, $expected);
+        $this->assertEquals($expected, $result);
     }
 
     private function getService($method = 'persist', $shows = null, $episodes = null)
@@ -142,8 +148,7 @@ class UserShowServiceTest extends TestCase
         $userShowRepo = $this->createMock(UserShowRepository::class);
         $userShowRepo
             ->method('findOneBy')
-            ->willReturn((new UserShow())->setShow(new Show()))
-        ;
+            ->willReturn((new UserShow())->setShow(new Show()));
 
         $userShowRepo->method('getShows')->willReturn($shows);
         $userShowRepo->method('getEpisodes')->willReturn($episodes);
@@ -151,8 +156,7 @@ class UserShowServiceTest extends TestCase
         $entityManager
             ->expects($this->any())
             ->method('getRepository')
-            ->willReturnOnConsecutiveCalls($userShowRepo, $userShowRepo)
-        ;
+            ->willReturnOnConsecutiveCalls($userShowRepo, $userShowRepo);
 
         $storage = (new Storage())->setUser(new User());
         /** @var EpisodesManager|MockObject $episodesManager */
@@ -164,8 +168,7 @@ class UserShowServiceTest extends TestCase
         if ($method) {
             $entityManager->expects($this->once())
                 ->method($method)
-                ->with($this->isInstanceOf(UserShow::class))
-            ;
+                ->with($this->isInstanceOf(UserShow::class));
         }
 
         return new UserShowService($entityManager, $storage, $episodesManager, $showsManager);
