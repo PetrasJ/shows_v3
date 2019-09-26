@@ -1,14 +1,16 @@
 function stopStream() {
     $.ajax({
-        type: "POST",
+        type: 'POST',
         url: window.baseUrl + 'stop',
         success: function (data) {
             console.log(data);
         }
     });
 }
+
 $(document).ready(function () {
-    $('li.videoList').click(function () {
+    const listVideo = $('li.videoList');
+    listVideo.click(function () {
         stopStream();
     });
     $('a').click(function () {
@@ -17,53 +19,55 @@ $(document).ready(function () {
     $('button').click(function () {
         stopStream();
     });
-    var playnext = true;
-    var currentvideo;
-    var videotoplay = null;
-    var videotoplayID = null;
+    let playNext = true;
+    let currentVideo;
+    let videoToPlay = null;
+    let videoToPlayID = null;
     if (window.location.hash) {
-        playnext = false;
-        videotoplay = decodeURIComponent(window.location.hash.substring(1));
+        playNext = false;
+        videoToPlay = decodeURIComponent(window.location.hash.substring(1));
     }
-    var count = 0;
-    $('li.videoList').each(function () {
+    let count = 0;
+    listVideo.each(function () {
         count++;
         $(this).attr('id', count);
-        if ($(this).data('movie-url') == videotoplay) {
-            $("#video-area").attr({
-                "src": window.baseUrl + 'video/' + videotoplay,
+        if ($(this).data('movie-url') === videoToPlay) {
+            $('#video-area').attr({
+                'src': window.baseUrl + 'video/' + videoToPlay,
             });
-            videotoplayID = count;
+            videoToPlayID = count;
         }
     });
+
     function video(id) {
-        $('li.videoList').removeClass('active');
+        listVideo.removeClass('active');
         $('#' + id).addClass('active');
-        currentvideo = id;
-        $('.video').html(currentvideo + '/' + count);
+        currentVideo = id;
+        $('.video').html(currentVideo + '/' + count);
     }
-    if (videotoplayID != null) {
-        video(videotoplayID);
+
+    if (videoToPlayID != null) {
+        video(videoToPlayID);
     }
-    $("#playlist li").on("click", function () {
-        $("#video-area").attr({
-            "src": window.baseUrl + 'video/' + $(this).data('movie-url'),
-            "poster": "",
-            "autoplay": "autoplay"
+    listVideo.on('click', function () {
+        $('#video-area').attr({
+            'src': window.baseUrl + 'video/' + $(this).data('movie-url'),
+            'poster': '',
+            'autoplay': 'autoplay'
         });
         video($(this).attr('id'));
-        ChangeUrl('sitas video', $('#' + currentvideo).data('movie-url'));
+        ChangeUrl('', $('#' + currentVideo).data('movie-url'));
     });
-    if (videotoplay == null) {
-        $("#video-area").attr({
-            "src": window.baseUrl + 'video/' + $("#playlist li").eq(0).data('movie-url'),
-            "autoplay": "autoplay"
-        })
-        video($("#playlist li").eq(0).attr("id"));
+    if (videoToPlay == null) {
+        $('#video-area').attr({
+            'src': window.baseUrl + 'video/' + listVideo.eq(0).data('movie-url'),
+            'autoplay': 'autoplay'
+        });
+        video($('#playlist li').eq(0).attr('id'));
     } else {
-        $("#video-area").attr({
-            "poster": "",
-            "autoplay": "autoplay"
+        $('#video-area').attr({
+            'poster': '',
+            'autoplay': 'autoplay'
         })
     }
     $('.next').click(function () {
@@ -72,47 +76,63 @@ $(document).ready(function () {
     $('.prev').click(function () {
         prev();
     });
-    $('video').on('ended', function () {
-        if (playnext == true) next();
+    const videoBlock = $('video');
+    videoBlock.on('ended', function () {
+        if (playNext === true) next();
     });
+
     function ChangeUrl(title, url) {
-        playnext = true;
-        if (url == "undefined") {
-            if (typeof (history.pushState) != "undefined") {
-                var obj = {Title: title, Url: url};
-                var urltohash = encodeURIComponent(obj.Url)
-                history.pushState(obj, obj.Title, '#' + urltohash);
+        playNext = true;
+        if (url === 'undefined') {
+            if (typeof (history.pushState) != 'undefined') {
+                let obj = {Title: title, Url: url};
+                let urlToHash = encodeURIComponent(obj.Url);
+                history.pushState(obj, obj.Title, '#' + urlToHash);
             }
         }
     }
+
     function next() {
-        if (currentvideo != count) video(parseInt(currentvideo) + 1);
+        if (currentVideo !== count) video(parseInt(currentVideo) + 1);
         else {
             video(1);
             alert('Playlist ended');
         }
-        $("#video-area").attr({
-            "src": window.baseUrl + 'video/' + $('#' + currentvideo).data('movie-url'),
-            "poster": "",
-            "autoplay": "autoplay"
+        let currentVideoLink = $('#' + currentVideo);
+
+        $('#video-area').attr({
+            'src': window.baseUrl + 'video/' + currentVideoLink.data('movie-url'),
+            'poster': '',
+            'autoplay': 'autoplay'
         });
-        ChangeUrl('sitas video', $('#' + currentvideo).data('movie-url'));
+        ChangeUrl('', currentVideoLink.data('movie-url'));
     }
+
     function prev() {
-        if (currentvideo != 1) video(parseInt(currentvideo) - 1);
-        else video(count);
-        $("#video-area").attr({
-            "src": window.baseUrl + 'video/' + $('#' + currentvideo).data('movie-url'),
-            "poster": "",
-            "autoplay": "autoplay"
+        if (currentVideo !== 1) video(parseInt(currentVideo) - 1);
+        else {
+            video(count);
+        }
+        let currentVideoLink = $('#' + currentVideo);
+        $('#video-area').attr({
+            'src': window.baseUrl + 'video/' + currentVideoLink.data('movie-url'),
+            'poster': '',
+            'autoplay': 'autoplay'
         });
-        ChangeUrl('sitas video', $('#' + currentvideo).data('movie-url'));
+        ChangeUrl('', currentVideoLink.data('movie-url'));
     }
+
     function play() {
-        $("#video-area").get(0).play();
+        const videoArea = $('#video-area')[0];
+        if (videoArea.paused === true) {
+            videoArea.play();
+        } else {
+            videoArea.pause();
+        }
     }
-    $('video').click(function () {
-        if (this.paused == false) {
+
+    videoBlock.click(function () {
+        if (this.paused === false) {
             this.pause();
         } else {
             this.play();
@@ -120,19 +140,19 @@ $(document).ready(function () {
     });
     $(document).keydown(function (e) {
         switch (e.which) {
-            case 37:
-                prev();// left
+            case 37: // left
+                prev();
                 break;
-            case 38:
-                prev(); // up
+            case 38: // up
+                prev();
                 break;
-            case 39:
-                next(); // right
+            case 39: // right
+                next();
                 break;
-            case 40:
-                next(); // down
+            case 40: // down
+                next();
                 break;
-            case 32:
+            case 32: // space
                 play();
                 break;
             default:
