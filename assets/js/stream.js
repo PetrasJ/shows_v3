@@ -112,14 +112,6 @@ $(document).ready(function () {
         }
     }
 
-    videoBlock.click(function () {
-        if (this.paused === false) {
-            this.pause();
-        } else {
-            this.play();
-        }
-    });
-
     $(document).keydown(function (e) {
         switch (e.which) {
             case 37: // left
