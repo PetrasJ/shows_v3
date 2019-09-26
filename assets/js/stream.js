@@ -13,26 +13,23 @@ $(document).ready(function () {
     listVideo.click(function () {
         stopStream();
     });
-    $('a').click(function () {
+
+    $('a, button').click(function () {
         stopStream();
     });
-    $('button').click(function () {
-        stopStream();
-    });
+
     let playNext = true;
     let currentVideo;
     let videoToPlay = null;
     let videoToPlayID = null;
-    if (window.location.hash) {
-        playNext = false;
-        videoToPlay = decodeURIComponent(window.location.hash.substring(1));
-    }
     let count = 0;
+    const videoArea = $('#video-area');
+
     listVideo.each(function () {
         count++;
         $(this).attr('id', count);
         if ($(this).data('movie-url') === videoToPlay) {
-            $('#video-area').attr({
+            videoArea.attr({
                 'src': window.baseUrl + 'video/' + videoToPlay,
             });
             videoToPlayID = count;
@@ -49,48 +46,35 @@ $(document).ready(function () {
     if (videoToPlayID != null) {
         video(videoToPlayID);
     }
+
     listVideo.on('click', function () {
-        $('#video-area').attr({
+        videoArea.attr({
             'src': window.baseUrl + 'video/' + $(this).data('movie-url'),
             'poster': '',
             'autoplay': 'autoplay'
         });
         video($(this).attr('id'));
-        ChangeUrl('', $('#' + currentVideo).data('movie-url'));
     });
-    if (videoToPlay == null) {
-        $('#video-area').attr({
-            'src': window.baseUrl + 'video/' + listVideo.eq(0).data('movie-url'),
-            'autoplay': 'autoplay'
-        });
-        video($('#playlist li').eq(0).attr('id'));
-    } else {
-        $('#video-area').attr({
-            'poster': '',
-            'autoplay': 'autoplay'
-        })
-    }
+
+    videoArea.attr({
+        'src': window.baseUrl + 'video/' + listVideo.eq(0).data('movie-url'),
+        'autoplay': 'autoplay'
+    });
+
+    video($('#playlist li').eq(0).attr('id'));
+
     $('.next').click(function () {
         next();
     });
+
     $('.prev').click(function () {
         prev();
     });
+
     const videoBlock = $('video');
     videoBlock.on('ended', function () {
         if (playNext === true) next();
     });
-
-    function ChangeUrl(title, url) {
-        playNext = true;
-        if (url === 'undefined') {
-            if (typeof (history.pushState) != 'undefined') {
-                let obj = {Title: title, Url: url};
-                let urlToHash = encodeURIComponent(obj.Url);
-                history.pushState(obj, obj.Title, '#' + urlToHash);
-            }
-        }
-    }
 
     function next() {
         if (currentVideo !== count) video(parseInt(currentVideo) + 1);
@@ -100,12 +84,11 @@ $(document).ready(function () {
         }
         let currentVideoLink = $('#' + currentVideo);
 
-        $('#video-area').attr({
+        videoArea.attr({
             'src': window.baseUrl + 'video/' + currentVideoLink.data('movie-url'),
             'poster': '',
             'autoplay': 'autoplay'
         });
-        ChangeUrl('', currentVideoLink.data('movie-url'));
     }
 
     function prev() {
@@ -114,20 +97,18 @@ $(document).ready(function () {
             video(count);
         }
         let currentVideoLink = $('#' + currentVideo);
-        $('#video-area').attr({
+        videoArea.attr({
             'src': window.baseUrl + 'video/' + currentVideoLink.data('movie-url'),
             'poster': '',
             'autoplay': 'autoplay'
         });
-        ChangeUrl('', currentVideoLink.data('movie-url'));
     }
 
     function play() {
-        const videoArea = $('#video-area')[0];
-        if (videoArea.paused === true) {
-            videoArea.play();
+        if (videoArea[0].paused === true) {
+            videoArea[0].play();
         } else {
-            videoArea.pause();
+            videoArea[0].pause();
         }
     }
 
@@ -138,6 +119,7 @@ $(document).ready(function () {
             this.play();
         }
     });
+
     $(document).keydown(function (e) {
         switch (e.which) {
             case 37: // left
