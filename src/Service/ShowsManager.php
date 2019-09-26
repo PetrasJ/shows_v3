@@ -8,8 +8,6 @@ use App\Entity\User;
 use App\Entity\UserShow;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Exception;
 use GuzzleHttp\Client;
 
@@ -102,23 +100,21 @@ class ShowsManager
         return ['shows' => $shows, 'userShows' => $userShows];
     }
 
-    public function getShow($showId): ?array
+    public function getShow(int $showId): ?array
     {
         try {
             return $this->entityManager
                 ->getRepository(UserShow::class)
                 ->getUserShow($this->user, $showId)
                 ;
-        } catch (NonUniqueResultException $e) {
-            $this->error($e->getMessage(), [__METHOD__]);
-        } catch (NoResultException $e) {
+        } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
         }
 
         return null;
     }
 
-    public function getNextEpisode($showId): ?array
+    public function getNextEpisode(int $showId): ?array
     {
         try {
             return $this->entityManager
@@ -132,8 +128,11 @@ class ShowsManager
         }
     }
 
-    public function updateShow($showId): ?string
+    public function updateShow(?int $showId): ?string
     {
+        if (!$showId) {
+            return null;
+        }
         try {
             $show = json_decode($this->getClient()->get(
                 sprintf('%s/%d', self::API_URL, $showId))->getBody()
@@ -167,6 +166,9 @@ class ShowsManager
         return $show->name;
     }
 
+    /**
+     * @param array $shows
+     */
     private function addShows($shows): void
     {
         foreach ($shows as $show) {
@@ -174,6 +176,9 @@ class ShowsManager
         }
     }
 
+    /**
+     * @param array $shows
+     */
     private function updateShows($shows): void
     {
         foreach ($shows as $show) {
@@ -228,9 +233,6 @@ class ShowsManager
         ;
     }
 
-    /**
-     * @return array
-     */
     private function checkForNewShows(): array
     {
         $lastShow = $this->entityManager->getRepository(Show::class)->findOneBy([], ['id' => 'desc']);

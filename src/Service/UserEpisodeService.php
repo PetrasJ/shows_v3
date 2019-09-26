@@ -24,7 +24,7 @@ class UserEpisodeService
         $this->user = $storage->getUser();
     }
 
-    public function getUnwatchedEpisodes($showId)
+    public function getUnwatchedEpisodes(int $showId)
     {
         try {
             return $this->entityManager
@@ -36,7 +36,7 @@ class UserEpisodeService
         }
     }
 
-    public function update($id, $userShowId, $action): void
+    public function update(int $id, int $userShowId, array $action): void
     {
         $episode = $this->entityManager->find(Episode::class, $id);
         $userEpisode = $this->entityManager
