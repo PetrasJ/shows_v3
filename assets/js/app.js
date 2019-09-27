@@ -1,8 +1,6 @@
-require('../css/app.css');
 const $ = require('jquery');
 window.$ = $;
 require('bootstrap');
-
 require('jquery-ui/ui/widgets/autocomplete');
 require('bootstrap-select');
 require('bootstrap-datepicker');
