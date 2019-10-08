@@ -29,9 +29,7 @@ $(document).ready(function () {
         count++;
         $(this).attr('id', count);
         if ($(this).data('movie-url') === videoToPlay) {
-            videoArea.attr({
-                'src': window.baseUrl + 'video/' + videoToPlay,
-            });
+            play(videoToPlay, false);
             videoToPlayID = count;
         }
     });
@@ -48,18 +46,11 @@ $(document).ready(function () {
     }
 
     listVideo.on('click', function () {
-        videoArea.attr({
-            'src': window.baseUrl + 'video/' + $(this).data('movie-url'),
-            'poster': '',
-            'autoplay': 'autoplay'
-        });
+        play($(this).data('movie-url'), 'autoplay');
         video($(this).attr('id'));
     });
 
-    videoArea.attr({
-        'src': window.baseUrl + 'video/' + listVideo.eq(0).data('movie-url'),
-        'autoplay': 'autoplay'
-    });
+    play(listVideo.eq(0).data('movie-url'), 'autoplay');
 
     video($('#playlist li').eq(0).attr('id'));
 
@@ -84,11 +75,7 @@ $(document).ready(function () {
         }
         let currentVideoLink = $('#' + currentVideo);
 
-        videoArea.attr({
-            'src': window.baseUrl + 'video/' + currentVideoLink.data('movie-url'),
-            'poster': '',
-            'autoplay': 'autoplay'
-        });
+        play(currentVideoLink.data('movie-url'), 'autoplay');
     }
 
     function prev() {
@@ -97,14 +84,20 @@ $(document).ready(function () {
             video(count);
         }
         let currentVideoLink = $('#' + currentVideo);
-        videoArea.attr({
-            'src': window.baseUrl + 'video/' + currentVideoLink.data('movie-url'),
-            'poster': '',
-            'autoplay': 'autoplay'
-        });
+        play(currentVideoLink.data('movie-url'), 'autoplay');
     }
 
-    function play() {
+    function play(movieUrl, autoplay) {
+        videoArea.attr({
+            'src': window.baseUrl + 'video/' + movieUrl,
+            'poster': '',
+            'autoplay': autoplay
+        });
+
+        $('#video-block').find('.title').html(movieUrl);
+    }
+
+    function playPause() {
         if (videoArea[0].paused === true) {
             videoArea[0].play();
         } else {
@@ -127,7 +120,7 @@ $(document).ready(function () {
                 next();
                 break;
             case 32: // space
-                play();
+                playPause();
                 break;
             default:
                 return; // exit this handler for other keys
