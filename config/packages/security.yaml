@@ -31,9 +31,9 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/en/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/en/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/en/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/en/calendar, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/en/admin/, roles: ROLE_ADMIN }
+        - { path: ^/(%app_locales%)/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/calendar, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/admin/, roles: ROLE_ADMIN }
         - { path: ^/, roles: [IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_REMEMBERED] }

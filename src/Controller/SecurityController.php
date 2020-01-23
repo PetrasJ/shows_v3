@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use App\Entity\User;
@@ -45,7 +44,9 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-        throw new Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
+        throw new Exception(
+            'This method can be blank - it will be intercepted by the logout key on your firewall'
+        );
     }
 
     /**
@@ -56,8 +57,12 @@ class SecurityController extends AbstractController
      * @param LoginFormAuthenticator $authenticator
      * @return Response
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        GuardAuthenticatorHandler $guardHandler,
+        LoginFormAuthenticator $authenticator
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
