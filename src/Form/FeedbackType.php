@@ -23,25 +23,25 @@ class FeedbackType extends AbstractType
         $builder
             ->setMethod('post')
             ->add('name', TextType::class, [
-                'label' => 'feedback.name',
+                'label' => 'name',
                 'attr' => [
-                    'placeholder' => 'feedback.name',
+                    'placeholder' => 'name',
                 ]
             ])
             ->add('email', EmailType::class, [
-                'label' => 'feedback.email',
+                'label' => 'email',
                 'attr' => [
-                    'placeholder' => 'feedback.email',
+                    'placeholder' => 'email',
                 ]
             ])
             ->add('message', TextareaType::class, [
-                'label' => 'feedback.message',
+                'label' => 'message',
                 'attr' => [
-                    'placeholder' => 'feedback.message',
+                    'placeholder' => 'message',
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'feedback.send',
+                'label' => 'send',
             ])
         ;;
     }

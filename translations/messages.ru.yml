@@ -46,6 +46,9 @@ menu:
     settings: Настройки
     update_all: обновить все
     videos: Видео
+password: пароль
+remember_me: запомнить
+sign_in: Войдите в систему
 calendar:
     watched: смотри
     Monday: понедельник
@@ -100,13 +103,12 @@ Hours: Часы
 Minutes: Минуты
 total_watched: В целом
 Show/Hide Wached Episodes: Показывать / скрывать эпизодические эпизоды
-feedback:
-    name: имя
-    email: E. почта
-    message: Сообщение
-    sent: отправлено сообщение
-    send: Отправить
-    feedback: обратная связь
+name: имя
+email: E. почта
+message: Сообщение
+sent: отправлено сообщение
+send: Отправить
+feedback: обратная связь
 assign facebook ID: назначить идентификатор facebook
 Connect facebook: подключить facebook
 Fail: Ошибка

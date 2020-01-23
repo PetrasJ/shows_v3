@@ -81,7 +81,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('user_settings') }}">{{ 'menu.settings'|trans }}</a>
 
-                            <a class="dropdown-item" href="{{ path('app_login') }}">{{ 'menu.change_password'|trans }}</a>
+                            {#<a class="dropdown-item" href="{{ path('app_login') }}">{{ 'menu.change_password'|trans }}</a>#}
                             <a class="dropdown-item"
                                href="{{ path('app_logout') }}">{{ 'menu.logout'|trans }}</a>
                         </div>
@@ -111,7 +111,7 @@
     <div class="container">
         <span class="float-left">{{ 'source'|trans }} <a class="text-dark" href="http://www.tvmaze.com" target="_blank">TVmaze</a></span>
         <span class="float-right">
-            <a class="text-dark" href="{{ path('feedback') }}">{{ 'feedback.feedback'|trans }}</a>
+            <a class="text-dark" href="{{ path('feedback') }}">{{ 'feedback'|trans }}</a>
             <a class="text-dark" target="_blank" href="https://github.com/PetrasJ/shows_v3">github</a></span>
     </div>
 </footer>

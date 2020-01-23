@@ -46,6 +46,9 @@ menu:
     settings: Settings
     update_all: Update All
     videos: Videos
+password: Password
+remember_me: Remember me
+sign_in: Sign in
 calendar:
     watched: Watched
     Monday: Monday
@@ -100,13 +103,12 @@ Hours: Hours
 Minutes: Minutes
 total_watched: Total watched
 Show/Hide Wached Episodes: Show/Hide Wached Episodes
-feedback:
-    name: Name
-    email: E-mail
-    message: Message
-    sent: Feedback sent
-    send: Send
-    feedback: feedback
+name: Name
+email: E-mail
+message: Message
+sent: Feedback sent
+send: Send
+feedback: feedback
 assign facebook ID: assign facebook ID
 Connect facebook: Connect facebook
 Fail: Fail

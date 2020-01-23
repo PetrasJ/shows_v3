@@ -32,8 +32,8 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/en/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/en/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/en/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/en/calendar, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, roles: ROLE_ADMIN }
+        - { path: ^/en/admin/, roles: ROLE_ADMIN }
         - { path: ^/, roles: [IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_REMEMBERED] }

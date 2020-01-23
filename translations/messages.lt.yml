@@ -46,6 +46,9 @@ menu:
     settings: Nustatymai
     update_all: Atnaujinti viską
     videos: Video
+password: Slaptažodis
+remember_me: Prisiminti
+sign_in: Prisijungti
 calendar:
     watched: Matyti
     Monday: Pirmadienis
@@ -100,13 +103,12 @@ Hours: Valandos
 Minutes: Minutės
 total_watched: Viso pražiūrėta
 Show/Hide Wached Episodes: Rodyti/Slėpti Matytus Epizodus
-feedback:
-    name: Vardas
-    email: El. paštas
-    message: Žinutė
-    sent: Atsiliepimas nusiųstas
-    send: Siųsti
-    feedback: atsiliepimas
+name: Vardas
+email: El. paštas
+message: Žinutė
+sent: Atsiliepimas nusiųstas
+send: Siųsti
+feedback: atsiliepimas
 assign facebook ID: Priskirti facebook ID
 Connect facebook: Prijungti facebook
 Fail: Klaida
