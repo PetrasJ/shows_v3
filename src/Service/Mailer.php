@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Feedback;
+use App\Entity\User;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -39,6 +40,21 @@ class Mailer
 
         $this->entityManager->persist($feedback);
         $this->entityManager->flush();
+
+        try {
+            $this->mailer->send($message);
+        } catch (Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+    }
+
+    public function sendConfirmation(User $user): void
+    {
+        $message = (new Swift_Message('shows.botai.eu email confirmation'))
+            ->setFrom('no-reply@botai.eu')
+            ->setTo($user->getEmail())
+            ->setBody('test confirmation' . PHP_EOL)
+        ;
 
         try {
             $this->mailer->send($message);
