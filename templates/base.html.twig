@@ -81,9 +81,9 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('user_settings') }}">{{ 'menu.settings'|trans }}</a>
 
-                            <a class="dropdown-item" href="{{ path('fos_user_change_password') }}">{{ 'menu.change_password'|trans }}</a>
+                            <a class="dropdown-item" href="{{ path('app_login') }}">{{ 'menu.change_password'|trans }}</a>
                             <a class="dropdown-item"
-                               href="{{ path('fos_user_security_logout') }}">{{ 'menu.logout'|trans }}</a>
+                               href="{{ path('app_logout') }}">{{ 'menu.logout'|trans }}</a>
                         </div>
                     </li>
                 {% else %}
@@ -93,10 +93,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('fos_user_registration_register') }}">{{ 'menu.register'|trans }}</a>
+                        <a class="nav-link" href="{{ path('app_register') }}">{{ 'menu.register'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('fos_user_security_login') }}">{{ 'menu.login'|trans }}</a>
+                        <a class="nav-link" href="{{ path('app_login') }}">{{ 'menu.login'|trans }}</a>
                     </li>
                 {% endif %}
             </ul>
