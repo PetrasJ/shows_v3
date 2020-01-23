@@ -287,6 +287,20 @@ td.current-day .inner {
   padding-left: 35px;
 }
 
+.flash-message {
+  position: absolute;
+  bottom: 30px;
+  z-index: 9999;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.flash-notice {
+  background-color: rgba(0,255,0,0.1);
+}
+
 @media screen and (max-width: 767px) {
   .image-list {
     display: block;

@@ -42,10 +42,11 @@ menu:
     register: регистр
     login: Авторизоваться
     logout: выйти из системы
-    change_password: Сменить пароль
     settings: Настройки
     update_all: обновить все
     videos: Видео
+change_password: Сменить пароль
+password_changed: Пароль изменен
 password: пароль
 remember_me: запомнить
 sign_in: Войдите в систему

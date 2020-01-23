@@ -81,7 +81,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('user_settings') }}">{{ 'menu.settings'|trans }}</a>
 
-                            {#<a class="dropdown-item" href="{{ path('app_login') }}">{{ 'menu.change_password'|trans }}</a>#}
+                            <a class="dropdown-item" href="{{ path('app_change_password') }}">{{ 'change_password'|trans }}</a>
                             <a class="dropdown-item"
                                href="{{ path('app_logout') }}">{{ 'menu.logout'|trans }}</a>
                         </div>
@@ -106,6 +106,7 @@
 
 <div id="content" class="container p-1">
     {% block body %}{% endblock %}
+    {% include '_inc/flash-messages.html.twig' %}
 </div>
 <footer class="footer bg-light text-dark">
     <div class="container">

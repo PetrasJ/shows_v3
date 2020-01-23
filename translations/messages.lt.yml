@@ -42,10 +42,11 @@ menu:
     register: Registruotis
     login: Prisijungti
     logout: Atsijungti
-    change_password: Keisti slaptažodį
     settings: Nustatymai
     update_all: Atnaujinti viską
     videos: Video
+change_password: Keisti slaptažodį
+password_changed: Slaptažodis pakeistas
 password: Slaptažodis
 remember_me: Prisiminti
 sign_in: Prisijungti

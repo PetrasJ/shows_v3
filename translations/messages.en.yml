@@ -42,10 +42,11 @@ menu:
     register: Register
     login: Login
     logout: Logout
-    change_password: Change Password
     settings: Settings
     update_all: Update All
     videos: Videos
+change_password: Change Password
+password_changed: Password changed
 password: Password
 remember_me: Remember me
 sign_in: Sign in
