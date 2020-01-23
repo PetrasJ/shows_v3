@@ -48,6 +48,7 @@ menu:
 change_password: Сменить пароль
 password_changed: Пароль изменен
 password: пароль
+confirm_password: Введите пароль еще раз
 remember_me: запомнить
 sign_in: Войдите в систему
 calendar:

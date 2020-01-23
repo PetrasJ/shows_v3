@@ -48,6 +48,7 @@ menu:
 change_password: Keisti slaptažodį
 password_changed: Slaptažodis pakeistas
 password: Slaptažodis
+confirm_password: Pakartoti Slaptažodį
 remember_me: Prisiminti
 sign_in: Prisijungti
 calendar:
