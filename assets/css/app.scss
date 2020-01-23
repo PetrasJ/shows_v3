@@ -301,6 +301,10 @@ td.current-day .inner {
   background-color: rgba(0,255,0,0.1);
 }
 
+.flash-error {
+  background-color: rgba(255,0,0,0.1);
+}
+
 @media screen and (max-width: 767px) {
   .image-list {
     display: block;

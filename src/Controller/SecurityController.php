@@ -10,6 +10,7 @@ use App\Service\Mailer;
 use App\Service\Storage;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -81,6 +82,7 @@ class SecurityController extends AbstractController
                 )
             );
 
+            $user->setEmailConfirmationToken(md5($user->getEmail() . $user->getPassword()));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -100,6 +102,33 @@ class SecurityController extends AbstractController
         return $this->render('security/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/confirm-email/{token}", name="confirm_email")
+     * @param string $token
+     * @return RedirectResponse|Response
+     * @throws Exception
+     */
+    public function confirmEmail($token)
+    {
+        /** @var User $user */
+        $user = $this
+            ->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneBy(['emailConfirmationToken' => $token]);
+
+        if ($user) {
+            $this->addFlash('notice', 'email_confirmed');
+            $entityManager = $this->getDoctrine()->getManager();
+            $user->setEmailConfirmationToken(null);
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('security/email-confirmation.html.twig');
     }
 
     /**

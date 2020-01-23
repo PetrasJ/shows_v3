@@ -53,7 +53,9 @@ class Mailer
         $message = (new Swift_Message('shows.botai.eu email confirmation'))
             ->setFrom('no-reply@botai.eu')
             ->setTo($user->getEmail())
-            ->setBody('test confirmation' . PHP_EOL)
+            ->setBody('test confirmation: ' . PHP_EOL
+            . ' https://test.botai.eu/en/confirm-email/' . $user->getEmailConfirmationToken()
+            )
         ;
 
         try {

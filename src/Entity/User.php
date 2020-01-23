@@ -27,6 +27,11 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $emailConfirmationToken;
+
+    /**
      * @ORM\Column(type="array", nullable=true)
      */
     private $roles = [];
@@ -99,6 +104,25 @@ class User implements UserInterface
     public function getUsername()
     {
         return $this->email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmailConfirmationToken()
+    {
+        return $this->emailConfirmationToken;
+    }
+
+    /**
+     * @param ?string $emailConfirmationToken
+     * @return User
+     */
+    public function setEmailConfirmationToken($emailConfirmationToken)
+    {
+        $this->emailConfirmationToken = $emailConfirmationToken;
+
+        return $this;
     }
 
     /**
