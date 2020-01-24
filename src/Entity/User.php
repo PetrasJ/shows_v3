@@ -43,6 +43,16 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $resetPasswordToken;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $resetPasswordRequestedAt;
+
+    /**
      * @var int
      * @ORM\Column(type="integer", nullable=false)
      */
@@ -158,6 +168,42 @@ class User implements UserInterface
     public function setPassword(string $password): User
     {
         $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResetPasswordToken()
+    {
+        return $this->resetPasswordToken;
+    }
+
+    /**
+     * @param mixed $resetPasswordToken
+     * @return User
+     */
+    public function setResetPasswordToken($resetPasswordToken)
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResetPasswordRequestedAt()
+    {
+        return $this->resetPasswordRequestedAt;
+    }
+
+    /**
+     * @param mixed $resetPasswordRequestedAt
+     * @return User
+     */
+    public function setResetPasswordRequestedAt($resetPasswordRequestedAt)
+    {
+        $this->resetPasswordRequestedAt = $resetPasswordRequestedAt;
         return $this;
     }
 

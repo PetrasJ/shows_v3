@@ -24,8 +24,11 @@
 
     <div class="checkbox mb-3">
         <label>
-            <input type="checkbox" name="_remember_me"> {{ 'remember_me'|trans }}
+            <input type="checkbox" name="_remember_me" id="remember_me"> {{ 'remember_me'|trans }}
         </label>
+    </div>
+    <div>
+        <a href="{{ path('app_forgot_password') }}">{{ 'forgot_password'|trans }}</a>
     </div>
 
     <button class="btn btn-lg btn-primary" type="submit">

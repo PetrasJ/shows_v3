@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Swift_Mailer;
 use Swift_Message;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Mailer
 {
@@ -17,12 +19,21 @@ class Mailer
     private $entityManager;
     private $mailer;
     private $user;
+    private $router;
+    private $translator;
 
-    public function __construct(EntityManagerInterface $entityManager, Swift_Mailer $mailer, Storage $storage)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        Swift_Mailer $mailer,
+        Storage $storage,
+        RouterInterface $router,
+        TranslatorInterface $translator
+    ) {
         $this->entityManager = $entityManager;
         $this->mailer = $mailer;
         $this->user = $storage->getUser();
+        $this->router = $router;
+        $this->translator = $translator;
     }
 
     public function sendFeedback(Feedback $feedback): void
@@ -50,11 +61,40 @@ class Mailer
 
     public function sendConfirmation(User $user): void
     {
+        $url = sprintf(
+            '%s://%s%s',
+            $this->router->getContext()->getScheme(),
+            $this->router->getContext()->getHost(),
+            $this->router->generate('app_confirm_email', ['token' => $user->getEmailConfirmationToken()])
+        );
         $message = (new Swift_Message('shows.botai.eu email confirmation'))
             ->setFrom('no-reply@botai.eu')
             ->setTo($user->getEmail())
-            ->setBody('test confirmation: ' . PHP_EOL
-            . ' https://test.botai.eu/en/confirm-email/' . $user->getEmailConfirmationToken()
+            ->setBody($this->translator->trans('confirm_email') . ': ' . PHP_EOL
+            . $url
+            )
+        ;
+
+        try {
+            $this->mailer->send($message);
+        } catch (Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+    }
+
+    public function sendResetPassword(User $user): void
+    {
+        $url = sprintf(
+            '%s://%s%s',
+            $this->router->getContext()->getScheme(),
+            $this->router->getContext()->getHost(),
+            $this->router->generate('app_reset_password', ['token' => $user->getResetPasswordToken()])
+        );
+        $message = (new Swift_Message('shows.botai.eu reset password'))
+            ->setFrom('no-reply@botai.eu')
+            ->setTo($user->getEmail())
+            ->setBody($this->translator->trans('reset_password') . ': ' . PHP_EOL
+                . $url
             )
         ;
 

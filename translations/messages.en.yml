@@ -49,6 +49,7 @@ change_password: Change Password
 password_changed: Password changed
 password: Password
 confirm_password: Confirm Password
+confirm_email: Confirm Email
 remember_me: Remember me
 sign_in: Sign in
 calendar:

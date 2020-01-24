@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ChangePasswordType;
+use App\Form\ForgotPasswordType;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
 use App\Service\Mailer;
 use App\Service\Storage;
+use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -82,7 +84,7 @@ class SecurityController extends AbstractController
                 )
             );
 
-            $user->setEmailConfirmationToken(hash('sha256', $user->getEmail() . $user->getPassword()));
+            $user->setEmailConfirmationToken(hash('sha256', $user->getEmail() . $user->getPassword() . time()));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -120,15 +122,18 @@ class SecurityController extends AbstractController
 
         if ($user) {
             $this->addFlash('notice', 'email_confirmed');
-            $entityManager = $this->getDoctrine()->getManager();
             $user->setEmailConfirmationToken(null);
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('security/email-confirmation.html.twig');
+        return $this->render(
+            'error.html.twig',
+            ['title' => 'confirm_email', 'message' => 'confirmation_not_found']
+        );
     }
 
     /**
@@ -168,5 +173,96 @@ class SecurityController extends AbstractController
         return $this->render('security/change-password.html.twig', [
             'changePasswordForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/forgot-password", name="forgot_password")
+     * @param Request $request
+     * @param Mailer $mailer
+     * @return Response
+     * @throws Exception
+     */
+    public function forgotPassword(Request $request, Mailer $mailer): Response
+    {
+        $form = $this->createForm(ForgotPasswordType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $this
+                ->getDoctrine()
+                ->getRepository(User::class)
+                ->findOneBy(['email' => $request->get('forgot_password')['email']]);
+
+            if ($user) {
+                $user->setResetPasswordToken(hash('sha256', $user->getEmail() . $user->getPassword() . time()));
+                $user->setResetPasswordRequestedAt(new DateTime());
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash(
+                    'notice',
+                    'email_sent'
+                );
+            }
+        }
+
+        return $this->render('security/forgot-password.html.twig', [
+            'forgotPasswordForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/reset-password/{token}", name="reset_password")
+     * @param $token
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return Response
+     */
+    public function resetPassword(
+        $token,
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder
+    ): Response
+    {
+        /** @var User $user */
+        $user = $this
+            ->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneBy(['resetPasswordToken' => $token]);
+
+        if ($user) {
+            $form = $this->createForm(ChangePasswordType::class, $user);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash(
+                    'notice',
+                    'password_changed'
+                );
+            }
+
+            return $this->render('security/change-password.html.twig', [
+                'changePasswordForm' => $form->createView(),
+            ]);
+        } else {
+            return $this->render(
+                'error.html.twig',
+                ['title' => 'reset_password', 'message' => 'reset_password_token_not_found']
+            );
+        }
     }
 }

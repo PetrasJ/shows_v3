@@ -33,7 +33,9 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/(%app_locales%)/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(%app_locales%)/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%app_locales%)/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/forgot-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/confirm-email, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/reset-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(%app_locales%)/calendar, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(%app_locales%)/admin/, roles: ROLE_ADMIN }
         - { path: ^/, roles: [IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_REMEMBERED] }

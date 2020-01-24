@@ -49,6 +49,7 @@ change_password: Keisti slaptažodį
 password_changed: Slaptažodis pakeistas
 password: Slaptažodis
 confirm_password: Pakartoti Slaptažodį
+confirm_email: Patvirtinti El. paštą
 remember_me: Prisiminti
 sign_in: Prisijungti
 calendar:
