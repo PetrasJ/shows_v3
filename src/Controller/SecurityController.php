@@ -82,7 +82,7 @@ class SecurityController extends AbstractController
                 )
             );
 
-            $user->setEmailConfirmationToken(md5($user->getEmail() . $user->getPassword()));
+            $user->setEmailConfirmationToken(hash('sha256', $user->getEmail() . $user->getPassword()));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
