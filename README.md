@@ -1,6 +1,6 @@
 https://shows.botai.eu
 
-sample user: test pass: test 
+sample user: test@test.com pass: test 
 
 ## Episode Calendar
 
