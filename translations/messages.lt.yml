@@ -54,6 +54,8 @@ remember_me: Prisiminti
 sign_in: Prisijungti
 forgot_password: Pamiršau slaptažodį
 reset_password: Atstatyti slaptažodį
+email_sent: El. pašto laiškas išsiųstas
+email_is_not_confirmed: El. paštas nepatvirtintas
 calendar:
     watched: Matyti
     Monday: Pirmadienis

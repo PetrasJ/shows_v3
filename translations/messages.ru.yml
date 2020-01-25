@@ -54,6 +54,8 @@ remember_me: запомнить
 sign_in: Войдите в систему
 forgot_password: Я забыл свой пароль
 reset_password: сброс пароля
+email_sent: E. Письмо было отправлено
+email_is_not_confirmed: E. адрес электронной почты не подтвержден
 calendar:
     watched: смотри
     Monday: понедельник
