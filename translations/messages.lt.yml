@@ -52,6 +52,8 @@ confirm_password: Pakartoti Slaptažodį
 confirm_email: Patvirtinti El. paštą
 remember_me: Prisiminti
 sign_in: Prisijungti
+forgot_password: Pamiršau slaptažodį
+reset_password: Atstatyti slaptažodį
 calendar:
     watched: Matyti
     Monday: Pirmadienis

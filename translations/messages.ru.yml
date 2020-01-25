@@ -52,6 +52,8 @@ confirm_password: Введите пароль еще раз
 confirm_email: подтверждение электронной почты
 remember_me: запомнить
 sign_in: Войдите в систему
+forgot_password: Я забыл свой пароль
+reset_password: сброс пароля
 calendar:
     watched: смотри
     Monday: понедельник

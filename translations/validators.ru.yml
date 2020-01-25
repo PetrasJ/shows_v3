@@ -2,3 +2,8 @@ user:
     password:
         difficulty: Легко
         short: Короткие
+please_enter_a_valid_email_address: введите правильный адрес электронной почты.
+please_enter_a_password: Пожалуйста, введите пароль
+your_password_should_be_at_least_6_characters: Пароль должен содержать не менее 6 символов
+your_password_does_not_match_the_confirmation: Ваш пароль не соответствует подтверждению.
+there_is_already_an_account_with_this_email: E. Email уже зарегистрирован

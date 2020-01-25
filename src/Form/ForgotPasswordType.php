@@ -14,7 +14,7 @@ class ForgotPasswordType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Email(['message' => 'Please enter a valid email address.'])
+                    new Email(['message' => 'please_enter_a_valid_email_address'])
                 ]
             ]);
     }

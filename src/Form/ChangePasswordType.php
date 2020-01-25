@@ -23,18 +23,18 @@ class ChangePasswordType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'please_enter_a_password',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'your_password_should_be_at_least_6_characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ])
                 ],
                 'first_options' => ['label' => 'password'],
                 'second_options' => ['label' => 'confirm_password'],
-                'invalid_message' => 'Your password does not match the confirmation.'
+                'invalid_message' => 'your_password_does_not_match_the_confirmation'
             ])
         ;
     }

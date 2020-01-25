@@ -22,17 +22,18 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Email(['message' => 'Please enter a valid email address.'])
-                ]
+                    new Email(['message' => 'please_enter_a_valid_email_address'])
+                ],
+                'label' => 'email'
             ])
-            ->add('agreeTerms', CheckboxType::class, [
+            /*->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
-            ])
+            ])*/
             ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -40,18 +41,18 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'please_enter_a_password',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'your_password_should_be_at_least_6_characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ])
                 ],
                 'first_options' => ['label' => 'password'],
                 'second_options' => ['label' => 'confirm_password'],
-                'invalid_message' => 'Your password does not match the confirmation.'
+                'invalid_message' => 'your_password_does_not_match_the_confirmation'
             ])
         ;
     }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}{{ 'menu.login'|trans}}{% endblock %}
 
 {% block body %}
 <form method="post">
@@ -13,8 +13,6 @@
             {{ app.user.username }}, <a href="{{ path('app_logout') }}">{{ 'menu.logout'|trans }}</a>
         </div>
     {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputEmail">{{ 'email'|trans }}</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
     <label for="inputPassword">{{ 'password'|trans }}</label>
