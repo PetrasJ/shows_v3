@@ -42,10 +42,22 @@ menu:
     register: Registruotis
     login: Prisijungti
     logout: Atsijungti
-    change_password: Keisti slaptažodį
     settings: Nustatymai
     update_all: Atnaujinti viską
     videos: Video
+change_password: Keisti slaptažodį
+password_changed: Slaptažodis pakeistas
+password: Slaptažodis
+confirm_password: Pakartoti Slaptažodį
+confirm_email: Patvirtinti El. paštą
+remember_me: Prisiminti
+sign_in: Prisijungti
+forgot_password: Pamiršau slaptažodį
+reset_password: Atstatyti slaptažodį
+email_sent: El. pašto laiškas išsiųstas
+email_is_not_confirmed: El. paštas nepatvirtintas
+reset_password_token_not_found: Slaptažodžio atstatymo raktas nerastas
+confirmation_not_found: Patvirtinimas nerastas
 calendar:
     watched: Matyti
     Monday: Pirmadienis
@@ -100,13 +112,12 @@ Hours: Valandos
 Minutes: Minutės
 total_watched: Viso pražiūrėta
 Show/Hide Wached Episodes: Rodyti/Slėpti Matytus Epizodus
-feedback:
-    name: Vardas
-    email: El. paštas
-    message: Žinutė
-    sent: Atsiliepimas nusiųstas
-    send: Siųsti
-    feedback: atsiliepimas
+name: Vardas
+email: El. paštas
+message: Žinutė
+sent: Atsiliepimas nusiųstas
+send: Siųsti
+feedback: atsiliepimas
 assign facebook ID: Priskirti facebook ID
 Connect facebook: Prijungti facebook
 Fail: Klaida

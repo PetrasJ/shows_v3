@@ -42,10 +42,22 @@ menu:
     register: регистр
     login: Авторизоваться
     logout: выйти из системы
-    change_password: Сменить пароль
     settings: Настройки
     update_all: обновить все
     videos: Видео
+change_password: Сменить пароль
+password_changed: Пароль изменен
+password: пароль
+confirm_password: Введите пароль еще раз
+confirm_email: подтверждение электронной почты
+remember_me: запомнить
+sign_in: Войдите в систему
+forgot_password: Я забыл свой пароль
+reset_password: сброс пароля
+email_sent: E. Письмо было отправлено
+email_is_not_confirmed: E. адрес электронной почты не подтвержден
+reset_password_token_not_found: Ключ сброса пароля не найден
+confirmation_not_found: Проверка не найдена
 calendar:
     watched: смотри
     Monday: понедельник
@@ -100,13 +112,12 @@ Hours: Часы
 Minutes: Минуты
 total_watched: В целом
 Show/Hide Wached Episodes: Показывать / скрывать эпизодические эпизоды
-feedback:
-    name: имя
-    email: E. почта
-    message: Сообщение
-    sent: отправлено сообщение
-    send: Отправить
-    feedback: обратная связь
+name: имя
+email: E. почта
+message: Сообщение
+sent: отправлено сообщение
+send: Отправить
+feedback: обратная связь
 assign facebook ID: назначить идентификатор facebook
 Connect facebook: подключить facebook
 Fail: Ошибка

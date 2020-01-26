@@ -20,6 +20,12 @@ const app = {
         this.initCalendar();
         this.initTooltip();
         this.initBackToTop();
+        this.initFlashMessages();
+    },
+    initFlashMessages: function () {
+        setTimeout(function() {
+            $('.flash-message').fadeOut('fast');
+        }, 5000);
     },
     initBackToTop: function () {
         const backToTop = $('#back-to-top');
