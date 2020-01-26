@@ -115,11 +115,11 @@ class SecurityController extends AbstractController
     {
         $user = $this->userManager->getUserByEmailConfirmationToken($token);
         if ($user) {
-            $this->addFlash('notice', 'email_confirmed');
+            $this->addFlash('success', 'email_confirmed');
             $user->setEmailConfirmationToken(null);
             $this->userManager->save($user);
         } else {
-            $this->addFlash('error', 'confirmation_not_found');
+            $this->addFlash('danger', 'confirmation_not_found');
         }
 
         return $this->redirectToRoute('app_login');
@@ -149,7 +149,7 @@ class SecurityController extends AbstractController
                 )
             );
             $this->userManager->save($user);
-            $this->addFlash('notice', 'password_changed');
+            $this->addFlash('success', 'password_changed');
         }
 
         return $this->render('security/change-password.html.twig', [
@@ -176,7 +176,7 @@ class SecurityController extends AbstractController
                 $user->setResetPasswordRequestedAt(new DateTime());
                 $this->userManager->save($user);
                 $mailer->sendResetPassword($user);
-                $this->addFlash('notice', 'email_sent');
+                $this->addFlash('success', 'email_sent');
             }
         }
 
@@ -216,7 +216,7 @@ class SecurityController extends AbstractController
                     )
                 );
                 $this->userManager->save($user);
-                $this->addFlash('notice', 'password_changed');
+                $this->addFlash('success', 'password_changed');
 
                 return $this->redirectToRoute('app_login');
             }

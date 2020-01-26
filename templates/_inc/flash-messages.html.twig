@@ -1,8 +1,12 @@
 {% for label, messages in app.flashes %}
     {% for message in messages %}
-        <div class="container flash-message flash-{{ label }}">
-            <i class="fas fa-times"></i>
-            {{ message|trans }}
+        <div class="card container flash-container text-white bg-{{ label }}">
+            <div class="card-body">
+                <div class="flash-message">
+                    <i class="fas fa-times"></i>
+                    {{ message|trans }}
+                </div>
+            </div>
         </div>
     {% endfor %}
 {% endfor %}

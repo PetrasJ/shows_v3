@@ -287,15 +287,22 @@ td.current-day .inner {
   padding-left: 35px;
 }
 
-.flash-message {
+.flash-container {
+  padding: 0;
   top: 50%;
   transform: translateY(-20px);
   position: absolute;
   z-index: 9999;
-  width: 100%;
   text-align: center;
+  opacity: 0.9;
+}
+
+.flash-container .card-body {
+  padding: 0;
+}
+
+.flash-message {
   padding: 10px;
-  border-radius: 5px;
 }
 
 .flash-message i {
@@ -306,14 +313,6 @@ td.current-day .inner {
 
 .flash-message i:hover {
   cursor: pointer;
-}
-
-.flash-notice {
-  background-color: rgba(0,255,0,0.1);
-}
-
-.flash-error {
-  background-color: rgba(255,0,0,0.1);
 }
 
 @media screen and (max-width: 767px) {

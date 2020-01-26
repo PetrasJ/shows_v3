@@ -24,10 +24,10 @@ const app = {
     },
     initFlashMessages: function () {
         setTimeout(function() {
-            $('.flash-message').fadeOut('fast');
+            $('.flash-container').fadeOut('fast');
         }, 5000);
         $('.flash-message').find('i').unbind().on('click', function() {
-            $(this).parent().fadeOut('fast');
+            $(this).parent().parent().parent().fadeOut('fast');
         })
     },
     initBackToTop: function () {

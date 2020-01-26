@@ -47,7 +47,7 @@ class LoginListener
         }
 
         if ($user->getEmailConfirmationToken()) {
-            $this->session->getFlashBag()->add('error', 'email_is_not_confirmed');
+            $this->session->getFlashBag()->add('danger', 'email_is_not_confirmed');
         }
     }
 }
