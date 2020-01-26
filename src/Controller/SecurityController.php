@@ -9,6 +9,7 @@ use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
 use App\Service\Mailer;
 use App\Service\Storage;
+use App\Service\UserManager;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,19 +27,23 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
+     * @var UserManager
+     */
+    private $userManager;
+
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
+    /**
      * @Route("/login", name="login")
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
@@ -76,7 +81,6 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -85,13 +89,8 @@ class SecurityController extends AbstractController
             );
 
             $user->setEmailConfirmationToken(hash('sha256', $user->getEmail() . $user->getPassword() . time()));
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
+            $this->userManager->save($user);
             $mailer->sendConfirmation($user);
-
-            // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -114,18 +113,11 @@ class SecurityController extends AbstractController
      */
     public function confirmEmail($token)
     {
-        /** @var User $user */
-        $user = $this
-            ->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy(['emailConfirmationToken' => $token]);
-
+        $user = $this->userManager->getUserByEmailConfirmationToken($token);
         if ($user) {
             $this->addFlash('notice', 'email_confirmed');
             $user->setEmailConfirmationToken(null);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->userManager->save($user);
 
             return $this->redirectToRoute('app_login');
         }
@@ -159,15 +151,8 @@ class SecurityController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $this->addFlash(
-                'notice',
-                'password_changed'
-            );
+            $this->userManager->save($user);
+            $this->addFlash('notice', 'password_changed');
         }
 
         return $this->render('security/change-password.html.twig', [
@@ -188,24 +173,12 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $user = $this
-                ->getDoctrine()
-                ->getRepository(User::class)
-                ->findOneBy(['email' => $request->get('forgot_password')['email']]);
-
+            $user = $this->userManager->getUserByEmail($request->get('forgot_password')['email']);
             if ($user) {
                 $user->setResetPasswordToken(hash('sha256', $user->getEmail() . $user->getPassword() . time()));
                 $user->setResetPasswordRequestedAt(new DateTime());
-
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $this->addFlash(
-                    'notice',
-                    'email_sent'
-                );
+                $this->userManager->save($user);
+                $this->addFlash('notice', 'email_sent');
             }
         }
 
@@ -225,18 +198,11 @@ class SecurityController extends AbstractController
         $token,
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder
-    ): Response
-    {
-        /** @var User $user */
-        $user = $this
-            ->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy(['resetPasswordToken' => $token]);
-
+    ): Response {
+        $user = $this->userManager->getUserByResetPasswordToken($token);
         if ($user) {
             $form = $this->createForm(ChangePasswordType::class, $user);
             $form->handleRequest($request);
-
             if ($form->isSubmitted() && $form->isValid()) {
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
@@ -244,15 +210,8 @@ class SecurityController extends AbstractController
                         $form->get('plainPassword')->getData()
                     )
                 );
-
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $this->addFlash(
-                    'notice',
-                    'password_changed'
-                );
+                $this->userManager->save($user);
+                $this->addFlash('notice', 'password_changed');
             }
 
             return $this->render('security/change-password.html.twig', [
