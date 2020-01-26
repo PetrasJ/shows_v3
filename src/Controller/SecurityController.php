@@ -178,6 +178,7 @@ class SecurityController extends AbstractController
                 $user->setResetPasswordToken(hash('sha256', $user->getEmail() . $user->getPassword() . time()));
                 $user->setResetPasswordRequestedAt(new DateTime());
                 $this->userManager->save($user);
+                $mailer->sendResetPassword($user);
                 $this->addFlash('notice', 'email_sent');
             }
         }
