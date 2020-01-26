@@ -58,6 +58,7 @@ email_sent: Email Sent
 email_is_not_confirmed: Email is not confirmed
 email_confirmed: Email confirmed
 reset_password_token_not_found: Reset password token not found
+reset_password_token_expired: Reset password token expired
 confirmation_not_found: Confirmation not found
 calendar:
     watched: Watched

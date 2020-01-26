@@ -58,6 +58,7 @@ email_sent: El. pašto laiškas išsiųstas
 email_is_not_confirmed: El. paštas nepatvirtintas
 email_confirmed: El. paštas patvirtintas
 reset_password_token_not_found: Slaptažodžio atstatymo raktas nerastas
+reset_password_token_expired: Slaptažodžio atstatymo raktas nebegalioja
 confirmation_not_found: Patvirtinimas nerastas
 calendar:
     watched: Matyti

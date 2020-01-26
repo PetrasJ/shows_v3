@@ -191,6 +191,7 @@ class SecurityController extends AbstractController
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response|RedirectResponse
+     * @throws Exception
      */
     public function resetPassword(
         $token,
@@ -199,6 +200,12 @@ class SecurityController extends AbstractController
     ): Response {
         $user = $this->userManager->getUserByResetPasswordToken($token);
         if ($user) {
+            if ($user->getResetPasswordRequestedAt() < (new DateTime())->modify('-1 day')) {
+                return $this->render(
+                    'error.html.twig',
+                    ['title' => 'reset_password', 'message' => 'reset_password_token_expired']
+                );
+            }
             $form = $this->createForm(ChangePasswordType::class, $user);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
