@@ -190,7 +190,7 @@ class SecurityController extends AbstractController
      * @param $token
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @return Response
+     * @return Response|RedirectResponse
      */
     public function resetPassword(
         $token,
@@ -210,6 +210,8 @@ class SecurityController extends AbstractController
                 );
                 $this->userManager->save($user);
                 $this->addFlash('notice', 'password_changed');
+
+                return $this->redirectToRoute('app_login');
             }
 
             return $this->render('security/change-password.html.twig', [

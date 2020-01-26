@@ -56,6 +56,7 @@ forgot_password: Pamiršau slaptažodį
 reset_password: Atstatyti slaptažodį
 email_sent: El. pašto laiškas išsiųstas
 email_is_not_confirmed: El. paštas nepatvirtintas
+email_confirmed: El. paštas patvirtintas
 reset_password_token_not_found: Slaptažodžio atstatymo raktas nerastas
 confirmation_not_found: Patvirtinimas nerastas
 calendar:
