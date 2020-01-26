@@ -26,6 +26,9 @@ const app = {
         setTimeout(function() {
             $('.flash-message').fadeOut('fast');
         }, 5000);
+        $('.flash-message').find('i').unbind().on('click', function() {
+            $(this).parent().fadeOut('fast');
+        })
     },
     initBackToTop: function () {
         const backToTop = $('#back-to-top');

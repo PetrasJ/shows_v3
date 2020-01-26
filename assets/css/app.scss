@@ -288,13 +288,24 @@ td.current-day .inner {
 }
 
 .flash-message {
+  top: 50%;
+  transform: translateY(-20px);
   position: absolute;
-  bottom: 30px;
   z-index: 9999;
   width: 100%;
   text-align: center;
   padding: 10px;
   border-radius: 5px;
+}
+
+.flash-message i {
+  position: absolute;
+  right: 7px;
+  top: 5px;
+}
+
+.flash-message i:hover {
+  cursor: pointer;
 }
 
 .flash-notice {
