@@ -108,7 +108,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/confirm-email/{token}", name="confirm_email")
      * @param string $token
-     * @return RedirectResponse|Response
+     * @return RedirectResponse
      * @throws Exception
      */
     public function confirmEmail($token)
@@ -118,14 +118,11 @@ class SecurityController extends AbstractController
             $this->addFlash('notice', 'email_confirmed');
             $user->setEmailConfirmationToken(null);
             $this->userManager->save($user);
-
-            return $this->redirectToRoute('app_login');
+        } else {
+            $this->addFlash('error', 'confirmation_not_found');
         }
 
-        return $this->render(
-            'error.html.twig',
-            ['title' => 'confirm_email', 'message' => 'confirmation_not_found']
-        );
+        return $this->redirectToRoute('app_login');
     }
 
     /**
