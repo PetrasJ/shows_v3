@@ -20,6 +20,11 @@ security:
                     - App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 31557600 # year
+                path:     /
+                always_remember_me: true
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
