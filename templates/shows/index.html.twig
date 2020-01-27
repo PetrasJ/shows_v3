@@ -55,13 +55,6 @@
                     {% endif %}
                 </div>
                 <div class="col-12 col-md-3">
-                    <button data-toggle="modal" data-target="#show-settings"
-                            class="btn btn-warning btn-sm show-settings m-1"
-                            data-user-show-id="{{ show.userShowId }}"
-                            data-title="{{ show.name }}"
-                            data-offset="{{ show.offset }}">
-                        <i class="fa fa-cog" aria-hidden="true"></i>
-                    </button>
                     {% include 'shows/actions.html.twig'
                         with
                         {'show': show, 'status': status, 'unwatched': show.episodesCount-show.watchedCount} %}
@@ -69,5 +62,4 @@
             </div>
         {% endfor %}
     </div>
-    {% include 'modals/show-settings.html.twig' %}
 {% endblock %}

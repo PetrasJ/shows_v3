@@ -7,13 +7,6 @@
     <h3 title="{{ userShow.watched }}" class="show-details-title">{{ userShow.name }}</h3>
     {{ userShow.summary|raw }}<br>
 
-    <button data-toggle="modal" data-target="#show-settings"
-            class="btn btn-warning btn-sm show-settings m-1"
-            data-user-show-id="{{ userShow.userShowId }}"
-            data-title="{{ userShow.name }}"
-            data-offset="{{ userShow.offset }}">
-        <i class="fa fa-cog" aria-hidden="true"></i>
-    </button>
     <div class="show-actions">
     {%
         include 'shows/actions.html.twig'
@@ -34,5 +27,4 @@
             {{ 'unlimited'|trans }}
         </a>
     {% endif %}
-    {% include 'modals/show-settings.html.twig' %}
 {% endblock %}

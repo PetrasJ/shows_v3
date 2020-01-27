@@ -106,7 +106,7 @@ const app = {
     },
     initModals: function () {
         const t = this;
-        $('#show-settings').on('shown.bs.modal', function (e) {
+        $('#show-settings').on('show.bs.modal', function (e) {
             const button = $(e.relatedTarget);
             const modal = $(this);
             modal.find('.modal-title').html(button.data('title'));
@@ -172,6 +172,7 @@ const app = {
             success: (data) => {
                 $('#result').hide().html(data).slideDown('fast');
                 this.initWatchActions();
+                this.initModals();
                 if (hideShows) {
                     $('.unwatched-shows').slideUp('fast');
                 }

@@ -1,3 +1,11 @@
+<button data-toggle="modal" data-target="#show-settings"
+        class="btn btn-warning btn-sm show-settings m-1"
+        data-user-show-id="{{ show.userShowId }}"
+        data-title="{{ show.name }}"
+        data-offset="{{ show.offset }}"
+        title="{{ 'show.offset (hours to add) 0 to use default'|trans }}">
+    <i class="fa fa-clock" aria-hidden="true"></i>
+</button>
 {% if status != constant('App\\Entity\\UserShow::STATUS_WATCHING') %}
     <button class="btn btn-success m-1 btn-sm" data-user-show-id="{{ show.userShowId }}"
             data-action="{{ path('shows_restore', {userShowId: show.userShowId}) }}" data-remove="true"
