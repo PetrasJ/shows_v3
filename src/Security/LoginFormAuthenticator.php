@@ -6,9 +6,11 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -100,5 +102,23 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     protected function getLoginUrl()
     {
         return $this->urlGenerator->generate('app_login');
+    }
+
+    /**
+     * Override to control what happens when the user hits a secure page
+     * but isn't logged in yet.
+     *
+     * @param Request $request
+     * @param AuthenticationException|null $authException
+     * @return RedirectResponse|Response
+     */
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
+        if (in_array($request->get('_route'), ['unwatched_episodes', 'unwatched_watch', 'unwatched_comment'])) {
+            return new Response('', Response::HTTP_FORBIDDEN, ['content-type' => 'text/html']);
+        }
+        $url = $this->getLoginUrl();
+
+        return new RedirectResponse($url);
     }
 }
