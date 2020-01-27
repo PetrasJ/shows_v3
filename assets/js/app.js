@@ -296,7 +296,7 @@ const app = {
                             $('#' + button.data('user-show-id')).slideUp('fast')
                         }
 
-                        if (button.data('watch-all')) {
+                        if (button.data('watch-all') || button.data('remove')) {
                             button.hide();
                             $('#' + button.data('user-show-id')).find('.unwatched').html('0');
 

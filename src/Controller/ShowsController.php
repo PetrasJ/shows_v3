@@ -69,12 +69,16 @@ class ShowsController extends AbstractController
     {
         $show = $this->userShowService->getUserShow($userShowId);
 
-        return $this->render('shows/actions.html.twig',
-            [
-                'show' => $show,
-                'status' => $show['userShowStatus'],
-                'unwatched' => $show['episodesCount'] - $show['watched'],
-            ]);
+        if ($show) {
+            return $this->render('shows/actions.html.twig',
+                [
+                    'show' => $show,
+                    'status' => $show['userShowStatus'],
+                    'unwatched' => $show['episodesCount'] - $show['watched'],
+                ]);
+        } else {
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
     }
 
     /**
