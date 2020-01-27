@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserType;
+use App\Service\Mailer;
 use App\Service\Storage;
 use App\Service\UserEpisodeService;
 use App\Service\UserManager;
@@ -21,6 +22,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @param UserManager $userManager
      * @param UserEpisodeService $userEpisodeService
+     * @param Mailer $mailer
      * @Route("/settings", name="settings")
      * @return Response
      */
@@ -28,9 +30,14 @@ class UserController extends AbstractController
         Storage $storage,
         Request $request,
         UserManager $userManager,
-        UserEpisodeService $userEpisodeService
+        UserEpisodeService $userEpisodeService,
+        Mailer $mailer
     ) {
         $user = $storage->getUser();
+        if ($request->get('resend_confirmation')) {
+            $mailer->sendConfirmation($user);
+            $this->addFlash('success', 'email_sent');
+        }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

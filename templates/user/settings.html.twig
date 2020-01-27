@@ -3,6 +3,18 @@
 {% form_theme form 'form/settings.html.twig' %}
 
 {% block body %}
+    <div class="row my-1">
+        <div class="col-4">{{ 'email'|trans }}</div><div class="col-8">{{ app.user.email }}
+            {% if app.user.emailConfirmationToken %}
+                <form method="post" class="d-inline-block">
+                    <input type="hidden" name="resend_confirmation" value="true">
+                    <button class="btn btn-light" title="{{ 'resend_confirmation'|trans }}" id="resend-confirmation">
+                        <i class="far fa-envelope"></i>
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
     {{ form(form) }}
 {{ 'total_watched'|trans }} <b title="{{ duration }} {{ 'min'|trans }}">{{ (duration / 1440)|round(0, 'floor') }}</b> {{ 'days'|trans }}<br>
     {{ 'show.latest_episodes_watched'|trans }}<br>
