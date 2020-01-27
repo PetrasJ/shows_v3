@@ -114,8 +114,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        if (in_array($request->get('_route'), ['unwatched_episodes', 'unwatched_watch', 'unwatched_comment'])) {
-            return new Response('', Response::HTTP_FORBIDDEN, ['content-type' => 'text/html']);
+        if ($request->isXmlHttpRequest()) {
+            return new Response('', Response::HTTP_FORBIDDEN);
         }
         $url = $this->getLoginUrl();
 
