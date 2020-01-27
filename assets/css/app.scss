@@ -291,7 +291,7 @@ td.current-day .inner {
   padding: 0;
   top: 50%;
   transform: translateY(-20px);
-  position: absolute;
+  position: fixed;
   z-index: 9999;
   text-align: center;
   opacity: 0.9;
