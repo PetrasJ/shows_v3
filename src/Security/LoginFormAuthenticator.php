@@ -3,7 +3,8 @@
 namespace App\Security;
 
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\UserManager;
+use DateTime;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,17 +27,21 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 {
     use TargetPathTrait;
 
-    private $entityManager;
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $userManager;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        UrlGeneratorInterface $urlGenerator,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        UserPasswordEncoderInterface $passwordEncoder,
+        UserManager $userManager
+    ) {
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->userManager = $userManager;
     }
 
     public function supports(Request $request)
@@ -55,7 +60,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $credentials['email']
-        );
+        )
+        ;
 
         return $credentials;
     }
@@ -67,7 +73,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->userManager->getUserByEmail($credentials['email']);
 
         if (!$user) {
             // fail authentication with a custom error
@@ -92,6 +98,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        /** @var User $user */
+        $user = $token->getUser();
+        $user->setLastLogin(new DateTime());
+        $this->userManager->save($user);
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }

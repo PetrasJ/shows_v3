@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -51,6 +52,12 @@ class User implements UserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $resetPasswordRequestedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var DateTime
+     */
+    private $lastLogin;
 
     /**
      * @var int
@@ -204,6 +211,25 @@ class User implements UserInterface
     public function setResetPasswordRequestedAt($resetPasswordRequestedAt)
     {
         $this->resetPasswordRequestedAt = $resetPasswordRequestedAt;
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getLastLogin(): ?DateTime
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @param DateTime $lastLogin
+     * @return User
+     */
+    public function setLastLogin(DateTime $lastLogin): User
+    {
+        $this->lastLogin = $lastLogin;
+
         return $this;
     }
 
