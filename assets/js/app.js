@@ -205,6 +205,9 @@ const app = {
                         const count = parseInt(showCount.html()) - 1;
                         showCount.html(count);
                         if (count === 0) {
+                            if ($('.show-status').data('status') === "Ended") {
+                                $('.archive-show').click()
+                            }
                             show.hide();
                             unwatchedShows.slideDown('fast');
                             result.html('');

@@ -3,7 +3,7 @@
         <b>
             <a href={{ path('shows_details', {userShowId: show.userShowId}) }}
               title="{{ show.watched }}" class="show-title">{{ show.name }}</a>
-        </b> {{ ('show.'~show.status)|trans }}
+        </b> <span class="show-status" data-status="{{ show.status }}">{{ ('show.'~show.status)|trans }}</span>
     </div>
     <div class="d-inline-block">
         <button class="btn btn-sm m-1 d-inline-block" onclick="$('.show-actions').toggleClass('d-none')">

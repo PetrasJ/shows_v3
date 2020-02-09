@@ -15,7 +15,7 @@
     </button>
 {% endif %}
 {% if status != constant('App\\Entity\\UserShow::STATUS_ARCHIVED') %}
-    <button class="btn btn-secondary btn-sm m-1" data-user-show-id="{{ show.userShowId }}" data-remove="true"
+    <button class="btn btn-secondary btn-sm m-1 archive-show" data-user-show-id="{{ show.userShowId }}" data-remove="true"
             data-action="{{ path('shows_archive', {userShowId: show.userShowId}) }}"
             data-toggle="modal" title="{{ 'show.archive show'|trans }}"
             data-text="{{ 'show.archive show'|trans }} <b>{{ show.name }}</b>" data-target="#confirm">
