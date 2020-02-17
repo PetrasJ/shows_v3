@@ -195,6 +195,7 @@ class StreamController extends AbstractController
      */
     private function streamVideo()
     {
+        session_destroy();
         $i = $this->start;
         set_time_limit(0);
         while (!feof($this->stream) && $i <= $this->end) {

@@ -31,7 +31,7 @@ class UserShowRepository extends EntityRepository
     public function getShows(User $user, $status = 0): ?array
     {
         return $this->createQueryBuilder('us')
-            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset')
+            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset, s.rating')
             ->addSelect('us.status as userShowStatus, s.imageMedium')
             ->addSelect('SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
             ->innerJoin('us.show', 's')
@@ -126,7 +126,7 @@ class UserShowRepository extends EntityRepository
     public function getUserShow(User $user, int $showId): ?array
     {
         return $this->createQueryBuilder('us')
-            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset')
+            ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset, s.rating')
             ->addSelect('us.status as userShowStatus, SUM(CASE WHEN ue.status = 1 THEN 1 ELSE 0 END) as watched')
             ->addSelect('COUNT(e.id) as episodesCount')
             ->innerJoin('us.show', 's')

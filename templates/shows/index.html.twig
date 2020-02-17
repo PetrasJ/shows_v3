@@ -28,7 +28,7 @@
             {% endif %}
             <div id="{{ show.userShowId }}" class="show row py-1 border-bottom">
                 <div class="col-12 col-md-3">
-                    <a title={{ show.watchedCount }}
+                    <a title="{{ 'watched'|trans }}: {{ show.watchedCount }}, {{ 'rating'|trans }}: {{ show.rating }}"
                        href="{{ path('shows_details', {'userShowId': show.userShowId}) }}">
                         {% if show.image %}
                             <img src="/img/shows/medium/{{ show.id }}.jpg" class="image-list" alt="{{ show.name }}">

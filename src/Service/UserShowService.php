@@ -101,6 +101,7 @@ class UserShowService
             $formatted[] = [
                 'id' => $show['id'],
                 'status' => $show['status'],
+                'rating' => $show['rating'],
                 'name' => $show['name'],
                 'image' => $show['imageMedium'],
                 'episodesCount' => $count,
