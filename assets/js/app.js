@@ -213,6 +213,9 @@ const app = {
                             result.html('');
                         }
                         episode.slideUp('fast');
+                        if (episode.next().hasClass('season')) {
+                            episode.next().hide().removeClass('d-inline-block');
+                        }
                         const title = result.find('.show-title');
                         const watched = parseInt(title.attr('data-original-title')) + 1;
                         title.attr('data-original-title', watched);

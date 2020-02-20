@@ -18,7 +18,7 @@
     {{ show.summary|raw }}<br>
     {% for episode in episodes %}
         {% if season is defined and season != episode.season %}
-            <div class="row m-1 text-center w-100 d-inline-block">
+            <div class="row m-1 text-center w-100 d-inline-block season">
                 <h4>{{ 'show.season'|trans}} {{ episode.season }}</h4>
             </div>
         {% endif %}
