@@ -53,7 +53,7 @@ class EpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment')
-            ->addSelect('ue.created, ue.updated ue.status, us.id as userShowId')
+            ->addSelect('ue.created, ue.updated, ue.status, us.id as userShowId')
             ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->innerJoin('e.show', 's')
             ->innerJoin(
