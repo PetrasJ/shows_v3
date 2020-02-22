@@ -4,17 +4,18 @@
                aria-label="{{ 'comment'|trans }}" aria-describedby="basic-addon2"
                 value="{{ episode.comment }}">
         <div class="input-group-append">
-            <button class="btn btn-secondary save"><i class="fa fa-save"></i></button>
+            <button class="btn btn-secondary save" title="{{ 'save_comment'|trans }}"><i class="fa fa-save"></i></button>
         </div>
     </div>
 </form>
 
 <button class="btn btn-success align-top watch-episode{% if episode.status == 1 %} d-none{% endif %}" type="button"
-        data-id="{{ episode.id }}" data-user-show-id="{{ episode.userShowId }}">
+        data-id="{{ episode.id }}" data-user-show-id="{{ episode.userShowId }}"
+        title="{{ 'mark_as_watched'|trans }}">
     <i class="fa fa-eye" aria-hidden="true"></i>
 </button>
 <button class="btn btn-secondary align-top unwatch-episode{% if episode.status != 1 %} d-none{% endif %}" type="button"
-        title="{{ episode.created|dateTimezone }}" data-id="{{ episode.id }}" data-user-show-id="{{ episode.userShowId }}">
+        title="{{ 'mark_as_not_watched'|trans }}, {{ 'watched'|trans }}: {{ episode.updated|dateTimezone }}" data-id="{{ episode.id }}" data-user-show-id="{{ episode.userShowId }}">
     <i class="fa fa-eye-slash" aria-hidden="true"></i>
 </button>
 

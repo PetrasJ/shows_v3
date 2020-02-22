@@ -5,6 +5,7 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -74,6 +75,13 @@ class UserEpisode
      * @var DateTime
      */
     protected $created;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="update")
+     * @var DateTime
+     */
+    protected $updated;
 
     /**
      * @return integer
@@ -217,5 +225,24 @@ class UserEpisode
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdated(): DateTime
+    {
+        return $this->updated;
+    }
+
+    /**
+     * @param DateTime $updated
+     * @return UserEpisode
+     */
+    public function setUpdated(DateTime $updated): UserEpisode
+    {
+        $this->updated = $updated;
+
+        return $this;
     }
 }

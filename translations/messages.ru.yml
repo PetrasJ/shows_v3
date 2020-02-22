@@ -120,8 +120,6 @@ message: Сообщение
 sent: отправлено сообщение
 send: Отправить
 feedback: обратная связь
-assign facebook ID: назначить идентификатор facebook
-Connect facebook: подключить facebook
 Fail: Ошибка
 Something went wrong: Что-то пошло не так
 already in use: Уже в использовании
@@ -132,9 +130,9 @@ tomorrow: завтра
 airdate: дата выхода
 duration: продолжительность
 min: мин
-mark as watched: отметьте как смотрели
-mark as not watched: отметить как не смотреть
-save comment: сохранить комментарий
+mark_as_watched: отметьте как смотрели
+mark_as_not_watched: отметить как не смотреть
+save_comment: сохранить комментарий
 comment: комментарий
 watched: смотрел
 Timezone: Часовой пояс

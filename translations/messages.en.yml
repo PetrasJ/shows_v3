@@ -120,8 +120,6 @@ message: Message
 sent: Feedback sent
 send: Send
 feedback: feedback
-assign facebook ID: assign facebook ID
-Connect facebook: Connect facebook
 Fail: Fail
 Something went wrong: Something went wrong
 already in use: Already in use
@@ -132,9 +130,9 @@ tomorrow: tomorrow
 airdate: airdate
 duration: duration
 min: min
-mark as watched: mark as watched
-mark as not watched: mark as NOT watched
-save comment: save comment
+mark_as_watched: mark as watched
+mark_as_not_watched: mark as not watched
+save_comment: save comment
 comment: comment
 watched: watched
 Timezone: Timezone

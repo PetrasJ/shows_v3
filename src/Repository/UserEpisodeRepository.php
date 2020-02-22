@@ -8,6 +8,7 @@ use App\Entity\UserShow;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\Expr\Join;
 
 class UserEpisodeRepository extends EntityRepository
@@ -43,6 +44,7 @@ class UserEpisodeRepository extends EntityRepository
      * @param User $user
      * @return null|int
      * @throws NonUniqueResultException
+     * @throws NoResultException
      */
     public function getWatchedDuration(User $user): ?int
     {
@@ -60,7 +62,8 @@ class UserEpisodeRepository extends EntityRepository
     public function getLastEpisodes(User $user, $limit): ?array
     {
         return $this->createQueryBuilder('ue')
-            ->select('ue.id, ue.created, e.season, e.episode, e.airstamp, e.name, e.duration, s.name as showName')
+            ->select('ue.id, ue.created, ue.updated, e.season, e.episode, e.airstamp, e.name, e.duration')
+            ->addSelect('s.name as showName')
             ->addSelect(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
             ->innerJoin('ue.episode', 'e')
             ->innerJoin('e.show', 's')

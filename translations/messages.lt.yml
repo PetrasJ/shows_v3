@@ -120,8 +120,6 @@ message: Žinutė
 sent: Atsiliepimas nusiųstas
 send: Siųsti
 feedback: atsiliepimas
-assign facebook ID: Priskirti facebook ID
-Connect facebook: Prijungti facebook
 Fail: Klaida
 Something went wrong: Kažkas atsitiko
 already in use: Užimtas
@@ -132,9 +130,9 @@ tomorrow: rytoj
 airdate: rodymo data
 duration: trukmė
 min: min.
-mark as watched: pažymėti kaip matytą
-mark as not watched: NUžymėti kaip matytą
-save comment: išsaugoti komentarą
+mark_as_watched: pažymėti kaip matytą
+mark_as_not_watched: Nužymėti kaip matytą
+save_comment: išsaugoti komentarą
 comment: komentaras
 watched: matyta
 Timezone: Laiko zona
