@@ -212,6 +212,7 @@ const app = {
                             unwatchedShows.slideDown('fast');
                             result.html('');
                         }
+                        $('.tooltip').hide();
                         episode.slideUp('fast');
                         if (episode.next().hasClass('season')) {
                             episode.next().hide().removeClass('d-inline-block');
