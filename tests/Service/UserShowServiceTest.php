@@ -65,6 +65,7 @@ class UserShowServiceTest extends TestCase
                 'userShowStatus' => 1,
                 'watched' => '0',
                 'imageMedium' => '1',
+                'rating' => 5,
             ],
         ];
 
@@ -128,6 +129,7 @@ class UserShowServiceTest extends TestCase
                     'offset' => null,
                     'userShowId' => 1,
                     'image' => '1',
+                    'rating' => 5,
                 ],
         ];
 
