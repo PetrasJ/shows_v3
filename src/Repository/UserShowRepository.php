@@ -139,9 +139,8 @@ class UserShowRepository extends EntityRepository
                 'ue.user = :user AND ue.episode = e AND us = ue.userShow'
             )
             ->where('us.user = :user')
-            ->andWhere('e.airstamp < ' . sprintf(EpisodeRepository::DATE_SUB, ':now'))
             ->andWhere('us.id = :showId')
-            ->setParameters(['user' => $user, 'showId' => $showId, 'now' => date('Y-m-d H:i')])
+            ->setParameters(['user' => $user, 'showId' => $showId])
             ->groupBy('s')
             ->getQuery()
             ->getSingleResult()
