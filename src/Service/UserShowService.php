@@ -204,7 +204,7 @@ class UserShowService
 
     public function watchAll(int $userShowId): void
     {
-        /** @var Show $show */
+        /** @var UserShow $userShow */
         $userShow = $this->entityManager
             ->getRepository(UserShow::class)
             ->findOneBy(['user' => $this->user, 'id' => $userShowId])

@@ -45,6 +45,7 @@ class UserEpisodeService
         ;
 
         if (!$userEpisode) {
+            /** @var UserShow $userShow */
             $userShow = $this->entityManager
                 ->getRepository(UserShow::class)
                 ->findOneBy(['id' => $userShowId, 'user' => $this->user])
@@ -92,7 +93,7 @@ class UserEpisodeService
     {
         return $this->entityManager
             ->getRepository(UserEpisode::class)
-            ->getLastEpisodes($this->user, 10)
+            ->getLastEpisodes($this->user, 100)
             ;
     }
 }
