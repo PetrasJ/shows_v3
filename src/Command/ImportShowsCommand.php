@@ -32,7 +32,6 @@ class ImportShowsCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return void
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -40,5 +39,7 @@ class ImportShowsCommand extends Command
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Import Shows Started']);
         $this->showsManager->load();
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Import Shows Finished']);
+
+        return 0;
     }
 }

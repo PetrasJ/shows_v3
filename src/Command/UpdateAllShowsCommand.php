@@ -32,7 +32,6 @@ class UpdateAllShowsCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return void
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -40,5 +39,7 @@ class UpdateAllShowsCommand extends Command
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update all shows Started']);
         $this->showsManager->load(true);
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update all shows Finished']);
+
+        return 0;
     }
 }
