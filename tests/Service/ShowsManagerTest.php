@@ -16,6 +16,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class ShowsManagerTest extends TestCase
 {
@@ -38,30 +40,21 @@ class ShowsManagerTest extends TestCase
             ->method('getRepository')
             ->willReturnOnConsecutiveCalls($userShowRepo, $showRepo)
         ;
-        /** @var ShowsManager|MockObject $service */
-        $service = $this->getMockBuilder(ShowsManager::class)
-            ->setMethods(['getClient'])
-            ->setConstructorArgs([$entityManager, $imageService, $episodeManager, $storage])
-            ->getMock()
-        ;
 
-        $client = $this->getMockBuilder(Client::class)
-            ->setMethods(['get'])
-            ->getMock()
-        ;
+        $client = $this->createMock(HttpClientInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $response->method('getContent')->willReturn($this->getShow());
+        $client->method('request')->willReturn($response);
 
-        $response = $this->createMock(Response::class);
-        $response->method('getBody')->willReturn($this->getShow());
+        $service = new ShowsManager($entityManager, $imageService, $episodeManager, $storage, $client);
 
-        $client->expects($this->at(0))->method('get')->willReturn($response);
-        $client->expects($this->at(1))->method('get')->willReturn($response);
-        $client->expects($this->at(2))->method('get')->willThrowException(new Exception());
-        $client->expects($this->at(3))->method('get')->willThrowException(new Exception());
-        $client->expects($this->at(4))->method('get')->willThrowException(new Exception());
-        $client->expects($this->at(5))->method('get')->willThrowException(new Exception());
-        $client->expects($this->at(6))->method('get')->willThrowException(new Exception());
-
-        $service->method('getClient')->willReturn($client);
+        $client->expects($this->at(0))->method('request')->willReturn($response);
+        $client->expects($this->at(1))->method('request')->willReturn($response);
+        $client->expects($this->at(2))->method('request')->willThrowException(new Exception());
+        $client->expects($this->at(3))->method('request')->willThrowException(new Exception());
+        $client->expects($this->at(4))->method('request')->willThrowException(new Exception());
+        $client->expects($this->at(5))->method('request')->willThrowException(new Exception());
+        $client->expects($this->at(6))->method('request')->willThrowException(new Exception());
 
         $service->update();
     }

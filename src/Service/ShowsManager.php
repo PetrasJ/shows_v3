@@ -239,9 +239,9 @@ class ShowsManager
         while (true) {
             $nextShowId++;
             try {
-                $show = json_decode($this->getClient()
-                    ->get(sprintf('%s/%d', self::API_URL, $nextShowId))
-                    ->getBody()
+                $show = json_decode($this->client
+                    ->request('GET', sprintf('%s/%d', self::API_URL, $nextShowId))
+                    ->getContent()
                 );
 
                 $newShow = $this->addShow($show);

@@ -11,8 +11,12 @@ use DateTime;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class EpisodesManagerTest extends TestCase
 {
@@ -42,7 +46,7 @@ class EpisodesManagerTest extends TestCase
     private function getService($update = true)
     {
         /** @var EntityManager|MockObject $entityManager */
-        $entityManager = $this->createMock(EntityManager::class);
+        $entityManager = $this->createMock(EntityManagerInterface::class);
         $connection = $this->createMock(Connection::class);
         if ($update) {
             $connection->expects($this->at(0))->method('exec');
@@ -54,21 +58,13 @@ class EpisodesManagerTest extends TestCase
         $episodesRepo->method('getEpisodesPublic')->willReturn([]);
         $entityManager->method('getRepository')->with(Episode::class)->willReturn($episodesRepo);
         $storage = new Storage();
-        $client = $this->getMockBuilder(Client::class)
-            ->setMethods(['get'])
-            ->getMock()
-        ;
-        $response = $this->createMock(Response::class);
-        $response->method('getBody')->willReturn($this->getEpisodes());
-        $client->method('get')->willReturn($response);
-        /** @var EpisodesManager|MockObject $service */
-        $service = $this->getMockBuilder(EpisodesManager::class)
-            ->setMethods(['getClient', 'error'])
-            ->setConstructorArgs([$entityManager, $storage])
-            ->getMock()
-        ;
-        $service->method('error');
-        $service->method('getClient')->willReturn($client);
+        $client = $this->createMock(HttpClientInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $response->method('getContent')->willReturn($this->getEpisodes());
+        $client->method('request')->willReturn($response);
+        $service = new EpisodesManager($entityManager, $storage, $client);
+        $logger = $this->createMock(LoggerInterface::class);
+        $service->setLogger($logger);
 
         if ($update) {
             $entityManager
