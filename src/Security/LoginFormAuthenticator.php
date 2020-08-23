@@ -27,10 +27,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 {
     use TargetPathTrait;
 
-    private $urlGenerator;
-    private $csrfTokenManager;
-    private $passwordEncoder;
-    private $userManager;
+    private UrlGeneratorInterface $urlGenerator;
+    private CsrfTokenManagerInterface $csrfTokenManager;
+    private UserPasswordEncoderInterface $passwordEncoder;
+    private UserManager $userManager;
 
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
@@ -76,7 +76,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $user = $this->userManager->getUserByEmail($credentials['email']);
 
         if (!$user) {
-            // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
 
@@ -128,8 +127,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         if ($request->isXmlHttpRequest()) {
             return new Response('', Response::HTTP_FORBIDDEN);
         }
-        $url = $this->getLoginUrl();
 
-        return new RedirectResponse($url);
+        return new RedirectResponse($this->getLoginUrl());
     }
 }

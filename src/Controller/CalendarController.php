@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\EpisodesManager;
+use App\Service\EpisodeManager;
 use App\Service\PeriodManager;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,10 +34,10 @@ class CalendarController extends AbstractController
      * @Route("/month/{month}", name="calendar")
      * @throws Exception
      */
-    public function month($month, EpisodesManager $episodesManager, PeriodManager $periodManager): Response
+    public function month($month, EpisodeManager $episodeManager, PeriodManager $periodManager): Response
     {
         $period = $periodManager->getPeriod($month);
-        $episodes = $episodesManager->getEpisodes($period['from'], $period['to']);
+        $episodes = $episodeManager->getEpisodes($period['from'], $period['to']);
 
         return $this->render('calendar/month.html.twig', [
             'month' => $month,

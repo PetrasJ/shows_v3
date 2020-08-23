@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\Expr\Join;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserEpisodeRepository extends EntityRepository
 {
@@ -41,12 +42,10 @@ class UserEpisodeRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     * @return null|int
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function getWatchedDuration(User $user): ?int
+    public function getWatchedDuration(UserInterface $user): ?int
     {
         return $this->createQueryBuilder('ue')
             ->select('SUM(e.duration)')
@@ -59,7 +58,7 @@ class UserEpisodeRepository extends EntityRepository
             ;
     }
 
-    public function getLastEpisodes(User $user, $limit): ?array
+    public function getLastEpisodes(UserInterface $user, $limit): ?array
     {
         return $this->createQueryBuilder('ue')
             ->select('ue.id, ue.created, ue.updated, e.season, e.episode, e.airstamp, e.name, e.duration')

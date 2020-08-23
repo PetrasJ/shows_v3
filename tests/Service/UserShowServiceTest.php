@@ -6,8 +6,8 @@ use App\Entity\Show;
 use App\Entity\User;
 use App\Entity\UserShow;
 use App\Repository\UserShowRepository;
-use App\Service\EpisodesManager;
-use App\Service\ShowsManager;
+use App\Service\EpisodeManager;
+use App\Service\ShowManager;
 use App\Service\UserShowService;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -162,10 +162,10 @@ class UserShowServiceTest extends TestCase
 
         $security = $this->createMock(Security::class);
         $security->method('getUser')->willReturn(new User());
-        /** @var EpisodesManager|MockObject $episodesManager */
-        $episodesManager = $this->createMock(EpisodesManager::class);
-        /** @var ShowsManager|MockObject $showsManager */
-        $showsManager = $this->createMock(ShowsManager::class);
+        /** @var EpisodeManager|MockObject $episodesManager */
+        $episodesManager = $this->createMock(EpisodeManager::class);
+        /** @var ShowManager|MockObject $showsManager */
+        $showsManager = $this->createMock(ShowManager::class);
 
         $entityManager->method('find')->willReturn(new Show());
         if ($method) {

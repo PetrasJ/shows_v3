@@ -13,22 +13,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoginListener
 {
-    private $em;
-    /** @var DataCollectorTranslator */
-    private $translator;
-    private $requestContextAwareInterface;
-    private $router;
-    /** @var Session */
-    private $session;
+    private TranslatorInterface $translator;
+    private RequestContextAwareInterface $requestContextAwareInterface;
+    private RouterInterface $router;
+    private SessionInterface $session;
 
     public function __construct(
-        EntityManagerInterface $em,
         TranslatorInterface $translator,
         RequestContextAwareInterface $requestContextAwareInterface,
         RouterInterface $router,
         SessionInterface $session
     ) {
-        $this->em = $em;
         $this->translator = $translator;
         $this->requestContextAwareInterface = $requestContextAwareInterface;
         $this->router = $router;

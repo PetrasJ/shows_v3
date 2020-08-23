@@ -5,7 +5,7 @@ namespace App\Tests\Service;
 use App\Entity\Episode;
 use App\Entity\Show;
 use App\Repository\EpisodeRepository;
-use App\Service\EpisodesManager;
+use App\Service\EpisodeManager;
 use App\Service\TVMazeClient;
 use DateTime;
 use Doctrine\DBAL\Connection;
@@ -59,7 +59,7 @@ class EpisodesManagerTest extends TestCase
         $security = $this->createMock(Security::class);
         $client = $this->createMock(TVMazeClient::class);
         $client->method('getEpisodes')->willReturn($this->getEpisodes());
-        $service = new EpisodesManager($entityManager, $security, $client);
+        $service = new EpisodeManager($entityManager, $security, $client);
         $logger = $this->createMock(LoggerInterface::class);
         $service->setLogger($logger);
 

@@ -10,15 +10,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class ShowsManager
+class ShowManager
 {
     use LoggerTrait;
 
     private $entityManager;
     private $imageService;
-    private $episodesManager;
+    private $episodeManager;
     private TVMazeClient $client;
 
     private ?UserInterface $user;
@@ -26,13 +25,13 @@ class ShowsManager
     public function __construct(
         EntityManagerInterface $entityManager,
         ImageService $imageService,
-        EpisodesManager $episodesManager,
+        EpisodeManager $episodeManager,
         Security $security,
         TVMazeClient $client
     ) {
         $this->entityManager = $entityManager;
         $this->imageService = $imageService;
-        $this->episodesManager = $episodesManager;
+        $this->episodeManager = $episodeManager;
         $this->user = $security->getUser();
         $this->client = $client;
     }
@@ -148,7 +147,7 @@ class ShowsManager
         $this->entityManager->persist($showEntity);
         $this->entityManager->flush();
 
-        $this->episodesManager->addEpisodes($showEntity);
+        $this->episodeManager->addEpisodes($showEntity);
 
         $this->entityManager->persist($showEntity->setUpdated($show->updated));
         $this->entityManager->flush();

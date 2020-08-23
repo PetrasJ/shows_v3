@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\ShowsManager;
+use App\Service\ShowManager;
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
 use App\Traits\LoggerTrait;
@@ -24,12 +24,12 @@ class ShowsController extends AbstractController
     use LoggerTrait;
 
     private $userShowService;
-    private $showsManager;
+    private $showManager;
 
-    public function __construct(UserShowService $userShowService, ShowsManager $showsManager)
+    public function __construct(UserShowService $userShowService, ShowManager $showManager)
     {
         $this->userShowService = $userShowService;
-        $this->showsManager = $showsManager;
+        $this->showManager = $showManager;
     }
 
     /**
@@ -237,7 +237,7 @@ class ShowsController extends AbstractController
     public function updateShows()
     {
         $start = (new DateTime())->format('Y-m-d H:i:s');
-        $result = $this->showsManager->update();
+        $result = $this->showManager->update();
         $finish = (new DateTime())->format('Y-m-d H:i:s');
 
         return $this->render('shows/update.html.twig',

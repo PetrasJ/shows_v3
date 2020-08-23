@@ -12,26 +12,27 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserShowService
 {
     use LoggerTrait;
 
-    private $entityManager;
-    private $user;
-    private $episodesManager;
-    private $showsManager;
+    private EntityManagerInterface $entityManager;
+    private ?UserInterface $user;
+    private EpisodeManager $episodeManager;
+    private ShowManager $showManager;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         Security $security,
-        EpisodesManager $episodesManager,
-        ShowsManager $showsManager
+        EpisodeManager $episodeManager,
+        ShowManager $showManager
     ) {
         $this->entityManager = $entityManager;
         $this->user = $security->getUser();
-        $this->episodesManager = $episodesManager;
-        $this->showsManager = $showsManager;
+        $this->episodeManager = $episodeManager;
+        $this->showManager = $showManager;
     }
 
     public function getShowsWithUnwatchedEpisodes(): ?array
@@ -165,7 +166,7 @@ class UserShowService
             ->setOffset(0)
         ;
 
-        $this->showsManager->updateShow($showId);
+        $this->showManager->updateShow($showId);
         $this->entityManager->persist($userShow);
         $this->entityManager->flush();
     }
@@ -188,7 +189,7 @@ class UserShowService
             $userShow->setStatus(UserShow::STATUS_WATCH_LATER);
         }
 
-        $this->showsManager->updateShow($userShow->getShow()->getId());
+        $this->showManager->updateShow($userShow->getShow()->getId());
         $this->entityManager->persist($userShow);
         $this->entityManager->flush();
     }

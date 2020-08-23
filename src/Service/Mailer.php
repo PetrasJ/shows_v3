@@ -18,11 +18,11 @@ class Mailer
 {
     use LoggerTrait;
 
-    private $entityManager;
-    private $mailer;
-    private $user;
-    private $router;
-    private $translator;
+    private EntityManagerInterface $entityManager;
+    private Swift_Mailer $mailer;
+    private ?UserInterface $user;
+    private RouterInterface $router;
+    private TranslatorInterface $translator;
 
     public function __construct(
         EntityManagerInterface $entityManager,

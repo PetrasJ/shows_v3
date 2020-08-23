@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
@@ -15,11 +16,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class UserShow
 {
-    const STATUS_WATCHING = 0;
-    const STATUS_WATCH_LATER = 1;
-    const STATUS_ARCHIVED = 2;
+    public const STATUS_WATCHING = 0;
+    public const STATUS_WATCH_LATER = 1;
+    public const STATUS_ARCHIVED = 2;
 
-    const STATUS = [
+    public const STATUS = [
         0 => 'watching',
         1 => 'watch later',
         2 => 'archived',
@@ -90,11 +91,7 @@ class UserShow
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     * @return UserShow
-     */
-    public function setUser(User $user): UserShow
+    public function setUser(UserInterface $user): UserShow
     {
         $this->user = $user;
 

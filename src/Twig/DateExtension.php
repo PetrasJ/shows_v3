@@ -14,7 +14,7 @@ class DateExtension extends AbstractExtension
 {
     use LoggerTrait;
 
-    private $timezone;
+    private string $timezone;
 
     public function __construct(Security $security)
     {

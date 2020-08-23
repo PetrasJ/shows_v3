@@ -5,9 +5,9 @@ namespace App\Tests\Service;
 use App\Entity\Show;
 use App\Repository\ShowRepository;
 use App\Repository\UserShowRepository;
-use App\Service\EpisodesManager;
+use App\Service\EpisodeManager;
 use App\Service\ImageService;
-use App\Service\ShowsManager;
+use App\Service\ShowManager;
 use App\Service\TVMazeClient;
 use Doctrine\ORM\EntityManager;
 use Exception;
@@ -22,7 +22,7 @@ class ShowsManagerTest extends TestCase
         /** @var EntityManager|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManager::class);
         $imageService = $this->createMock(ImageService::class);
-        $episodeManager = $this->createMock(EpisodesManager::class);
+        $episodeManager = $this->createMock(EpisodeManager::class);
 
         $userShowRepo = $this->createMock(UserShowRepository::class);
         $userShowRepo->method('getAllUsersShows')->willReturn([1]);
@@ -41,7 +41,7 @@ class ShowsManagerTest extends TestCase
 
         $security = $this->createMock(Security::class);
 
-        $service = new ShowsManager($entityManager, $imageService, $episodeManager, $security, $client);
+        $service = new ShowManager($entityManager, $imageService, $episodeManager, $security, $client);
 
         $client->expects($this->at(0))->method('getShow')->willReturn($this->getShow());
         $client->expects($this->at(1))->method('getShow')->willReturn($this->getShow());

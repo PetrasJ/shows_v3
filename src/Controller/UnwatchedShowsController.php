@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Service\EpisodesManager;
-use App\Service\ShowsManager;
+use App\Service\EpisodeManager;
+use App\Service\ShowManager;
 use App\Service\UserEpisodeService;
 use App\Service\UserShowService;
 use App\Traits\LoggerTrait;
@@ -25,16 +25,16 @@ class UnwatchedShowsController extends AbstractController
 
     /**
      * @param UserShowService $userShowService
-     * @param EpisodesManager $episodesManager
+     * @param EpisodeManager $episodeManager
      * @Route("/", name="index")
      * @return Response
      * @throws Exception
      */
-    public function unwatched(UserShowService $userShowService, EpisodesManager $episodesManager)
+    public function unwatched(UserShowService $userShowService, EpisodeManager $episodeManager)
     {
         try {
             $shows = $userShowService->getShowsWithUnwatchedEpisodes();
-            $episodes = $episodesManager->getEpisodes(
+            $episodes = $episodeManager->getEpisodes(
                 new DateTime(),
                 (new DateTime())->modify('+2 days'),
                 true,
@@ -52,19 +52,19 @@ class UnwatchedShowsController extends AbstractController
     /**
      * @param int $userShowId
      * @param UserEpisodeService $userEpisodeService
-     * @param ShowsManager $showsManager
+     * @param ShowManager $showManager
      * @Route("/episodes/{userShowId}", name="episodes")
      * @return Response
      */
     public function unwatchedEpisodes(
         int $userShowId,
         UserEpisodeService $userEpisodeService,
-        ShowsManager $showsManager
+        ShowManager $showManager
     ) {
         try {
             $episodes = $userEpisodeService->getUnwatchedEpisodes($userShowId);
-            $show = $showsManager->getShow($userShowId);
-            $nextEpisode = $showsManager->getNextEpisode($show['id']);
+            $show = $showManager->getShow($userShowId);
+            $nextEpisode = $showManager->getNextEpisode($show['id']);
         } catch (NotFoundHttpException $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 

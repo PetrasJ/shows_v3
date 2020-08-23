@@ -20,10 +20,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserEpisode
 {
-    const STATUS_UNWATCHED = 0;
-    const STATUS_WATCHED = 1;
-    const STATUS_COMMENTED = 2;
-    const MAX_RESULT = 100;
+    public const STATUS_UNWATCHED = 0;
+    public const STATUS_WATCHED = 1;
+    public const STATUS_COMMENTED = 2;
+    public const MAX_RESULT = 100;
 
     /**
      * @ORM\Column(type="integer")

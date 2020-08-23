@@ -133,7 +133,7 @@ class EpisodeRepository extends EntityRepository
     public function getEpisodes(
         DateTime $dateFrom,
         DateTime $dateTo,
-        User $user = null,
+        UserInterface $user = null,
         bool $watching = false,
         bool $excludeWatched = false
     ): ?array {
@@ -216,7 +216,7 @@ class EpisodeRepository extends EntityRepository
             ;
     }
 
-    public function getUserShowEpisodes(User $user, UserShow $userShow, $limit = UserEpisode::MAX_RESULT): ?array
+    public function getUserShowEpisodes(UserInterface $user, UserShow $userShow, $limit = UserEpisode::MAX_RESULT): ?array
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary, e.duration')
@@ -254,7 +254,7 @@ class EpisodeRepository extends EntityRepository
             ;
     }
 
-    public function getUnwatchedEpisodeEntities(User $user, UserShow $userShow): ?array
+    public function getUnwatchedEpisodeEntities(UserInterface $user, UserShow $userShow): ?array
     {
         return $this->createQueryBuilder('e')
             ->select('e')

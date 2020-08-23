@@ -29,7 +29,7 @@ class UserShowRepository extends EntityRepository
         return array_column($result, 'id');
     }
 
-    public function getShows(User $user, $status = 0): ?array
+    public function getShows(UserInterface $user, $status = 0): ?array
     {
         return $this->createQueryBuilder('us')
             ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset, s.rating')
@@ -55,7 +55,7 @@ class UserShowRepository extends EntityRepository
             ;
     }
 
-    public function getEpisodes(User $user, $status): ?array
+    public function getEpisodes(UserInterface $user, $status): ?array
     {
         return $this->createQueryBuilder('us')
             ->select('us.id as userShowId, e.id, e.season, e.episode, e.airstamp, e.name, e.duration')
