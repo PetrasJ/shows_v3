@@ -9,7 +9,7 @@ use App\Entity\UserShow;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use GuzzleHttp\Client;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ShowsManager
 {
@@ -19,6 +19,7 @@ class ShowsManager
     private $entityManager;
     private $imageService;
     private $episodesManager;
+    private $client;
 
     /**
      * @var User|null
@@ -29,17 +30,14 @@ class ShowsManager
         EntityManagerInterface $entityManager,
         ImageService $imageService,
         EpisodesManager $episodesManager,
-        Storage $storage
+        Storage $storage,
+        HttpClientInterface $client
     ) {
         $this->entityManager = $entityManager;
         $this->imageService = $imageService;
         $this->episodesManager = $episodesManager;
         $this->user = $storage->getUser();
-    }
-
-    public function getClient(): Client
-    {
-        return new Client();
+        $this->client = $client;
     }
 
     public function load(bool $update = false): void
@@ -47,10 +45,10 @@ class ShowsManager
         $gap = 0;
         for ($page = 0; $page <= 2000; $page++) {
             try {
-                $shows = json_decode($this->getClient()
-                    ->get(sprintf('%s?page=%d', self::API_URL, $page))
-                    ->getBody()
-                );
+                $shows = json_decode($this->client
+                    ->request('GET', sprintf('%s?page=%d', self::API_URL, $page))
+                    ->getContent())
+                ;
                 if (!$update) {
                     $this->addShows($shows);
                 } else {
@@ -134,9 +132,8 @@ class ShowsManager
             return null;
         }
         try {
-            $show = json_decode($this->getClient()->get(
-                sprintf('%s/%d', self::API_URL, $showId))->getBody()
-            );
+            $show = json_decode($this->client
+                ->request('GET', sprintf('%s/%d', self::API_URL, $showId))->getContent());
         } catch (Exception $e) {
             $this->info($e->getMessage(), [__METHOD__]);
 

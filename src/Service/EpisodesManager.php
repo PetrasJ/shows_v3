@@ -9,8 +9,8 @@ use DateTime;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use GuzzleHttp\Client;
 use Psr\Log\LogLevel;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class EpisodesManager
 {
@@ -18,11 +18,13 @@ class EpisodesManager
 
     private $entityManager;
     private $user;
+    private $client;
 
-    public function __construct(EntityManagerInterface $entityManager, Storage $storage)
+    public function __construct(EntityManagerInterface $entityManager, Storage $storage, HttpClientInterface $client)
     {
         $this->entityManager = $entityManager;
         $this->user = $storage->getUser();
+        $this->client = $client;
     }
 
     public function addEpisodes(Show $show): int
@@ -93,19 +95,12 @@ class EpisodesManager
         return $formatted;
     }
 
-    public function getClient()
-    {
-        return new Client();
-    }
-
     private function getEpisodesApi(Show $show): array
     {
         try {
-            return json_decode(
-                $this->getClient()
-                    ->get(sprintf('%s/%d/episodes', ShowsManager::API_URL, $show->getId()))
-                    ->getBody()
-            );
+            return json_decode($this->client
+                ->request('GET', sprintf('%s/%d/episodes', ShowsManager::API_URL, $show->getId()))
+                ->getContent());
         } catch (Exception $e) {
             $this->logger->log(LogLevel::ERROR, $e->getMessage());
 
