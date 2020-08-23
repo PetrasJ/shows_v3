@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
@@ -91,19 +92,12 @@ class UserEpisode
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     * @return UserEpisode
-     */
-    public function setUser(User $user): UserEpisode
+    public function setUser(UserInterface $user): UserEpisode
     {
         $this->user = $user;
 

@@ -8,28 +8,27 @@ use App\Traits\LoggerTrait;
 use DateTime;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
-use Psr\Log\LogLevel;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class EpisodesManager
 {
     use LoggerTrait;
 
-    private $entityManager;
-    private $user;
-    private $client;
+    private EntityManagerInterface $entityManager;
+    private ?UserInterface $user;
+    private TVMazeClient $client;
 
-    public function __construct(EntityManagerInterface $entityManager, Storage $storage, HttpClientInterface $client)
+    public function __construct(EntityManagerInterface $entityManager, Security $security, TVMazeClient $client)
     {
         $this->entityManager = $entityManager;
-        $this->user = $storage->getUser();
+        $this->user = $security->getUser();
         $this->client = $client;
     }
 
     public function addEpisodes(Show $show): int
     {
-        $episodes = $this->getEpisodesApi($show);
+        $episodes = $this->client->getEpisodes($show);
 
         if ($episodes) {
             $this->removeEpisodes($show);
@@ -93,20 +92,6 @@ class EpisodesManager
         }
 
         return $formatted;
-    }
-
-    private function getEpisodesApi(Show $show): array
-    {
-        try {
-            return json_decode($this->client
-                ->request('GET', sprintf('%s/%d/episodes', ShowsManager::API_URL, $show->getId()))
-                ->getContent());
-        } catch (Exception $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage());
-
-            return [];
-        }
-
     }
 
     /**

@@ -5,16 +5,15 @@ namespace App\Tests\Service;
 use App\Entity\Episode;
 use App\Entity\Show;
 use App\Entity\User;
-
 use App\Entity\UserEpisode;
 use App\Entity\UserShow;
 use App\Repository\UserEpisodeRepository;
 use App\Repository\UserShowRepository;
-use App\Service\Storage;
 use App\Service\UserEpisodeService;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Security;
 
 class UserEpisodeServiceTest extends TestCase
 {
@@ -39,9 +38,9 @@ class UserEpisodeServiceTest extends TestCase
             ->willReturnOnConsecutiveCalls($userEpisodeRepo, $userShowRepo)
         ;
 
-        $storage = new Storage();
-        $storage->setUser((new User()));
-        $service = new UserEpisodeService($entityManager, $storage);
+        $security = $this->createMock(Security::class);
+        $security->method('getUser')->willReturn(new User());
+        $service = new UserEpisodeService($entityManager, $security);
 
         $entityManager->expects($this->once())
             ->method('persist')

@@ -11,6 +11,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Security;
 
 class UserShowService
 {
@@ -23,12 +24,12 @@ class UserShowService
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        Storage $storage,
+        Security $security,
         EpisodesManager $episodesManager,
         ShowsManager $showsManager
     ) {
         $this->entityManager = $entityManager;
-        $this->user = $storage->getUser();
+        $this->user = $security->getUser();
         $this->episodesManager = $episodesManager;
         $this->showsManager = $showsManager;
     }

@@ -2,11 +2,11 @@
 
 namespace App\Twig;
 
-use App\Service\Storage;
 use App\Traits\LoggerTrait;
 use DateTime;
 use DateTimeZone;
 use Exception;
+use Symfony\Component\Security\Core\Security;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -16,9 +16,9 @@ class DateExtension extends AbstractExtension
 
     private $timezone;
 
-    public function __construct(Storage $storage)
+    public function __construct(Security $security)
     {
-        $user = $storage->getUser();
+        $user = $security->getUser();
         if ($user && $user->getTimezone()) {
             $this->timezone = new DateTimeZone($user->getTimezone());
         } else {

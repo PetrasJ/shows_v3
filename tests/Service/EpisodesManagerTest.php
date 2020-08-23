@@ -6,7 +6,7 @@ use App\Entity\Episode;
 use App\Entity\Show;
 use App\Repository\EpisodeRepository;
 use App\Service\EpisodesManager;
-use App\Service\Storage;
+use App\Service\TVMazeClient;
 use DateTime;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
@@ -15,8 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Contracts\HttpClient\ResponseInterface;
+use Symfony\Component\Security\Core\Security;
 
 class EpisodesManagerTest extends TestCase
 {
@@ -40,7 +39,7 @@ class EpisodesManagerTest extends TestCase
 
     private function getEpisodes()
     {
-        return '[{"id":277665,"url":"http://www.tvmaze.com/episodes/277665/one-punch-man-1x01-the-strongest-man","name":"The Strongest Man","season":1,"number":1,"airdate":"2015-10-04","airtime":"01:05","airstamp":"2015-10-04T16:05:00+00:00","runtime":25,"image":{"medium":"http://static.tvmaze.com/uploads/images/medium_landscape/77/192602.jpg","original":"http://static.tvmaze.com/uploads/images/original_untouched/77/192602.jpg"},"summary":"","_links":{"self":{"href":"http://api.tvmaze.com/episodes/277665"}}}]';
+        return json_decode('[{"id":277665,"url":"http://www.tvmaze.com/episodes/277665/one-punch-man-1x01-the-strongest-man","name":"The Strongest Man","season":1,"number":1,"airdate":"2015-10-04","airtime":"01:05","airstamp":"2015-10-04T16:05:00+00:00","runtime":25,"image":{"medium":"http://static.tvmaze.com/uploads/images/medium_landscape/77/192602.jpg","original":"http://static.tvmaze.com/uploads/images/original_untouched/77/192602.jpg"},"summary":"","_links":{"self":{"href":"http://api.tvmaze.com/episodes/277665"}}}]');
     }
 
     private function getService($update = true)
@@ -57,12 +56,10 @@ class EpisodesManagerTest extends TestCase
         $episodesRepo->method('findBy')->willReturn([new Episode(), new Episode()]);
         $episodesRepo->method('getEpisodesPublic')->willReturn([]);
         $entityManager->method('getRepository')->with(Episode::class)->willReturn($episodesRepo);
-        $storage = new Storage();
-        $client = $this->createMock(HttpClientInterface::class);
-        $response = $this->createMock(ResponseInterface::class);
-        $response->method('getContent')->willReturn($this->getEpisodes());
-        $client->method('request')->willReturn($response);
-        $service = new EpisodesManager($entityManager, $storage, $client);
+        $security = $this->createMock(Security::class);
+        $client = $this->createMock(TVMazeClient::class);
+        $client->method('getEpisodes')->willReturn($this->getEpisodes());
+        $service = new EpisodesManager($entityManager, $security, $client);
         $logger = $this->createMock(LoggerInterface::class);
         $service->setLogger($logger);
 

@@ -4,39 +4,36 @@ namespace App\Service;
 
 use App\Entity\Episode;
 use App\Entity\Show;
-use App\Entity\User;
 use App\Entity\UserShow;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ShowsManager
 {
     use LoggerTrait;
 
-    const API_URL = 'http://api.tvmaze.com/shows';
     private $entityManager;
     private $imageService;
     private $episodesManager;
-    private $client;
+    private TVMazeClient $client;
 
-    /**
-     * @var User|null
-     */
-    private $user;
+    private ?UserInterface $user;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         ImageService $imageService,
         EpisodesManager $episodesManager,
-        Storage $storage,
-        HttpClientInterface $client
+        Security $security,
+        TVMazeClient $client
     ) {
         $this->entityManager = $entityManager;
         $this->imageService = $imageService;
         $this->episodesManager = $episodesManager;
-        $this->user = $storage->getUser();
+        $this->user = $security->getUser();
         $this->client = $client;
     }
 
@@ -45,10 +42,7 @@ class ShowsManager
         $gap = 0;
         for ($page = 0; $page <= 2000; $page++) {
             try {
-                $shows = json_decode($this->client
-                    ->request('GET', sprintf('%s?page=%d', self::API_URL, $page))
-                    ->getContent())
-                ;
+                $shows = $this->client->getShows($page);
                 if (!$update) {
                     $this->addShows($shows);
                 } else {
@@ -132,8 +126,7 @@ class ShowsManager
             return null;
         }
         try {
-            $show = json_decode($this->client
-                ->request('GET', sprintf('%s/%d', self::API_URL, $showId))->getContent());
+            $show = $this->client->getShow($showId);
         } catch (Exception $e) {
             $this->info($e->getMessage(), [__METHOD__]);
 
@@ -239,10 +232,7 @@ class ShowsManager
         while (true) {
             $nextShowId++;
             try {
-                $show = json_decode($this->client
-                    ->request('GET', sprintf('%s/%d', self::API_URL, $nextShowId))
-                    ->getContent()
-                );
+                $show = $this->client->getShow($nextShowId);
 
                 $newShow = $this->addShow($show);
                 if ($newShow) {

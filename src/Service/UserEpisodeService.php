@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Security;
 
 class UserEpisodeService
 {
@@ -18,10 +19,10 @@ class UserEpisodeService
     private $entityManager;
     private $user;
 
-    public function __construct(EntityManagerInterface $entityManager, Storage $storage)
+    public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
         $this->entityManager = $entityManager;
-        $this->user = $storage->getUser();
+        $this->user = $security->getUser();
     }
 
     public function getUnwatchedEpisodes(int $showId)

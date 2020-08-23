@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Service\EpisodesManager;
-use App\Service\Storage;
 use DateInterval;
 use DatePeriod;
 use DateTime;
@@ -11,6 +10,7 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/calendar", name="calendar_")
@@ -18,17 +18,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalendarController extends AbstractController
 {
     /**
-     * @param Storage $storage
      * @Route("/", name="index")
-     * @return Response
      */
-    public function index(Storage $storage)
+    public function index(Security $security): Response
     {
         return $this
             ->render('calendar/index.html.twig',
                 [
                     'currentMonth' => date('Y-m'),
-                    'include' => $storage->getUser() ? $storage->getUser()->getCalendarShow() : [],
+                    'include' => $security->getUser() ? $security->getUser()->getCalendarShow() : [],
                 ]
             );
     }
