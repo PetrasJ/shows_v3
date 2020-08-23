@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserManager
 {
@@ -14,7 +15,7 @@ class UserManager
         $this->entityManager = $entityManager;
     }
 
-    public function save(User $user): void
+    public function save(UserInterface $user): void
     {
         $this->entityManager->persist($user);
         $this->entityManager->flush();
