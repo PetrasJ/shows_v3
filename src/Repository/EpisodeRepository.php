@@ -9,13 +9,14 @@ use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class EpisodeRepository extends EntityRepository
 {
     const DATE_ADD = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
     const DATE_SUB = "date_sub(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
 
-    public function getShowsWithUnwatchedEpisodes(User $user, int $status = 0): ?array
+    public function getShowsWithUnwatchedEpisodes(UserInterface $user, int $status = 0): ?array
     {
         return $this->createQueryBuilder('e')
             ->select('s.id, s.name, count(e.id) as episodes, us.id as userShowId')
@@ -49,7 +50,7 @@ class EpisodeRepository extends EntityRepository
             ;
     }
 
-    public function getUnwatchedEpisodes(User $user, int $showId, string $order = 'asc'): ?array
+    public function getUnwatchedEpisodes(UserInterface $user, int $showId, string $order = 'asc'): ?array
     {
         return $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment')
@@ -93,7 +94,7 @@ class EpisodeRepository extends EntityRepository
      * @return array
      * @throws NonUniqueResultException
      */
-    public function getNextEpisode(User $user, int $showId): ?array
+    public function getNextEpisode(UserInterface $user, int $showId): ?array
     {
         return $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.duration, e.name, e.summary, ue.comment')
@@ -132,7 +133,7 @@ class EpisodeRepository extends EntityRepository
     public function getEpisodes(
         DateTime $dateFrom,
         DateTime $dateTo,
-        User $user = null,
+        UserInterface $user = null,
         bool $watching = false,
         bool $excludeWatched = false
     ): ?array {
@@ -215,7 +216,7 @@ class EpisodeRepository extends EntityRepository
             ;
     }
 
-    public function getUserShowEpisodes(User $user, UserShow $userShow, $limit = UserEpisode::MAX_RESULT): ?array
+    public function getUserShowEpisodes(UserInterface $user, UserShow $userShow, $limit = UserEpisode::MAX_RESULT): ?array
     {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary, e.duration')
@@ -253,7 +254,7 @@ class EpisodeRepository extends EntityRepository
             ;
     }
 
-    public function getUnwatchedEpisodeEntities(User $user, UserShow $userShow): ?array
+    public function getUnwatchedEpisodeEntities(UserInterface $user, UserShow $userShow): ?array
     {
         return $this->createQueryBuilder('e')
             ->select('e')

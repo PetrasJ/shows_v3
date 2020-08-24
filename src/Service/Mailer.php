@@ -10,28 +10,30 @@ use Exception;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Mailer
 {
     use LoggerTrait;
 
-    private $entityManager;
-    private $mailer;
-    private $user;
-    private $router;
-    private $translator;
+    private EntityManagerInterface $entityManager;
+    private Swift_Mailer $mailer;
+    private ?UserInterface $user;
+    private RouterInterface $router;
+    private TranslatorInterface $translator;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         Swift_Mailer $mailer,
-        Storage $storage,
+        Security $security,
         RouterInterface $router,
         TranslatorInterface $translator
     ) {
         $this->entityManager = $entityManager;
         $this->mailer = $mailer;
-        $this->user = $storage->getUser();
+        $this->user = $security->getUser();
         $this->router = $router;
         $this->translator = $translator;
     }
@@ -59,7 +61,7 @@ class Mailer
         }
     }
 
-    public function sendConfirmation(User $user): void
+    public function sendConfirmation(UserInterface $user): void
     {
         $url = sprintf(
             '%s://%s%s',

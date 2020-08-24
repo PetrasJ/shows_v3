@@ -7,21 +7,22 @@ use App\Entity\UserEpisode;
 use App\Entity\UserShow;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserEpisodeService
 {
     use LoggerTrait;
 
-    private $entityManager;
-    private $user;
+    private EntityManagerInterface $entityManager;
+    private ?UserInterface $user;
 
-    public function __construct(EntityManagerInterface $entityManager, Storage $storage)
+    public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
         $this->entityManager = $entityManager;
-        $this->user = $storage->getUser();
+        $this->user = $security->getUser();
     }
 
     public function getUnwatchedEpisodes(int $showId)
@@ -82,7 +83,7 @@ class UserEpisodeService
     {
         try {
             return $this->entityManager->getRepository(UserEpisode::class)->getWatchedDuration($this->user);
-        } catch (NonUniqueResultException $e) {
+        } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
             return null;

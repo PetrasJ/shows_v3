@@ -4,13 +4,13 @@ namespace App\Controller;
 
 use App\Form\UserType;
 use App\Service\Mailer;
-use App\Service\Storage;
 use App\Service\UserEpisodeService;
 use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/user", name="user_")
@@ -18,7 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @param Storage $storage
      * @param Request $request
      * @param UserManager $userManager
      * @param UserEpisodeService $userEpisodeService
@@ -27,13 +26,13 @@ class UserController extends AbstractController
      * @return Response
      */
     public function settings(
-        Storage $storage,
+        Security $security,
         Request $request,
         UserManager $userManager,
         UserEpisodeService $userEpisodeService,
         Mailer $mailer
     ) {
-        $user = $storage->getUser();
+        $user = $security->getUser();
         if ($request->get('resend_confirmation')) {
             $mailer->sendConfirmation($user);
             $this->addFlash('success', 'email_sent');

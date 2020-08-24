@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Service\ShowsManager;
+use App\Service\ShowManager;
 use DateTime;
 use Exception;
 use Symfony\Component\Console\Command\Command;
@@ -11,12 +11,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateShowsCommand extends Command
 {
-    private $showsManager;
+    private $showManager;
 
-    public function __construct(ShowsManager $showsManager)
+    public function __construct(ShowManager $showManager)
     {
         parent::__construct();
-        $this->showsManager = $showsManager;
+        $this->showManager = $showManager;
     }
 
     /**
@@ -32,14 +32,13 @@ class UpdateShowsCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return void
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update shows Started']);
 
-        $result = $this->showsManager->update();
+        $result = $this->showManager->update();
         if (count($result['updated']) > 0) {
             $output->writeln(['Updated Shows: ' . count($result['updated'])]);
             $output->writeln(implode($result['updated'], ', '));
@@ -52,5 +51,7 @@ class UpdateShowsCommand extends Command
         }
 
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update shows Finished']);
+
+        return 0;
     }
 }

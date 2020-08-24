@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
@@ -19,10 +20,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class UserEpisode
 {
-    const STATUS_UNWATCHED = 0;
-    const STATUS_WATCHED = 1;
-    const STATUS_COMMENTED = 2;
-    const MAX_RESULT = 100;
+    public const STATUS_UNWATCHED = 0;
+    public const STATUS_WATCHED = 1;
+    public const STATUS_COMMENTED = 2;
+    public const MAX_RESULT = 100;
 
     /**
      * @ORM\Column(type="integer")
@@ -91,19 +92,12 @@ class UserEpisode
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     * @return UserEpisode
-     */
-    public function setUser(User $user): UserEpisode
+    public function setUser(UserInterface $user): UserEpisode
     {
         $this->user = $user;
 

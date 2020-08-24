@@ -10,10 +10,7 @@ class ImageService
 {
     use LoggerTrait;
 
-    /**
-     * @var string
-     */
-    private $projectDir;
+    private string $projectDir;
 
     public function __construct(KernelInterface $appKernel)
     {

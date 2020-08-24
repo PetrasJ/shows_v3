@@ -8,7 +8,6 @@ use App\Form\ForgotPasswordType;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
 use App\Service\Mailer;
-use App\Service\Storage;
 use App\Service\UserManager;
 use DateTime;
 use Exception;
@@ -18,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -127,17 +127,14 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/change-password", name="change_password")
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param Storage $storage
      * @return Response
      */
     public function changePassword(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
-        Storage $storage
+        Security $security
     ): Response {
-        $user = $storage->getUser();
+        $user = $security->getUser();
         $form = $this->createForm(ChangePasswordType::class, $user);
         $form->handleRequest($request);
 

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\Expr\Join;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserShowRepository extends EntityRepository
 {
@@ -28,7 +29,7 @@ class UserShowRepository extends EntityRepository
         return array_column($result, 'id');
     }
 
-    public function getShows(User $user, $status = 0): ?array
+    public function getShows(UserInterface $user, $status = 0): ?array
     {
         return $this->createQueryBuilder('us')
             ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset, s.rating')
@@ -54,7 +55,7 @@ class UserShowRepository extends EntityRepository
             ;
     }
 
-    public function getEpisodes(User $user, $status): ?array
+    public function getEpisodes(UserInterface $user, $status): ?array
     {
         return $this->createQueryBuilder('us')
             ->select('us.id as userShowId, e.id, e.season, e.episode, e.airstamp, e.name, e.duration')
@@ -80,7 +81,7 @@ class UserShowRepository extends EntityRepository
             ;
     }
 
-    public function getUserShows(User $user, array $shows): array
+    public function getUserShows(UserInterface $user, array $shows): array
     {
         $userShows = $this->createQueryBuilder('us')
             ->select('s.id, us.id as userShowId, us.status')
@@ -123,7 +124,7 @@ class UserShowRepository extends EntityRepository
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getUserShow(User $user, int $showId): ?array
+    public function getUserShow(UserInterface $user, int $showId): ?array
     {
         return $this->createQueryBuilder('us')
             ->select('s.id, s.name, s.summary, s.status, us.id as userShowId, us.offset, s.rating')
