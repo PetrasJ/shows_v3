@@ -36,23 +36,9 @@ class EpisodeManager
 
         $saved = 0;
         foreach ($episodes as $episode) {
-            $saved++;
-            if (($episode->name) && ($episode->airdate)) {
-                $dateTime = (new DateTime())->createFromFormat('Y-m-d\TH:i:s\+00:00', $episode->airstamp);
-                $newEpisode = new Episode();
-                $newEpisode
-                    ->setId($episode->id)
-                    ->setShow($show)
-                    ->setName($episode->name)
-                    ->setSeason($episode->season)
-                    ->setEpisode($episode->number)
-                    ->setAirstamp($dateTime)
-                    ->setAirdate($episode->airdate)
-                    ->setAirtime($episode->airtime)
-                    ->setSummary($episode->summary)
-                    ->setDuration($episode->runtime)
-                ;
-                $this->entityManager->persist($newEpisode);
+            if ($episode->name && $episode->airdate) {
+                $this->entityManager->persist($this->makeEntity($show, $episode));
+                $saved++;
             }
         }
         $this->entityManager->flush();
@@ -110,5 +96,23 @@ class EpisodeManager
             $this->error($e->getMessage(), [__METHOD__]);
         }
         $this->entityManager->flush();
+    }
+
+    private function makeEntity(Show $show, \stdClass $episode): Episode
+    {
+        $dateTime = (new \DateTime())->createFromFormat('Y-m-d\TH:i:s\+00:00', $episode->airstamp);
+
+        return (new Episode())
+            ->setId($episode->id)
+            ->setShow($show)
+            ->setName($episode->name)
+            ->setSeason($episode->season)
+            ->setEpisode($episode->number)
+            ->setAirstamp($dateTime)
+            ->setAirdate($episode->airdate)
+            ->setAirtime($episode->airtime)
+            ->setSummary($episode->summary)
+            ->setDuration($episode->runtime)
+            ;
     }
 }
