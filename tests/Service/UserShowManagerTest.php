@@ -8,7 +8,7 @@ use App\Entity\UserShow;
 use App\Repository\UserShowRepository;
 use App\Service\EpisodeManager;
 use App\Service\ShowManager;
-use App\Service\UserShowService;
+use App\Service\UserShowManager;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\FilterCollection;
@@ -16,7 +16,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Security;
 
-class UserShowServiceTest extends TestCase
+class UserShowManagerTest extends TestCase
 {
     /**
      * @param string $type
@@ -174,6 +174,6 @@ class UserShowServiceTest extends TestCase
                 ->with($this->isInstanceOf(UserShow::class));
         }
 
-        return new UserShowService($entityManager, $security, $episodesManager, $showsManager);
+        return new UserShowManager($entityManager, $security, $episodesManager, $showsManager);
     }
 }

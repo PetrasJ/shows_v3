@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Form\UserType;
 use App\Service\Mailer;
-use App\Service\UserEpisodeService;
+use App\Service\UserEpisodeManager;
 use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ class UserController extends AbstractController
     /**
      * @param Request $request
      * @param UserManager $userManager
-     * @param UserEpisodeService $userEpisodeService
+     * @param UserEpisodeManager $userEpisodeService
      * @param Mailer $mailer
      * @Route("/settings", name="settings")
      * @return Response
@@ -29,7 +29,7 @@ class UserController extends AbstractController
         Security $security,
         Request $request,
         UserManager $userManager,
-        UserEpisodeService $userEpisodeService,
+        UserEpisodeManager $userEpisodeService,
         Mailer $mailer
     ) {
         $user = $security->getUser();

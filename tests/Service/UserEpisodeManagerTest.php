@@ -9,13 +9,13 @@ use App\Entity\UserEpisode;
 use App\Entity\UserShow;
 use App\Repository\UserEpisodeRepository;
 use App\Repository\UserShowRepository;
-use App\Service\UserEpisodeService;
+use App\Service\UserEpisodeManager;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Security;
 
-class UserEpisodeServiceTest extends TestCase
+class UserEpisodeManagerTest extends TestCase
 {
     /**
      * @param array $action
@@ -40,7 +40,7 @@ class UserEpisodeServiceTest extends TestCase
 
         $security = $this->createMock(Security::class);
         $security->method('getUser')->willReturn(new User());
-        $service = new UserEpisodeService($entityManager, $security);
+        $service = new UserEpisodeManager($entityManager, $security);
 
         $entityManager->expects($this->once())
             ->method('persist')

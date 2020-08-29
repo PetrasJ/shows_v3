@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Service\ShowManager;
-use App\Service\UserEpisodeService;
-use App\Service\UserShowService;
+use App\Service\UserEpisodeManager;
+use App\Service\UserShowManager;
 use App\Traits\LoggerTrait;
 use DateTime;
 use Exception;
@@ -23,10 +23,10 @@ class ShowsController extends AbstractController
 {
     use LoggerTrait;
 
-    private $userShowService;
-    private $showManager;
+    private UserShowManager $userShowService;
+    private ShowManager $showManager;
 
-    public function __construct(UserShowService $userShowService, ShowManager $showManager)
+    public function __construct(UserShowManager $userShowService, ShowManager $showManager)
     {
         $this->userShowService = $userShowService;
         $this->showManager = $showManager;
@@ -70,12 +70,14 @@ class ShowsController extends AbstractController
         $show = $this->userShowService->getUserShow($userShowId);
 
         if ($show) {
-            return $this->render('shows/actions.html.twig',
+            return $this->render(
+                'shows/actions.html.twig',
                 [
                     'show' => $show,
                     'status' => $show['userShowStatus'],
                     'unwatched' => $show['episodesCount'] - $show['watched'],
-                ]);
+                ]
+            );
         } else {
             return new Response('', Response::HTTP_NOT_FOUND);
         }
@@ -83,11 +85,11 @@ class ShowsController extends AbstractController
 
     /**
      * @param Request $request
-     * @param UserEpisodeService $userEpisodeService
+     * @param UserEpisodeManager $userEpisodeService
      * @Route("/unwatch", name="watch")
      * @return JsonResponse
      */
-    public function unwatch(Request $request, UserEpisodeService $userEpisodeService)
+    public function unwatch(Request $request, UserEpisodeManager $userEpisodeService)
     {
         try {
             $userEpisodeService

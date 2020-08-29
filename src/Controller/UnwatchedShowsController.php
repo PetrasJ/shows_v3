@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Service\EpisodeManager;
 use App\Service\ShowManager;
-use App\Service\UserEpisodeService;
-use App\Service\UserShowService;
+use App\Service\UserEpisodeManager;
+use App\Service\UserShowManager;
 use App\Traits\LoggerTrait;
 use DateTime;
 use Exception;
@@ -24,13 +24,13 @@ class UnwatchedShowsController extends AbstractController
     use LoggerTrait;
 
     /**
-     * @param UserShowService $userShowService
+     * @param UserShowManager $userShowService
      * @param EpisodeManager $episodeManager
      * @Route("/", name="index")
      * @return Response
      * @throws Exception
      */
-    public function unwatched(UserShowService $userShowService, EpisodeManager $episodeManager)
+    public function unwatched(UserShowManager $userShowService, EpisodeManager $episodeManager)
     {
         try {
             $shows = $userShowService->getShowsWithUnwatchedEpisodes();
@@ -51,14 +51,14 @@ class UnwatchedShowsController extends AbstractController
 
     /**
      * @param int $userShowId
-     * @param UserEpisodeService $userEpisodeService
+     * @param UserEpisodeManager $userEpisodeService
      * @param ShowManager $showManager
      * @Route("/episodes/{userShowId}", name="episodes")
      * @return Response
      */
     public function unwatchedEpisodes(
         int $userShowId,
-        UserEpisodeService $userEpisodeService,
+        UserEpisodeManager $userEpisodeService,
         ShowManager $showManager
     ) {
         try {
@@ -80,11 +80,11 @@ class UnwatchedShowsController extends AbstractController
 
     /**
      * @param Request $request
-     * @param UserEpisodeService $userEpisodeService
+     * @param UserEpisodeManager $userEpisodeService
      * @Route("/comment", name="comment")
      * @return JsonResponse
      */
-    public function comment(Request $request, UserEpisodeService $userEpisodeService)
+    public function comment(Request $request, UserEpisodeManager $userEpisodeService)
     {
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'),
@@ -100,11 +100,11 @@ class UnwatchedShowsController extends AbstractController
 
     /**
      * @param Request $request
-     * @param UserEpisodeService $userEpisodeService
+     * @param UserEpisodeManager $userEpisodeService
      * @Route("/watch", name="watch")
      * @return JsonResponse
      */
-    public function watch(Request $request, UserEpisodeService $userEpisodeService)
+    public function watch(Request $request, UserEpisodeManager $userEpisodeService)
     {
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['watch' => true]);

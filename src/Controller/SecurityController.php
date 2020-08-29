@@ -26,10 +26,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  */
 class SecurityController extends AbstractController
 {
-    /**
-     * @var UserManager
-     */
-    private $userManager;
+    private UserManager $userManager;
 
     public function __construct(UserManager $userManager)
     {
@@ -96,7 +93,7 @@ class SecurityController extends AbstractController
                 $user,
                 $request,
                 $authenticator,
-                'main' // firewall name in security.yaml
+                'main'
             );
         }
 
@@ -107,11 +104,10 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/confirm-email/{token}", name="confirm_email")
-     * @param string $token
      * @return RedirectResponse
      * @throws Exception
      */
-    public function confirmEmail($token)
+    public function confirmEmail(string $token)
     {
         $user = $this->userManager->getUserByEmailConfirmationToken($token);
         if ($user) {
