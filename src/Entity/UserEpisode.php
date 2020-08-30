@@ -72,7 +72,7 @@ class UserEpisode
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @ORM\Version
+     * @Gedmo\Timestampable(on="create")
      * @var DateTime
      */
     protected $created;
