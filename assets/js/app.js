@@ -15,7 +15,6 @@ const app = {
         this.initWatchActions();
         $('.selectpicker').selectpicker();
         this.initAddRemoveShow();
-        this.initShowList();
         this.initConfirm();
         this.initCalendar();
         this.initTooltip();
@@ -23,10 +22,10 @@ const app = {
         this.initFlashMessages();
     },
     initFlashMessages: function () {
-        setTimeout(function() {
+        setTimeout(function () {
             $('.flash-container').fadeOut('fast');
         }, 5000);
-        $('.flash-message').find('i').unbind().on('click', function() {
+        $('.flash-message').find('i').unbind().on('click', function () {
             $(this).parent().parent().parent().fadeOut('fast');
         })
     },
@@ -50,50 +49,28 @@ const app = {
     initSearch: function () {
         const form = $('form#search');
         form.find('.term').autocomplete({
-            source: window.baseUrl + 'search',
+            source: form.data('source'),
             minLength: 2,
             delay: 100,
             focus: function (event) {
                 event.preventDefault();
             },
             select: function (event, ui) {
-                window.location.href = window.baseUrl + 'search/results/' + ui.item.value;
+                window.location.href = form.data('results') + '/' + ui.item.value;
             }
         });
         form.on('submit', function (e) {
             e.preventDefault();
-            window.location.href = window.baseUrl + 'search/results/' + form.find('.term').val();
+            window.location.href = form.data('results') + '/' + form.find('.term').val();
         })
     },
     initAddRemoveShow: function () {
-        $('.add-show').unbind().on('click', function () {
+        const button = $('.add-show');
+        button.unbind().on('click', function () {
             loading(true);
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + 'shows/add/' + $(this).data('id'),
-                data: {
-                    id: $(this).data('id'),
-                    value: $(this).val()
-                },
-                success: () => {
-                    $(this).hide()
-                }
-            }).fail(function (data) {
-                console.log(data);
-            }).always(function () {
-                loaded();
-            });
-        });
-
-        $('.remove-show').unbind().on('click', function () {
-            loading(true);
-            $.ajax({
-                type: 'post',
-                url: window.baseUrl + 'shows/remove/' + $(this).data('user-show-id'),
-                data: {
-                    id: $(this).data('id'),
-                    value: $(this).val()
-                },
+                url: button.data('action'),
                 success: () => {
                     $(this).hide()
                 }
@@ -113,23 +90,6 @@ const app = {
             modal.find('.show-offset').val(button.data('offset')).attr('data-user-show-id', button.data('user-show-id'));
             t.initSettings();
         })
-    },
-    initShowList: function () {
-        $('.update-show').unbind().on('click', function () {
-            loading(true);
-            const id = $(this).data('user-show-id');
-            $.ajax({
-                type: 'post',
-                url: window.baseUrl + 'shows/' + $(this).data('action') + '/' + id,
-                success: () => {
-                    $('#' + id).slideUp('fast')
-                }
-            }).fail(function (data) {
-                console.log(data);
-            }).always(function () {
-                loaded();
-            });
-        });
     },
     initSettings: function () {
         $('.show-offset').unbind().change(function () {
@@ -296,8 +256,7 @@ const app = {
                                 showActions.html('');
                             }
                             t.loadActions(button.data('user-show-id'));
-                        }
-                        else if (button.data('remove')) {
+                        } else if (button.data('remove')) {
                             const shows = $('.shows');
                             shows.html(parseInt(shows.html()) - 1);
                             $('#' + button.data('user-show-id')).slideUp('fast')

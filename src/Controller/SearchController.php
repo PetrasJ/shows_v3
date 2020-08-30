@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SearchController extends AbstractController
 {
-    private $showManager;
+    private ShowManager $showManager;
 
     public function __construct(ShowManager $showManager)
     {
@@ -34,7 +34,7 @@ class SearchController extends AbstractController
     /**
      * @param string $term
      * @param ShowManager $showManager
-     * @Route("/results/{term}", name="results")
+     * @Route("/results/{term}", name="results", defaults={"term":null})
      * @return Response
      */
     public function results($term, ShowManager $showManager)

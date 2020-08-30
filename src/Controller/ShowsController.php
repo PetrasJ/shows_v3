@@ -33,7 +33,7 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param                 $status
+     * @param $status
      * @Route("/list/{status}", name="index", defaults={"status":"0"})
      * @return Response
      */
@@ -45,7 +45,7 @@ class ShowsController extends AbstractController
     }
 
     /**
-     * @param     $userShowId
+     * @param $userShowId
      * @param int $limit
      * @Route("/details/{userShowId}/{limit}", name="details", defaults={"limit"=100})
      * @return Response
@@ -242,7 +242,8 @@ class ShowsController extends AbstractController
         $result = $this->showManager->update();
         $finish = (new DateTime())->format('Y-m-d H:i:s');
 
-        return $this->render('shows/update.html.twig',
+        return $this->render(
+            'shows/update.html.twig',
             [
                 'start' => $start,
                 'updated' => $result['updated'],

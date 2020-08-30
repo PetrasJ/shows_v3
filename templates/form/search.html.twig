@@ -1,11 +1,13 @@
-<form id="search">
-    <div class="input-group">
-        <input type="text" class="term form-control" name="search_show" required="required" autocomplete="off"
-               placeholder="{{ 'show.show'|trans }}">
-        <div class="input-group-append">
-            <button class="btn btn-secondary" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
+<div class="search-box">
+    <form id="search" data-source="{{ path('search_search') }}" data-results="{{ path('search_results') }}">
+        <div class="input-group">
+            <input type="text" class="term form-control" name="search_show" required="required" autocomplete="off"
+                   placeholder="{{ 'show.show'|trans }}">
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
