@@ -247,7 +247,7 @@ class ShowsController extends AbstractController
             [
                 'start' => $start,
                 'updated' => $updated,
-                'updatedList' => implode($newShows, ', '),
+                'updatedList' => implode($updated, ', '),
                 'added' => $newShows,
                 'addedList' => implode($newShows, ', '),
                 'finish' => $finish,
