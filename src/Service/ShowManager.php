@@ -15,9 +15,9 @@ class ShowManager
 {
     use LoggerTrait;
 
-    private $entityManager;
-    private $imageService;
-    private $episodeManager;
+    private EntityManagerInterface $entityManager;
+    private ImageService $imageService;
+    private EpisodeManager $episodeManager;
     private TVMazeClient $client;
 
     private ?UserInterface $user;
@@ -66,12 +66,12 @@ class ShowManager
             $show = $this->updateShow($showId);
             if ($show) {
                 $updated[] = $show;
-            };
+            }
         }
 
         $newShows = $this->checkForNewShows();
 
-        return ['updated' => $updated, 'newShows' => $newShows];
+        return [$updated, $newShows];
     }
 
     public function find(string $term): ?array
@@ -88,7 +88,7 @@ class ShowManager
                 ->getUserShows($this->user, $shows)
             : [];
 
-        return ['shows' => $shows, 'userShows' => $userShows];
+        return [$shows, $userShows];
     }
 
     public function getShow(int $showId): ?array

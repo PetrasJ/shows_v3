@@ -35,8 +35,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/login", name="login")
-     * @param AuthenticationUtils $authenticationUtils
-     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -59,12 +57,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/register", name="register")
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param GuardAuthenticatorHandler $guardHandler
-     * @param LoginFormAuthenticator $authenticator
-     * @param Mailer $mailer
-     * @return Response
      */
     public function register(
         Request $request,
@@ -104,10 +96,9 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/confirm-email/{token}", name="confirm_email")
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function confirmEmail(string $token)
+    public function confirmEmail(string $token): RedirectResponse
     {
         $user = $this->userManager->getUserByEmailConfirmationToken($token);
         if ($user) {
@@ -123,7 +114,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/change-password", name="change_password")
-     * @return Response
      */
     public function changePassword(
         Request $request,
@@ -152,9 +142,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/forgot-password", name="forgot_password")
-     * @param Request $request
-     * @param Mailer $mailer
-     * @return Response
      * @throws Exception
      */
     public function forgotPassword(Request $request, Mailer $mailer): Response
@@ -180,14 +167,10 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/reset-password/{token}", name="reset_password")
-     * @param $token
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @return Response|RedirectResponse
      * @throws Exception
      */
     public function resetPassword(
-        $token,
+        string $token,
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder
     ): Response {

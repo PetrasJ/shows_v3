@@ -39,11 +39,11 @@ class SearchController extends AbstractController
      */
     public function results($term, ShowManager $showManager)
     {
-        $shows = $showManager->findFull($term);
+        [$shows, $userShows] = $showManager->findFull($term);
 
         return $this->render('search/results.html.twig', [
-            'shows' => $shows['shows'],
-            'userShows' => $shows['userShows'],
+            'shows' => $shows,
+            'userShows' => $userShows,
             'term' => $term,
         ]);
     }

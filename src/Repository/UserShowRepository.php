@@ -13,9 +13,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserShowRepository extends EntityRepository
 {
-    /**
-     * @return array
-     */
     public function getAllUsersShows(): ?array
     {
         $result = $this->createQueryBuilder('p')
@@ -118,9 +115,6 @@ class UserShowRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     * @param int $showId
-     * @return null|array
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

@@ -8,7 +8,7 @@ use App\Service\UserShowManager;
 use App\Traits\LoggerTrait;
 use DateTime;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -234,22 +234,22 @@ class ShowsController extends AbstractController
      * @Route("/update-all", name="update_all")
      * @return Response
      * @throws Exception
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function updateShows()
     {
         $start = (new DateTime())->format('Y-m-d H:i:s');
-        $result = $this->showManager->update();
+        [$updated, $newShows] = $this->showManager->update();
         $finish = (new DateTime())->format('Y-m-d H:i:s');
 
         return $this->render(
             'shows/update.html.twig',
             [
                 'start' => $start,
-                'updated' => $result['updated'],
-                'updatedList' => implode($result['updated'], ', '),
-                'added' => $result['newShows'],
-                'addedList' => implode($result['newShows'], ', '),
+                'updated' => $updated,
+                'updatedList' => implode($newShows, ', '),
+                'added' => $newShows,
+                'addedList' => implode($newShows, ', '),
                 'finish' => $finish,
             ]
         );

@@ -18,12 +18,7 @@ use Symfony\Component\Security\Core\Security;
 class UserController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param UserManager $userManager
-     * @param UserEpisodeManager $userEpisodeService
-     * @param Mailer $mailer
      * @Route("/settings", name="settings")
-     * @return Response
      */
     public function settings(
         Security $security,
@@ -31,7 +26,7 @@ class UserController extends AbstractController
         UserManager $userManager,
         UserEpisodeManager $userEpisodeService,
         Mailer $mailer
-    ) {
+    ): Response {
         $user = $security->getUser();
         if ($request->get('resend_confirmation')) {
             $mailer->sendConfirmation($user);
@@ -48,7 +43,8 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('user/settings.html.twig',
+        return $this->render(
+            'user/settings.html.twig',
             [
                 'form' => $form->createView(),
                 'lastEpisodes' => $userEpisodeService->getLastEpisodes(),

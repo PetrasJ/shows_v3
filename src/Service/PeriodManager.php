@@ -41,10 +41,6 @@ class PeriodManager
             $days[] = $value->format('Y-m-d');
         }
 
-        return [
-            'from' => $from,
-            'to' => $to,
-            'days' => $days
-        ];
+        return [$from, $to, $days];
     }
 }

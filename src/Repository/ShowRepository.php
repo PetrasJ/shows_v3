@@ -7,12 +7,7 @@ use Doctrine\ORM\EntityRepository;
 
 class ShowRepository extends EntityRepository
 {
-    /**
-     * @param string $name
-     * @param bool $full
-     * @return array
-     */
-    public function findAllByName($name, $full = false): ?array
+    public function findAllByName(?string $name, bool $full = false): ?array
     {
         $names = str_replace('"', " ", $name);
         $names = str_replace('%20', " ", $names);

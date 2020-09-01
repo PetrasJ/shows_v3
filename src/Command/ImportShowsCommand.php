@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportShowsCommand extends Command
 {
-    private $showManager;
+    private ShowManager $showManager;
 
     public function __construct(ShowManager $showManager)
     {
@@ -30,8 +30,6 @@ class ImportShowsCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -40,6 +38,6 @@ class ImportShowsCommand extends Command
         $this->showManager->load();
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Import Shows Finished']);
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

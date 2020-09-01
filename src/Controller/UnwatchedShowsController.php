@@ -24,13 +24,10 @@ class UnwatchedShowsController extends AbstractController
     use LoggerTrait;
 
     /**
-     * @param UserShowManager $userShowService
-     * @param EpisodeManager $episodeManager
      * @Route("/", name="index")
-     * @return Response
      * @throws Exception
      */
-    public function unwatched(UserShowManager $userShowService, EpisodeManager $episodeManager)
+    public function unwatched(UserShowManager $userShowService, EpisodeManager $episodeManager): Response
     {
         try {
             $shows = $userShowService->getShowsWithUnwatchedEpisodes();
@@ -43,24 +40,20 @@ class UnwatchedShowsController extends AbstractController
         } catch (NotFoundHttpException $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
-            return new Response([], 500);
+            return new Response('', 500);
         }
 
         return $this->render('unwatched-shows/index.html.twig', ['shows' => $shows, 'episodes' => $episodes]);
     }
 
     /**
-     * @param int $userShowId
-     * @param UserEpisodeManager $userEpisodeService
-     * @param ShowManager $showManager
      * @Route("/episodes/{userShowId}", name="episodes")
-     * @return Response
      */
     public function unwatchedEpisodes(
         int $userShowId,
         UserEpisodeManager $userEpisodeService,
         ShowManager $showManager
-    ) {
+    ): Response {
         try {
             $episodes = $userEpisodeService->getUnwatchedEpisodes($userShowId);
             $show = $showManager->getShow($userShowId);
@@ -68,7 +61,7 @@ class UnwatchedShowsController extends AbstractController
         } catch (NotFoundHttpException $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
-            return new Response([], 500);
+            return new Response('', 500);
         }
 
         return $this->render('unwatched-shows/episodes.html.twig', [
@@ -79,16 +72,16 @@ class UnwatchedShowsController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param UserEpisodeManager $userEpisodeService
      * @Route("/comment", name="comment")
-     * @return JsonResponse
      */
-    public function comment(Request $request, UserEpisodeManager $userEpisodeService)
+    public function comment(Request $request, UserEpisodeManager $userEpisodeService): JsonResponse
     {
         try {
-            $userEpisodeService->update($request->get('id'), $request->get('userShowId'),
-                ['comment' => $request->get('comment')]);
+            $userEpisodeService->update(
+                $request->get('id'),
+                $request->get('userShowId'),
+                ['comment' => $request->get('comment')]
+            );
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
@@ -99,12 +92,9 @@ class UnwatchedShowsController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param UserEpisodeManager $userEpisodeService
      * @Route("/watch", name="watch")
-     * @return JsonResponse
      */
-    public function watch(Request $request, UserEpisodeManager $userEpisodeService)
+    public function watch(Request $request, UserEpisodeManager $userEpisodeService): JsonResponse
     {
         try {
             $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['watch' => true]);

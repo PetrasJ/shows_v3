@@ -91,10 +91,8 @@ class UserShowManager
                     if ($episode['airstamp'] < $now) {
                         $count++;
                         $lastEpisode = $episode;
-
                     } else {
                         $nextEpisode = $episode;
-
                         break;
                     }
                 }
@@ -122,7 +120,6 @@ class UserShowManager
     {
         try {
             $userShow = $this->entityManager->find(UserShow::class, $userShowId);
-
             $return['episodes'] = $this->entityManager
                 ->getRepository(Episode::class)
                 ->getUserShowEpisodes($this->user, $userShow, $limit)
@@ -132,7 +129,6 @@ class UserShowManager
                 ->getRepository(UserShow::class)
                 ->getUserShow($this->user, $userShowId)
             ;
-
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 

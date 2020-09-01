@@ -21,7 +21,8 @@ class CalendarController extends AbstractController
     public function index(Security $security): Response
     {
         return $this
-            ->render('calendar/index.html.twig',
+            ->render(
+                'calendar/index.html.twig',
                 [
                     'currentMonth' => date('Y-m'),
                     'include' => $security->getUser() ? $security->getUser()->getCalendarShow() : [],
@@ -30,18 +31,17 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * @param string $month
      * @Route("/month/{month}", name="calendar")
      * @throws Exception
      */
-    public function month($month, EpisodeManager $episodeManager, PeriodManager $periodManager): Response
+    public function month(string $month, EpisodeManager $episodeManager, PeriodManager $periodManager): Response
     {
-        $period = $periodManager->getPeriod($month);
-        $episodes = $episodeManager->getEpisodes($period['from'], $period['to']);
+        [$from, $to, $days] = $periodManager->getPeriod($month);
+        $episodes = $episodeManager->getEpisodes($from, $to);
 
         return $this->render('calendar/month.html.twig', [
             'month' => $month,
-            'days' => $period['days'],
+            'days' => $days,
             'episodes' => $episodes,
         ]);
     }

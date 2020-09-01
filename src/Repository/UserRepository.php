@@ -25,9 +25,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     * @param UserInterface $user
-     * @param string $newEncodedPassword
      * @throws ORMException
      * @throws OptimisticLockException
      */

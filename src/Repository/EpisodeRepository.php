@@ -13,8 +13,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class EpisodeRepository extends EntityRepository
 {
-    const DATE_ADD = "date_add(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
-    const DATE_SUB = "date_sub(%s, CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END, 'hour')";
+    public const DATE_ADD = "date_add(%s, " . self::CASE . ", 'hour')";
+    private const CASE = 'CASE WHEN us.offset IS NOT NULL AND us.offset != 0 THEN us.offset ELSE u.defaultOffset END';
+    private const DATE_SUB = "date_sub(%s, " . self::CASE . ", 'hour')";
 
     public function getShowsWithUnwatchedEpisodes(UserInterface $user, int $status = 0): ?array
     {
@@ -89,9 +90,6 @@ class EpisodeRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     * @param int $showId
-     * @return array
      * @throws NonUniqueResultException
      */
     public function getNextEpisode(UserInterface $user, int $showId): ?array
@@ -216,8 +214,11 @@ class EpisodeRepository extends EntityRepository
             ;
     }
 
-    public function getUserShowEpisodes(UserInterface $user, UserShow $userShow, $limit = UserEpisode::MAX_RESULT): ?array
-    {
+    public function getUserShowEpisodes(
+        UserInterface $user,
+        UserShow $userShow,
+        $limit = UserEpisode::MAX_RESULT
+    ): ?array {
         $qb = $this->createQueryBuilder('e')
             ->select('e.id, e.season, e.episode, e.airstamp, e.name, e.summary, e.duration')
             ->addSelect(sprintf(self::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
@@ -230,8 +231,12 @@ class EpisodeRepository extends EntityRepository
             )
             ->innerJoin('us.user', 'u')
             ->innerJoin('e.show', 's')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH,
-                'ue.user = :user AND ue.episode = e AND ue.userShow = :userShow')
+            ->leftJoin(
+                UserEpisode::class,
+                'ue',
+                Join::WITH,
+                'ue.user = :user AND ue.episode = e AND ue.userShow = :userShow'
+            )
             ->where('u = :user')
             ->andWhere('e.show = :show')
             ->andWhere('us = :userShow')
@@ -258,8 +263,12 @@ class EpisodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e')
-            ->leftJoin(UserEpisode::class, 'ue', Join::WITH,
-                'ue.user = :user AND ue.episode = e AND ue.userShow = :userShow')
+            ->leftJoin(
+                UserEpisode::class,
+                'ue',
+                Join::WITH,
+                'ue.user = :user AND ue.episode = e AND ue.userShow = :userShow'
+            )
             ->where('e.show = :show')
             ->andWhere('ue.id IS NULL')
             ->andWhere('e.airstamp < :now')

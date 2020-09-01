@@ -14,10 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FeedbackType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -43,7 +39,7 @@ class FeedbackType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'send',
             ])
-        ;;
+        ;
     }
 
     /**
