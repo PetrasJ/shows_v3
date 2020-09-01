@@ -22,22 +22,17 @@ class SearchController extends AbstractController
     }
 
     /**
-     * @param Request $request
      * @Route("/", name="search")
-     * @return JsonResponse
      */
-    public function search(Request $request)
+    public function search(Request $request): JsonResponse
     {
         return new JsonResponse($this->showManager->find($request->get('term')));
     }
 
     /**
-     * @param string $term
-     * @param ShowManager $showManager
      * @Route("/results/{term}", name="results", defaults={"term":null})
-     * @return Response
      */
-    public function results($term, ShowManager $showManager)
+    public function results(string $term, ShowManager $showManager): Response
     {
         [$shows, $userShows] = $showManager->findFull($term);
 

@@ -9,7 +9,6 @@ use App\Service\UserShowManager;
 use App\Traits\LoggerTrait;
 use DateTime;
 use Exception;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route(name="unwatched_")
  */
-class UnwatchedShowsController extends AbstractController
+class UnwatchedShowsController extends GeneralController
 {
     use LoggerTrait;
 
@@ -40,7 +39,7 @@ class UnwatchedShowsController extends AbstractController
         } catch (NotFoundHttpException $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
-            return new Response('', 500);
+            return $this->fail();
         }
 
         return $this->render('unwatched-shows/index.html.twig', ['shows' => $shows, 'episodes' => $episodes]);
@@ -61,7 +60,7 @@ class UnwatchedShowsController extends AbstractController
         } catch (NotFoundHttpException $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
-            return new Response('', 500);
+            return $this->fail();
         }
 
         return $this->render('unwatched-shows/episodes.html.twig', [
@@ -85,10 +84,10 @@ class UnwatchedShowsController extends AbstractController
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
-            return new JsonResponse(['success' => false], 500);
+            return $this->failJson();
         }
 
-        return new JsonResponse(['success' => true]);
+        return $this->successJson();
     }
 
     /**
@@ -101,9 +100,9 @@ class UnwatchedShowsController extends AbstractController
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
-            return new JsonResponse(['success' => false], 500);
+            return $this->failJson();
         }
 
-        return new JsonResponse(['success' => true]);
+        return $this->successJson();
     }
 }

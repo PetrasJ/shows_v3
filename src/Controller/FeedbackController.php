@@ -13,12 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class FeedbackController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param Mailer $mailer
      * @Route("/feedback", name="feedback")
-     * @return Response
      */
-    public function feedback(Request $request, Mailer $mailer)
+    public function feedback(Request $request, Mailer $mailer): Response
     {
         $feedback = new Feedback();
 
