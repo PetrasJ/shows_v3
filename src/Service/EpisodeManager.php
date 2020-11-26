@@ -6,6 +6,7 @@ use App\Entity\Episode;
 use App\Entity\Show;
 use App\Traits\LoggerTrait;
 use DateTime;
+use DateTimeZone;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -73,8 +74,13 @@ class EpisodeManager
     private function formatEpisodes($episodes)
     {
         $formatted = [];
+        $timezone = $this->user->getTimeZone() ?? 'UTC';
+        $timezone = new DateTimeZone($timezone);
+
         foreach ($episodes as $episode) {
-            $formatted[substr($episode['userAirstamp'], 0, 10)][] = $episode;
+            $date = new DateTime($episode['userAirstamp']);
+            $date->setTimezone($timezone);
+            $formatted[$date->format('Y-m-d')][] = $episode;
         }
 
         return $formatted;
