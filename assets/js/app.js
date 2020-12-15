@@ -65,9 +65,9 @@ const app = {
         })
     },
     initAddRemoveShow: function () {
-        const button = $('.add-show');
-        button.unbind().on('click', function () {
+        $('.add-show').unbind().on('click', function () {
             loading(true);
+            const button = $(this);
             $.ajax({
                 type: 'post',
                 url: button.data('action'),
