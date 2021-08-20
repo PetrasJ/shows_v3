@@ -20,7 +20,7 @@
 
                 {% if is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     {% if userShows[show.id] is defined %}
-                        <button class="btn btn-sm btn-danger add-show"
+                        <button class="btn btn-sm btn-danger add-show"  data-action="{{ path('shows_add', {'showId': show.id}) }}"
                                 data-id="{{ show.id }}">{{ 'add_rewatch'|trans }}</button>
                         {% for userShow in userShows[show.id] %}
                             <a href="{{ path('shows_details', {'userShowId': userShow.userShowId}) }}"
