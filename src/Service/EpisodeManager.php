@@ -74,7 +74,12 @@ class EpisodeManager
     private function formatEpisodes($episodes)
     {
         $formatted = [];
-        $timezone = $this->user->getTimeZone() ?? 'UTC';
+        if ($this->user) {
+            $timezone = $this->user->getTimeZone() ?? 'UTC';
+        } else {
+            $timezone = 'UTC';
+        }
+
         $timezone = new DateTimeZone($timezone);
 
         foreach ($episodes as $episode) {
