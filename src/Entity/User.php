@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="there_is_already_an_account_with_this_email")
  * @ORM\Table(name="user")
+ * @method string getUserIdentifier()
  */
 class User implements UserInterface
 {
@@ -331,7 +332,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
@@ -343,5 +344,10 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function __call($name, $arguments)
+    {
+        return $this->email;
     }
 }

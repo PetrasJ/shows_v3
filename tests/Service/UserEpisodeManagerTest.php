@@ -18,10 +18,9 @@ use Symfony\Component\Security\Core\Security;
 class UserEpisodeManagerTest extends TestCase
 {
     /**
-     * @param array $action
      * @dataProvider dpUpdate
      */
-    public function testUpdate($action)
+    public function testUpdate(array $action): void
     {
         /** @var EntityManager|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManager::class);

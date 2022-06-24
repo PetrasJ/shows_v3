@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Security;
 
 class EpisodesManagerTest extends TestCase
 {
-    public function testAddEpisodes()
+    public function testAddEpisodes(): void
     {
         $service = $this->getService();
         $show = (new Show())->setId(1);
