@@ -9,7 +9,6 @@ use App\Service\EpisodeManager;
 use App\Service\TVMazeClient;
 use DateTime;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -49,7 +48,7 @@ class EpisodesManagerTest extends TestCase
         $connection = $this->createMock(Connection::class);
         if ($update) {
             $connection->expects($this->at(0))->method('exec');
-            $connection->expects($this->at(1))->method('exec')->willThrowException(new DBALException());
+            $connection->expects($this->at(1))->method('exec')->willThrowException(new \Exception());
         }
         $entityManager->method('getConnection')->willReturn($connection);
         $episodesRepo = $this->createMock(EpisodeRepository::class);

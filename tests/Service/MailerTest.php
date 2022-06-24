@@ -7,7 +7,8 @@ use App\Service\Mailer;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Swift_Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -20,8 +21,8 @@ class MailerTest extends TestCase
         $entityManager = $this->createMock(EntityManager::class);
         $entityManager->method('flush');
 
-        /** @var Swift_Mailer|MockObject $swiftMailer */
-        $swiftMailer = $this->createMock(Swift_Mailer::class);
+        /** @var MailerInterface|MockObject $swiftMailer */
+        $swiftMailer = $this->createMock(MailerInterface::class);
         $security = $this->createMock(Security::class);
 
         /** @var RouterInterface $router */
@@ -34,7 +35,7 @@ class MailerTest extends TestCase
 
         $swiftMailer->expects($this->once())
             ->method('send')
-            ->with($this->isInstanceOf('Swift_Message'));
+            ->with($this->isInstanceOf(Email::class));
 
         $service->sendFeedback($feedback);
     }
