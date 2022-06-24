@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Swift_Mailer;
 use Swift_Message;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,14 +21,15 @@ class Mailer
     use LoggerTrait;
 
     private EntityManagerInterface $entityManager;
-    private Swift_Mailer $mailer;
+
     private ?UserInterface $user;
     private RouterInterface $router;
     private TranslatorInterface $translator;
+    private MailerInterface $mailer;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        Swift_Mailer $mailer,
+        MailerInterface $mailer,
         Security $security,
         RouterInterface $router,
         TranslatorInterface $translator
@@ -41,10 +44,11 @@ class Mailer
     public function sendFeedback(Feedback $feedback): void
     {
         $user = $this->user ? $this->user->getId() : '0';
-        $message = (new Swift_Message('shows.botai.eu feedback'))
-            ->setFrom('no-reply@botai.eu')
-            ->setTo('petras.jodkonis@gmail.com')
-            ->setBody('name: ' . $feedback->getName() . PHP_EOL .
+        $message = (new Email())
+            ->from('no-reply@botai.eu')
+            ->to('petras.jodkonis@gmail.com')
+            ->subject('shows.botai.eu feedback')
+            ->html('name: ' . $feedback->getName() . PHP_EOL .
                 'userId: ' . $user . PHP_EOL .
                 'email: ' . $feedback->getEmail() . PHP_EOL .
                 'message: ' . $feedback->getMessage()
@@ -69,12 +73,11 @@ class Mailer
             $this->router->getContext()->getHost(),
             $this->router->generate('app_confirm_email', ['token' => $user->getEmailConfirmationToken()])
         );
-        $message = (new Swift_Message('shows.botai.eu email confirmation'))
-            ->setFrom('no-reply@botai.eu')
-            ->setTo($user->getEmail())
-            ->setBody($this->translator->trans('confirm_email') . ': ' . PHP_EOL
-            . $url
-            )
+        $message = (new Email())
+            ->from('no-reply@botai.eu')
+            ->to($user->getEmail())
+            ->subject('shows.botai.eu email confirmation')
+            ->html($this->translator->trans('confirm_email') . ': ' . PHP_EOL . $url)
         ;
 
         try {
@@ -92,12 +95,11 @@ class Mailer
             $this->router->getContext()->getHost(),
             $this->router->generate('app_reset_password', ['token' => $user->getResetPasswordToken()])
         );
-        $message = (new Swift_Message('shows.botai.eu reset password'))
-            ->setFrom('no-reply@botai.eu')
-            ->setTo($user->getEmail())
-            ->setBody($this->translator->trans('reset_password') . ': ' . PHP_EOL
-                . $url
-            )
+        $message = (new Email())
+            ->from('no-reply@botai.eu')
+            ->to($user->getEmail())
+            ->subject('shows.botai.eu reset password')
+            ->body($this->translator->trans('reset_password') . ': ' . PHP_EOL . $url)
         ;
 
         try {
