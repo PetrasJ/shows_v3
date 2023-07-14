@@ -20,6 +20,7 @@ const app = {
         this.initTooltip();
         this.initBackToTop();
         this.initFlashMessages();
+        this.initCopyToClipboard();
     },
     initFlashMessages: function () {
         setTimeout(function () {
@@ -237,6 +238,7 @@ const app = {
             });
         });
         this.initTooltip();
+        this.initCopyToClipboard();
     },
     initConfirm: function () {
         const t = this;
@@ -357,6 +359,12 @@ const app = {
         }).always(function () {
             loaded();
         });
+    },
+    initCopyToClipboard: function() {
+        const episodeCopyButtons = $('.episode-copy');
+        episodeCopyButtons.unbind().click(function() {
+            navigator.clipboard.writeText($(this).data('episode'));
+        })
     }
 };
 

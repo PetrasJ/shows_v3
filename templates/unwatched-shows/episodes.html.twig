@@ -23,7 +23,12 @@
             </div>
         {% endif %}
         {% set season = episode.season %}
-        <div class="row episode" id="{{ episode.id }}" data-show-id="{{ show.id }}">
+            <div
+                class="row episode episode-copy"
+                id="{{ episode.id }}"
+                data-show-id="{{ show.id }}"
+                data-episode="{{ show.name }} S{{ '%02d'|format(episode.season) }}E{{ '%02d'|format(episode.episode) }}"
+            >
             <div class="col-lg-3 col-12">
                 {% include '_inc/episode-details.html.twig' with {episode: episode} %}
             </div>
