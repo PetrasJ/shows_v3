@@ -353,6 +353,7 @@ const app = {
                 $('.calendar').html(data);
                 this.initTooltip();
                 this.initCalendarHideActions();
+                this.initCopyToClipboard();
             }
         }).fail(function (data) {
             console.log(data);
@@ -361,9 +362,9 @@ const app = {
         });
     },
     initCopyToClipboard: function() {
-        const episodeCopyButtons = $('.episode-copy');
-        episodeCopyButtons.unbind().click(function() {
+        $('.episode-copy').unbind().click(function() {
             navigator.clipboard.writeText($(this).data('episode'));
+            alert('copied');
         })
     }
 };

@@ -43,7 +43,7 @@
             {% if episodes[day] is defined %}
                 {% for episode in episodes[day] %}
                     {% if app.user.username is defined %}
-                        <div class="episode{{ episode|class }}">
+                        <div class="episode{{ episode|class }} episode-copy" data-episode="{{ episode.showName }} S{{ '%02d'|format(episode.season) }}E{{ '%02d'|format(episode.episode) }}">
                             {% include '_inc/episode-details-time.html.twig' with {episode: episode} %}
                             <a href="{{ url('shows_details',{'userShowId': episode.userShowId}) }}"
                                title="{{ episode.name }}">{{ episode.showName }}</a>
