@@ -1,4 +1,6 @@
-<span title="{{ 'airdate'|trans }} {{ episode.airstamp|dateTimezone }}">{{ episode.userAirstamp|dateTimezone }}</span>
-<span title="{{ 'duration'|trans }} {{ episode.duration }} {{ 'min'|trans }}">
-    <b>S{{ '%02d'|format(episode.season) }}E{{ '%02d'|format(episode.episode) }}</b>
+<span class="episode-copy" data-episode="{{ episode.showName }} S{{ '%02d'|format(episode.season) }}E{{ '%02d'|format(episode.episode) }}">
+    <span title="{{ 'airdate'|trans }} {{ episode.airstamp|dateTimezone }}">{{ episode.userAirstamp|dateTimezone }}</span>
+    <span title="{{ 'duration'|trans }} {{ episode.duration }} {{ 'min'|trans }}">
+        <b>S{{ '%02d'|format(episode.season) }}E{{ '%02d'|format(episode.episode) }}</b>
+    </span>
 </span>

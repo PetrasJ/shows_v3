@@ -64,6 +64,7 @@ class UserEpisodeRepository extends EntityRepository
             ->select('ue.id, ue.created, ue.updated, e.season, e.episode, e.airstamp, e.name, e.duration')
             ->addSelect('s.name as showName')
             ->addSelect(sprintf(EpisodeRepository::DATE_ADD, 'e.airstamp') . ' as userAirstamp')
+            ->addSelect('s.name as showName')
             ->innerJoin('ue.episode', 'e')
             ->innerJoin('e.show', 's')
             ->innerJoin(
