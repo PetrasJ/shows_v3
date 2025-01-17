@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  shows_www:
+    build: docker/php
+    ports:
+    - "8741:80"
+    volumes:
+    - ./docker/php/vhosts:/etc/apache2/sites-enabled
+    - ./:/var/www
+    environment:
+      PHP_IDE_CONFIG: "serverName=Xdebug"
+      WEB_DOCUMENT_ROOT: "/app/public"
+    restart: always
+    links:
+    - shows_db
+    networks:
+    - shows
+  shows_db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+    - "3309:3306"
+    command: --sql_mode=""
+    networks:
+    - shows
+networks:
+  shows:

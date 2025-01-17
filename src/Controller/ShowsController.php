@@ -221,9 +221,9 @@ class ShowsController extends GeneralController
             [
                 'start' => $start,
                 'updated' => $updated,
-                'updatedList' => implode($updated, ', '),
+                'updatedList' => implode(', ', $updated),
                 'added' => $newShows,
-                'addedList' => implode($newShows, ', '),
+                'addedList' => implode(', ', $newShows),
                 'finish' => $finish,
             ]
         );
