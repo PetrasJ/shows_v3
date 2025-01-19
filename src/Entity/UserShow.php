@@ -60,7 +60,7 @@ class UserShow
     private $status;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true, name="`offset`")
      */
     private $offset;
 
