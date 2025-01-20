@@ -39,13 +39,13 @@ class UpdateShowsCommand extends Command
         [$updated, $newShows] = $this->showManager->update();
         if ($updated) {
             $output->writeln(['Updated Shows: ' . count($updated)]);
-            $output->writeln(implode($updated, ', '));
+            $output->writeln(implode(', ', $updated));
         }
 
 
         if (count($newShows) > 0) {
             $output->writeln(['New Shows: ' . count($newShows)]);
-            $output->writeln(implode($newShows, ', '));
+            $output->writeln(implode(', ', $newShows));
         }
 
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update shows Finished']);
