@@ -1,11 +1,15 @@
 const $ = require('jquery');
+
 window.$ = $;
-require('bootstrap');
+window.jQuery = $;
+const bootstrap = require('bootstrap');
+window.bootstrap = bootstrap;
 require('jquery-ui/ui/widgets/autocomplete');
 require('bootstrap-select');
-require('bootstrap-datepicker');
-require('bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min');
-require('bootstrap-datepicker/dist/locales/bootstrap-datepicker.lt.min');
+require('bootstrap-datepicker/dist/js/bootstrap-datepicker.js');
+
+//require('bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min');
+//require('bootstrap-datepicker/dist/locales/bootstrap-datepicker.lt.min');
 
 const app = {
     init: function () {
@@ -44,8 +48,13 @@ const app = {
         });
     },
     initTooltip: function () {
-        $('.tooltip').hide();
-        $('[title]').tooltip();
+        document.querySelectorAll('[title], [data-bs-original-title]').forEach(el => {
+            if (el.closest('.bootstrap-select') || el.matches('[data-bs-toggle="dropdown"]')) {
+                return;
+            }
+
+            bootstrap.Tooltip.getOrCreateInstance(el);
+        });
     },
     initSearch: function () {
         const form = $('form#search');

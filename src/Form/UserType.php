@@ -25,6 +25,10 @@ class UserType extends AbstractType
             ->add('timezone', ChoiceType::class, [
                 'choices' => $this->getTimezones(),
                 'choice_translation_domain' => false,
+                'attr' => [
+                    'class' => 'selectpicker',
+                    'data-live-search' => 'true',
+                ],
             ])
             ->add('locale', ChoiceType::class, [
                 'label' => 'locale',
@@ -43,17 +47,12 @@ class UserType extends AbstractType
                     'cosmo' => 'cosmo',
                     'cyborg' => 'cyborg',
                     'darkly' => 'darkly',
-                    'darkster' => 'darkster',
                     'flatly' => 'flatly',
-                    'fresca' => 'fresca',
-                    'greyson' => 'greyson',
-                    'herbie' => 'herbie',
                     'journal' => 'journal',
                     'litera' => 'litera',
                     'lumen' => 'lumen',
                     'materia' => 'materia',
                     'minty' => 'minty',
-                    'monotony' => 'monotony',
                     'pulse' => 'pulse',
                     'sandstone' => 'sandstone',
                     'simplex' => 'simplex',
@@ -62,7 +61,6 @@ class UserType extends AbstractType
                     'solar' => 'solar',
                     'spacelab' => 'spacelab',
                     'superhero' => 'superhero',
-                    'tequila' => 'tequila',
                     'united' => 'united',
                     'yeti' => 'yeti',
                 ],

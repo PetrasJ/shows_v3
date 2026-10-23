@@ -1,7 +1,7 @@
 {% block form_row %}
-    <div class="form-group row">
+    <div class="row mb-3">
         <div class="col-4">
-            {{ form_label(form) }}
+            {{ form_label(form, null, {'label_attr': {'class': 'form-label'}}) }}
         </div>
         <div class="col-8">
             {{ form_errors(form) }}
@@ -14,4 +14,3 @@
 {{ form_errors(form) }}
 {{ form_widget(form) }}
 {{ form_end(form) }}
-

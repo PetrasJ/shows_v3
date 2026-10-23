@@ -25,7 +25,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand d-none d-lg-block" href="{{ path('unwatched_index') }}">Shows v3</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,7 +33,7 @@
             {% include 'form/search.html.twig' %}
         {% endif %}
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav me-auto">
 
                 {% if app.user.username is defined %}
                     <li class="nav-item">
@@ -47,7 +47,7 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-film" aria-hidden="true"></i> {{ 'menu.shows'|trans }}
                         </a>
                         <div class="dropdown-menu">
@@ -73,7 +73,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> {{ 'menu.user'|trans }}
                         </a>
                         <div class="dropdown-menu">
@@ -108,8 +108,8 @@
 </div>
 <footer class="footer bg-light text-dark">
     <div class="container">
-        <span class="float-left">{{ 'source'|trans }} <a class="text-dark" href="http://www.tvmaze.com" target="_blank">TVmaze</a></span>
-        <span class="float-right">
+        <span class="float-start">{{ 'source'|trans }} <a class="text-dark" href="http://www.tvmaze.com" target="_blank">TVmaze</a></span>
+        <span class="float-end">
             <a class="text-dark" href="{{ path('feedback') }}">{{ 'feedback'|trans }}</a>
             <a class="text-dark" target="_blank" href="https://github.com/PetrasJ/shows_v3">github</a></span>
     </div>

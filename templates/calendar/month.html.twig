@@ -1,13 +1,13 @@
 {% set time = month|date("U") %}
 {% if userWatchedEpisodes is defined %}
-<button title="{{ userWatchedEpisodes|length }}" data-toggle="tooltip" class="showhide btn btn-default"><i
+<button title="{{ userWatchedEpisodes|length }}" data-bs-toggle="tooltip" class="showhide btn btn-default"><i
         class="fa fa-eye" aria-hidden="true"></i> {{ 'calendar.watched'|trans }}</button>{% endif %}
 {% if userCalendarShowArchived is defined and userCalendarShowArchived != false %}
-<button class='btn legend-icon legend-archived alert-danger' id=hide_archived data-toggle="tooltip"
+<button class='btn legend-icon legend-archived alert-danger' id=hide_archived data-bs-toggle="tooltip"
         title='{{ 'calendar.show/hide archived shows'|trans }}'><i class="fa fa-eye" aria-hidden="true"></i>
     </button>{% endif %}
 {% if userCalendarShowWatchlater is defined and userCalendarShowWatchlater != false %}
-<button class="btn legend-icon legend-watchlater alert-success" id="hide_watchlater" data-toggle="tooltip"
+<button class="btn legend-icon legend-watchlater alert-success" id="hide_watchlater" data-bs-toggle="tooltip"
         title='{{ 'calendar.show/hide watch later shows'|trans }}'><i class="fa fa-eye" aria-hidden="true"></i>
     </button>{% endif %}
 
