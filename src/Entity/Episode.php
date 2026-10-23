@@ -2,75 +2,59 @@
 
 namespace App\Entity;
 
+use App\Repository\EpisodeRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="episodes", indexes={
- *      @Index(name="showID", columns={"show_id"}),
- *      @Index(name="airstamp", columns={"airstamp"}),
- * })
- * @ORM\Entity(repositoryClass="App\Repository\EpisodeRepository")
- */
+#[ORM\Table(name: 'episodes')]
+#[Index(name: 'showID', columns: ['show_id'])]
+#[Index(name: 'airstamp', columns: ['airstamp'])]
+#[ORM\Entity(repositoryClass: EpisodeRepository::class)]
 class Episode
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
      * @var Show
-     * @ORM\ManyToOne(targetEntity="Show", inversedBy="episodes")
-     * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
      */
+    #[ORM\JoinColumn(name: 'show_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: \Show::class, inversedBy: 'episodes')]
     private $show;
 
-    /**
-     * @ORM\Column(type="string", length=250, nullable=true)
-     */
-
+    #[ORM\Column(type: 'string', length: 250, nullable: true)]
     private $name;
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $season;
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $episode;
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $airstamp;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $airdate;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $airtime;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $duration;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $summary;
 
     /**

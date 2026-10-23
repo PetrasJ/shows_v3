@@ -1,8 +1,6 @@
 security:
-    encoders:
-        App\Entity\User:
-            algorithm: auto
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    password_hashers:
+        App\Entity\User: 'auto'
     providers:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
@@ -14,10 +12,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: ~
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
+            lazy: true
+            custom_authenticators:
+                - App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
             remember_me:
@@ -36,12 +33,12 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/(%app_locales%)/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%app_locales%)/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%app_locales%)/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%app_locales%)/forgot-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%app_locales%)/confirm-email, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%app_locales%)/reset-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%app_locales%)/calendar, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/search, roles: PUBLIC_ACCESS }
+        - { path: ^/(%app_locales%)/login$, roles: PUBLIC_ACCESS }
+        - { path: ^/(%app_locales%)/register, roles: PUBLIC_ACCESS }
+        - { path: ^/(%app_locales%)/forgot-password, roles: PUBLIC_ACCESS }
+        - { path: ^/(%app_locales%)/confirm-email, roles: PUBLIC_ACCESS }
+        - { path: ^/(%app_locales%)/reset-password, roles: PUBLIC_ACCESS }
+        - { path: ^/(%app_locales%)/calendar, roles: PUBLIC_ACCESS }
         - { path: ^/(%app_locales%)/admin/, roles: ROLE_ADMIN }
-        - { path: ^/, roles: [IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_REMEMBERED] }
+        - { path: ^/, roles: IS_AUTHENTICATED }

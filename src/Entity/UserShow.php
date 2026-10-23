@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserShowRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,11 +10,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="user_shows")
- * @ORM\Entity(repositoryClass="App\Repository\UserShowRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
+#[ORM\Table(name: 'user_shows')]
+#[ORM\Entity(repositoryClass: UserShowRepository::class)]
 class UserShow
 {
     public const STATUS_WATCHING = 0;
@@ -26,48 +26,44 @@ class UserShow
         2 => 'archived',
     ];
 
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $user;
 
     /**
      * @var Show
-     * @ORM\ManyToOne(targetEntity="Show", fetch="EAGER")
-     * @ORM\JoinColumn(name="show_id", referencedColumnName="id")
      */
+    #[ORM\JoinColumn(name: 'show_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: Show::class, fetch: 'EAGER')]
     private $show;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="UserEpisode", mappedBy="userShow")
      */
+    #[ORM\OneToMany(targetEntity: UserEpisode::class, mappedBy: 'userShow')]
     private $userEpisodes;
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $status;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true, name="`offset`")
-     */
+    #[ORM\Column(type: 'integer', nullable: true, name: '`offset`')]
     private $offset;
 
     /**
      * @var DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $deletedAt;
 
     public function __construct()

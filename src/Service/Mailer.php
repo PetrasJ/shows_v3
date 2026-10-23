@@ -7,12 +7,10 @@ use App\Entity\User;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Swift_Mailer;
-use Swift_Message;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -99,7 +97,7 @@ class Mailer
             ->from('no-reply@botai.eu')
             ->to($user->getEmail())
             ->subject('shows.botai.eu reset password')
-            ->body($this->translator->trans('reset_password') . ': ' . PHP_EOL . $url)
+            ->html($this->translator->trans('reset_password') . ': ' . PHP_EOL . $url)
         ;
 
         try {

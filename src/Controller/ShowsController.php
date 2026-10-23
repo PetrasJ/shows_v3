@@ -8,45 +8,43 @@ use App\Service\UserShowManager;
 use App\Traits\LoggerTrait;
 use DateTime;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Route("/shows", name="shows_")
- */
+#[Route('/shows', name: 'shows_')]
 class ShowsController extends GeneralController
 {
     use LoggerTrait;
 
-    private UserShowManager $userShowService;
-    private ShowManager $showManager;
-
-    public function __construct(UserShowManager $userShowService, ShowManager $showManager)
-    {
-        $this->userShowService = $userShowService;
-        $this->showManager = $showManager;
+    public function __construct(
+        private readonly UserShowManager $userShowService,
+        private readonly ShowManager $showManager,
+    ) {
     }
 
-    /**
-     * @Route("/list/{status}", name="index", defaults={"status":"0"})
-     */
+    #[Route('/list/{status}', name: 'index', defaults: ['status' => '0'])]
     public function index(string $status): Response
     {
-        $shows = $this->userShowService->getShows((int)$status);
+        $shows = $this->userShowService->getShows((int) $status);
 
-        return $this->render('shows/index.html.twig', ['shows' => $shows, 'status' => $status]);
+        return $this->render('shows/index.html.twig', [
+            'shows' => $shows,
+            'status' => $status,
+        ]);
     }
 
-    /**
-     * @Route("/details/{userShowId}/{limit}", name="details", defaults={"limit"=100})
-     */
+    #[Route('/details/{userShowId}/{limit}', name: 'details', defaults: ['limit' => 100])]
     public function show(string $userShowId, string $limit): Response
     {
-        $show = $this->userShowService->getUserShowAndEpisodes((int)$userShowId, (int)$limit);
+        $show = $this->userShowService->getUserShowAndEpisodes(
+            (int) $userShowId,
+            (int) $limit
+        );
 
         return $this->render('shows/show.html.twig', [
             'userShow' => $show['userShow'],
@@ -54,35 +52,33 @@ class ShowsController extends GeneralController
         ]);
     }
 
-    /**
-     * @Route("/actions/{userShowId}", name="actions")
-     */
+    #[Route('/actions/{userShowId}', name: 'actions')]
     public function actions(string $userShowId): Response
     {
         $show = $this->userShowService->getUserShow($userShowId);
 
-        if ($show) {
-            return $this->render(
-                'shows/actions.html.twig',
-                [
-                    'show' => $show,
-                    'status' => $show['userShowStatus'],
-                    'unwatched' => $show['episodesCount'] - $show['watched'],
-                ]
-            );
-        } else {
+        if (!$show) {
             return new Response('', Response::HTTP_NOT_FOUND);
         }
+
+        return $this->render('shows/actions.html.twig', [
+            'show' => $show,
+            'status' => $show['userShowStatus'],
+            'unwatched' => $show['episodesCount'] - $show['watched'],
+        ]);
     }
 
-    /**
-     * @Route("/unwatch", name="watch")
-     */
-    public function unwatch(Request $request, UserEpisodeManager $userEpisodeService): JsonResponse
-    {
+    #[Route('/unwatch', name: 'watch')]
+    public function unwatch(
+        Request $request,
+        UserEpisodeManager $userEpisodeService,
+    ): JsonResponse {
         try {
-            $userEpisodeService
-                ->update($request->get('id'), $request->get('userShowId'), ['unwatch' => true]);
+            $userEpisodeService->update(
+                $request->getPayload()->get('id', $request->query->get('id')),
+                $request->getPayload()->get('userShowId', $request->query->get('userShowId')),
+                ['unwatch' => true]
+            );
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
@@ -92,14 +88,14 @@ class ShowsController extends GeneralController
         return $this->successJson();
     }
 
-    /**
-     * @Route("/update", name="update")
-     */
+    #[Route('/update', name: 'update')]
     public function update(Request $request): JsonResponse
     {
         try {
-            $this->userShowService
-                ->updateShow($request->get('userShowId'), ['offset' => $request->get('value')]);
+            $this->userShowService->updateShow(
+                $request->getPayload()->get('userShowId', $request->query->get('userShowId')),
+                ['offset' => $request->getPayload()->get('value', $request->query->get('value'))]
+            );
         } catch (NotFoundHttpException $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 
@@ -109,9 +105,7 @@ class ShowsController extends GeneralController
         return $this->successJson();
     }
 
-    /**
-     * @Route("/add/{showId}", name="add")
-     */
+    #[Route('/add/{showId}', name: 'add')]
     public function add(string $showId): JsonResponse
     {
         try {
@@ -125,9 +119,7 @@ class ShowsController extends GeneralController
         return $this->successJson();
     }
 
-    /**
-     * @Route("/restore/{userShowId}", name="restore")
-     */
+    #[Route('/restore/{userShowId}', name: 'restore')]
     public function restore(string $userShowId): JsonResponse
     {
         try {
@@ -141,9 +133,7 @@ class ShowsController extends GeneralController
         return $this->successJson();
     }
 
-    /**
-     * @Route("/archive/{userShowId}", name="archive")
-     */
+    #[Route('/archive/{userShowId}', name: 'archive')]
     public function archive(string $userShowId): JsonResponse
     {
         try {
@@ -157,9 +147,7 @@ class ShowsController extends GeneralController
         return $this->successJson();
     }
 
-    /**
-     * @Route("/watch-later/{userShowId}", name="watch_later")
-     */
+    #[Route('/watch-later/{userShowId}', name: 'watch_later')]
     public function watchLater(string $userShowId): JsonResponse
     {
         try {
@@ -173,9 +161,7 @@ class ShowsController extends GeneralController
         return $this->successJson();
     }
 
-    /**
-     * @Route("/remove/{userShowId}", name="remove")
-     */
+    #[Route('/remove/{userShowId}', name: 'remove')]
     public function remove(string $userShowId): Response
     {
         try {
@@ -189,9 +175,7 @@ class ShowsController extends GeneralController
         return $this->successJson();
     }
 
-    /**
-     * @Route("/watch-all/{userShowId}", name="watch_all")
-     */
+    #[Route('/watch-all/{userShowId}', name: 'watch_all')]
     public function watchAllEpisodes(string $userShowId): JsonResponse
     {
         try {
@@ -205,27 +189,23 @@ class ShowsController extends GeneralController
         return $this->successJson();
     }
 
-    /**
-     * @Route("/update-all", name="update_all")
-     * @throws Exception
-     * @IsGranted("ROLE_ADMIN")
-     */
+    #[Route('/update-all', name: 'update_all')]
+    #[IsGranted('ROLE_ADMIN')]
     public function updateShows(): Response
     {
         $start = (new DateTime())->format('Y-m-d H:i:s');
+
         [$updated, $newShows] = $this->showManager->update();
+
         $finish = (new DateTime())->format('Y-m-d H:i:s');
 
-        return $this->render(
-            'shows/update.html.twig',
-            [
-                'start' => $start,
-                'updated' => $updated,
-                'updatedList' => implode(', ', $updated),
-                'added' => $newShows,
-                'addedList' => implode(', ', $newShows),
-                'finish' => $finish,
-            ]
-        );
+        return $this->render('shows/update.html.twig', [
+            'start' => $start,
+            'updated' => $updated,
+            'updatedList' => implode(', ', $updated),
+            'added' => $newShows,
+            'addedList' => implode(', ', $newShows),
+            'finish' => $finish,
+        ]);
     }
 }

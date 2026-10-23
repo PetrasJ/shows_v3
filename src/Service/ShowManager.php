@@ -8,7 +8,7 @@ use App\Entity\UserShow;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ShowManager

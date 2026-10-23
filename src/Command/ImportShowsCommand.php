@@ -22,7 +22,7 @@ class ImportShowsCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('import-shows')
             ->setDescription('Imports shows from TV Maze')
@@ -32,7 +32,7 @@ class ImportShowsCommand extends Command
     /**
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Import Shows Started']);
         $this->showManager->load();

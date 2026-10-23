@@ -19,7 +19,7 @@ class UserType extends AbstractType
 {
     use LoggerTrait;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('timezone', ChoiceType::class, [
@@ -97,7 +97,7 @@ class UserType extends AbstractType
     /**
      * @return array
      */
-    private function getTimezones()
+    private function getTimezones(): array
     {
         $timezones = [];
         $zones = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
@@ -113,7 +113,7 @@ class UserType extends AbstractType
         return $timezones;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,

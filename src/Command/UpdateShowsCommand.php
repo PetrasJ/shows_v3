@@ -22,7 +22,7 @@ class UpdateShowsCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('update-shows')
             ->setDescription('Updates shows')
@@ -32,7 +32,7 @@ class UpdateShowsCommand extends Command
     /**
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update shows Started']);
 
