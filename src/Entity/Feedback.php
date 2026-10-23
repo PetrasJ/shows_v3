@@ -39,10 +39,7 @@ class Feedback
     #[ORM\Column(type: 'string', length: 250, nullable: true)]
     private $message;
 
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @var DateTime
-     */
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $created;
 
