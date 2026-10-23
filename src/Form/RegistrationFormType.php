@@ -28,14 +28,8 @@ class RegistrationFormType extends AbstractType
                 'type' => PasswordType::class,
                 'mapped' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'please_enter_a_password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'your_password_should_be_at_least_6_characters',
-                        'max' => 4096,
-                    ])
+                    new NotBlank(message: 'please_enter_a_password'),
+                    new Length(min: 6, max: 4096, minMessage: 'your_password_should_be_at_least_6_characters'),
                 ],
                 'first_options' => ['label' => 'password'],
                 'second_options' => ['label' => 'confirm_password'],

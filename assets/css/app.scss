@@ -4,6 +4,16 @@
 @import '~bootstrap-select/dist/css/bootstrap-select.min.css';
 @import '~bootstrap-datepicker/dist/css/bootstrap-datepicker3.css';
 
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
 .ui-autocomplete {
   position: absolute;
   background: rgba(0, 0, 0, 0.6);
@@ -279,7 +289,6 @@ td.current-day .inner {
   left: 10px;
   max-height: 42px;
   max-width: 30px;
-  position: absolute;
 }
 
 .shows-list .show-title {

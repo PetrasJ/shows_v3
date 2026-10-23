@@ -1,4 +1,4 @@
-var Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore').default;
 
 Encore
     .setOutputPath('public/build/')
@@ -10,7 +10,7 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .autoProvidejQuery()
+    //.autoProvidejQuery()
     .addStyleEntry('style', './assets/css/app.scss')
     .addStyleEntry('stream-style', './assets/css/stream.css')
     .enableSassLoader()
