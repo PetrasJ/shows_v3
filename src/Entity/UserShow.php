@@ -9,9 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- */
+#[Gedmo\SoftDeleteable]
 #[ORM\Table(name: 'user_shows')]
 #[ORM\Entity(repositoryClass: UserShowRepository::class)]
 class UserShow

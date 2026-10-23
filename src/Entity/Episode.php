@@ -21,7 +21,7 @@ class Episode
      * @var Show
      */
     #[ORM\JoinColumn(name: 'show_id', referencedColumnName: 'id')]
-    #[ORM\ManyToOne(targetEntity: \Show::class, inversedBy: 'episodes')]
+    #[ORM\ManyToOne(targetEntity: Show::class, inversedBy: 'episodes')]
     private $show;
 
     #[ORM\Column(type: 'string', length: 250, nullable: true)]
