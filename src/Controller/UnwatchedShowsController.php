@@ -13,23 +13,21 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route(name="unwatched_")
- */
+#[Route(name: 'unwatched_')]
 class UnwatchedShowsController extends GeneralController
 {
     use LoggerTrait;
 
-    /**
-     * @Route("/", name="index")
-     * @throws Exception
-     */
-    public function unwatched(UserShowManager $userShowService, EpisodeManager $episodeManager): Response
-    {
+    #[Route('/', name: 'index')]
+    public function unwatched(
+        UserShowManager $userShowService,
+        EpisodeManager $episodeManager,
+    ): Response {
         try {
             $shows = $userShowService->getShowsWithUnwatchedEpisodes();
+
             $episodes = $episodeManager->getEpisodes(
                 new DateTime(),
                 (new DateTime())->modify('+2 days'),
@@ -42,16 +40,17 @@ class UnwatchedShowsController extends GeneralController
             return $this->fail();
         }
 
-        return $this->render('unwatched-shows/index.html.twig', ['shows' => $shows, 'episodes' => $episodes]);
+        return $this->render('unwatched-shows/index.html.twig', [
+            'shows' => $shows,
+            'episodes' => $episodes,
+        ]);
     }
 
-    /**
-     * @Route("/episodes/{userShowId}", name="episodes")
-     */
+    #[Route('/episodes/{userShowId}', name: 'episodes')]
     public function unwatchedEpisodes(
         int $userShowId,
         UserEpisodeManager $userEpisodeService,
-        ShowManager $showManager
+        ShowManager $showManager,
     ): Response {
         try {
             $episodes = $userEpisodeService->getUnwatchedEpisodes($userShowId);
@@ -70,16 +69,23 @@ class UnwatchedShowsController extends GeneralController
         ]);
     }
 
-    /**
-     * @Route("/comment", name="comment")
-     */
-    public function comment(Request $request, UserEpisodeManager $userEpisodeService): JsonResponse
-    {
+    #[Route('/comment', name: 'comment')]
+    public function comment(
+        Request $request,
+        UserEpisodeManager $userEpisodeService,
+    ): JsonResponse {
         try {
+            $payload = $request->getPayload();
+
             $userEpisodeService->update(
-                $request->get('id'),
-                $request->get('userShowId'),
-                ['comment' => $request->get('comment')]
+                $payload->get('id', $request->query->get('id')),
+                $payload->get('userShowId', $request->query->get('userShowId')),
+                [
+                    'comment' => $payload->get(
+                        'comment',
+                        $request->query->get('comment')
+                    ),
+                ]
             );
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
@@ -90,13 +96,19 @@ class UnwatchedShowsController extends GeneralController
         return $this->successJson();
     }
 
-    /**
-     * @Route("/watch", name="watch")
-     */
-    public function watch(Request $request, UserEpisodeManager $userEpisodeService): JsonResponse
-    {
+    #[Route('/watch', name: 'watch')]
+    public function watch(
+        Request $request,
+        UserEpisodeManager $userEpisodeService,
+    ): JsonResponse {
         try {
-            $userEpisodeService->update($request->get('id'), $request->get('userShowId'), ['watch' => true]);
+            $payload = $request->getPayload();
+
+            $userEpisodeService->update(
+                $payload->get('id', $request->query->get('id')),
+                $payload->get('userShowId', $request->query->get('userShowId')),
+                ['watch' => true]
+            );
         } catch (Exception $e) {
             $this->error($e->getMessage(), [__METHOD__]);
 

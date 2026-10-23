@@ -22,7 +22,7 @@ class UpdateAllShowsCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('update-all-shows')
             ->setDescription('Updates all shows from TV Maze')
@@ -32,7 +32,7 @@ class UpdateAllShowsCommand extends Command
     /**
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln([(new DateTime())->format('Y-m-d H:i:s') . ' Update all shows Started']);
         $this->showManager->load(true);

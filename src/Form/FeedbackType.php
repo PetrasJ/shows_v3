@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FeedbackType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->setMethod('post')
@@ -45,7 +45,7 @@ class FeedbackType extends AbstractType
     /**
      * @return null|string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return '';
     }
@@ -53,7 +53,7 @@ class FeedbackType extends AbstractType
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Feedback::class,

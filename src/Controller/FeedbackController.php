@@ -8,13 +8,14 @@ use App\Service\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class FeedbackController extends AbstractController
 {
     /**
      * @Route("/feedback", name="feedback")
      */
+    #[Route('/feedback', 'feedback')]
     public function feedback(Request $request, Mailer $mailer): Response
     {
         $feedback = new Feedback();

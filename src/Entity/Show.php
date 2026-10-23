@@ -2,89 +2,62 @@
 
 namespace App\Entity;
 
+use App\Repository\ShowRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="shows")
- * @ORM\Entity(repositoryClass="App\Repository\ShowRepository")
- */
+#[ORM\Table(name: 'shows')]
+#[ORM\Entity(repositoryClass: ShowRepository::class)]
 class Show
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Episode", mappedBy="show")
-     * @ORM\OrderBy({"airstamp" = "ASC", "season" = "ASC", "episode" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: Episode::class, mappedBy: 'show')]
+    #[ORM\OrderBy(['airstamp' => 'ASC', 'season' => 'ASC', 'episode' => 'ASC'])]
     private $episodes;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=250, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 250, nullable: true)]
     private $url;
 
-    /**
-     * @ORM\Column(type="string", length=250, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 250, nullable: true)]
     private $officialSite;
 
-    /**
-     * @ORM\Column(type="string", length=5, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 5, nullable: true)]
     private $rating;
 
-    /**
-     * @ORM\Column(type="string", length=5, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 5, nullable: true)]
     private $weight;
 
-    /**
-     * @ORM\Column(type="string", length=250, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 250, nullable: true)]
     private $image;
 
-    /**
-     * @ORM\Column(type="string", length=250, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 250, nullable: true)]
     private $imageMedium;
 
     /**
      * @var string
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $summary;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $updated;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $status;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $premiered;
 
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
     private $genres;
 
     public function __construct()

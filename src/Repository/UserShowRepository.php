@@ -43,7 +43,8 @@ class UserShowRepository extends EntityRepository
             )
             ->where('us.user = :user')
             ->andWhere('us.status = :status')
-            ->setParameters(['user' => $user, 'status' => $status])
+            ->setParameter('user', $user)
+            ->setParameter('status', $status)
             ->groupBy('us')
             ->orderBy('s.status', 'desc')
             ->addOrderBy('s.name', 'asc')
@@ -69,7 +70,8 @@ class UserShowRepository extends EntityRepository
             )
             ->where('us.user = :user')
             ->andWhere('us.status = :status')
-            ->setParameters(['user' => $user, 'status' => $status])
+            ->setParameter('user', $user)
+            ->setParameter('status', $status)
             ->orderBy('e.airstamp', 'asc')
             ->addOrderBy('e.season', 'asc')
             ->addOrderBy('e.episode', 'asc')
@@ -90,12 +92,10 @@ class UserShowRepository extends EntityRepository
             ->andWhere('us.show IN (:shows)')
             ->andWhere('e.airstamp < :now OR e.airstamp IS NULL')
             ->andWhere('ue.status = :watched OR ue.status IS NULL')
-            ->setParameters([
-                'user' => $user,
-                'shows' => $shows,
-                'now' => new DateTime(),
-                'watched' => UserEpisode::STATUS_WATCHED
-            ])
+            ->setParameter('user', $user)
+            ->setParameter('shows', $shows)
+            ->setParameter('now', new DateTime())
+            ->setParameter('watched', UserEpisode::STATUS_WATCHED)
             ->groupBy('us.id')
             ->getQuery()
             ->getResult()
@@ -135,7 +135,8 @@ class UserShowRepository extends EntityRepository
             )
             ->where('us.user = :user')
             ->andWhere('us.id = :showId')
-            ->setParameters(['user' => $user, 'showId' => $showId])
+            ->setParameter('user', $user)
+            ->setParameter('showId', $showId)
             ->groupBy('s')
             ->getQuery()
             ->getSingleResult()

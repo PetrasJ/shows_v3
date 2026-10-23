@@ -2,92 +2,78 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="there_is_already_an_account_with_this_email")
- * @ORM\Table(name="user")
- * @method string getUserIdentifier()
- */
-class User implements UserInterface
+#[ORM\Table(name: 'user')]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'there_is_already_an_account_with_this_email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     private $emailConfirmationToken;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     private $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     private $resetPasswordToken;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $resetPasswordRequestedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @var DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $lastLogin;
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     private $defaultOffset = 0;
 
     /**
      * @var array
-     * @ORM\Column(type="array", nullable=true)
      */
+    #[ORM\Column(type: 'json', nullable: true)]
     private $calendarShow;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=2, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
     private $locale;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $theme = '';
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=30, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 30, nullable: true)]
     private $timezone;
 
     /**
@@ -349,5 +335,10 @@ class User implements UserInterface
     public function __call($name, $arguments)
     {
         return $this->email;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->getEmail();
     }
 }

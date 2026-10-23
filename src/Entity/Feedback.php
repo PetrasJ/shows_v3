@@ -6,48 +6,44 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints\DateTime;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="feedback")
- */
+#[ORM\Table(name: 'feedback')]
+#[ORM\Entity]
 class Feedback
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $userId;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $name;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $email;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=250, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 250, nullable: true)]
     private $message;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
      * @var DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $created;
 
     /**

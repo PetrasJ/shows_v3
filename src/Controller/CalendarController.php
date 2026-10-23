@@ -6,18 +6,14 @@ use App\Service\EpisodeManager;
 use App\Service\PeriodManager;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/calendar", name="calendar_")
- */
+#[Route('/calendar', 'calendar_')]
 class CalendarController extends AbstractController
 {
-    /**
-     * @Route("/", name="index")
-     */
+    #[Route('/', 'index')]
     public function index(Security $security): Response
     {
         return $this
@@ -31,9 +27,9 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * @Route("/month/{month}", name="calendar")
      * @throws Exception
      */
+    #[Route('/month/{month}', 'calendar')]
     public function month(string $month, EpisodeManager $episodeManager, PeriodManager $periodManager): Response
     {
         [$from, $to, $days] = $periodManager->getPeriod($month);

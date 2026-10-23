@@ -38,12 +38,10 @@ class EpisodeRepository extends EntityRepository
             ->andWhere('e.airstamp < ' . sprintf(self::DATE_SUB, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->andWhere('us.status = :showStatus')
-            ->setParameters([
-                'watched' => UserEpisode::STATUS_WATCHED,
-                'dateTo' => date('Y-m-d H:i'),
-                'user' => $user,
-                'showStatus' => $status,
-            ])
+            ->setParameter('watched', UserEpisode::STATUS_WATCHED)
+            ->setParameter('dateTo', date('Y-m-d H:i'))
+            ->setParameter('user', $user)
+            ->setParameter('showStatus', $status)
             ->groupBy('us')
             ->orderBy('s.name', 'asc')
             ->getQuery()
@@ -74,12 +72,10 @@ class EpisodeRepository extends EntityRepository
             ->andWhere('e.airstamp < ' . sprintf(self::DATE_SUB, ':dateTo'))
             ->andWhere('ue.status != :watched OR ue.status IS NULL')
             ->andWhere('us.id = :userShowId')
-            ->setParameters([
-                'watched' => UserEpisode::STATUS_WATCHED,
-                'dateTo' => date("Y-m-d H:i"),
-                'user' => $user,
-                'userShowId' => $showId,
-            ])
+            ->setParameter('watched', UserEpisode::STATUS_WATCHED)
+            ->setParameter('dateTo', date('Y-m-d H:i'))
+            ->setParameter('user', $user)
+            ->setParameter('userShowId', $showId)
             ->orderBy('e.airstamp', $order)
             ->addOrderBy('e.season', $order)
             ->addOrderBy('e.episode', $order)
@@ -114,11 +110,9 @@ class EpisodeRepository extends EntityRepository
             )
             ->where('s.id = :showId')
             ->andWhere('e.airstamp > ' . sprintf(self::DATE_SUB, ':dateFrom'))
-            ->setParameters([
-                'user' => $user,
-                'dateFrom' => date("Y-m-d H:i"),
-                'showId' => $showId,
-            ])
+            ->setParameter('user', $user)
+            ->setParameter('dateFrom', date("Y-m-d H:i"))
+            ->setParameter('showId', $showId)
             ->orderBy('e.airstamp', 'asc')
             ->addOrderBy('e.season', 'asc')
             ->addOrderBy('e.episode', 'asc')
@@ -160,11 +154,9 @@ class EpisodeRepository extends EntityRepository
             ->andWhere('e.airstamp >= ' . sprintf(self::DATE_SUB, ':dateFrom'))
             ->andWhere('e.airstamp <= ' . sprintf(self::DATE_SUB, ':dateTo'))
             ->groupBy('e.id')
-            ->setParameters([
-                'user' => $user,
-                'dateFrom' => $dateFrom,
-                'dateTo' => $dateTo,
-            ])
+            ->setParameter('user', $user)
+            ->setParameter('dateFrom', $dateFrom)
+            ->setParameter('dateTo', $dateTo)
             ->orderBy('userAirstamp', 'ASC')
             ->addOrderBy('e.season', 'ASC')
             ->addOrderBy('e.episode', 'ASC')
@@ -199,10 +191,8 @@ class EpisodeRepository extends EntityRepository
             ->innerJoin('e.show', 's')
             ->andWhere('e.airstamp >=  :dateFrom')
             ->andWhere('e.airstamp <= :dateTo')
-            ->setParameters([
-                'dateFrom' => $dateFrom,
-                'dateTo' => $dateTo,
-            ])
+            ->setParameter('dateFrom', $dateFrom)
+            ->setParameter('dateTo', $dateTo)
             ->groupBy('e.id')
             ->orderBy('e.airstamp', 'ASC')
             ->addOrderBy('e.season', 'ASC')
@@ -240,11 +230,9 @@ class EpisodeRepository extends EntityRepository
             ->where('u = :user')
             ->andWhere('e.show = :show')
             ->andWhere('us = :userShow')
-            ->setParameters([
-                'user' => $user,
-                'show' => $userShow->getShow(),
-                'userShow' => $userShow,
-            ])
+            ->setParameter('user', $user)
+            ->setParameter('show', $userShow->getShow())
+            ->setParameter('userShow', $userShow)
             ->orderBy('e.airstamp', 'desc')
             ->addOrderBy('e.season', 'desc')
             ->addOrderBy('e.episode', 'desc')
@@ -272,12 +260,10 @@ class EpisodeRepository extends EntityRepository
             ->where('e.show = :show')
             ->andWhere('ue.id IS NULL')
             ->andWhere('e.airstamp < :now')
-            ->setParameters([
-                'user' => $user,
-                'userShow' => $userShow,
-                'show' => $userShow->getShow(),
-                'now' => new DateTime(),
-            ])
+            ->setParameter('user', $user)
+            ->setParameter('userShow', $userShow)
+            ->setParameter('show', $userShow->getShow())
+            ->setParameter('now', new DateTime())
             ->getQuery()
             ->getResult()
             ;

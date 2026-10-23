@@ -6,7 +6,7 @@ use App\Traits\LoggerTrait;
 use DateTime;
 use DateTimeZone;
 use Exception;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
