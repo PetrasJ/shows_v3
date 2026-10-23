@@ -61,17 +61,11 @@ class UserEpisode
     #[ORM\Column(type: 'integer', length: 20, nullable: true)]
     private $status;
 
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @var DateTime
-     */
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $created;
 
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @var DateTime
-     */
+    #[Gedmo\Timestampable(on: 'update')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $updated;
 
